@@ -1,5 +1,5 @@
 ---
-title: "Training series “Education for all …?!” – four Saturdays from 21 November"
+title: "Training series “Education for all …?!”: four Saturdays from 21 November"
 date: 2026-11-06
 type: event
 summary: "Educational justice between Uganda and Germany: free training days in Berlin and online, with experts joining live from Kampala. Each day can be booked separately."
@@ -14,12 +14,12 @@ pinUntil: 2026-12-12
 project: p26-214-bildung-fuer-alle
 ---
 
-Why do some children have access to good education and others do not – in Kampala as in Berlin? Our new training series is for teachers, educators, school social workers, diaspora activists, parents and people active in associations.
+Why do some children have access to good education and others do not, in Kampala as in Berlin? Our new training series is for teachers, educators, school social workers, diaspora activists, parents and people active in associations.
 
 - **Sat 21 Nov 2026:** Educational justice in global comparison
 - **Sat 28 Nov 2026:** The right to education and inclusive education
 - **Sat 5 Dec 2026:** Education financing and room for local action
-- **Sat 12 Dec 2026:** Bringing educational justice into your own practice – with closing session
+- **Sat 12 Dec 2026:** Bringing educational justice into your own practice, with closing session
 
 Registration closes on the Tuesday before each date. Full details on the project page.
 

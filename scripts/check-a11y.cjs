@@ -3,7 +3,7 @@
 const { chromium } = require('playwright');
 const fs = require('fs');
 const axeSrc = fs.readFileSync('node_modules/axe-core/axe.min.js', 'utf8');
-const pages = ['/', '/ueber-uns/', '/menschen/', '/programme/', '/programme/internationale-zusammenarbeit/', '/projekte/', '/projekte/p26-224-erde-saat-erbe/', '/projekte/p26-214-bildung-fuer-alle/', '/aktuelles/', '/aktuelles/ubuntu-talks-15-11-2026/', '/veranstaltungen/', '/wirkung/', '/berichte/', '/downloads/', '/shop/', '/shop/abantu-coffee-roots-and-routes/', '/spenden/', '/mitmachen/', '/kontakt/', '/impressum/', '/datenschutz/', '/barrierefreiheit/', '/einfache-sprache/', '/en/', '/en/projects/p26-230-pearl-kita-kampala/', '/en/accessibility/'];
+const pages = process.env.PAGES ? process.env.PAGES.split(',') : ['/', '/ueber-uns/', '/menschen/', '/inlandsarbeit/', '/inlandsarbeit/bildung/', '/auslandsarbeit/globale-zusammenarbeit/', '/bildungsangebote/', '/projekte/p26-224-erde-saat-erbe/', '/projekte/p23-91-ours-zerebralparese/', '/kontakt/', '/einfache-sprache/', '/barrierefreiheit/', '/en/', '/en/education-offers/', '/en/people/', '/fr/', '/fr/formations/', '/fr/equipe/', '/fr/travail-en-allemagne/migration-et-integration/', '/fr/projets/p26-230-pearl-kita-kampala/', '/fr/accessibilite/', '/fr/contact/', '/fr/mentions-legales/'];
 (async () => {
   const b = await chromium.launch();
   const summary = {};

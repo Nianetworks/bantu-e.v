@@ -165,6 +165,9 @@ code { font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: .95em;
 .btn { display: inline-flex; align-items: center; justify-content: center; gap: .55rem; min-height: var(--tap); padding: .75rem 1.35rem; border-radius: 999px; font-weight: 700; font-size: 1rem; text-decoration: none; border: 2px solid transparent; cursor: pointer; transition: transform .15s ease, background .15s ease, box-shadow .15s ease; line-height: 1.2; font-family: var(--font-sans); }
 .btn:hover { transform: translateY(-1px); box-shadow: var(--shadow); }
 .btn svg { width: 1.15em; height: 1.15em; flex: none; }
+.btn { max-width: 100%; white-space: normal; text-align: center; }
+.form input, .form select, .form textarea { max-width: 100%; min-width: 0; box-sizing: border-box; }
+.form { min-width: 0; }
 .btn--gold { background: var(--gold); color: var(--on-gold); }
 .btn--gold:hover { background: #ffcc33; color: var(--on-gold); }
 .btn--dark { background: var(--ink); color: var(--bg); }

@@ -10,4 +10,4 @@ On 29 October 2026, Bantu e.V. and our Ugandan partner Anchored Bridges Initiati
 
 The Montessori-inspired kindergarten in Namuwongo offers 60 children aged three to six a fee-free place with a warm meal every day. Six local educators are being trained. The project runs until the end of March 2027 and is funded by the EZ-Kleinprojektefonds of the Stiftung Nord-Süd-Brücken.
 
-Bantu e.V. contributes €1,390 of its own funds – every donation with the reference “Pearl Kita” helps.
+Bantu e.V. contributes €1,390 of its own funds. Every donation with the reference “Pearl Kita” helps.

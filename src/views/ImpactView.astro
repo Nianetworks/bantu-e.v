@@ -9,18 +9,19 @@ import { impact } from '../data/impact';
 interface Props { lang: Lang }
 const { lang } = Astro.props;
 const de = lang === 'de';
+const fr = lang === 'fr';
 const stories = (await getProjects(lang)).filter((p) => p.data.successStory);
-const title = de ? 'Wirkung & Erfolgsgeschichten' : 'Impact & success stories';
+const title = de ? 'Wirkung & Erfolgsgeschichten' : fr ? 'Impact et réussites' : 'Impact & success stories';
 const lead = de
-  ? 'Was unsere Projekte bewirkt haben – mit Zahlen aus unseren Abschlussberichten und den Geschichten dahinter.'
-  : 'What our projects have achieved – with figures from our final reports and the stories behind them.';
+  ? 'Was unsere Projekte bewirkt haben, mit Zahlen aus unseren Abschlussberichten und den Geschichten dahinter.'
+  : fr ? 'Ce que nos projets ont permis, avec des chiffres tirés de nos rapports finaux et les histoires qui les accompagnent.' : 'What our projects have achieved, with figures from our final reports and the stories behind them.';
 ---
 <Base lang={lang} title={title} description={lead} altHref={r('impact', de ? 'en' : 'de')}>
   <PageHead lang={lang} title={title} lead={lead} />
 
   <section class="section section--deep">
     <div class="wrap">
-      <h2>{de ? 'Wirkung in Zahlen' : 'Impact in numbers'}</h2>
+      <h2>{de ? 'Wirkung in Zahlen' : fr ? 'L’impact en chiffres' : 'Impact in numbers'}</h2>
       <div class="stat-grid">
         {impact.map((s) => (
           <a class="stat stat--link" href={projectPath(lang, s.project)}>
@@ -30,13 +31,13 @@ const lead = de
           </a>
         ))}
       </div>
-      <p class="small" style="margin-top:1.25rem;color:#bdb7aa">{de ? 'Alle Zahlen stammen aus Sach- und Tätigkeitsberichten, die wir den Förderern vorgelegt haben.' : 'All figures come from narrative and activity reports submitted to our funders.'}</p>
+      <p class="small" style="margin-top:1.25rem;color:#bdb7aa">{de ? 'Alle Zahlen stammen aus Sach- und Tätigkeitsberichten, die wir den Förderern vorgelegt haben.' : fr ? 'Tous les chiffres proviennent des rapports d’activité remis à nos bailleurs.' : 'All figures come from narrative and activity reports submitted to our funders.'}</p>
     </div>
   </section>
 
   <section class="section">
     <div class="wrap">
-      <h2>{de ? 'Erfolgsgeschichten' : 'Success stories'}</h2>
+      <h2>{de ? 'Erfolgsgeschichten' : fr ? 'Réussites' : 'Success stories'}</h2>
       <div class="stories">
         {stories.map((p, i) => (
           <article class={`story ${i % 2 ? 'story--flip' : ''}`}>
@@ -46,21 +47,21 @@ const lead = de
               <h3>{p.data.title}</h3>
               <p>{p.data.summary}</p>
               {p.data.stats.length > 0 && <ul class="story__stats">{p.data.stats.map((s) => <li><strong>{s.value}</strong> {s.label}</li>)}</ul>}
-              <a class="link-arrow" href={projectPath(lang, slugOf(p.id))}>{de ? 'Ganze Geschichte lesen' : 'Read the full story'}</a>
+              <a class="link-arrow" href={projectPath(lang, slugOf(p.id))}>{de ? 'Ganze Geschichte lesen' : fr ? 'Lire toute l’histoire' : 'Read the full story'}</a>
             </div>
           </article>
         ))}
       </div>
       <div class="notice notice--info" style="margin-top:2rem">
-        {de ? 'Stimmen von Teilnehmenden und Partner*innen ergänzen wir hier, sobald uns ihre Einwilligung zur Veröffentlichung vorliegt.' : 'We will add voices of participants and partners here as soon as we have their consent to publish.'}
+        {de ? 'Stimmen von Teilnehmenden und Partner*innen ergänzen wir hier, sobald uns ihre Einwilligung zur Veröffentlichung vorliegt.' : fr ? 'Nous ajouterons ici les voix des participantes, participants et partenaires dès que nous aurons leur accord pour publier.' : 'We will add voices of participants and partners here as soon as we have their consent to publish.'}
       </div>
     </div>
   </section>
 
   <section class="section section--alt section--tight">
     <div class="wrap cta-line">
-      <p>{de ? 'Ausführliche Berichte und Finanzen finden Sie in unseren Jahres- und Transparenzberichten.' : 'Detailed reports and finances are in our annual and transparency reports.'}</p>
-      <a class="btn btn--dark" href={r('reports', lang)}>{de ? 'Zu den Berichten' : 'View reports'}</a>
+      <p>{de ? 'Ausführliche Berichte und Finanzen finden Sie in unseren Jahres- und Transparenzberichten.' : fr ? 'Les rapports détaillés et les finances se trouvent dans nos rapports annuels et de transparence.' : 'Detailed reports and finances are in our annual and transparency reports.'}</p>
+      <a class="btn btn--dark" href={r('reports', lang)}>{de ? 'Zu den Berichten' : fr ? 'Voir les rapports' : 'View reports'}</a>
     </div>
   </section>
 </Base>

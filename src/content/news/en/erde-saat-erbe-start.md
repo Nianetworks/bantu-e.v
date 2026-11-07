@@ -2,7 +2,7 @@
 title: "“Soil, Seed and Heritage”: decolonisation in the classroom"
 date: 2026-09-01
 type: news
-summary: "Our new BIKO project brings rammed earth, seeds and colonial traces into Berlin schools – in cooperation with AfricAvenir International e.V."
+summary: "Our new BIKO project brings rammed earth, seeds and colonial traces into Berlin schools, in cooperation with AfricAvenir International e.V."
 project: p26-224-erde-saat-erbe
 ---
 

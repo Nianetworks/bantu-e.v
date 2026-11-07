@@ -1,4 +1,5 @@
 ---
+import Phones from '../components/Phones.astro';
 import Base from '../layouts/Base.astro';
 import PageHead from '../components/PageHead.astro';
 import { href, r, type Lang } from '../i18n';
@@ -7,10 +8,11 @@ import { org } from '../data/site';
 interface Props { lang: Lang }
 const { lang } = Astro.props;
 const de = lang === 'de';
-const title = de ? 'Mitmachen' : 'Get involved';
+const fr = lang === 'fr';
+const title = de ? 'Mitmachen' : fr ? 'S’engager' : 'Get involved';
 const lead = de
-  ? 'Unser Büro ist in Berlin, unser Team ist international – vieles läuft online. Sie können von überall aus mitmachen.'
-  : 'Our office is in Berlin, our team is international – much of the work happens online. You can join from anywhere.';
+  ? 'Unser Büro ist in Berlin, unser Team ist international. Vieles läuft online. Sie können von überall aus mitmachen.'
+  : fr ? 'Notre bureau est à Berlin, notre équipe est internationale. Une grande partie du travail se fait en ligne. Vous pouvez participer de partout.' : 'Our office is in Berlin, our team is international. Much of the work happens online. You can join from anywhere.';
 const mail = (s: string) => `mailto:${org.email}?subject=${encodeURIComponent(s)}`;
 ---
 <Base lang={lang} title={title} description={lead} altHref={r('join', de ? 'en' : 'de')}>
@@ -19,25 +21,25 @@ const mail = (s: string) => `mailto:${org.email}?subject=${encodeURIComponent(s)
   <section class="section section--tight" id="membership">
     <div class="wrap two-col">
       <div>
-        <div class="eyebrow">{de ? 'Mitgliedschaft' : 'Membership'}</div>
-        <h2>{de ? 'Mitglied werden' : 'Become a member'}</h2>
-        <p>{de ? 'Als Mitglied tragen Sie den Verein mit – mit Ihrem Beitrag und, wenn Sie möchten, mit Ihrer Stimme und Ihrer Zeit.' : 'As a member you help carry the association – with your fee and, if you like, with your vote and your time.'}</p>
+        <div class="eyebrow">{de ? 'Mitgliedschaft' : fr ? 'Adhésion' : 'Membership'}</div>
+        <h2>{de ? 'Mitglied werden' : fr ? 'Devenir membre' : 'Become a member'}</h2>
+        <p>{de ? 'Als Mitglied tragen Sie den Verein mit: mit Ihrem Beitrag und, wenn Sie möchten, mit Ihrer Stimme und Ihrer Zeit.' : fr ? 'En tant que membre, vous portez l’association : par votre cotisation et, si vous le souhaitez, par votre voix et votre temps.' : 'As a member you help carry the association: with your fee and, if you like, with your vote and your time.'}</p>
         <ul class="checks">
-          <li><strong>{de ? 'Ordentliches Mitglied' : 'Full member'}</strong> – {de ? 'mit Stimmrecht, wählbar in Gremien' : 'with voting rights, eligible for office'}</li>
-          <li><strong>{de ? 'Fördermitglied' : 'Supporting member'}</strong> – {de ? 'unterstützt finanziell, ohne Stimmrecht' : 'financial support, without voting rights'}</li>
-          <li>{de ? 'Beitrag: 5 € im Monat, ermäßigt 2,50 € – oder ein selbst gewählter Betrag' : 'Fee: €5 a month, reduced €2.50 – or an amount of your choice'}</li>
-          <li>{de ? 'Probemitgliedschaft: drei Monate ohne Beitrag' : 'Trial membership: three months without a fee'}</li>
+          <li><strong>{de ? 'Ordentliches Mitglied' : fr ? 'Membre actif' : 'Full member'}</strong>: {de ? 'mit Stimmrecht, wählbar in Gremien' : fr ? 'avec droit de vote, éligible aux instances' : 'with voting rights, eligible for office'}</li>
+          <li><strong>{de ? 'Fördermitglied' : fr ? 'Membre bienfaiteur' : 'Supporting member'}</strong>: {de ? 'unterstützt finanziell, ohne Stimmrecht' : fr ? 'soutien financier, sans droit de vote' : 'financial support, without voting rights'}</li>
+          <li>{de ? 'Beitrag: 5 € im Monat, ermäßigt 2,50 €, oder ein selbst gewählter Betrag' : fr ? 'Cotisation : 5 € par mois, tarif réduit 2,50 €, ou un montant de votre choix' : 'Fee: €5 a month, reduced €2.50, or an amount of your choice'}</li>
+          <li>{de ? 'Probemitgliedschaft: drei Monate ohne Beitrag' : fr ? 'Adhésion à l’essai : trois mois sans cotisation' : 'Trial membership: three months without a fee'}</li>
         </ul>
       </div>
       <div class="panel">
-        <h3>{de ? 'So geht’s' : 'How it works'}</h3>
+        <h3>{de ? 'So geht’s' : fr ? 'Comment faire' : 'How it works'}</h3>
         <ol>
-          <li>{de ? 'Mitgliedsantrag herunterladen und ausfüllen' : 'Download and complete the membership form'}</li>
-          <li>{de ? `Per Post an ${org.shortName}, ${org.postbox.line}, ${org.postbox.zip} ${org.postbox.city} – oder eingescannt an ${org.email}` : `Send it by post to ${org.shortName}, ${org.postbox.line}, ${org.postbox.zip} ${org.postbox.city} – or scan it and e-mail it to ${org.email}`}</li>
+          <li>{de ? 'Mitgliedsantrag herunterladen und ausfüllen' : fr ? 'Télécharger et remplir le formulaire d’adhésion' : 'Download and complete the membership form'}</li>
+          <li>{de ? `Per Post an ${org.shortName}, ${org.postbox.line}, ${org.postbox.zip} ${org.postbox.city}, oder eingescannt an ${org.email}` : fr ? `Envoyez-le par courrier à ${org.shortName}, ${org.postbox.line}, ${org.postbox.zip} ${org.postbox.city}, ou scanné par e-mail à ${org.email}` : `Send it by post to ${org.shortName}, ${org.postbox.line}, ${org.postbox.zip} ${org.postbox.city}, or scan it and e-mail it to ${org.email}`}</li>
         </ol>
         <div class="btn-row">
-          <a class="btn btn--dark" href={href('/downloads/mitgliedschaft/bantu-ev-mitgliedsantrag-de.pdf')} download>{de ? 'Mitgliedsantrag (DE)' : 'Membership form (DE)'}</a>
-          <a class="btn btn--outline" href={href('/downloads/mitgliedschaft/bantu-ev-membership-form-en.pdf')} download>{de ? 'Formular (EN)' : 'Membership form (EN)'}</a>
+          <a class="btn btn--dark" href={href('/downloads/mitgliedschaft/bantu-ev-mitgliedsantrag-de.pdf')} download>{de ? 'Mitgliedsantrag (DE)' : fr ? 'Formulaire d’adhésion (DE)' : 'Membership form (DE)'}</a>
+          <a class="btn btn--outline" href={href('/downloads/mitgliedschaft/bantu-ev-membership-form-en.pdf')} download>{de ? 'Formular (EN)' : fr ? 'Formulaire d’adhésion (EN)' : 'Membership form (EN)'}</a>
         </div>
       </div>
     </div>
@@ -45,36 +47,37 @@ const mail = (s: string) => `mailto:${org.email}?subject=${encodeURIComponent(s)
 
   <section class="section section--alt" id="volunteer">
     <div class="wrap">
-      <div class="eyebrow">{de ? 'Ehrenamt' : 'Volunteering'}</div>
-      <h2>{de ? 'Ehrenamtlich mitmachen' : 'Volunteer with us'}</h2>
-      <p class="lead">{de ? 'Jede und jeder kann mitmachen. Wir freuen uns über Unterstützung zum Beispiel bei:' : 'Everyone is welcome. We are glad of support, for example with:'}</p>
+      <div class="eyebrow">{de ? 'Ehrenamt' : fr ? 'Bénévolat' : 'Volunteering'}</div>
+      <h2>{de ? 'Ehrenamtlich mitmachen' : fr ? 'Devenir bénévole' : 'Volunteer with us'}</h2>
+      <p class="lead">{de ? 'Jede und jeder kann mitmachen. Wir freuen uns über Unterstützung zum Beispiel bei:' : fr ? 'Tout le monde est bienvenu. Nous apprécions votre aide, par exemple pour :' : 'Everyone is welcome. We are glad of support, for example with:'}</p>
       <div class="grid grid--4">
         {(de
-          ? [['Veranstaltungen', 'Empfang, Aufbau, Küche, Kinderbetreuung'], ['Sprachen', 'Übersetzung und Dolmetschen – Englisch, Französisch, Luganda, Runyankore, Kirundi und mehr'], ['Kommunikation', 'Fotos, Texte, Social Media, Website'], ['Fundraising & Verwaltung', 'Anträge, Buchhaltung, IT']]
-          : [['Events', 'reception, set-up, kitchen, childcare'], ['Languages', 'translation and interpreting – English, French, Luganda, Runyankore, Kirundi and more'], ['Communications', 'photos, writing, social media, website'], ['Fundraising & admin', 'grant applications, bookkeeping, IT']]
+          ? [['Veranstaltungen', 'Empfang, Aufbau, Küche, Kinderbetreuung'], ['Sprachen', 'Übersetzung und Dolmetschen: Englisch, Französisch, Luganda, Runyankore, Kirundi und mehr'], ['Kommunikation', 'Fotos, Texte, Social Media, Website'], ['Fundraising & Verwaltung', 'Anträge, Buchhaltung, IT']]
+          : fr ? [['Événements', 'accueil, installation, cuisine, garde d’enfants'], ['Langues', 'traduction et interprétation : anglais, français, luganda, runyankore, kirundi et plus'], ['Communication', 'photos, textes, réseaux sociaux, site web'], ['Collecte de fonds et administration', 'demandes de subvention, comptabilité, informatique']]
+          : [['Events', 'reception, set-up, kitchen, childcare'], ['Languages', 'translation and interpreting: English, French, Luganda, Runyankore, Kirundi and more'], ['Communications', 'photos, writing, social media, website'], ['Fundraising & admin', 'grant applications, bookkeeping, IT']]
         ).map(([h, p]) => <div class="panel"><h3>{h}</h3><p>{p}</p></div>)}
       </div>
-      <p style="margin-top:1.5rem">{de ? 'Wir haben auch schon internationale Freiwillige begleitet, etwa über das Europäische Solidaritätskorps.' : 'We have also hosted international volunteers, for example through the European Solidarity Corps.'}</p>
-      <a class="btn btn--dark" href={mail(de ? 'Ehrenamt bei Bantu e.V.' : 'Volunteering at Bantu e.V.')}>{de ? 'Schreiben Sie uns' : 'Get in touch'}</a>
+      <p style="margin-top:1.5rem">{de ? 'Wir haben auch schon internationale Freiwillige begleitet, etwa über das Europäische Solidaritätskorps.' : fr ? 'Nous avons aussi accueilli des volontaires internationaux, par exemple dans le cadre du Corps européen de solidarité.' : 'We have also hosted international volunteers, for example through the European Solidarity Corps.'}</p>
+      <a class="btn btn--dark" href={mail(de ? 'Ehrenamt bei Bantu e.V.' : fr ? 'Bénévolat chez Bantu e.V.' : 'Volunteering at Bantu e.V.')}>{de ? 'Schreiben Sie uns' : fr ? 'Nous contacter' : 'Get in touch'}</a>
     </div>
   </section>
 
   <section class="section" id="cooperation">
     <div class="wrap two-col">
       <div>
-        <div class="eyebrow">{de ? 'Kooperationen' : 'Partnerships'}</div>
-        <h2>{de ? 'Lassen Sie uns zusammenarbeiten' : 'Let’s work together'}</h2>
-        <p>{de ? 'Sie sind eine Schule, eine Initiative, ein Verein oder eine Stiftung? Sie haben eine Projektidee oder möchten Fachwissen oder Zeit einbringen? Wir freuen uns auf das Gespräch.' : 'Are you a school, an initiative, an association or a foundation? Do you have a project idea or would you like to contribute expertise or time? We look forward to hearing from you.'}</p>
+        <div class="eyebrow">{de ? 'Kooperationen' : fr ? 'Partenariats' : 'Partnerships'}</div>
+        <h2>{de ? 'Lassen Sie uns zusammenarbeiten' : fr ? 'Travaillons ensemble' : 'Let’s work together'}</h2>
+        <p>{de ? 'Sie sind eine Schule, eine Initiative, ein Verein oder eine Stiftung? Sie haben eine Projektidee oder möchten Fachwissen oder Zeit einbringen? Wir freuen uns auf das Gespräch.' : fr ? 'Vous êtes une école, une initiative, une association ou une fondation ? Vous avez une idée de projet ou souhaitez apporter votre expertise ou votre temps ? Nous nous réjouissons de votre message.' : 'Are you a school, an initiative, an association or a foundation? Do you have a project idea or would you like to contribute expertise or time? We look forward to hearing from you.'}</p>
         <ul class="checks">
-          <li>{de ? 'Workshops und Projekttage für Schulen (Globales Lernen, Dekolonisierung)' : 'Workshops and project days for schools (global learning, decolonisation)'}</li>
-          <li>{de ? 'Gemeinsame Anträge und Projekte mit Partnern in Uganda und Burundi' : 'Joint applications and projects with partners in Uganda and Burundi'}</li>
-          <li>{de ? 'Begegnungsformate in Berlin-Mitte und darüber hinaus' : 'Encounter formats in Berlin-Mitte and beyond'}</li>
+          <li>{de ? 'Workshops und Projekttage für Schulen (Globales Lernen, Dekolonisierung)' : fr ? 'Ateliers et journées de projet pour les écoles (éducation globale, décolonisation)' : 'Workshops and project days for schools (global learning, decolonisation)'}</li>
+          <li>{de ? 'Gemeinsame Anträge und Projekte mit Partnern in Uganda und Burundi' : fr ? 'Demandes de financement et projets communs avec des partenaires en Ouganda et au Burundi' : 'Joint applications and projects with partners in Uganda and Burundi'}</li>
+          <li>{de ? 'Begegnungsformate in Berlin-Mitte und darüber hinaus' : fr ? 'Formats de rencontre à Berlin-Mitte et au-delà' : 'Encounter formats in Berlin-Mitte and beyond'}</li>
         </ul>
       </div>
       <div class="panel">
-        <h3>{de ? 'Kontakt' : 'Contact'}</h3>
-        <p>Boaz Murinzi Murema<br /><a href={`mailto:${org.email}`}>{org.email}</a><br /><a href={`tel:${org.phoneHref}`}>{org.phone}</a></p>
-        <a class="btn btn--gold" href={r('contact', lang)}>{de ? 'Zum Kontaktformular' : 'Contact form'}</a>
+        <h3>{de ? 'Kontakt' : fr ? 'Contact' : 'Contact'}</h3>
+        <p>Boaz Murinzi Murema<br /><a href={`mailto:${org.email}`}>{org.email}</a><br /><Phones lang={lang} variant="plain" /></p>
+        <a class="btn btn--gold" href={r('contact', lang)}>{de ? 'Zum Kontaktformular' : fr ? 'Formulaire de contact' : 'Contact form'}</a>
       </div>
     </div>
   </section>

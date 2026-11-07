@@ -1,0 +1,36 @@
+---
+// Office line and mobile with opening hours and messenger note. Used in footer, contact, imprint, easy read.
+import Icon from './Icon.astro';
+import { type Lang } from '../i18n';
+import { org } from '../data/site';
+interface Props { lang: Lang; variant?: 'list' | 'footer' | 'plain' }
+const { lang, variant = 'list' } = Astro.props;
+const de = lang === 'de';
+const fr = lang === 'fr';
+const msg = org.messengers.join(', ').replace(/, ([^,]*)$/, de ? ' und $1' : fr ? ' et $1' : ' and $1');
+const office = de ? 'Büro' : fr ? 'Bureau' : 'Office';
+const mobile = de ? 'Mobil' : fr ? 'Mobile' : 'Mobile';
+const hours = de ? `erreichbar von ${org.mobileHours.replace('–', ' bis ')} Uhr` : fr ? `joignable de ${org.mobileHours.replace('–', ' à ')}` : `available ${org.mobileHours.replace('–', ' to ')}`;
+const via = de ? `auch über ${msg}` : fr ? `aussi via ${msg}` : `also via ${msg}`;
+---
+{variant === 'plain' ? (
+  <>
+    {office}: <a href={`tel:${org.officePhoneHref}`}>{org.officePhone}</a><br />
+    {mobile}: <a href={`tel:${org.phoneHref}`}>{org.phone}</a> ({hours}, {via})
+  </>
+) : (
+  <span class={`phones phones--${variant}`}>
+    <span class="phones__line"><Icon name="phone" /> <span>{office}: <a href={`tel:${org.officePhoneHref}`}>{org.officePhone}</a></span></span>
+    <span class="phones__line"><Icon name="messenger" /> <span>{mobile}: <a href={`tel:${org.phoneHref}`}>{org.phone}</a><span class="phones__note">{hours}, {via}</span></span></span>
+  </span>
+)}
+<style>
+  .phones { display: grid; gap: .45rem; }
+  .phones__line { display: inline-flex; gap: .5rem; align-items: flex-start; }
+  .phones__line > span { display: flex; flex-direction: column; }
+  .phones__line :global(svg) { width: 1.1em; height: 1.1em; flex-shrink: 0; margin-top: .2em; }
+  .phones__note { font-size: .88em; opacity: .9; }
+  .phones--footer :global(svg) { color: #ffd34d; }
+  .phones--footer a { color: var(--on-deep); text-decoration: none; }
+  .phones--footer a:hover { color: #ffd34d; text-decoration: underline; }
+</style>

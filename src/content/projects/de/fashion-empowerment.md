@@ -1,7 +1,7 @@
 ---
 title: "FashionEmpowerment"
 subtitle: "Kreativworkshops für Kinder und Jugendliche afrikanischer Abstammung in Berlin-Wedding"
-summary: "Wöchentliche Mode- und Empowerment-Workshops – mit einer großen Abschlussshow vor 350 Gästen."
+summary: "Wöchentliche Mode- und Empowerment-Workshops, mit einer großen Abschlussshow vor 350 Gästen."
 programme: inland
 status: completed
 country: "Deutschland"
@@ -24,4 +24,4 @@ sources:
 
 In wöchentlichen Kreativworkshops gestalteten Kinder und Jugendliche afrikanischer Abstammung eigene Modeaccessoires und entwickelten dabei Botschaften, die stark machen.
 
-Den Abschluss bildete die **FashionEmpowerment-Show am 16. Dezember 2023** – am Sudan Peace Action Day – mit **350 Besucher*innen**.
+Den Abschluss bildete die **FashionEmpowerment-Show am 16. Dezember 2023**, am Sudan Peace Action Day, mit **350 Besucher*innen**.

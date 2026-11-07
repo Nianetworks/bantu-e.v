@@ -3,7 +3,7 @@
 Operating manual for Claude Code. Read this first, then `docs/01_Relaunch-Plan.md`.
 
 ## What this is
-Static, bilingual (DE default, EN under `/en/`) website of **Bantu-Vereinigung für globale Bildung, Gerechtigkeit und Zusammenarbeit e.V.**, Berlin. Replaces the old WordPress/Elementor site (last edited 2023). Built with **Astro 7** (pinned in package.json). **Live since 07.11.2026 on the association's own hosting** (cPanel account `bantuev` on wolke.rukeira.com): GitHub Actions builds the site into branch `live`, the server pulls it every 10 minutes. Preview on GitHub Pages. No database, no cookies, no tracking, no external fonts/CDNs (only exception: the twingle donation form, loaded after a click).
+Static, trilingual (DE default, EN under `/en/`, FR under `/fr/`) website of **Bantu-Vereinigung für globale Bildung, Gerechtigkeit und Zusammenarbeit e.V.**, Berlin. Replaces the old WordPress/Elementor site (last edited 2023). Built with **Astro 7** (pinned in package.json). **Live since 07.11.2026 on the association's own hosting** (cPanel account `bantuev` on wolke.rukeira.com): GitHub Actions builds the site into branch `live`, the server pulls it every 10 minutes. Preview on GitHub Pages. No database, no cookies, no tracking, no external fonts/CDNs (only exception: the twingle donation form, loaded after a click).
 
 ## Repository
 - GitHub: https://github.com/Nianetworks/bantu-e.v (branch `main`) · Live: https://www.bantu-ev.org · Preview: https://nianetworks.github.io/bantu-e.v/
@@ -29,11 +29,14 @@ src/data/shop.ts        shop categories + products (prices empty until the board
 src/data/downloads.ts   files offered on /downloads and /berichte (live in public/downloads/)
 src/data/impact.ts      verified impact figures + timeline
 src/data/redirects.mjs  old WordPress URLs -> new pages
-src/content/projects/{de,en}/<slug>.md   one file per project and language (same file name!)
-src/content/news/{de,en}/<slug>.md       news, events (type: event), announcements (pinUntil)
+src/content/projects/{de,en,fr}/<slug>.md   one file per project and language (same file name!)
+src/content/news/{de,en,fr}/<slug>.md       news, events (type: event), announcements (pinUntil)
 src/views/*.astro       page templates (take `lang`)
 src/pages/**            thin DE routes + /en/ routes that render the views
-src/i18n/index.ts       routes per language, UI strings, nav
+src/i18n/index.ts       routes per language (de/en/fr), UI strings, main nav (mega menus for the two work areas)
+src/lib/alternates.ts   maps every page to its DE/EN/FR versions (language switch DE · EN · FR, hreflang)
+src/data/sdgs.ts        SDG names; icons in public/sdg/ (SdgIcons component)
+public/partners/        partner logos (OrgCard); public/funders/ funder logos
 public/                 brand assets, images, funder logos, downloads
 docs/                   plan, go-live/DNS, legal & shop, photo brief, editing guide, open questions
 ```
@@ -45,7 +48,10 @@ docs/                   plan, go-live/DNS, legal & shop, photo brief, editing gu
 4. **Privacy:** people appear with name/photo only with `consent: true`. No identifiable children without parental consent (Pearl Kita!). No embeds (YouTube, Google Maps, Instagram) – link instead. Fonts are self-hosted via @fontsource.
 5. **Funding acknowledgements are contractual.** Keep `fundingNote`, `fundingLogos`, `disclaimer` exactly as the funder requires (P 26/224 BIKO, P 26/214 Engagement Global/BMZ, MI2026-24B MITTEinander aktiv). Missing logos = OPEN items.
 6. **Brand (Guidelines v2.1, Nov 2026):** original logo only (globe + interwoven green/blue peace sign + 8 rings, name *below* the emblem). Never use the July-2026 redesign concepts or `bantu_logo.svg`. Stacked logo ≥ 120 px wide; emblem-only ≥ 48 px only in very small spaces. Colours: Gold #FEBF00, Green #3CB04B, Blue #749BCA, Black; text-safe #8A6200 / #2E8A3B / #3F6FA6. Fonts: Noto Serif (headlines), Archivo (text).
-7. **Bilingual parity:** every project/news file exists in `de/` and `en/` with the same file name. German is binding for funder/authority wording.
+7. **Language parity:** every project/news file exists in `de/`, `en/` and `fr/` with the same file name. German is binding for funder/authority wording (funding sentences stay German, with a translation after it). Views use `de ? 'DE' : fr ? 'FR' : 'EN'`. Write like a person: no em/en dashes as punctuation (ranges like 2021–2025 are fine), no filler phrases.
+10. **Navigation:** Über uns · Inlandsarbeit · Internationale Zusammenarbeit (mega menus: programme → projects) · Aktuelles · Mitmachen. Region programme pages: `/inlandsarbeit/<programm>/`, `/auslandsarbeit/<programm>/`. Education offers with AfricAvenir: `/bildungsangebote/`.
+11. **Contacts:** office +49 (0)30 26934764; mobile +49 176 34213765 only 16:00–20:00, also Signal, Threema, Telegram, WhatsApp (`Phones` component).
+12. **Funding logos:** EZ-KPF projects show SNSB + BMZ; P 26/214 (SDG fund) SNSB + BMZ + Engagement Global; P 26/224 (BIKO) SNSB + SenBJF; Ubuntu Talks BA Mitte + Club Dialog. SDG icons on project, programme and area pages.
 8. **Accessibility is a core requirement (blind and partially sighted users):** target WCAG 2.2 AA. Semantic HTML and landmarks, one `h1`, no skipped heading levels, alt texts (decorative = `aria-hidden`), visible focus, contrast ≥ 4.5:1 in **all three themes** (light, dark, high contrast), targets ≥ 44 px, no hover-only interactions, no autoplay, `lang` on mixed-language text. Colours only via CSS variables in `global.css` (never hard-code text/background colours in components – they break dark/contrast mode). New pages must pass `node` axe check and the reflow check (see below) with text at 150 %.
    - Accessibility toolbar: `src/components/A11yPanel.astro` (text size, dark/high contrast, Atkinson Hyperlegible font, spacing, link highlighting, stop motion, read aloud via on-device speech synthesis). Settings live in `localStorage` key `bantu-a11y` and are applied as `data-*` attributes on `<html>`.
    - Pages: `/barrierefreiheit/` (statement + feedback) and `/einfache-sprache/` (easy read) – keep both up to date when content changes.

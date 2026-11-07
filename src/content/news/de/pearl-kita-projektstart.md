@@ -10,4 +10,4 @@ Am 29. Oktober 2026 haben Bantu e.V. und unsere ugandische Partnerorganisation A
 
 Der Montessori-orientierte Kindergarten in Namuwongo bietet 60 Kindern von drei bis sechs Jahren einen gebührenfreien Platz mit täglicher warmer Mahlzeit. Sechs lokale Erzieher*innen werden fortgebildet. Das Projekt läuft bis Ende März 2027 und wird aus dem EZ-Kleinprojektefonds der Stiftung Nord-Süd-Brücken gefördert.
 
-Bantu e.V. bringt für das Projekt einen Eigenanteil von 1.390 Euro auf – jede Spende mit dem Verwendungszweck „Pearl Kita“ hilft.
+Bantu e.V. bringt für das Projekt einen Eigenanteil von 1.390 Euro auf. Jede Spende mit dem Verwendungszweck „Pearl Kita“ hilft.

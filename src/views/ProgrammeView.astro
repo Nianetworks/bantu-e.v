@@ -5,13 +5,15 @@ import Base from '../layouts/Base.astro';
 import PageHead from '../components/PageHead.astro';
 import ProjectCard from '../components/ProjectCard.astro';
 import Icon from '../components/Icon.astro';
+import SdgIcons from '../components/SdgIcons.astro';
 import { r, ui, projectPath, type Lang } from '../i18n';
 import { getProjects, slugOf, type Project } from '../lib/content';
-import { programmes, management, trusteeships, programmePath, regions, regionPath, type ProgrammeKey } from '../data/programmes';
+import { programmes, management, trusteeships, programmePath, regions, regionPath, regionProgrammePath, type ProgrammeKey } from '../data/programmes';
 
 interface Props { lang: Lang; programme?: ProgrammeKey; mode?: 'overview' | 'programme' | 'all' }
 const { lang, programme, mode = 'programme' } = Astro.props;
 const de = lang === 'de';
+const fr = lang === 'fr';
 const t = ui[lang];
 const all = await getProjects(lang);
 const bySlug = new Map(all.map((p) => [slugOf(p.id), p]));
@@ -29,24 +31,24 @@ const prev = idx > 0 ? programmes[idx - 1] : null;
 const next = idx >= 0 && idx < programmes.length - 1 ? programmes[idx + 1] : null;
 
 const other: Lang = de ? 'en' : 'de';
-const title = mode === 'all' ? t.allProjects : mode === 'overview' ? (de ? 'Programme & Projekte' : 'Programmes & projects') : prog!.title[lang];
+const title = mode === 'all' ? t.allProjects : mode === 'overview' ? (de ? 'Programme & Projekte' : fr ? 'Programmes et projets' : 'Programmes & projects') : prog!.title[lang];
 const altHref = mode === 'all' ? r('projects', other) : mode === 'overview' ? r('programmes', other) : programmePath(other, prog!.key);
-const crumbs = mode === 'overview' ? [] : [{ label: de ? 'Programme' : 'Programmes', href: r('programmes', lang) }];
+const crumbs = mode === 'overview' ? [] : [{ label: de ? 'Programme' : fr ? 'Programmes' : 'Programmes', href: r('programmes', lang) }];
 const lead = mode === 'all'
-  ? (de ? 'Alle laufenden und abgeschlossenen Projekte von Bantu e.V. – geordnet nach unseren Programmen, in Uganda, Burundi und Deutschland.' : 'All ongoing and completed projects of Bantu e.V. – organised by programme, in Uganda, Burundi and Germany.')
+  ? (de ? 'Alle laufenden und abgeschlossenen Projekte von Bantu e.V., geordnet nach unseren Programmen, in Uganda, Burundi und Deutschland.' : fr ? 'Tous les projets en cours et terminés de Bantu e.V., classés par programme, en Ouganda, au Burundi et en Allemagne.' : 'All ongoing and completed projects of Bantu e.V., organised by programme, in Uganda, Burundi and Germany.')
   : mode === 'overview'
-    ? (de ? 'Unsere Arbeit gliedert sich in fünf Programme, getragen von einem gemeinsamen Rahmen für Steuerung und Qualität. Alle folgen dem Ubuntu-Gedanken: Ich bin, weil wir sind.' : 'Our work is organised in five programmes, held together by a shared framework for management and quality. All of them follow the idea of Ubuntu: I am because we are.')
+    ? (de ? 'Unsere Arbeit gliedert sich in fünf Programme, getragen von einem gemeinsamen Rahmen für Steuerung und Qualität. Alle folgen dem Ubuntu-Gedanken: Ich bin, weil wir sind.' : fr ? 'Notre travail est organisé en cinq programmes, reliés par un cadre commun de pilotage et de qualité. Tous suivent l’idée d’Ubuntu : je suis parce que nous sommes.' : 'Our work is organised in five programmes, held together by a shared framework for management and quality. All of them follow the idea of Ubuntu: I am because we are.')
     : prog!.lead[lang];
 const sponsorId = de ? 'traegerschaften' : 'fiscal-sponsorship';
 ---
 <Base lang={lang} title={title} description={lead} altHref={altHref}>
-  <PageHead lang={lang} title={title} lead={lead} crumbs={crumbs} eyebrow={mode === 'programme' ? `${de ? 'Programm' : 'Programme'} ${prog!.no}` : undefined} />
+  <PageHead lang={lang} title={title} lead={lead} crumbs={crumbs} eyebrow={mode === 'programme' ? `${de ? 'Programm' : fr ? 'Programme' : 'Programme'} ${prog!.no}` : undefined} />
 
   {mode === 'overview' && (
     <>
       <section class="section section--tight" aria-labelledby="h-areas">
         <div class="wrap">
-          <h2 id="h-areas" class="h3">{de ? 'Nach Arbeitsbereich' : 'By area of work'}</h2>
+          <h2 id="h-areas" class="h3">{de ? 'Nach Arbeitsbereich' : fr ? 'Par domaine d’action' : 'By area of work'}</h2>
           <div class="grid grid--2">
             {regions.map((rg) => (
               <a class={`area-link area-link--${rg.key}`} href={regionPath(lang, rg.key)}>
@@ -60,7 +62,7 @@ const sponsorId = de ? 'traegerschaften' : 'fiscal-sponsorship';
       </section>
       <section class="section section--tight" aria-labelledby="h-progs">
         <div class="wrap">
-          <h2 id="h-progs" class="h3">{de ? 'Unsere Programme' : 'Our programmes'}</h2>
+          <h2 id="h-progs" class="h3">{de ? 'Unsere Programme' : fr ? 'Nos programmes' : 'Our programmes'}</h2>
           <ol class="prog-grid">
             {programmes.map((p) => {
               const items = projectsOf(p.key);
@@ -69,29 +71,29 @@ const sponsorId = de ? 'traegerschaften' : 'fiscal-sponsorship';
                 <li class={`prog-card accent--${p.accent}`}>
                   <div class="prog-card__top">
                     <span class="icon-badge"><Icon name={p.icon} /></span>
-                    <span class="prog-card__no">{de ? 'Programm' : 'Programme'} {p.no}</span>
+                    <span class="prog-card__no">{de ? 'Programm' : fr ? 'Programme' : 'Programme'} {p.no}</span>
                   </div>
                   <h3><a href={programmePath(lang, p.key)}>{p.title[lang]}</a></h3>
                   <p class="prog-card__short">{p.short[lang]}</p>
-                  <p class="small muted">{running} {de ? 'laufend' : 'ongoing'} · {items.length} {de ? 'Projekte' : 'projects'}</p>
-                  <p class="prog-card__regions">{regions.filter((rg) => items.some((x) => x.data.programme === rg.key) || p.services?.some((sv) => sv.region === rg.key)).map((rg) => <a class="tag" href={`${regionPath(lang, rg.key)}#${p.key}`}>{rg.title[lang]}</a>)}</p>
+                  <p class="small muted">{running} {de ? 'laufend' : fr ? 'en cours' : 'ongoing'} · {items.length} {de ? 'Projekte' : fr ? 'projets' : 'projects'}</p>
+                  <p class="prog-card__regions">{regions.filter((rg) => items.some((x) => x.data.programme === rg.key) || p.services?.some((sv) => sv.region === rg.key)).map((rg) => <a class="tag" href={regionProgrammePath(lang, rg.key, p.key)}>{rg.title[lang]}</a>)}</p>
                   <ul class="prog-card__list">
                     {items.map((x) => <li><a href={projectPath(lang, slugOf(x.id))}>{x.data.title}</a></li>)}
                     {p.services?.map((s) => <li class="muted">{s.title[lang]}</li>)}
                   </ul>
-                  <a class="link-arrow prog-card__more" href={programmePath(lang, p.key)} aria-hidden="true" tabindex="-1">{de ? 'Zum Programm' : 'View programme'}</a>
+                  <a class="link-arrow prog-card__more" href={programmePath(lang, p.key)} aria-hidden="true" tabindex="-1">{de ? 'Zum Programm' : fr ? 'Voir le programme' : 'View programme'}</a>
                 </li>
               );
             })}
             <li class="prog-card prog-card--mgmt">
               <div class="prog-card__top">
                 <span class="icon-badge"><Icon name="chart" /></span>
-                <span class="prog-card__no">{de ? 'Programm' : 'Programme'} {management.no}</span>
+                <span class="prog-card__no">{de ? 'Programm' : fr ? 'Programme' : 'Programme'} {management.no}</span>
               </div>
               <h3>{management.title[lang]}</h3>
               <p class="prog-card__short">{management.lead[lang]}</p>
               <ul class="prog-card__list prog-card__list--plain">{management.items[lang].map((i) => <li>{i}</li>)}</ul>
-              <a class="link-arrow" href={r('reports', lang)}>{de ? 'Transparenz und Berichte' : 'Transparency and reports'}</a>
+              <a class="link-arrow" href={r('reports', lang)}>{de ? 'Transparenz und Berichte' : fr ? 'Transparence et rapports' : 'Transparency and reports'}</a>
             </li>
           </ol>
         </div>
@@ -101,9 +103,9 @@ const sponsorId = de ? 'traegerschaften' : 'fiscal-sponsorship';
         <div class="wrap">
           <div class="section-head">
             <div>
-              <div class="eyebrow">{de ? 'Trägerschaften' : 'Fiscal sponsorship'}</div>
-              <h2 id={`${sponsorId}-h`}>{de ? 'Wir ermöglichen Initiativen' : 'We enable initiatives'}</h2>
-              <p>{de ? 'Als Trägerverein stellen wir jungen Initiativen unsere Gemeinnützigkeit, Verwaltung und Erfahrung zur Verfügung – von der Beantragung und Verwaltung der Fördermittel bis zur Abrechnung –, bis sie eigenständig arbeiten können.' : 'As a fiscal sponsor we lend young initiatives our charitable status, administration and experience – from applying for and managing grants to financial reporting – until they can work independently.'}</p>
+              <div class="eyebrow">{de ? 'Trägerschaften' : fr ? 'Portage d’initiatives' : 'Fiscal sponsorship'}</div>
+              <h2 id={`${sponsorId}-h`}>{de ? 'Wir ermöglichen Initiativen' : fr ? 'Nous rendons des initiatives possibles' : 'We enable initiatives'}</h2>
+              <p>{de ? 'Als Trägerverein stellen wir jungen Initiativen unsere Gemeinnützigkeit, Verwaltung und Erfahrung zur Verfügung, von der Beantragung und Verwaltung der Fördermittel bis zur Abrechnung, bis sie eigenständig arbeiten können.' : fr ? 'En tant qu’association porteuse, nous mettons à la disposition de jeunes initiatives notre statut d’intérêt général, notre administration et notre expérience, de la demande et la gestion des subventions jusqu’au décompte final, jusqu’à ce qu’elles puissent travailler de façon autonome.' : 'As a fiscal sponsor we lend young initiatives our charitable status, administration and experience, from applying for and managing grants to financial reporting, until they can work independently.'}</p>
             </div>
           </div>
           <div class="grid grid--2">
@@ -112,7 +114,7 @@ const sponsorId = de ? 'traegerschaften' : 'fiscal-sponsorship';
                 <p class="small muted">{ts.place} · {ts.period[lang]}</p>
                 <h3><a href={ts.url} rel="noopener">{ts.name}</a></h3>
                 <p>{ts.text[lang]}</p>
-                <h4 class="sponsor__h">{de ? 'Projekte unter unserer Trägerschaft' : 'Projects under our sponsorship'}</h4>
+                <h4 class="sponsor__h">{de ? 'Projekte unter unserer Trägerschaft' : fr ? 'Projets portés par nous' : 'Projects under our sponsorship'}</h4>
                 <ul>{ts.projects[lang].map((x) => <li>{x}</li>)}</ul>
               </article>
             ))}
@@ -133,9 +135,12 @@ const sponsorId = de ? 'traegerschaften' : 'fiscal-sponsorship';
       <section class="section section--tight">
         <div class="wrap focus-row">
           <div class={`panel focus accent--${prog.accent}`}>
-            <h2 class="h3">{de ? 'Schwerpunkte' : 'Focus areas'}</h2>
+            <h2 class="h3">{de ? 'Schwerpunkte' : fr ? 'Axes principaux' : 'Focus areas'}</h2>
             <ul>{prog.focus[lang].map((f) => <li>{f}</li>)}</ul>
-            <p class="small muted">{de ? 'Beitrag zu den Nachhaltigkeitszielen (SDG)' : 'Contribution to the Sustainable Development Goals (SDG)'}: {prog.sdgs.join(', ')}</p>
+            <h3 class="sdg-h">{de ? 'Beitrag zu den Nachhaltigkeitszielen' : fr ? 'Contribution aux objectifs de développement durable' : 'Contribution to the Sustainable Development Goals'}</h3>
+            <SdgIcons lang={lang} goals={prog.sdgs} size="sm" />
+            <h3 class="sdg-h">{de ? 'Dieses Programm in unseren Arbeitsbereichen' : fr ? 'Ce programme dans nos domaines d’action' : 'This programme in our areas of work'}</h3>
+            <p class="region-links">{regions.filter((rg) => list.some((x) => x.data.programme === rg.key) || prog.services?.some((sv) => sv.region === rg.key)).map((rg) => <a class="btn btn--outline" href={regionProgrammePath(lang, rg.key, prog.key)}>{rg.title[lang]}: {prog.title[lang]}</a>)}</p>
           </div>
           {prog.services?.map((s) => (
             <div class="panel service">
@@ -149,7 +154,7 @@ const sponsorId = de ? 'traegerschaften' : 'fiscal-sponsorship';
       {active.length > 0 && (
         <section class="section section--tight">
           <div class="wrap">
-            <h2>{de ? 'Laufende Projekte' : 'Current projects'}</h2>
+            <h2>{de ? 'Laufende Projekte' : fr ? 'Projets en cours' : 'Current projects'}</h2>
             <div class="grid grid--3">{active.map((p) => <ProjectCard lang={lang} project={p} />)}</div>
           </div>
         </section>
@@ -157,16 +162,16 @@ const sponsorId = de ? 'traegerschaften' : 'fiscal-sponsorship';
       {done.length > 0 && (
         <section class="section section--alt">
           <div class="wrap">
-            <h2>{de ? 'Abgeschlossene Projekte' : 'Completed projects'}</h2>
+            <h2>{de ? 'Abgeschlossene Projekte' : fr ? 'Projets terminés' : 'Completed projects'}</h2>
             <div class="grid grid--3">{done.map((p) => <ProjectCard lang={lang} project={p} />)}</div>
           </div>
         </section>
       )}
-      <nav class="section section--tight" aria-label={de ? 'Weitere Programme' : 'More programmes'}>
+      <nav class="section section--tight" aria-label={de ? 'Weitere Programme' : fr ? 'Autres programmes' : 'More programmes'}>
         <div class="wrap pager">
-          {prev ? <a class="pager__link" href={programmePath(lang, prev.key)}><span class="small muted">← {de ? 'Programm' : 'Programme'} {prev.no}</span><strong>{prev.title[lang]}</strong></a> : <span></span>}
-          <a class="pager__link pager__link--mid" href={r('programmes', lang)}><strong>{de ? 'Alle Programme' : 'All programmes'}</strong></a>
-          {next ? <a class="pager__link pager__link--end" href={programmePath(lang, next.key)}><span class="small muted">{de ? 'Programm' : 'Programme'} {next.no} →</span><strong>{next.title[lang]}</strong></a> : <span></span>}
+          {prev ? <a class="pager__link" href={programmePath(lang, prev.key)}><span class="small muted">← {de ? 'Programm' : fr ? 'Programme' : 'Programme'} {prev.no}</span><strong>{prev.title[lang]}</strong></a> : <span></span>}
+          <a class="pager__link pager__link--mid" href={r('programmes', lang)}><strong>{de ? 'Alle Programme' : fr ? 'Tous les programmes' : 'All programmes'}</strong></a>
+          {next ? <a class="pager__link pager__link--end" href={programmePath(lang, next.key)}><span class="small muted">{de ? 'Programm' : fr ? 'Programme' : 'Programme'} {next.no} →</span><strong>{next.title[lang]}</strong></a> : <span></span>}
         </div>
       </nav>
     </>
@@ -181,10 +186,10 @@ const sponsorId = de ? 'traegerschaften' : 'fiscal-sponsorship';
             <div class="wrap">
               <div class="section-head">
                 <div>
-                  <div class="eyebrow">{de ? 'Programm' : 'Programme'} {p.no}</div>
+                  <div class="eyebrow">{de ? 'Programm' : fr ? 'Programme' : 'Programme'} {p.no}</div>
                   <h2 id={`h-${p.key}`}>{p.title[lang]}</h2>
                 </div>
-                <a class="link-arrow" href={programmePath(lang, p.key)}>{de ? 'Zum Programm' : 'View programme'}</a>
+                <a class="link-arrow" href={programmePath(lang, p.key)}>{de ? 'Zum Programm' : fr ? 'Voir le programme' : 'View programme'}</a>
               </div>
               <div class="grid grid--3">{items.map((x) => <ProjectCard lang={lang} project={x} />)}</div>
             </div>
@@ -194,7 +199,7 @@ const sponsorId = de ? 'traegerschaften' : 'fiscal-sponsorship';
       {unassigned.length > 0 && (
         <section class="section section--tight">
           <div class="wrap">
-            <h2>{de ? 'Weitere Projekte' : 'More projects'}</h2>
+            <h2>{de ? 'Weitere Projekte' : fr ? 'Autres projets' : 'More projects'}</h2>
             <div class="grid grid--3">{unassigned.map((x) => <ProjectCard lang={lang} project={x} />)}</div>
           </div>
         </section>
@@ -250,4 +255,6 @@ const sponsorId = de ? 'traegerschaften' : 'fiscal-sponsorship';
   .pager__link--mid { align-items: center; }
   .pager__link--end { text-align: right; align-items: flex-end; }
   @media (max-width: 720px) { .pager { grid-template-columns: 1fr; } .pager__link--end { text-align: left; align-items: flex-start; } .pager > span:empty { display: none; } }
+  .sdg-h { font-size: 1rem; margin: 1.25rem 0 .6rem; }
+  .region-links { display: flex; flex-wrap: wrap; gap: .5rem; margin: 0; }
 </style>

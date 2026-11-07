@@ -1,0 +1,48 @@
+---
+title: "Racines fortes : jardin d’enfants Pearl à Kampala"
+subtitle: "Là où les petites racines deviennent fortes : un jardin d’enfants d’inspiration Montessori pour des enfants défavorisés"
+summary: "Avec notre partenaire ABI, nous ouvrons à Kampala-Namuwongo un jardin d’enfants gratuit pour 60 enfants de familles à faibles revenus."
+code: "P 26/230"
+programme: international
+status: active
+country: "Ouganda"
+location: "Kampala, division de Makindye, Namuwongo"
+period: "01.10.2026–31.03.2027"
+start: 2026-10-01
+end: 2027-03-31
+partners: ["Anchored Bridges Initiatives (ABI), Kampala, anciennement Ability Beyond the Iris"]
+funders: ["Stiftung Nord-Süd-Brücken (fonds pour petits projets) avec des fonds du BMZ"]
+fundingLogos:
+  - { src: "/funders/nord-sued-bruecken.svg", alt: "Stiftung Nord-Süd-Brücken", width: 170 }
+  - { src: "/funders/bmz-logo.png", alt: "Ministère fédéral allemand de la Coopération économique et du Développement", width: 190 }
+sdgs: [4, 5, 10]
+stats:
+  - { value: "60", label: "enfants de 3 à 6 ans, dont au moins la moitié de filles" }
+  - { value: "6", label: "éducatrices et éducateurs locaux formés" }
+  - { value: "0 €", label: "de frais pendant toute la durée du financement" }
+photoBrief: "Salle de groupe avec du matériel Montessori, éducatrices en formation. Enfants uniquement sans visage reconnaissable ou avec l’accord des parents"
+featured: true
+order: 1
+---
+
+En Ouganda, l’éducation de la petite enfance ne fait pas partie du système public gratuit. Pour les familles des quartiers pauvres de Namuwongo et Kisugu à Kampala, une bonne place en jardin d’enfants est le plus souvent inaccessible, en particulier pour les mères seules et les mères qui travaillent.
+
+Avec notre partenaire ougandais **Anchored Bridges Initiatives (ABI)**, nous soutenons la création du **jardin d’enfants Pearl à Kampala** : un jardin d’enfants à but non lucratif, d’inspiration Montessori, guidé par la phrase *« Aide-moi à faire seul »*, avec un enseignement bilingue (allemand et anglais), une pédagogie de la nature et une politique de protection de l’enfance contraignante, conforme au cadre national ougandais pour le développement de la petite enfance.
+
+## Ce que fait le projet
+
+- **60 enfants** de trois à six ans issus de familles à faibles revenus reçoivent une **place gratuite** pendant toute la durée du financement, dont au moins 50 % de filles et au moins cinq places pour des enfants en situation de handicap.
+- Chaque enfant reçoit **chaque jour un repas chaud avec des fruits**.
+- **Six éducatrices et éducateurs locaux** sont formés aux bases de la pédagogie Montessori, à la protection de l’enfance, à l’hygiène et aux premiers secours.
+- Des locaux loués avec trois salles de groupe et une cuisine sont aménagés pour les jeunes enfants ; une paroisse voisine met gratuitement à disposition l’espace de jeux extérieur. Il n’y a pas de travaux de construction.
+- Le fonctionnement est assuré pendant les cinq premiers mois après l’ouverture. Ensuite, une **grille de tarifs sociale** fait vivre le jardin d’enfants sans exclure les familles les plus pauvres.
+
+Le jardin d’enfants Pearl est la première étape du campus éducatif qu’ABI prévoit à Kampala, de la petite enfance à la formation professionnelle.
+
+## Notre partenaire
+
+ABI a été fondée en 2017 sous le nom *Ability Beyond the Iris* par des Ougandaises et Ougandais engagés pour l’égalité des chances des personnes marginalisées. En 2026, l’organisation a pris le nom **Anchored Bridges Initiatives**, pour montrer son passage d’un travail centré sur le handicap à un développement communautaire global. Bantu e.V. et ABI travaillent ensemble depuis 2021.
+
+## Comment aider
+
+Bantu e.V. apporte **1 390 €** de fonds propres à ce projet. Chaque don avec le motif **« Pearl Kita »** nous aide à les réunir.

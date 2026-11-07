@@ -1,5 +1,5 @@
 ---
-title: "Youth Eco Project – Eco-Entrepreneurship"
+title: "Youth Eco Project: Eco-Entrepreneurship"
 subtitle: "European cooperation on green entrepreneurship for young people (Erasmus+)"
 summary: "As implementing partner for Germany we co-hosted the Youth Eco Conference 2024 in Berlin."
 programme: inland
@@ -20,4 +20,4 @@ order: 24
 
 The European cooperation project **Youth Eco Project** set out to empower young people for green entrepreneurship. It was coordinated by Aspire Education Group GmbH; Bantu e.V. was the implementing partner for Germany.
 
-The highlight was the **Youth Eco Conference on 18 October 2024** at Berlin Global Village – together with partners from six European countries.
+The highlight was the **Youth Eco Conference on 18 October 2024** at Berlin Global Village, together with partners from six European countries.

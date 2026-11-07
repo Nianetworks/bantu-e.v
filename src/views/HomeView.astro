@@ -6,7 +6,7 @@ import Placeholder from '../components/Placeholder.astro';
 import Icon from '../components/Icon.astro';
 import HeroSlideshow from '../components/HeroSlideshow.astro';
 import { programmes, programmePath, regions, regionPath } from '../data/programmes';
-import { funders, partnersNorth, partnersSouth } from '../data/people';
+import { funders, orgLogo, partnersNorth, partnersSouth } from '../data/people';
 import { href, r, projectPath, ui, type Lang } from '../i18n';
 import { getEvents, getNews, getProjects } from '../lib/content';
 import { impact } from '../data/impact';
@@ -15,6 +15,7 @@ import { org } from '../data/site';
 interface Props { lang: Lang }
 const { lang } = Astro.props;
 const de = lang === 'de';
+const fr = lang === 'fr';
 const t = ui[lang];
 const projects = await getProjects(lang);
 const featured = projects.filter((p) => p.data.featured && p.data.status === 'active').slice(0, 4);
@@ -22,33 +23,33 @@ const { upcoming } = await getEvents(lang);
 const news = (await getNews(lang)).filter((n) => n.data.type !== 'event').slice(0, 3);
 const spotlight = [...upcoming.slice(0, 2), ...news].slice(0, 3);
 const quick = [
-  { icon: 'globe', label: de ? 'Projekte entdecken' : 'Explore projects', text: de ? `${projects.length} Projekte in Uganda, Burundi und Berlin` : `${projects.length} projects in Uganda, Burundi and Berlin`, href: r('projects', lang) },
-  { icon: 'calendar', label: de ? 'Termine' : 'Events', text: upcoming[0] ? upcoming[0].data.title : (de ? 'Workshops und Begegnungen' : 'Workshops and encounters'), href: r('events', lang) },
-  { icon: 'heart', label: t.donate, text: de ? 'Mit Zuwendungsbestätigung' : 'With donation receipt', href: r('donate', lang) },
-  { icon: 'hand', label: de ? 'Mitmachen' : 'Get involved', text: de ? 'Mitglied, Ehrenamt, Kooperation' : 'Membership, volunteering, partnerships', href: r('join', lang) },
+  { icon: 'globe', label: de ? 'Projekte entdecken' : fr ? 'Découvrir les projets' : 'Explore projects', text: de ? `${projects.length} Projekte in Uganda, Burundi und Berlin` : fr ? `${projects.length} projets en Ouganda, au Burundi et à Berlin` : `${projects.length} projects in Uganda, Burundi and Berlin`, href: r('projects', lang) },
+  { icon: 'calendar', label: de ? 'Termine' : fr ? 'Événements' : 'Events', text: upcoming[0] ? upcoming[0].data.title : (de ? 'Workshops und Begegnungen' : fr ? 'Ateliers et rencontres' : 'Workshops and encounters'), href: r('events', lang) },
+  { icon: 'heart', label: t.donate, text: de ? 'Mit Zuwendungsbestätigung' : fr ? 'Avec reçu fiscal' : 'With donation receipt', href: r('donate', lang) },
+  { icon: 'hand', label: de ? 'Mitmachen' : fr ? 'S’engager' : 'Get involved', text: de ? 'Mitglied, Ehrenamt, Kooperation' : fr ? 'Adhésion, bénévolat, partenariats' : 'Membership, volunteering, partnerships', href: r('join', lang) },
 ] as const;
 ---
 <Base lang={lang} title={org.shortName} altHref={r('home', de ? 'en' : 'de')}>
   <section class="hero hero--photo" aria-labelledby="hero-title">
     <div class="wrap hero__grid">
       <div class="hero__text">
-        <p class="hero__kicker">{de ? 'Gemeinnütziger Verein · Berlin · seit 2019' : 'Non-profit association · Berlin · since 2019'}</p>
-        <h1 id="hero-title">{de ? <>Ich bin, weil <span class="hl">wir</span> sind.</> : <>I am because <span class="hl">we</span> are.</>}</h1>
+        <p class="hero__kicker">{de ? 'Gemeinnütziger Verein · Berlin · seit 2019' : fr ? 'Association d’intérêt général · Berlin · depuis 2019' : 'Non-profit association · Berlin · since 2019'}</p>
+        <h1 id="hero-title">{de ? <><span class="hl">Gemeinsam</span> bauen wir nachhaltige und selbstbestimmte Gemeinschaften.</> : fr ? <><span class="hl">Ensemble</span>, nous bâtissons des communautés durables et autonomes.</> : <><span class="hl">Together</span>, We Build Sustainable and Empowered Communities.</>}</h1>
         <p class="hero__lead">
           {de
-            ? 'Bantu e.V. verbindet Menschen in Berlin und in der Region der Großen Seen Ostafrikas. Mit Partnerorganisationen in Uganda und Burundi schaffen wir Zugang zu Bildung, Wasser und Teilhabe – und setzen uns in Deutschland für globale Gerechtigkeit und Dekolonisierung ein.'
-            : 'Bantu e.V. connects people in Berlin and the Great Lakes region of East Africa. With partner organisations in Uganda and Burundi we create access to education, water and participation – and in Germany we work for global justice and decolonisation.'}
+            ? 'Bantu e.V. verbindet Menschen in Berlin und in der Region der Großen Seen Ostafrikas. Mit Partnerorganisationen in Uganda und Burundi schaffen wir Zugang zu Bildung, Wasser und Teilhabe, und setzen uns in Deutschland für globale Gerechtigkeit und Dekolonisierung ein.'
+            : fr ? 'Bantu e.V. relie des personnes à Berlin et dans la région des Grands Lacs d’Afrique de l’Est. Avec nos organisations partenaires en Ouganda et au Burundi, nous ouvrons l’accès à l’éducation, à l’eau et à la participation, et en Allemagne nous agissons pour la justice globale et la décolonisation.' : 'Bantu e.V. connects people in Berlin and the Great Lakes region of East Africa. With partner organisations in Uganda and Burundi we create access to education, water and participation, and in Germany we work for global justice and decolonisation.'}
         </p>
         <div class="btn-row">
-          <a class="btn btn--gold" href={r('programmes', lang)}>{de ? 'Unsere Arbeit' : 'Our work'} <Icon name="arrow" /></a>
-          <a class="btn btn--ghost" href={r('donate', lang)}><Icon name="heart" /> {de ? 'Jetzt spenden' : 'Donate now'}</a>
+          <a class="btn btn--gold" href={r('programmes', lang)}>{de ? 'Unsere Arbeit' : fr ? 'Notre travail' : 'Our work'} <Icon name="arrow" /></a>
+          <a class="btn btn--ghost" href={r('donate', lang)}><Icon name="heart" /> {de ? 'Jetzt spenden' : fr ? 'Faire un don' : 'Donate now'}</a>
         </div>
       </div>
       <HeroSlideshow lang={lang} />
     </div>
   </section>
 
-  <nav class="quick" aria-label={de ? 'Schnellzugriff' : 'Quick links'}>
+  <nav class="quick" aria-label={de ? 'Schnellzugriff' : fr ? 'Accès rapide' : 'Quick links'}>
     <div class="wrap quick__grid">
       {quick.map((q) => (
         <a class="quick__item" href={q.href}>
@@ -64,8 +65,8 @@ const quick = [
       <div class="wrap">
         <div class="section-head">
           <div>
-            <div class="eyebrow">{de ? 'Aktuell & demnächst' : 'News & upcoming'}</div>
-            <h2 id="h-news">{de ? 'Was gerade passiert' : 'What’s happening'}</h2>
+            <div class="eyebrow">{de ? 'Aktuell & demnächst' : fr ? 'Actualités et agenda' : 'News & upcoming'}</div>
+            <h2 id="h-news">{de ? 'Was gerade passiert' : fr ? 'Ce qui se passe' : 'What’s happening'}</h2>
           </div>
           <div class="btn-row">
             <a class="link-arrow" href={r('events', lang)}>{t.allEvents}</a>
@@ -83,8 +84,8 @@ const quick = [
     <div class="wrap">
       <div class="section-head">
         <div>
-          <div class="eyebrow">{de ? 'Wo wir arbeiten' : 'Where we work'}</div>
-          <h2 id="h-regions">{de ? 'Zwei Arbeitsbereiche, ein Netzwerk' : 'Two areas of work, one network'}</h2>
+          <div class="eyebrow">{de ? 'Wo wir arbeiten' : fr ? 'Où nous travaillons' : 'Where we work'}</div>
+          <h2 id="h-regions">{de ? 'Zwei Arbeitsbereiche, ein Netzwerk' : fr ? 'Deux domaines, un seul réseau' : 'Two areas of work, one network'}</h2>
         </div>
       </div>
       <div class="grid grid--2 regions">
@@ -95,10 +96,10 @@ const quick = [
             <article class="region">
               <img src={href(rg.image)} alt="" loading="lazy" width="800" height="533" />
               <div class="region__body">
-                <p class="region__meta">{rg.places[lang]} · {progCount} {de ? 'Programme' : 'programmes'} · {items.length} {de ? 'Projekte' : 'projects'}</p>
+                <p class="region__meta">{rg.places[lang]} · {progCount} {de ? 'Programme' : fr ? 'programmes' : 'programmes'} · {items.length} {de ? 'Projekte' : fr ? 'projets' : 'projects'}</p>
                 <h3><a href={regionPath(lang, rg.key)}>{de && rg.key === 'international' ? 'Internationale Zusammenarbeit' : rg.title[lang]}</a></h3>
                 <p>{rg.lead[lang]}</p>
-                <span class="link-arrow" aria-hidden="true">{de ? 'Mehr erfahren' : 'Learn more'}</span>
+                <span class="link-arrow" aria-hidden="true">{de ? 'Mehr erfahren' : fr ? 'En savoir plus' : 'Learn more'}</span>
               </div>
             </article>
           );
@@ -111,11 +112,11 @@ const quick = [
     <div class="wrap">
       <div class="section-head">
         <div>
-          <div class="eyebrow">{de ? 'Programme' : 'Programmes'}</div>
-          <h2 id="h-prog">{de ? 'Fünf Programme, ein Gedanke' : 'Five programmes, one idea'}</h2>
-          <p>{de ? 'Wir arbeiten dort, wo wir verwurzelt sind: mit Partnerorganisationen in Uganda und Burundi und mit Communities, Schulen und Initiativen in Deutschland.' : 'We work where we have roots: with partner organisations in Uganda and Burundi and with communities, schools and initiatives in Germany.'}</p>
+          <div class="eyebrow">{de ? 'Programme' : fr ? 'Programmes' : 'Programmes'}</div>
+          <h2 id="h-prog">{de ? 'Fünf Programme, ein Gedanke' : fr ? 'Cinq programmes, une idée' : 'Five programmes, one idea'}</h2>
+          <p>{de ? 'Wir arbeiten dort, wo wir verwurzelt sind: mit Partnerorganisationen in Uganda und Burundi und mit Communities, Schulen und Initiativen in Deutschland.' : fr ? 'Nous travaillons là où nous avons des racines : avec des organisations partenaires en Ouganda et au Burundi, et avec des communautés, des écoles et des initiatives en Allemagne.' : 'We work where we have roots: with partner organisations in Uganda and Burundi and with communities, schools and initiatives in Germany.'}</p>
         </div>
-        <a class="link-arrow" href={r('programmes', lang)}>{de ? 'Alle Programme' : 'All programmes'}</a>
+        <a class="link-arrow" href={r('programmes', lang)}>{de ? 'Alle Programme' : fr ? 'Tous les programmes' : 'All programmes'}</a>
       </div>
       <ul class="prog-row">
         {programmes.map((p) => {
@@ -123,7 +124,7 @@ const quick = [
           return (
             <li class={`prog prog--${p.accent}`}>
               <span class="icon-badge"><Icon name={p.icon} /></span>
-              <p class="prog__count">{de ? 'Programm' : 'Programme'} {p.no}{running > 0 && <> · {running} {de ? 'laufend' : 'ongoing'}</>}</p>
+              <p class="prog__count">{de ? 'Programm' : fr ? 'Programme' : 'Programme'} {p.no}{running > 0 && <> · {running} {de ? 'laufend' : fr ? 'en cours' : 'ongoing'}</>}</p>
               <h3><a href={programmePath(lang, p.key)}>{p.title[lang]}</a></h3>
               <p>{p.short[lang]}</p>
             </li>
@@ -137,10 +138,10 @@ const quick = [
     <div class="wrap">
       <div class="section-head">
         <div>
-          <div class="eyebrow">{de ? 'Wirkung' : 'Impact'}</div>
-          <h2 id="h-impact">{de ? 'Was wir gemeinsam erreicht haben' : 'What we have achieved together'}</h2>
+          <div class="eyebrow">{de ? 'Wirkung' : fr ? 'Impact' : 'Impact'}</div>
+          <h2 id="h-impact">{de ? 'Was wir gemeinsam erreicht haben' : fr ? 'Ce que nous avons accompli ensemble' : 'What we have achieved together'}</h2>
         </div>
-        <a class="link-arrow on-deep" href={r('impact', lang)}>{de ? 'Alle Erfolgsgeschichten' : 'All success stories'}</a>
+        <a class="link-arrow on-deep" href={r('impact', lang)}>{de ? 'Alle Erfolgsgeschichten' : fr ? 'Toutes les réussites' : 'All success stories'}</a>
       </div>
       <ul class="stat-grid impact-list">
         {impact.map((s) => (
@@ -160,8 +161,8 @@ const quick = [
     <div class="wrap">
       <div class="section-head">
         <div>
-          <div class="eyebrow">{de ? 'Laufende Projekte' : 'Current projects'}</div>
-          <h2 id="h-proj">{de ? 'Woran wir gerade arbeiten' : 'What we are working on'}</h2>
+          <div class="eyebrow">{de ? 'Laufende Projekte' : fr ? 'Projets en cours' : 'Current projects'}</div>
+          <h2 id="h-proj">{de ? 'Woran wir gerade arbeiten' : fr ? 'Ce sur quoi nous travaillons' : 'What we are working on'}</h2>
         </div>
         <a class="link-arrow" href={r('projects', lang)}>{t.allProjects}</a>
       </div>
@@ -174,15 +175,15 @@ const quick = [
   <section class="section section--alt" aria-labelledby="h-story">
     <div class="wrap story">
       <div class="story__media">
-        <Placeholder lang={lang} label={de ? 'Absolventinnen mit Zertifikaten, Ausbildung im Salon (mit Einverständnis)' : 'Graduates with certificates, training in the salon (with consent)'} ratio="4 / 3" tone="gold" icon="star" />
+        <Placeholder lang={lang} label={de ? 'Absolventinnen mit Zertifikaten, Ausbildung im Salon (mit Einverständnis)' : fr ? 'Diplômées avec leurs certificats, formation au salon (avec consentement)' : 'Graduates with certificates, training in the salon (with consent)'} ratio="4 / 3" tone="gold" icon="star" />
       </div>
       <div>
-        <div class="eyebrow">{de ? 'Erfolgsgeschichte' : 'Success story'}</div>
-        <h2 id="h-story">{de ? '18 Zertifikate, 7 Arbeitsplätze, viel Mut' : '18 certificates, 7 jobs, a lot of courage'}</h2>
-        <p class="lead">{de ? 'An der Msingi School in Mbarara haben 18 junge Frauen ihre Ausbildung in Friseurhandwerk und Kosmetik abgeschlossen – sieben wurden direkt von ihren Praktikumsbetrieben eingestellt.' : 'At Msingi School in Mbarara, 18 young women completed their training in hairdressing and cosmetology – seven were hired directly by their placement businesses.'}</p>
+        <div class="eyebrow">{de ? 'Erfolgsgeschichte' : fr ? 'Une réussite' : 'Success story'}</div>
+        <h2 id="h-story">{de ? '18 Zertifikate, 7 Arbeitsplätze, viel Mut' : fr ? '18 certificats, 7 emplois, beaucoup de courage' : '18 certificates, 7 jobs, a lot of courage'}</h2>
+        <p class="lead">{de ? 'An der Msingi School in Mbarara haben 18 junge Frauen ihre Ausbildung in Friseurhandwerk und Kosmetik abgeschlossen. Sieben wurden direkt von ihren Praktikumsbetrieben eingestellt.' : fr ? 'À la Msingi School de Mbarara, 18 jeunes femmes ont terminé leur formation en coiffure et esthétique. Sept ont été embauchées directement par les entreprises où elles avaient fait leur stage.' : 'At Msingi School in Mbarara, 18 young women completed their training in hairdressing and cosmetology. Seven were hired directly by their placement businesses.'}</p>
         <div class="btn-row">
-          <a class="btn btn--dark" href={projectPath(lang, 'p24-200-msingi-school')}>{de ? 'Geschichte lesen' : 'Read the story'}</a>
-          <a class="link-arrow" href={r('impact', lang)}>{de ? 'Weitere Erfolgsgeschichten' : 'More success stories'}</a>
+          <a class="btn btn--dark" href={projectPath(lang, 'p24-200-msingi-school')}>{de ? 'Geschichte lesen' : fr ? 'Lire l’histoire' : 'Read the story'}</a>
+          <a class="link-arrow" href={r('impact', lang)}>{de ? 'Weitere Erfolgsgeschichten' : fr ? 'Autres réussites' : 'More success stories'}</a>
         </div>
       </div>
     </div>
@@ -192,30 +193,30 @@ const quick = [
     <div class="wrap">
       <div class="section-head">
         <div>
-          <div class="eyebrow">{de ? 'Unterstützen' : 'Support'}</div>
-          <h2 id="h-support">{de ? 'Werden Sie Teil davon' : 'Become part of it'}</h2>
+          <div class="eyebrow">{de ? 'Unterstützen' : fr ? 'Soutenir' : 'Support'}</div>
+          <h2 id="h-support">{de ? 'Werden Sie Teil davon' : fr ? 'Rejoignez-nous' : 'Become part of it'}</h2>
         </div>
       </div>
       <div class="grid grid--4">
         <article class="support">
           <span class="icon-badge"><Icon name="heart" /></span>
           <h3><a href={r('donate', lang)}>{t.donate}</a></h3>
-          <p>{de ? 'Jeder Betrag hilft – wir stellen Zuwendungsbestätigungen aus.' : 'Every amount helps – we issue donation receipts.'}</p>
+          <p>{de ? 'Jeder Betrag hilft. Wir stellen Zuwendungsbestätigungen aus.' : fr ? 'Chaque montant aide. Nous délivrons des reçus fiscaux.' : 'Every amount helps. We issue donation receipts.'}</p>
         </article>
         <article class="support">
           <span class="icon-badge"><Icon name="people" /></span>
-          <h3><a href={r('join', lang, '#membership')}>{de ? 'Mitglied werden' : 'Become a member'}</a></h3>
-          <p>{de ? 'Ab 5 € im Monat (ermäßigt 2,50 €) – mit Stimme im Verein.' : 'From €5 a month (reduced €2.50) – with a vote in the association.'}</p>
+          <h3><a href={r('join', lang, '#membership')}>{de ? 'Mitglied werden' : fr ? 'Devenir membre' : 'Become a member'}</a></h3>
+          <p>{de ? 'Ab 5 € im Monat (ermäßigt 2,50 €), mit Stimme im Verein.' : fr ? 'Dès 5 € par mois (tarif réduit 2,50 €), avec droit de vote dans l’association.' : 'From €5 a month (reduced €2.50), with a vote in the association.'}</p>
         </article>
         <article class="support">
           <span class="icon-badge"><Icon name="hand" /></span>
-          <h3><a href={r('join', lang, '#volunteer')}>{de ? 'Ehrenamtlich mitmachen' : 'Volunteer'}</a></h3>
-          <p>{de ? 'Bei Veranstaltungen, Übersetzungen, Social Media oder Fundraising – in Berlin oder online.' : 'At events, with translation, social media or fundraising – in Berlin or online.'}</p>
+          <h3><a href={r('join', lang, '#volunteer')}>{de ? 'Ehrenamtlich mitmachen' : fr ? 'Bénévolat' : 'Volunteer'}</a></h3>
+          <p>{de ? 'Bei Veranstaltungen, Übersetzungen, Social Media oder Fundraising, in Berlin oder online.' : fr ? 'Lors d’événements, pour des traductions, sur les réseaux sociaux ou pour la collecte de fonds, à Berlin ou en ligne.' : 'At events, with translation, social media or fundraising, in Berlin or online.'}</p>
         </article>
         <article class="support">
           <span class="icon-badge"><Icon name="bag" /></span>
           <h3><a href={r('shop', lang)}>Shop</a></h3>
-          <p>{de ? 'Spendengeschenke, bald auch Abantu Coffee und Merchandise.' : 'Gift donations, soon also Abantu Coffee and merchandise.'}</p>
+          <p>{de ? 'Spendengeschenke, bald auch Abantu Coffee und Merchandise.' : fr ? 'Dons-cadeaux, bientôt aussi le café Abantu et des articles à notre image.' : 'Gift donations, soon also Abantu Coffee and merchandise.'}</p>
         </article>
       </div>
     </div>
@@ -225,12 +226,12 @@ const quick = [
     <div class="wrap access-band">
       <span class="icon-badge icon-badge--lg"><Icon name="access" /></span>
       <div>
-        <h2 id="h-access">{de ? 'Eine Website für alle' : 'A website for everyone'}</h2>
+        <h2 id="h-access">{de ? 'Eine Website für alle' : fr ? 'Un site pour tout le monde' : 'A website for everyone'}</h2>
         <p>{de
           ? 'Schrift vergrößern, hoher Kontrast, dunkle Ansicht, gut lesbare Schrift oder Seite vorlesen lassen: Über „Barrierefreiheit“ oben auf jeder Seite passen Sie die Darstellung an. Wichtige Informationen gibt es auch in Einfacher Sprache.'
-          : 'Bigger text, high contrast, dark mode, an easy-to-read font or having the page read aloud: use “Accessibility” at the top of every page to adjust the display. Key information is also available in easy read.'}</p>
+          : fr ? 'Texte plus grand, contraste élevé, mode sombre, police facile à lire ou lecture à voix haute : utilisez « Accessibilité » en haut de chaque page pour adapter l’affichage. Les informations essentielles existent aussi en langage facile.' : 'Bigger text, high contrast, dark mode, an easy-to-read font or having the page read aloud: use “Accessibility” at the top of every page to adjust the display. Key information is also available in easy read.'}</p>
         <div class="btn-row">
-          <button type="button" class="btn btn--dark" data-a11y-toggle aria-expanded="false" aria-controls="a11y-panel"><Icon name="access" /> {de ? 'Darstellung anpassen' : 'Adjust display'}</button>
+          <button type="button" class="btn btn--dark" data-a11y-toggle aria-expanded="false" aria-controls="a11y-panel"><Icon name="access" /> {de ? 'Darstellung anpassen' : fr ? 'Adapter l’affichage' : 'Adjust display'}</button>
           <a class="btn btn--outline" href={r('easy', lang)}><Icon name="easy" /> {t.easy}</a>
         </div>
       </div>
@@ -241,17 +242,23 @@ const quick = [
     <div class="wrap">
       <div class="section-head">
         <div>
-          <div class="eyebrow">{de ? 'Danke' : 'Thank you'}</div>
-          <h2 id="h-partners">{de ? 'Unsere Arbeit wird gefördert von' : 'Our work is supported by'}</h2>
+          <div class="eyebrow">{de ? 'Danke' : fr ? 'Merci' : 'Thank you'}</div>
+          <h2 id="h-partners">{de ? 'Unsere Arbeit wird gefördert von' : fr ? 'Notre travail est soutenu par' : 'Our work is supported by'}</h2>
         </div>
-        <a class="link-arrow" href={r('people', lang, de ? '#foerderer' : '#funders')}>{de ? 'Alle Partner und Förderer' : 'All partners and funders'}</a>
+        <a class="link-arrow" href={r('people', lang, de ? '#foerderer' : '#funders')}>{de ? 'Alle Partner und Förderer' : fr ? 'Tous les partenaires et bailleurs' : 'All partners and funders'}</a>
       </div>
       <ul class="logo-strip">
         {funders.filter((f) => f.logo).map((f) => (
           <li><a href={f.url} rel="noopener"><img src={href(f.logo!)} alt={f.name[lang]} loading="lazy" /></a></li>
         ))}
       </ul>
-      <p class="partners-line"><strong>{de ? 'Partnerorganisationen:' : 'Partner organisations:'}</strong> {[...partnersSouth, ...partnersNorth].filter((o) => o.url).map((o, i) => <>{i > 0 && ' · '}<a href={o.url} rel="noopener">{o.name}</a></>)}</p>
+      <h3 class="logo-h">{de ? 'Wir arbeiten zusammen mit' : fr ? 'Nous travaillons avec' : 'We work together with'}</h3>
+      <ul class="logo-strip logo-strip--partners">
+        {[...partnersSouth, ...partnersNorth].filter((o) => o.logo && o.url).map((o) => (
+          <li><a class={o.logoDark ? 'is-dark' : ''} href={o.url} rel="noopener"><img src={href(orgLogo(o, lang)!)} alt={o.name} loading="lazy" /></a></li>
+        ))}
+      </ul>
+      <p class="partners-line">{de ? 'Außerdem: ' : fr ? 'Également : ' : 'Also: '}{[...partnersSouth, ...partnersNorth].filter((o) => !o.logo).map((o, i) => <>{i > 0 && ' · '}{o.url ? <a href={o.url} rel="noopener">{o.name}</a> : o.name}</>)}</p>
     </div>
   </section>
 </Base>
@@ -262,7 +269,7 @@ const quick = [
   .hero--photo .hero__grid { min-height: clamp(340px, 46vh, 520px); }
   .hero__grid { display: grid; grid-template-columns: 1.2fr .8fr; gap: clamp(2rem, 5vw, 4rem); align-items: center; }
   .hero__kicker { font-weight: 700; letter-spacing: .14em; text-transform: uppercase; font-size: .85rem; color: #ffd34d; margin-bottom: 1rem; }
-  .hero h1 { color: #fff; font-size: clamp(2.7rem, 6.4vw, 5rem); max-width: 13ch; margin-bottom: .4em; }
+  .hero h1 { color: #fff; font-size: clamp(2.2rem, 4.8vw, 3.9rem); max-width: 19ch; margin-bottom: .45em; line-height: 1.1; }
   .hl { color: #ffd34d; text-decoration: underline; text-decoration-color: rgba(254,191,0,.5); text-decoration-thickness: .08em; text-underline-offset: .12em; }
   .hero__lead { font-size: clamp(1.1rem, 1.6vw, 1.3rem); color: #e8e3d6; max-width: 58ch; margin-bottom: 1.8rem; }
   .btn--ghost { border-color: rgba(255,255,255,.75); color: #fff; background: transparent; }
@@ -345,6 +352,8 @@ const quick = [
   .logo-strip li { margin: 0; }
   .logo-strip a { display: grid; place-items: center; height: 88px; padding: .7rem 1rem; background: #fff; border: 1px solid var(--line); border-radius: 14px; }
   .logo-strip a:hover { box-shadow: var(--shadow); }
+  .logo-strip a.is-dark { background: #2b1d16; border-color: #2b1d16; }
+  .logo-h { font-size: 1.1rem; margin: 0 0 .9rem; }
   .logo-strip img { max-width: 100%; max-height: 60px; width: auto; height: auto; object-fit: contain; }
   .partners-line { margin: 0; color: var(--ink-2); line-height: 1.8; }
   .partners-line a { color: var(--ink); text-underline-offset: .18em; }

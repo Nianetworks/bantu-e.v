@@ -2,7 +2,7 @@
 title: "„Erde, Saat und Erbe“: Dekolonisierung im Klassenzimmer"
 date: 2026-09-01
 type: news
-summary: "Unser neues BIKO-Projekt bringt Stampflehm, Saatgut und koloniale Spuren in Berliner Schulen – in Kooperation mit AfricAvenir International e.V."
+summary: "Unser neues BIKO-Projekt bringt Stampflehm, Saatgut und koloniale Spuren in Berliner Schulen, in Kooperation mit AfricAvenir International e.V."
 project: p26-224-erde-saat-erbe
 ---
 

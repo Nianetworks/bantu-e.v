@@ -10,12 +10,15 @@ location: "Ruziba, Bujumbura"
 period: "seit September 2026"
 start: 2026-09-01
 partners: ["Women Initiative Against Vulnerability for Harm Reduction (WIV-HR), Burundi"]
-funders: ["Stiftung Nord-Süd-Brücken (EZ-Kleinprojektefonds)"]
+funders: ["Stiftung Nord-Süd-Brücken (EZ-Kleinprojektefonds) mit Mitteln des BMZ"]
+fundingLogos:
+  - { src: "/funders/nord-sued-bruecken.svg", alt: "Stiftung Nord-Süd-Brücken", width: 170 }
+  - { src: "/funders/bmz-logo.png", alt: "Bundesministerium für wirtschaftliche Zusammenarbeit und Entwicklung", width: 190 }
 sdgs: [3, 6]
 stats:
   - { value: "150", label: "Haushalte als direkte Zielgruppe" }
   - { value: "≈ 900", label: "Menschen mit sauberem Trinkwasser" }
-  - { value: "5.000 l", label: "Hochbehälter – Wasserabgabe ohne Strom" }
+  - { value: "5.000 l", label: "Hochbehälter: Wasserabgabe ohne Strom" }
 photoBrief: "Bohrstelle und Hochbehälter in Ruziba, Menschen an der Zapfstelle (mit Einverständnis)"
 featured: true
 order: 2
@@ -23,15 +26,15 @@ sources:
   - "04_Fundraising…/2026/SNSB/02_Eingereichte_Vollanträge/P 26-186_…/02.09.2026/…/P 26-186_WasserRUZIBA_ProjektantragTeilB_DE_unterschrieben.pdf"
 ---
 
-Burundi gehört zu den ärmsten Ländern der Welt. Rund um die Hauptstadt Bujumbura sind seit den 2010er-Jahren schnell neue Wohnviertel entstanden, deren Trinkwasserbedarf nicht gedeckt ist. Viele Bewohner*innen von Ruziba müssen das stark verschmutzte Wasser des nahegelegenen Flusses Mugere nutzen – mit Folgen wie Cholera, Ruhr und anderen durch Wasser übertragenen Krankheiten, die besonders Kinder gefährden.
+Burundi gehört zu den ärmsten Ländern der Welt. Rund um die Hauptstadt Bujumbura sind seit den 2010er-Jahren schnell neue Wohnviertel entstanden, deren Trinkwasserbedarf nicht gedeckt ist. Viele Bewohner*innen von Ruziba müssen das stark verschmutzte Wasser des nahegelegenen Flusses Mugere nutzen, mit Folgen wie Cholera, Ruhr und anderen durch Wasser übertragenen Krankheiten, die besonders Kinder gefährden.
 
 ## Die Lösung
 
 Gemeinsam mit unserer burundischen Partnerorganisation **WIV-HR** entsteht eine nachhaltige Trinkwasserversorgung:
 
 - eine **Bohrung mit solarbetriebener Pumpe**,
-- ein **Hochbehälter mit 5.000 Litern** auf einem 6 Meter hohen Stahlturm – das Wasser fließt per Schwerkraft zu **drei Zapfstellen** und ist damit unabhängig von Strom,
-- ausgelegt auf rund **13,5 m³ pro Tag**: 15 Liter pro Person und Tag für etwa 900 Menschen – das entspricht dem WHO-Mindeststandard für die häusliche Grundversorgung.
+- ein **Hochbehälter mit 5.000 Litern** auf einem 6 Meter hohen Stahlturm: das Wasser fließt per Schwerkraft zu **drei Zapfstellen** und ist damit unabhängig von Strom,
+- ausgelegt auf rund **13,5 m³ pro Tag**: 15 Liter pro Person und Tag für etwa 900 Menschen. Das entspricht dem WHO-Mindeststandard für die häusliche Grundversorgung.
 
 Die messbaren Ziele beziehen sich auf **150 registrierte Haushalte (ca. 900 Personen)**. Die Zone Ruziba umfasst insgesamt rund 1.500 Haushalte; die Anlage steht im Rahmen ihrer Kapazität auch weiteren Bewohner*innen offen. Ein kleines monatliches Nutzungsentgelt der Haushalte finanziert Wartung und Reparaturen, damit die Anlage dauerhaft läuft.
 

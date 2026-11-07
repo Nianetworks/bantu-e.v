@@ -1,7 +1,7 @@
 ---
-title: "Royal College Namugongo – Schulgeld und Rampen"
+title: "Royal College Namugongo: Schulgeld und Rampen"
 subtitle: "Bildungschancen für Kinder aus armen Familien und ein barrierefreier Zugang zur Schule"
-summary: "Gemeinsam mit unserer Partnerorganisation ABI haben wir Schulgeld für Kinder aus armen Familien übernommen – und mit Spenden des Wilhelm-Remy-Gymnasiums Bendorf Rampen für einen barrierefreien Schulzugang gebaut."
+summary: "Gemeinsam mit unserer Partnerorganisation ABI haben wir Schulgeld für Kinder aus armen Familien übernommen, und mit Spenden des Wilhelm-Remy-Gymnasiums Bendorf Rampen für einen barrierefreien Schulzugang gebaut."
 programme: international
 status: completed
 country: "Uganda"
@@ -21,12 +21,12 @@ sources:
   - "wrg-online.de/englisch (Uganda-Kooperation)"
 ---
 
-Das **Royal College Namugongo** ist eine Schule in Namugongo bei Kampala. Viele Familien in der Umgebung können das Schulgeld nicht aufbringen – und für Kinder, die einen Rollstuhl oder Gehhilfen nutzen, waren Klassenräume über Stufen kaum erreichbar.
+Das **Royal College Namugongo** ist eine Schule in Namugongo bei Kampala. Viele Familien in der Umgebung können das Schulgeld nicht aufbringen, und für Kinder, die einen Rollstuhl oder Gehhilfen nutzen, waren Klassenräume über Stufen kaum erreichbar.
 
 ## Was wir gemacht haben
 
 - **Schulgeld:** Über unsere Partnerorganisation ABI (damals „Ability Beyond the Iris“, heute Anchored Bridges Initiatives) haben wir Schulgeld für Kinder aus armen Familien übernommen, damit sie weiter zur Schule gehen konnten.
-- **Rampen:** Mit Spenden unserer Partnerschule in Bendorf wurden am Royal College Rampen gebaut – für einen barrierefreien Zugang zu den Schulgebäuden.
+- **Rampen:** Mit Spenden unserer Partnerschule in Bendorf wurden am Royal College Rampen gebaut, für einen barrierefreien Zugang zu den Schulgebäuden.
 
 <!-- OPEN: Anzahl der unterstützten Kinder, Zeitraum der Schulgeldförderung und Kosten der Rampen bestätigen. -->
 

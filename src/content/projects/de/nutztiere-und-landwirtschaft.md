@@ -1,5 +1,5 @@
 ---
-title: "Nutztiere & Landwirtschaft – Einkommen aus eigener Kraft"
+title: "Nutztiere & Landwirtschaft: Einkommen aus eigener Kraft"
 subtitle: "Ziegen und andere Nutztiere für Frauenkooperativen und Selbstvertretungen von Menschen mit Behinderung"
 summary: "Frauenkooperativen und Organisationen von Menschen mit Behinderung erhalten Ziegen und andere Nutztiere, züchten sie weiter und bauen so selbstverwaltete, dauerhafte Einkommen auf."
 programme: international
@@ -19,7 +19,7 @@ Wer ein eigenes Einkommen hat, kann selbst entscheiden. Mit dieser Initiative st
 ## So funktioniert es
 
 1. Die Gruppen erhalten **Ziegen und andere Nutztiere**.
-2. Sie halten und **züchten die Tiere weiter** – Nachwuchs kann verkauft oder an weitere Mitglieder weitergegeben werden.
+2. Sie halten und **züchten die Tiere weiter**: Nachwuchs kann verkauft oder an weitere Mitglieder weitergegeben werden.
 3. Aus dem Verkauf und der Nachzucht entsteht ein **eigenes Einkommen**, das die Gruppen selbst verwalten.
 
 So wächst aus einer einmaligen Unterstützung eine dauerhafte, selbstverwaltete Lebensgrundlage.

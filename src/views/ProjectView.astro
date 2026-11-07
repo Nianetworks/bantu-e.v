@@ -3,16 +3,18 @@ import Base from '../layouts/Base.astro';
 import PageHead from '../components/PageHead.astro';
 import Placeholder from '../components/Placeholder.astro';
 import FundingNote from '../components/FundingNote.astro';
+import SdgIcons from '../components/SdgIcons.astro';
 import ProjectCard from '../components/ProjectCard.astro';
 import NewsCard from '../components/NewsCard.astro';
 import { render } from 'astro:content';
 import { href, projectPath, r, ui, type Lang } from '../i18n';
 import { getNews, getProjects, slugOf, type Project } from '../lib/content';
-import { programmeOfProject, programmePath, regions, regionPath } from '../data/programmes';
+import { programmeOfProject, programmePath, regions, regionPath, regionProgrammePath } from '../data/programmes';
 
 interface Props { lang: Lang; project: Project; hasAlt: boolean }
 const { lang, project, hasAlt } = Astro.props;
 const de = lang === 'de';
+const fr = lang === 'fr';
 const t = ui[lang];
 const d = project.data;
 const slug = slugOf(project.id);
@@ -27,7 +29,7 @@ const donateRef = slug.includes('pearl') ? 'Pearl Kita' : slug.includes('ruziba'
 ---
 <Base lang={lang} title={d.title} description={d.summary} altHref={hasAlt ? projectPath(otherLang, slug) : undefined} image={d.image}>
   <PageHead lang={lang} title={d.title} lead={d.subtitle} eyebrow={prog ? prog.title[lang] : t.programme[d.programme]}
-    crumbs={[{ label: de ? 'Programme' : 'Programmes', href: r('programmes', lang) }, ...(prog ? [{ label: prog.title[lang], href: programmePath(lang, prog.key) }] : [])]}>
+    crumbs={[{ label: regions.find((rg) => rg.key === d.programme)!.title[lang], href: regionPath(lang, d.programme) }, ...(prog ? [{ label: prog.title[lang], href: regionProgrammePath(lang, d.programme, prog.key) }] : [])]}>
     <div class="head-tags">
       <span class={`tag tag--${d.status}`}><span class="dot" aria-hidden="true"></span>{t.projectStatus[d.status]}</span>
       <span class="tag">{d.country}</span>
@@ -54,26 +56,26 @@ const donateRef = slug.includes('pearl') ? 'Pearl Kita' : slug.includes('ruziba'
       </div>
       <aside class="project__side">
         <div class="panel">
-          <h2 class="side-title">{de ? 'Auf einen Blick' : 'At a glance'}</h2>
+          <h2 class="side-title">{de ? 'Auf einen Blick' : fr ? 'En bref' : 'At a glance'}</h2>
           <dl class="facts">
-            <dt>{de ? 'Arbeitsbereich' : 'Area of work'}</dt><dd><a href={regionPath(lang, d.programme)}>{regions.find((rg) => rg.key === d.programme)!.title[lang]}</a></dd>
-            {prog && <><dt>{de ? 'Programm' : 'Programme'}</dt><dd><a href={programmePath(lang, prog.key)}>{prog.title[lang]}</a></dd></>}
+            <dt>{de ? 'Arbeitsbereich' : fr ? 'Domaine d’action' : 'Area of work'}</dt><dd><a href={regionPath(lang, d.programme)}>{regions.find((rg) => rg.key === d.programme)!.title[lang]}</a></dd>
+            {prog && <><dt>{de ? 'Programm' : fr ? 'Programme' : 'Programme'}</dt><dd><a href={regionProgrammePath(lang, d.programme, prog.key)}>{prog.title[lang]}</a></dd></>}
             <dt>{t.period}</dt><dd>{d.period}</dd>
-            {d.implementer && <><dt>{de ? 'Umsetzung' : 'Implemented by'}</dt><dd>{d.implementer}{d.fiscalSponsorship && <> ({de ? 'Bantu e.V. als Trägerverein' : 'Bantu e.V. as fiscal sponsor'})</>}</dd></>}
+            {d.implementer && <><dt>{de ? 'Umsetzung' : fr ? 'Mis en œuvre par' : 'Implemented by'}</dt><dd>{d.implementer}{d.fiscalSponsorship && <> ({de ? 'Bantu e.V. als Trägerverein' : fr ? 'Bantu e.V. comme association porteuse' : 'Bantu e.V. as fiscal sponsor'})</>}</dd></>}
             {d.location && <><dt>{t.location}</dt><dd>{d.location}</dd></>}
             <dt>{t.country}</dt><dd>{d.country}</dd>
             {d.code && <><dt>{t.code}</dt><dd>{d.code}</dd></>}
             {d.partners.length > 0 && <><dt>{t.partners}</dt><dd><ul>{d.partners.map((p) => <li>{p}</li>)}</ul></dd></>}
             {d.funders.length > 0 && <><dt>{t.funders}</dt><dd><ul>{d.funders.map((f) => <li>{f}</li>)}</ul></dd></>}
-            {d.sdgs.length > 0 && <><dt>{t.sdgs}</dt><dd class="sdgs">{d.sdgs.map((n) => <span class="sdg">SDG {n}</span>)}</dd></>}
+            {d.sdgs.length > 0 && <><dt>{t.sdgs}</dt><dd class="sdgs"><SdgIcons lang={lang} goals={d.sdgs} size="sm" /></dd></>}
           </dl>
         </div>
         {d.status !== 'completed' && (
           <div class="panel side-cta">
-            <h2 class="side-title">{de ? 'Projekt unterstützen' : 'Support this project'}</h2>
+            <h2 class="side-title">{de ? 'Projekt unterstützen' : fr ? 'Soutenir ce projet' : 'Support this project'}</h2>
             <p>{donateRef
-              ? (de ? `Spenden Sie mit dem Verwendungszweck „${donateRef}“.` : `Donate with the reference “${donateRef}”.`)
-              : (de ? 'Ihre Spende hilft uns, Eigenanteile aufzubringen und Angebote kostenfrei zu halten.' : 'Your donation helps us raise our own contributions and keep our offers free of charge.')}</p>
+              ? (de ? `Spenden Sie mit dem Verwendungszweck „${donateRef}“.` : fr ? `Faites un don avec le motif « ${donateRef} ».` : `Donate with the reference “${donateRef}”.`)
+              : (de ? 'Ihre Spende hilft uns, Eigenanteile aufzubringen und Angebote kostenfrei zu halten.' : fr ? 'Votre don nous aide à réunir notre part de financement et à garder nos offres gratuites.' : 'Your donation helps us raise our own contributions and keep our offers free of charge.')}</p>
             <a class="btn btn--gold" href={r('donate', lang)}>{t.donate}</a>
           </div>
         )}
@@ -88,7 +90,7 @@ const donateRef = slug.includes('pearl') ? 'Pearl Kita' : slug.includes('ruziba'
   {news.length > 0 && (
     <section class="section section--tight">
       <div class="wrap">
-        <h2>{de ? 'Neuigkeiten aus dem Projekt' : 'News from this project'}</h2>
+        <h2>{de ? 'Neuigkeiten aus dem Projekt' : fr ? 'Actualités de ce projet' : 'News from this project'}</h2>
         <div class="grid grid--3">{news.map((n) => <NewsCard lang={lang} item={n} />)}</div>
       </div>
     </section>
@@ -97,7 +99,7 @@ const donateRef = slug.includes('pearl') ? 'Pearl Kita' : slug.includes('ruziba'
   {related.length > 0 && (
     <section class="section section--alt">
       <div class="wrap">
-        <h2>{de ? 'Weitere Projekte im Programm' : 'More projects in this programme'}</h2>
+        <h2>{de ? 'Weitere Projekte im Programm' : fr ? 'Autres projets de ce programme' : 'More projects in this programme'}</h2>
         <div class="grid grid--3">{related.map((p) => <ProjectCard lang={lang} project={p} />)}</div>
       </div>
     </section>
@@ -115,8 +117,7 @@ const donateRef = slug.includes('pearl') ? 'Pearl Kita' : slug.includes('ruziba'
   .facts dt { font-weight: 600; font-size: .82rem; color: var(--muted); margin-top: .6rem; }
   .facts dd { margin: 0; font-size: .95rem; }
   .facts ul { margin: 0; padding-left: 1rem; }
-  .sdgs { display: flex; flex-wrap: wrap; gap: .35rem; }
-  .sdg { background: var(--ink); color: var(--bg); border-radius: 6px; padding: .1rem .45rem; font-size: .78rem; font-weight: 700; }
+  .sdgs { margin-top: .35rem; }
   .side-cta { background: var(--gold-soft); border-color: #e9cf72; }
   .side-cta p { font-size: .95rem; }
   @media (max-width: 960px) { .project { grid-template-columns: 1fr; } .project__side { position: static; } }

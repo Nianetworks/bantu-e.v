@@ -1,7 +1,7 @@
 ---
-title: "Royal College Namugongo – School Fees and Ramps"
+title: "Royal College Namugongo: School Fees and Ramps"
 subtitle: "Education for children from poor families and step-free access to school"
-summary: "Together with our partner ABI we covered school fees for children from poor families – and, with donations from the Wilhelm-Remy-Gymnasium in Bendorf, built ramps for step-free access to the school."
+summary: "Together with our partner ABI we covered school fees for children from poor families, and, with donations from the Wilhelm-Remy-Gymnasium in Bendorf, built ramps for step-free access to the school."
 programme: international
 status: completed
 country: "Uganda"
@@ -17,12 +17,12 @@ photoBrief: "Ramp at the entrance of a Royal College Namugongo building (childre
 order: 14
 ---
 
-**Royal College Namugongo** is a school in Namugongo near Kampala. Many families in the area cannot afford school fees – and for children using a wheelchair or walking aids, classrooms reached by steps were hard to access.
+**Royal College Namugongo** is a school in Namugongo near Kampala. Many families in the area cannot afford school fees. And for children using a wheelchair or walking aids, classrooms reached by steps were hard to access.
 
 ## What we did
 
 - **School fees:** Through our partner organisation ABI (formerly “Ability Beyond the Iris”, now Anchored Bridges Initiatives) we covered school fees for children from poor families so they could stay in school.
-- **Ramps:** With donations from our partner school in Bendorf, ramps were built at Royal College – for step-free access to the school buildings.
+- **Ramps:** With donations from our partner school in Bendorf, ramps were built at Royal College, for step-free access to the school buildings.
 
 ## Partnership with the Wilhelm-Remy-Gymnasium Bendorf
 

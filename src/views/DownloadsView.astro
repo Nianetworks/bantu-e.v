@@ -7,11 +7,12 @@ import { downloads, groups } from '../data/downloads';
 interface Props { lang: Lang }
 const { lang } = Astro.props;
 const de = lang === 'de';
+const fr = lang === 'fr';
 const title = 'Downloads';
-const lead = de ? 'Berichte, Formulare, Flyer und Logos von Bantu e.V.' : 'Reports, forms, flyers and logos of Bantu e.V.';
+const lead = de ? 'Berichte, Formulare, Flyer und Logos von Bantu e.V.' : fr ? 'Rapports, formulaires, dépliants et logos de Bantu e.V.' : 'Reports, forms, flyers and logos of Bantu e.V.';
 ---
 <Base lang={lang} title={title} description={lead} altHref={r('downloads', de ? 'en' : 'de')}>
-  <PageHead lang={lang} title={title} lead={lead} crumbs={[{ label: de ? 'Wirkung' : 'Impact', href: r('impact', lang) }]} />
+  <PageHead lang={lang} title={title} lead={lead} crumbs={[{ label: de ? 'Wirkung' : fr ? 'Impact' : 'Impact', href: r('impact', lang) }]} />
   <section class="section section--tight">
     <div class="wrap dl-groups">
       {groups.map((g) => (
@@ -31,7 +32,7 @@ const lead = de ? 'Berichte, Formulare, Flyer und Logos von Bantu e.V.' : 'Repor
           </ul>
         </section>
       ))}
-      <div class="notice notice--info">{de ? 'Sie suchen ein Dokument, das hier fehlt (z. B. Satzung oder Freistellungsbescheid)? Schreiben Sie uns an info@bantu-ev.org.' : 'Looking for a document that is not listed (e.g. statutes or tax exemption notice)? Write to info@bantu-ev.org.'}</div>
+      <div class="notice notice--info">{de ? 'Sie suchen ein Dokument, das hier fehlt (z. B. Satzung oder Freistellungsbescheid)? Schreiben Sie uns an info@bantu-ev.org.' : fr ? 'Vous cherchez un document qui ne figure pas ici (par exemple les statuts ou l’avis d’exonération) ? Écrivez à info@bantu-ev.org.' : 'Looking for a document that is not listed (e.g. statutes or tax exemption notice)? Write to info@bantu-ev.org.'}</div>
     </div>
   </section>
 </Base>

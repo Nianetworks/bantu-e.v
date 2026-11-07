@@ -9,11 +9,12 @@ import { features, org } from '../data/site';
 interface Props { lang: Lang; product: Product }
 const { lang, product: p } = Astro.props;
 const de = lang === 'de';
+const fr = lang === 'fr';
 const t = ui[lang];
 const cat = categories.find((c) => c.id === p.category)!;
 const canBuy = features.shopCheckoutOpen && p.status === 'available' && !!p.checkoutUrl;
 const isGift = p.category === 'gifts';
-const mail = `mailto:${org.email}?subject=${encodeURIComponent((de ? 'Vormerken: ' : 'Reserve: ') + p.name[lang])}`;
+const mail = `mailto:${org.email}?subject=${encodeURIComponent((de ? 'Vormerken: ' : fr ? 'Réserver : ' : 'Reserve: ') + p.name[lang])}`;
 ---
 <Base lang={lang} title={p.name[lang]} description={p.short[lang]} altHref={productPath(de ? 'en' : 'de', p.slug)}>
   <PageHead lang={lang} title={p.name[lang]} lead={p.short[lang]} crumbs={[{ label: 'Shop', href: r('shop', lang) }, { label: cat.name[lang], href: r('shop', lang, `#${cat.id}`) }]} />
@@ -29,12 +30,12 @@ const mail = `mailto:${org.email}?subject=${encodeURIComponent((de ? 'Vormerken:
           <dl class="kv">{p.details.map((d) => <><dt>{d.label[lang]}</dt><dd>{d.value[lang]}</dd></>)}</dl>
         )}
         <div class="btn-row" style="margin-top:1.5rem">
-          {isGift && <a class="btn btn--gold" href={r('donate', lang, `?ref=${encodeURIComponent(p.donationReference ?? '')}`)}>{de ? 'Jetzt spenden' : 'Donate now'}</a>}
+          {isGift && <a class="btn btn--gold" href={r('donate', lang, `?ref=${encodeURIComponent(p.donationReference ?? '')}`)}>{de ? 'Jetzt spenden' : fr ? 'Faire un don' : 'Donate now'}</a>}
           {!isGift && canBuy && <a class="btn btn--gold" href={p.checkoutUrl} rel="noopener">{t.buy}</a>}
           {!isGift && !canBuy && <a class="btn btn--dark" href={mail}>{t.notify}</a>}
-          {p.project && <a class="btn btn--outline" href={projectPath(lang, p.project)}>{de ? 'Zum Projekt' : 'About the project'}</a>}
+          {p.project && <a class="btn btn--outline" href={projectPath(lang, p.project)}>{de ? 'Zum Projekt' : fr ? 'À propos du projet' : 'About the project'}</a>}
         </div>
-        {isGift && p.donationReference && <p class="small muted" style="margin-top:1rem">{de ? 'Verwendungszweck' : 'Payment reference'}: <strong>{p.donationReference}</strong></p>}
+        {isGift && p.donationReference && <p class="small muted" style="margin-top:1rem">{de ? 'Verwendungszweck' : fr ? 'Motif du paiement' : 'Payment reference'}: <strong>{p.donationReference}</strong></p>}
         {!isGift && !canBuy && <p class="notice" style="margin-top:1.25rem">{t.shopClosedNote}</p>}
       </div>
     </div>

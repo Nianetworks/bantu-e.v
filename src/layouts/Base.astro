@@ -3,7 +3,8 @@ import '../styles/global.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import AnnouncementBar from '../components/AnnouncementBar.astro';
-import { href, ui, type Lang } from '../i18n';
+import { href, languages, r, ui, type Lang } from '../i18n';
+import { alternatesFor } from '../lib/alternates';
 import { org } from '../data/site';
 
 interface Props {
@@ -17,12 +18,15 @@ interface Props {
 }
 const { lang, title, description, altHref, image, noindex } = Astro.props;
 const t = ui[lang];
-const fullTitle = title === org.shortName ? `${org.shortName} – ${org.tagline[lang]}` : `${title} | ${org.shortName}`;
+const fullTitle = title === org.shortName ? `${org.shortName} | ${org.tagline[lang]}` : `${title} | ${org.shortName}`;
 const desc = description ?? t.footerAbout;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const ogImage = new URL(href(image ?? '/brand/og-default.jpg'), Astro.site);
-const otherLang: Lang = lang === 'de' ? 'en' : 'de';
-const alt = altHref ? new URL(altHref, Astro.site) : null;
+// Same page in the other languages (computed centrally; altHref is only a fallback for the other of DE/EN).
+const alts = await alternatesFor(Astro.url.pathname);
+if (altHref && lang !== 'fr') alts[lang === 'de' ? 'en' : 'de'] ??= altHref;
+const hreflangs = languages.filter((l) => alts[l]).map((l) => ({ l, url: new URL(alts[l]!, Astro.site) }));
+const switchLinks = languages.map((l) => ({ lang: l, href: l === lang ? Astro.url.pathname : alts[l] ?? r('home', l), exact: !!alts[l] }));
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'NGO',
@@ -31,7 +35,7 @@ const jsonLd = {
   url: org.web,
   logo: new URL(href('/brand/bantu-logo.png'), Astro.site).toString(),
   email: org.email,
-  telephone: org.phone,
+  telephone: org.officePhone,
   foundingDate: String(org.founded),
   address: { '@type': 'PostalAddress', streetAddress: org.address.street, postalCode: org.address.zip, addressLocality: org.address.city, addressCountry: 'DE' },
   sameAs: org.socials.map((s) => s.url),
@@ -42,7 +46,7 @@ const prefsScript = `try{var p=JSON.parse(localStorage.getItem('bantu-a11y')||'{
 const extScript = `document.querySelectorAll('main a[href^="http"]').forEach(function(a){if(a.host!==location.host){a.target='_blank';a.rel='noopener';if(!a.querySelector('.sr-only')){var s=document.createElement('span');s.className='sr-only';s.textContent=' ${t.newWindow}';a.appendChild(s)}}})`;
 ---
 <!doctype html>
-<html lang={lang === 'de' ? 'de' : 'en'}>
+<html lang={lang}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -50,30 +54,30 @@ const extScript = `document.querySelectorAll('main a[href^="http"]').forEach(fun
     <title>{fullTitle}</title>
     <meta name="description" content={desc} />
     <link rel="canonical" href={canonical} />
-    {alt && <link rel="alternate" hreflang={lang} href={canonical} />}
-    {alt && <link rel="alternate" hreflang={otherLang} href={alt} />}
+    {hreflangs.length > 1 && hreflangs.map((h) => <link rel="alternate" hreflang={h.l} href={h.url} />)}
+    {hreflangs.length > 1 && alts.de && <link rel="alternate" hreflang="x-default" href={new URL(alts.de, Astro.site)} />}
     {noindex && <meta name="robots" content="noindex" />}
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content={org.shortName} />
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={desc} />
     <meta property="og:image" content={ogImage} />
-    <meta property="og:locale" content={lang === 'de' ? 'de_DE' : 'en_GB'} />
+    <meta property="og:locale" content={lang === 'de' ? 'de_DE' : lang === 'fr' ? 'fr_FR' : 'en_GB'} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="theme-color" content="#14231c" />
     <link rel="icon" type="image/png" sizes="32x32" href={href('/favicon-32.png')} />
     <link rel="apple-touch-icon" href={href('/apple-touch-icon.png')} />
-    <link rel="alternate" type="application/rss+xml" title={`${org.shortName} – RSS`} href={href(lang === 'de' ? '/aktuelles/rss.xml' : '/en/news/rss.xml')} />
+    <link rel="alternate" type="application/rss+xml" title={`${org.shortName} RSS`} href={href(lang === 'de' ? '/aktuelles/rss.xml' : lang === 'fr' ? '/fr/actualites/rss.xml' : '/en/news/rss.xml')} />
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   </head>
   <body>
-    <nav class="skip-links" aria-label={lang === 'de' ? 'Sprunglinks' : 'Skip links'}>
+    <nav class="skip-links" aria-label={lang === 'de' ? 'Sprunglinks' : lang === 'fr' ? 'Liens d’accès rapide' : 'Skip links'}>
       <a href="#main">{t.skip}</a>
       <a href="#main-nav">{t.skipNav}</a>
       <a href="#footer">{t.skipFooter}</a>
     </nav>
     <AnnouncementBar lang={lang} />
-    <Header lang={lang} altHref={altHref} />
+    <Header lang={lang} switchLinks={switchLinks} />
     <main id="main" tabindex="-1">
       <slot />
     </main>

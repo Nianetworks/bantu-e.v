@@ -1,29 +1,30 @@
-import { programmes, programmePath } from '../data/programmes';
-export type Lang = 'de' | 'en';
-export const languages: Lang[] = ['de', 'en'];
+export type Lang = 'de' | 'en' | 'fr';
+export const languages: Lang[] = ['de', 'en', 'fr'];
+export const langNames: Record<Lang, string> = { de: 'Deutsch', en: 'English', fr: 'Français' };
 
 /** Page routes per language (without base path). */
 export const routes = {
-  home: { de: '/', en: '/en/' },
-  about: { de: '/ueber-uns/', en: '/en/about/' },
-  people: { de: '/menschen/', en: '/en/people/' },
-  programmes: { de: '/programme/', en: '/en/programmes/' },
-  inland: { de: '/inlandsarbeit/', en: '/en/work-in-germany/' },
-  international: { de: '/auslandsarbeit/', en: '/en/international-cooperation/' },
-  projects: { de: '/projekte/', en: '/en/projects/' },
-  news: { de: '/aktuelles/', en: '/en/news/' },
-  events: { de: '/veranstaltungen/', en: '/en/events/' },
-  impact: { de: '/wirkung/', en: '/en/impact/' },
-  reports: { de: '/berichte/', en: '/en/reports/' },
-  downloads: { de: '/downloads/', en: '/en/downloads/' },
-  shop: { de: '/shop/', en: '/en/shop/' },
-  donate: { de: '/spenden/', en: '/en/donate/' },
-  join: { de: '/mitmachen/', en: '/en/get-involved/' },
-  contact: { de: '/kontakt/', en: '/en/contact/' },
-  imprint: { de: '/impressum/', en: '/en/imprint/' },
-  privacy: { de: '/datenschutz/', en: '/en/privacy/' },
-  accessibility: { de: '/barrierefreiheit/', en: '/en/accessibility/' },
-  easy: { de: '/einfache-sprache/', en: '/en/easy-read/' },
+  home: { de: '/', en: '/en/', fr: '/fr/' },
+  about: { de: '/ueber-uns/', en: '/en/about/', fr: '/fr/a-propos/' },
+  people: { de: '/menschen/', en: '/en/people/', fr: '/fr/equipe/' },
+  programmes: { de: '/programme/', en: '/en/programmes/', fr: '/fr/programmes/' },
+  inland: { de: '/inlandsarbeit/', en: '/en/work-in-germany/', fr: '/fr/travail-en-allemagne/' },
+  international: { de: '/auslandsarbeit/', en: '/en/international-cooperation/', fr: '/fr/cooperation-internationale/' },
+  projects: { de: '/projekte/', en: '/en/projects/', fr: '/fr/projets/' },
+  news: { de: '/aktuelles/', en: '/en/news/', fr: '/fr/actualites/' },
+  events: { de: '/veranstaltungen/', en: '/en/events/', fr: '/fr/evenements/' },
+  impact: { de: '/wirkung/', en: '/en/impact/', fr: '/fr/impact/' },
+  reports: { de: '/berichte/', en: '/en/reports/', fr: '/fr/rapports/' },
+  downloads: { de: '/downloads/', en: '/en/downloads/', fr: '/fr/telechargements/' },
+  shop: { de: '/shop/', en: '/en/shop/', fr: '/fr/boutique/' },
+  donate: { de: '/spenden/', en: '/en/donate/', fr: '/fr/faire-un-don/' },
+  join: { de: '/mitmachen/', en: '/en/get-involved/', fr: '/fr/s-engager/' },
+  contact: { de: '/kontakt/', en: '/en/contact/', fr: '/fr/contact/' },
+  imprint: { de: '/impressum/', en: '/en/imprint/', fr: '/fr/mentions-legales/' },
+  privacy: { de: '/datenschutz/', en: '/en/privacy/', fr: '/fr/confidentialite/' },
+  accessibility: { de: '/barrierefreiheit/', en: '/en/accessibility/', fr: '/fr/accessibilite/' },
+  easy: { de: '/einfache-sprache/', en: '/en/easy-read/', fr: '/fr/facile-a-lire/' },
+  offers: { de: '/bildungsangebote/', en: '/en/education-offers/', fr: '/fr/formations/' },
 } as const;
 export type RouteKey = keyof typeof routes;
 
@@ -37,13 +38,13 @@ export function href(path: string): string {
 export function r(key: RouteKey, lang: Lang, hash = ''): string {
   return href(routes[key][lang] + hash);
 }
-export const projectPath = (lang: Lang, slug: string) => href(`${lang === 'de' ? '/projekte/' : '/en/projects/'}${slug}/`);
-export const newsPath = (lang: Lang, slug: string) => href(`${lang === 'de' ? '/aktuelles/' : '/en/news/'}${slug}/`);
-export const productPath = (lang: Lang, slug: string) => href(`${lang === 'de' ? '/shop/' : '/en/shop/'}${slug}/`);
+export const projectPath = (lang: Lang, slug: string) => href(`${routes.projects[lang]}${slug}/`);
+export const newsPath = (lang: Lang, slug: string) => href(`${routes.news[lang]}${slug}/`);
+export const productPath = (lang: Lang, slug: string) => href(`${routes.shop[lang]}${slug}/`);
 
 const tz = 'Europe/Berlin';
 export function formatDate(d: Date, lang: Lang, opts: Intl.DateTimeFormatOptions = { day: '2-digit', month: '2-digit', year: 'numeric' }) {
-  return new Intl.DateTimeFormat(lang === 'de' ? 'de-DE' : 'en-GB', { timeZone: tz, ...opts }).format(d);
+  return new Intl.DateTimeFormat(lang === 'de' ? 'de-DE' : lang === 'fr' ? 'fr-FR' : 'en-GB', { timeZone: tz, ...opts }).format(d);
 }
 export function formatLongDate(d: Date, lang: Lang) {
   return formatDate(d, lang, { weekday: 'short', day: 'numeric', month: 'long', year: 'numeric' });
@@ -64,6 +65,7 @@ export const ui = {
     donate: 'Spenden',
     langName: 'Deutsch',
     otherLang: 'English',
+    language: 'Sprache',
     readMore: 'Weiterlesen',
     allProjects: 'Alle Projekte',
     allNews: 'Alle Neuigkeiten',
@@ -88,8 +90,8 @@ export const ui = {
     cost: 'Kosten',
     backTo: 'Zurück zu',
     contact: 'Kontakt',
-    footerAbout: 'Gemeinnütziger Verein für globale Bildung, Gerechtigkeit und Zusammenarbeit – in Berlin und in der Region der Großen Seen Ostafrikas.',
-    newsletterHint: 'Neuigkeiten per E-Mail? Schreiben Sie uns kurz – wir nehmen Sie in unseren Verteiler auf.',
+    footerAbout: 'Gemeinnütziger Verein für globale Bildung, Gerechtigkeit und Zusammenarbeit, in Berlin und in der Region der Großen Seen Ostafrikas.',
+    newsletterHint: 'Neuigkeiten per E-Mail? Schreiben Sie uns kurz. Wir nehmen Sie in unseren Verteiler auf.',
     priceTbd: 'Preis folgt',
     comingSoon: 'Bald erhältlich',
     buy: 'Jetzt kaufen',
@@ -114,6 +116,7 @@ export const ui = {
     donate: 'Donate',
     langName: 'English',
     otherLang: 'Deutsch',
+    language: 'Language',
     readMore: 'Read more',
     allProjects: 'All projects',
     allNews: 'All news',
@@ -138,7 +141,7 @@ export const ui = {
     cost: 'Cost',
     backTo: 'Back to',
     contact: 'Contact',
-    footerAbout: 'Non-profit association for global education, justice and cooperation – in Berlin and in the Great Lakes region of East Africa.',
+    footerAbout: 'Non-profit association for global education, justice and cooperation, in Berlin and in the Great Lakes region of East Africa.',
     newsletterHint: 'Want news by e-mail? Drop us a line and we will add you to our mailing list.',
     priceTbd: 'Price to follow',
     comingSoon: 'Coming soon',
@@ -151,61 +154,98 @@ export const ui = {
     page: 'Page',
     breadcrumbHome: 'Home',
   },
+  fr: {
+    skip: 'Aller au contenu',
+    skipNav: 'Aller à la navigation',
+    skipFooter: 'Aller au contact',
+    a11y: 'Accessibilité',
+    easy: 'Facile à lire',
+    newWindow: '(s’ouvre dans une nouvelle fenêtre)',
+    overview: 'Vue d’ensemble',
+    menu: 'Menu',
+    close: 'Fermer',
+    donate: 'Faire un don',
+    langName: 'Français',
+    otherLang: 'Deutsch',
+    language: 'Langue',
+    readMore: 'Lire la suite',
+    allProjects: 'Tous les projets',
+    allNews: 'Toutes les actualités',
+    allEvents: 'Tous les événements',
+    projectStatus: { active: 'En cours', completed: 'Terminé', planned: 'En préparation' },
+    programme: { international: 'Coopération internationale', inland: 'Travail en Allemagne' },
+    type: { news: 'Actualité', event: 'Événement', announcement: 'Annonce' },
+    period: 'Durée',
+    location: 'Lieu',
+    partners: 'Partenaires',
+    funders: 'Financé par',
+    code: 'Numéro de projet',
+    sdgs: 'Objectifs de développement durable',
+    country: 'Pays',
+    photoComing: 'Photo à venir',
+    upcoming: 'À venir',
+    past: 'Événements passés',
+    noUpcoming: 'Aucun événement n’est prévu pour le moment. Nous annonçons les nouveaux événements ici et sur Instagram.',
+    register: 'Inscription',
+    when: 'Quand',
+    where: 'Où',
+    cost: 'Coût',
+    backTo: 'Retour à',
+    contact: 'Contact',
+    footerAbout: 'Association d’intérêt général pour l’éducation globale, la justice et la coopération, à Berlin et dans la région des Grands Lacs d’Afrique de l’Est.',
+    newsletterHint: 'Des nouvelles par e-mail ? Écrivez-nous un mot et nous vous ajoutons à notre liste de diffusion.',
+    priceTbd: 'Prix à venir',
+    comingSoon: 'Bientôt disponible',
+    buy: 'Acheter',
+    notify: 'Réserver',
+    shopClosedNote: 'La boutique en ligne ouvre bientôt. Vous pouvez déjà réserver des produits par e-mail.',
+    copy: 'Copier',
+    copied: 'Copié',
+    sources: 'Source',
+    page: 'Page',
+    breadcrumbHome: 'Accueil',
+  },
 } as const;
 
-export type NavItem = { label: string; href: string; children?: { label: string; href: string }[] };
+export type NavItem = { label: string; href: string; mega?: 'inland' | 'international'; children?: { label: string; href: string }[] };
 
 export function mainNav(lang: Lang): NavItem[] {
   const de = lang === 'de';
+  const fr = lang === 'fr';
   return [
     {
-      label: de ? 'Über uns' : 'About',
+      label: de ? 'Über uns' : fr ? 'À propos' : 'About',
       href: r('about', lang),
       children: [
-        { label: de ? 'Wer wir sind' : 'Who we are', href: r('about', lang) },
-        { label: de ? 'Menschen' : 'People', href: r('people', lang) },
-        { label: de ? 'Partner & Förderer' : 'Partners & funders', href: r('people', lang, de ? '#partner' : '#partners') },
-        { label: de ? 'Transparenz' : 'Transparency', href: r('reports', lang, de ? '#transparenz' : '#transparency') },
-      ],
-    },
-    {
-      label: de ? 'Programme' : 'Programmes',
-      href: r('programmes', lang),
-      children: [
-        { label: de ? 'Inlandsarbeit' : 'Work in Germany', href: r('inland', lang) },
-        { label: de ? 'Internationale Zusammenarbeit (Auslandsarbeit)' : 'International cooperation', href: r('international', lang) },
-        { label: de ? 'Alle Programme im Überblick' : 'All programmes', href: r('programmes', lang) },
-        ...programmes.map((p) => ({ label: p.title[lang], href: programmePath(lang, p.key) })),
-        { label: de ? 'Trägerschaften' : 'Fiscal sponsorship', href: r('programmes', lang, de ? '#traegerschaften' : '#fiscal-sponsorship') },
-        { label: de ? 'Alle Projekte' : 'All projects', href: r('projects', lang) },
-      ],
-    },
-    {
-      label: de ? 'Aktuelles' : 'News',
-      href: r('news', lang),
-      children: [
-        { label: de ? 'Neuigkeiten' : 'Latest news', href: r('news', lang) },
-        { label: de ? 'Veranstaltungen' : 'Events', href: r('events', lang) },
-      ],
-    },
-    {
-      label: de ? 'Wirkung' : 'Impact',
-      href: r('impact', lang),
-      children: [
-        { label: de ? 'Erfolgsgeschichten' : 'Success stories', href: r('impact', lang) },
-        { label: de ? 'Jahres- & Transparenzberichte' : 'Annual & transparency reports', href: r('reports', lang) },
+        { label: de ? 'Wer wir sind' : fr ? 'Qui nous sommes' : 'Who we are', href: r('about', lang) },
+        { label: de ? 'Vorstand und Team' : fr ? 'Conseil d’administration et équipe' : 'Board and team', href: r('people', lang) },
+        { label: de ? 'Partner und Förderer' : fr ? 'Partenaires et bailleurs' : 'Partners and funders', href: r('people', lang, de ? '#partner' : '#partners') },
+        { label: de ? 'Alle Programme im Überblick' : fr ? 'Tous les programmes en bref' : 'All programmes at a glance', href: r('programmes', lang) },
+        { label: de ? 'Wirkung' : fr ? 'Impact' : 'Impact', href: r('impact', lang) },
+        { label: de ? 'Jahres- und Transparenzberichte' : fr ? 'Rapports annuels et de transparence' : 'Annual and transparency reports', href: r('reports', lang) },
         { label: 'Downloads', href: r('downloads', lang) },
       ],
     },
-    { label: 'Shop', href: r('shop', lang) },
+    { label: de ? 'Inlandsarbeit' : fr ? 'Travail en Allemagne' : 'Work in Germany', href: r('inland', lang), mega: 'inland' },
+    { label: de ? 'Internationale Zusammenarbeit' : fr ? 'Coopération internationale' : 'International Cooperation', href: r('international', lang), mega: 'international' },
     {
-      label: de ? 'Mitmachen' : 'Get involved',
+      label: de ? 'Aktuelles' : fr ? 'Actualités' : 'News',
+      href: r('news', lang),
+      children: [
+        { label: de ? 'Neuigkeiten' : fr ? 'Dernières nouvelles' : 'Latest news', href: r('news', lang) },
+        { label: de ? 'Veranstaltungen' : fr ? 'Événements' : 'Events', href: r('events', lang) },
+      ],
+    },
+    {
+      label: de ? 'Mitmachen' : fr ? 'S’engager' : 'Get involved',
       href: r('join', lang),
       children: [
-        { label: de ? 'Mitglied werden' : 'Become a member', href: r('join', lang, '#membership') },
-        { label: de ? 'Ehrenamt' : 'Volunteer', href: r('join', lang, '#volunteer') },
-        { label: de ? 'Kooperationen' : 'Partner with us', href: r('join', lang, '#cooperation') },
-        { label: de ? 'Kontakt' : 'Contact', href: r('contact', lang) },
+        { label: de ? 'Mitglied werden' : fr ? 'Devenir membre' : 'Become a member', href: r('join', lang, '#membership') },
+        { label: de ? 'Ehrenamt' : fr ? 'Bénévolat' : 'Volunteer', href: r('join', lang, '#volunteer') },
+        { label: de ? 'Bildungsangebote anfragen' : fr ? 'Demander un atelier ou une formation' : 'Book a workshop or training', href: r('offers', lang) },
+        { label: de ? 'Kooperationen' : fr ? 'Coopérer avec nous' : 'Partner with us', href: r('join', lang, '#cooperation') },
+        { label: 'Shop', href: r('shop', lang) },
+        { label: de ? 'Kontakt' : fr ? 'Contact' : 'Contact', href: r('contact', lang) },
       ],
     },
   ];

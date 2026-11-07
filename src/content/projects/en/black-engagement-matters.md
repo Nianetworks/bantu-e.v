@@ -1,12 +1,12 @@
 ---
-title: "Black Engagement Matters – Building Black Resilience"
+title: "Black Engagement Matters: Building Black Resilience"
 subtitle: "Strengthening Black civic engagement at the close of the UN Decade for People of African Descent"
 summary: "Ten Black resource persons were trained and 30 Black organisations across Germany were connected."
 programme: inland
 status: completed
 country: "Germany"
 location: "nationwide"
-period: "2023 – 2024"
+period: "2023–2024"
 start: 2023-01-01
 end: 2024-12-31
 implementer: "tubman.network e.V."

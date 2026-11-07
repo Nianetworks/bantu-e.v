@@ -8,9 +8,9 @@ const { lang } = Astro.props;
 const pinned = (await getPinned(lang))[0];
 ---
 {pinned && (
-  <aside class="announce" data-until={pinned.data.pinUntil!.toISOString()} aria-label={lang === 'de' ? 'Ankündigung' : 'Announcement'}>
+  <aside class="announce" data-until={pinned.data.pinUntil!.toISOString()} aria-label={lang === 'de' ? 'Ankündigung' : lang === 'fr' ? 'Annonce' : 'Announcement'}>
     <div class="wrap announce__inner">
-      <span class="announce__label">{pinned.data.type === 'event' ? (lang === 'de' ? 'Termin' : 'Event') : (lang === 'de' ? 'Aktuell' : 'News')}</span>
+      <span class="announce__label">{pinned.data.type === 'event' ? (lang === 'de' ? 'Termin' : lang === 'fr' ? 'Rendez-vous' : 'Event') : (lang === 'de' ? 'Aktuell' : lang === 'fr' ? 'Actualité' : 'News')}</span>
       <a href={newsPath(lang, slugOf(pinned.id))}>{pinned.data.title}{pinned.data.eventTime ? ` · ${pinned.data.eventTime}` : ''}</a>
     </div>
   </aside>

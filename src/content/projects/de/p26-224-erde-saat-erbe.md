@@ -1,7 +1,7 @@
 ---
 title: "Erde, Saat und Erbe"
 subtitle: "Dekolonisierung von Architektur und Landwirtschaft"
-summary: "Ein Bildungsprojekt für Berliner Schulen: Stampflehmbau, Saatgut und koloniale Spuren im Afrikanischen Viertel – in Kooperation mit AfricAvenir International e.V."
+summary: "Ein Bildungsprojekt für Berliner Schulen: Stampflehmbau, Saatgut und koloniale Spuren im Afrikanischen Viertel, in Kooperation mit AfricAvenir International e.V."
 code: "P 26/224"
 programme: inland
 status: active
@@ -11,8 +11,11 @@ period: "September bis Dezember 2026"
 start: 2026-09-01
 end: 2026-12-31
 partners: ["AfricAvenir International e.V."]
-funders: ["Land Berlin – Senatsverwaltung für Bildung, Jugend und Familie", "Stiftung Nord-Süd-Brücken (Programm BIKO)"]
+funders: ["Land Berlin, Senatsverwaltung für Bildung, Jugend und Familie", "Stiftung Nord-Süd-Brücken (Programm BIKO)"]
 fundingNote: "Gefördert mit Haushaltsmitteln des Landes Berlin, Senatsverwaltung für Bildung, Jugend und Familie, über die Stiftung Nord-Süd-Brücken (Programm BIKO)."
+fundingLogos:
+  - { src: "/funders/nord-sued-bruecken.svg", alt: "Stiftung Nord-Süd-Brücken", width: 170 }
+  - { src: "/funders/senbjf.webp", alt: "Senatsverwaltung für Bildung, Jugend und Familie Berlin", width: 260 }
 disclaimer: "Für die Inhalte der Publikationen ist allein die bezuschusste Institution verantwortlich. Die hier dargestellten Positionen geben nicht den Standpunkt der Senatsverwaltung für Bildung, Jugend und Familie und der Stiftung Nord-Süd-Brücken wieder."
 sdgs: [4, 11, 15]
 stats:

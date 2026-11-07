@@ -8,6 +8,7 @@ import { slugOf, type NewsItem } from '../lib/content';
 interface Props { lang: Lang; item: NewsItem; hasAlt: boolean }
 const { lang, item, hasAlt } = Astro.props;
 const de = lang === 'de';
+const fr = lang === 'fr';
 const t = ui[lang];
 const d = item.data;
 const { Content } = await render(item);
@@ -16,7 +17,7 @@ const sameDay = isEvent && (!d.eventEnd || formatDate(d.eventStart!, lang) === f
 ---
 <Base lang={lang} title={d.title} description={d.summary} altHref={hasAlt ? newsPath(de ? 'en' : 'de', slugOf(item.id)) : undefined} image={d.image}>
   <PageHead lang={lang} title={d.title} lead={d.summary} eyebrow={t.type[d.type]}
-    crumbs={[{ label: isEvent ? (de ? 'Veranstaltungen' : 'Events') : (de ? 'Aktuelles' : 'News'), href: isEvent ? r('events', lang) : r('news', lang) }]}>
+    crumbs={[{ label: isEvent ? (de ? 'Veranstaltungen' : fr ? 'Événements' : 'Events') : (de ? 'Aktuelles' : fr ? 'Actualités' : 'News'), href: isEvent ? r('events', lang) : r('news', lang) }]}>
     {!isEvent && <p class="small muted"><time datetime={d.date.toISOString()}>{formatDate(d.date, lang, { day: 'numeric', month: 'long', year: 'numeric' })}</time></p>}
   </PageHead>
   <section class="section section--tight">
@@ -24,14 +25,14 @@ const sameDay = isEvent && (!d.eventEnd || formatDate(d.eventStart!, lang) === f
       <div>
         {d.image && <img class="article__img" src={href(d.image)} alt={d.imageAlt ?? ''} />}
         <div class="prose"><Content /></div>
-        {d.project && <p><a class="link-arrow" href={projectPath(lang, d.project)}>{de ? 'Zur Projektseite' : 'Go to the project page'}</a></p>}
+        {d.project && <p><a class="link-arrow" href={projectPath(lang, d.project)}>{de ? 'Zur Projektseite' : fr ? 'Aller à la page du projet' : 'Go to the project page'}</a></p>}
       </div>
       {isEvent && (
         <aside class="panel event-box">
-          <h2 class="side-title">{de ? 'Termin' : 'Event details'}</h2>
+          <h2 class="side-title">{de ? 'Termin' : fr ? 'Détails de l’événement' : 'Event details'}</h2>
           <dl class="kv">
             <dt>{t.when}</dt>
-            <dd>{sameDay ? formatLongDate(d.eventStart!, lang) : `${formatDate(d.eventStart!, lang)} – ${formatDate(d.eventEnd!, lang)}`}{d.eventTime && <><br />{d.eventTime}</>}</dd>
+            <dd>{sameDay ? formatLongDate(d.eventStart!, lang) : `${formatDate(d.eventStart!, lang)}–${formatDate(d.eventEnd!, lang)}`}{d.eventTime && <><br />{d.eventTime}</>}</dd>
             {d.location && <><dt>{t.where}</dt><dd>{d.location}</dd></>}
             {d.cost && <><dt>{t.cost}</dt><dd>{d.cost}</dd></>}
           </dl>

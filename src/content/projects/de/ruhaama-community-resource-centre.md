@@ -7,11 +7,14 @@ programme: international
 status: completed
 country: "Uganda"
 location: "Ruhaama, Distrikt Ntungamo"
-period: "2021 – 2023 (zwei Phasen)"
+period: "2021–2023 (zwei Phasen)"
 start: 2021-01-01
 end: 2023-12-31
 partners: ["Anchored Bridges Initiatives (ABI), damals Ability Beyond the Iris"]
-funders: ["Stiftung Nord-Süd-Brücken"]
+funders: ["Stiftung Nord-Süd-Brücken (EZ-Kleinprojektefonds) mit Mitteln des BMZ"]
+fundingLogos:
+  - { src: "/funders/nord-sued-bruecken.svg", alt: "Stiftung Nord-Süd-Brücken", width: 170 }
+  - { src: "/funders/bmz-logo.png", alt: "Bundesministerium für wirtschaftliche Zusammenarbeit und Entwicklung", width: 190 }
 sdgs: [4, 9]
 stats:
   - { value: "225", label: "Teilnehmende an IT-Kursen" }
@@ -26,7 +29,7 @@ sources:
   - "Bantu_eV_Taetigkeitsbericht_2023_2025.pdf (3.3); P 26-230 Antrag Teil B 2.2; alte Website (Startseite)"
 ---
 
-Digitale Kompetenzen entscheiden heute über Bildungs- und Berufschancen – gerade in ländlichen Regionen fehlt aber oft schon der Zugang zu einem Computer. Mit unserer Partnerorganisation ABI haben wir deshalb in Ruhaama (Distrikt Ntungamo) neben der Rwengoma Primary School ein **Community Resource Centre** aufgebaut.
+Digitale Kompetenzen entscheiden heute über Bildungs- und Berufschancen. Gerade in ländlichen Regionen fehlt aber oft schon der Zugang zu einem Computer. Mit unserer Partnerorganisation ABI haben wir deshalb in Ruhaama (Distrikt Ntungamo) neben der Rwengoma Primary School ein **Community Resource Centre** aufgebaut.
 
 - **Phase 1 (P 21/23):** Aufbau und Ausstattung des Zentrums mit Computern und E-Learning-Angeboten für Menschen jeden Alters.
 - **Phase 2 (P 22/29, bis Dezember 2023):** Konsolidierung, IT-Kurse und Nachhilfe.
@@ -35,5 +38,5 @@ Digitale Kompetenzen entscheiden heute über Bildungs- und Berufschancen – ger
 
 - **225 Teilnehmende** besuchten IT-Kurse, **175** schlossen mit Zertifikat ab.
 - **350 Schüler*innen** wurden mit Nachhilfe erreicht.
-- Das Zentrum ist ein Treffpunkt der Gemeinde geblieben – 2024 feierten dort die Teilnehmenden unseres Jugendaustauschs gemeinsam den Internationalen Frauentag.
+- Das Zentrum ist ein Treffpunkt der Gemeinde geblieben: 2024 feierten dort die Teilnehmenden unseres Jugendaustauschs gemeinsam den Internationalen Frauentag.
 <!-- OPEN: Quellen nennen 225 Teilnehmende/175 Zertifikate (Tätigkeitsbericht, Pearl-Antrag) bzw. „225 certificates“ (Transparenzbericht 2025, Übersicht) – Zahl prüfen. -->

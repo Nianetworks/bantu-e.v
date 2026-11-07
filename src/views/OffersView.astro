@@ -1,0 +1,327 @@
+---
+// Bildungsangebote: workshops, training, process support, facilitation and mediation.
+// Offered together with AfricAvenir International e.V. (instruction of the chair, 07.11.2026).
+// Content per language lives in one object, so a third language only needs one more block.
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import Icon from '../components/Icon.astro';
+import Phones from '../components/Phones.astro';
+import { href, projectPath, r, type Lang } from '../i18n';
+import { org } from '../data/site';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+type Aud = 'school' | 'org' | 'community';
+type Offer = { id: string; icon: string; accent: string; title: string; hook: string; text: string; formats: string[]; for: Aud[]; links?: [string, string][] };
+
+const content = {
+  de: {
+    title: 'Bildungsangebote',
+    lead: 'Workshops, Fortbildungen und Begleitung für Schulen, Vereine, Verwaltungen und Teams. Wir bieten sie gemeinsam mit AfricAvenir International e.V. an.',
+    eyebrow: 'Inlandsarbeit · Bildung',
+    partnerH: 'Gemeinsam mit AfricAvenir',
+    partnerText: 'Unsere allgemeine Bildungsarbeit machen wir zusammen mit AfricAvenir International e.V., einem Berliner Verein, der seit vielen Jahren zu Dekolonisierung, Rassismuskritik und afrikanischen Perspektiven arbeitet. Wenn Sie bei uns anfragen, planen Referent*innen aus beiden Vereinen das Angebot mit Ihnen.',
+    filterH: 'Für wen suchen Sie etwas?',
+    filters: { all: 'Alle Angebote', school: 'Schulen und Jugendarbeit', org: 'Organisationen und Teams', community: 'Communities und Initiativen' } as Record<'all' | Aud, string>,
+    count: (n: number) => (n === 1 ? '1 Angebot' : `${n} Angebote`),
+    forLabel: 'Passt für:',
+    formatsLabel: 'Mögliche Formate',
+    offers: [
+      { id: 'organisationsentwicklung', icon: 'people', accent: 'gold', title: 'Machtsensible Organisationsentwicklung und Prozessbegleitung',
+        hook: 'Für Organisationen, die Vielfalt nicht nur im Leitbild haben wollen.',
+        text: 'Wer entscheidet, wer wird gehört, wer bleibt draußen? Wir schauen mit Leitung und Team auf Strukturen, Abläufe und Kultur: von der Stellenausschreibung über Beschwerdewege bis zur Zusammenarbeit mit Partnern im Globalen Süden. Daraus entstehen konkrete Schritte, die zu Ihrer Organisation passen.',
+        formats: ['Bestandsaufnahme mit Leitung und Team', 'Strategie- und Klausurtage', 'Begleitung eines Veränderungsprozesses über mehrere Monate', 'Beratung zu Beschwerdewegen und Schutzkonzepten'], for: ['org'] },
+      { id: 'mediation-moderation', icon: 'hand', accent: 'blue', title: 'Mediation und Moderation',
+        hook: 'Wenn es schwierig wird, oder wenn viele mitreden sollen.',
+        text: 'Wir moderieren Fachtage, Podien, Beteiligungsprozesse und Community-Dialoge so, dass alle zu Wort kommen. Bei Konflikten in Teams, Vereinen oder zwischen Kooperationspartnern begleiten wir als Mediator*innen, mit Blick darauf, welche Rolle Macht und Diskriminierung im Konflikt spielen.',
+        formats: ['Moderation von Veranstaltungen und Beteiligungsprozessen', 'Mediation bei Konflikten im Team oder Verein', 'Klärungsgespräche zwischen Kooperationspartnern'], for: ['org', 'community'], links: [['Ubuntu Talks: ein Beispiel für einen moderierten Community-Dialog', 'ubuntu-talks-2026']] },
+      { id: 'empowerment', icon: 'heart', accent: 'red', title: 'Empowerment-Workshops',
+        hook: 'Räume, in denen man nicht erklären muss, wer man ist.',
+        text: 'Für Schwarze Menschen, People of Colour und Menschen mit Flucht- oder Migrationsgeschichte: geschützte Räume, um Erfahrungen zu teilen, eigene Stärken zu sehen, Rechte zu kennen und sich zu organisieren. Für Jugendliche, Eltern, Engagierte und Fachkräfte.',
+        formats: ['Workshop für Jugendgruppen', 'Workshopreihe für Erwachsene, Eltern oder Engagierte', 'Austausch- und Vernetzungstreffen'], for: ['community', 'school'] },
+      { id: 'antirassismus', icon: 'star', accent: 'purple', title: 'Antirassismus und Critical Whiteness',
+        hook: 'Rassismus verstehen, die eigene Position sehen, sicherer handeln.',
+        text: 'Wie wirkt Rassismus im Alltag von Schule, Beratung, Verwaltung oder Verein, auch wenn niemand es so meint? Wir arbeiten mit Fallbeispielen aus Ihrem Arbeitsfeld, reflektieren Weißsein und Privilegien und üben, in schwierigen Situationen zu reagieren.',
+        formats: ['Einführungsworkshop für Teams', 'Fortbildung für Lehrkräfte und pädagogische Fachkräfte', 'Vertiefung für Leitung und Personalverantwortliche'], for: ['org', 'school'] },
+      { id: 'globales-lernen', icon: 'globe', accent: 'green', title: 'Globales Lernen und Dekolonisierung',
+        hook: 'Die Welt im Klassenzimmer, mit Stimmen aus Uganda.',
+        text: 'Projekttage und Reihen zu den Nachhaltigkeitszielen, zur Kolonialgeschichte Berlins, zu Bildungsgerechtigkeit und zur Dekolonisierung von Wissen, Architektur und Landwirtschaft. Kolleg*innen aus Uganda sind live zugeschaltet, damit nicht nur über, sondern mit Menschen aus dem Globalen Süden gesprochen wird.',
+        formats: ['Projekttag für eine Klasse', 'Workshopreihe mit Exkursion', 'Fortbildung für Lehrkräfte', 'Offene Abendveranstaltung'], for: ['school', 'community'], links: [['Bildung für alle …?! (P 26/214)', 'p26-214-bildung-fuer-alle'], ['Erde, Saat und Erbe (P 26/224)', 'p26-224-erde-saat-erbe']] },
+    ] as Offer[],
+    howH: 'Wie wir arbeiten',
+    how: [
+      ['Erst zuhören', 'Wir fragen, was Sie erreichen wollen und wer dabei ist, bevor wir ein Programm vorschlagen.'],
+      ['Im Tandem', 'Meist leiten zwei Personen mit unterschiedlichen Perspektiven, oft aus beiden Vereinen.'],
+      ['Mitmachen statt zuhören', 'Wenig Vortrag, viel Austausch, Übungen und Fälle aus Ihrem Alltag.'],
+      ['Barrieren abbauen', 'Leichte Sprache, Übersetzung oder Kinderbetreuung sprechen wir gemeinsam ab.'],
+    ],
+    stepsH: 'In vier Schritten zu Ihrem Angebot',
+    steps: [
+      ['Anfrage', 'Schreiben Sie uns, wer teilnimmt, worum es gehen soll und welcher Zeitraum passt.'],
+      ['Vorgespräch', 'Wir klären Ziele, Rahmen und Erwartungen in einem kurzen Gespräch.'],
+      ['Konzept und Kosten', 'Sie bekommen einen Vorschlag mit Ablauf und Kosten. Gern denken wir über Fördermöglichkeiten mit.'],
+      ['Durchführung und Auswertung', 'Nach dem Angebot schauen wir gemeinsam zurück: Was hat gewirkt, was braucht es noch?'],
+    ],
+    ctaH: 'Angebot anfragen',
+    ctaText: 'Schreiben Sie uns eine E-Mail. Wir melden uns in der Regel innerhalb einer Woche.',
+    ctaBtn: 'E-Mail schreiben',
+    subject: 'Anfrage Bildungsangebot',
+    body: 'Hallo Bantu e.V.,\n\nwir interessieren uns für folgendes Angebot:\n\nTeilnehmende (wer, wie viele):\nThema und Ziel:\nWunschzeitraum:\nOrt oder online:\n\nViele Grüße',
+    contact: 'Lieber telefonieren?',
+    crumbs: 'Inlandsarbeit',
+  },
+  en: {
+    title: 'Workshops and training',
+    lead: 'Workshops, training and support for schools, associations, public bodies and teams. We offer them together with AfricAvenir International e.V.',
+    eyebrow: 'Work in Germany · Education',
+    partnerH: 'Together with AfricAvenir',
+    partnerText: 'We run our general education work together with AfricAvenir International e.V., a Berlin association with many years of work on decolonisation, anti-racism and African perspectives. When you contact us, trainers from both associations plan the offer with you.',
+    filterH: 'Who are you looking for?',
+    filters: { all: 'All offers', school: 'Schools and youth work', org: 'Organisations and teams', community: 'Communities and initiatives' } as Record<'all' | Aud, string>,
+    count: (n: number) => (n === 1 ? '1 offer' : `${n} offers`),
+    forLabel: 'Suitable for:',
+    formatsLabel: 'Possible formats',
+    offers: [
+      { id: 'organisational-development', icon: 'people', accent: 'gold', title: 'Power-sensitive organisational development and process support',
+        hook: 'For organisations that want diversity to be more than a mission statement.',
+        text: 'Who decides, who is heard, who is left out? Together with management and staff we look at structures, processes and culture: from job adverts and complaint procedures to working with partners in the Global South. The result is concrete steps that fit your organisation.',
+        formats: ['Stocktaking with management and team', 'Strategy days and retreats', 'Support for a change process over several months', 'Advice on complaint procedures and safeguarding'], for: ['org'] },
+      { id: 'mediation-facilitation', icon: 'hand', accent: 'blue', title: 'Mediation and facilitation',
+        hook: 'When things get difficult, or when many people need a say.',
+        text: 'We facilitate conferences, panels, participation processes and community dialogues so that everyone gets heard. In conflicts within teams, associations or between partners we act as mediators and keep an eye on the role that power and discrimination play.',
+        formats: ['Facilitating events and participation processes', 'Mediation in team or association conflicts', 'Clarifying talks between partner organisations'], for: ['org', 'community'], links: [['Ubuntu Talks: an example of a facilitated community dialogue', 'ubuntu-talks-2026']] },
+      { id: 'empowerment', icon: 'heart', accent: 'red', title: 'Empowerment workshops',
+        hook: 'Spaces where you do not have to explain who you are.',
+        text: 'For Black people, People of Colour and people with a refugee or migration background: safer spaces to share experiences, recognise one’s strengths, know one’s rights and get organised. For young people, parents, volunteers and professionals.',
+        formats: ['Workshop for youth groups', 'Workshop series for adults, parents or volunteers', 'Exchange and networking meetings'], for: ['community', 'school'] },
+      { id: 'anti-racism', icon: 'star', accent: 'purple', title: 'Anti-racism and critical whiteness',
+        hook: 'Understand racism, see your own position, act with more confidence.',
+        text: 'How does racism show up in everyday school, counselling, public administration or club life, even when nobody means it that way? We work with cases from your field, reflect on whiteness and privilege and practise how to respond in difficult moments.',
+        formats: ['Introductory workshop for teams', 'Training for teachers and educators', 'In-depth sessions for management and HR'], for: ['org', 'school'] },
+      { id: 'global-learning', icon: 'globe', accent: 'green', title: 'Global learning and decolonisation',
+        hook: 'The world in the classroom, with voices from Uganda.',
+        text: 'Project days and series on the Sustainable Development Goals, Berlin’s colonial history, educational justice and decolonising knowledge, architecture and agriculture. Colleagues from Uganda join live, so that students talk with people from the Global South and not only about them.',
+        formats: ['Project day for one class', 'Workshop series with a field trip', 'Training for teachers', 'Open evening event'], for: ['school', 'community'], links: [['Education for all …?! (P 26/214)', 'p26-214-bildung-fuer-alle'], ['Soil, Seed and Heritage (P 26/224)', 'p26-224-erde-saat-erbe']] },
+    ] as Offer[],
+    howH: 'How we work',
+    how: [
+      ['Listen first', 'We ask what you want to achieve and who will take part before we propose a programme.'],
+      ['In tandem', 'Usually two people with different perspectives lead, often one from each association.'],
+      ['Doing, not just listening', 'Little lecturing, plenty of exchange, exercises and cases from your everyday work.'],
+      ['Removing barriers', 'Plain language, interpreting or childcare can be arranged together.'],
+    ],
+    stepsH: 'Four steps to your offer',
+    steps: [
+      ['Request', 'Tell us who will take part, what it should be about and which dates suit you.'],
+      ['First call', 'In a short conversation we clarify goals, setting and expectations.'],
+      ['Plan and costs', 'You receive a proposal with the programme and costs. We are happy to think about funding options with you.'],
+      ['Delivery and review', 'Afterwards we look back together: what worked, and what is still needed?'],
+    ],
+    ctaH: 'Request an offer',
+    ctaText: 'Send us an e-mail. We usually reply within a week.',
+    ctaBtn: 'Write an e-mail',
+    subject: 'Request: workshop or training',
+    body: 'Hello Bantu e.V.,\n\nwe are interested in the following offer:\n\nParticipants (who, how many):\nTopic and goal:\nPreferred dates:\nVenue or online:\n\nBest regards',
+    contact: 'Prefer to call?',
+    crumbs: 'Work in Germany',
+  },
+  fr: {
+    title: 'Ateliers et formations',
+    lead: 'Des ateliers, des formations et un accompagnement pour les écoles, associations, administrations et équipes. Nous les proposons avec AfricAvenir International e.V.',
+    eyebrow: 'Travail en Allemagne · Éducation',
+    partnerH: 'Avec AfricAvenir',
+    partnerText: 'Nous menons notre travail éducatif général avec AfricAvenir International e.V., une association berlinoise qui travaille depuis de nombreuses années sur la décolonisation, la critique du racisme et les perspectives africaines. Lorsque vous nous contactez, des intervenantes et intervenants des deux associations construisent l’offre avec vous.',
+    filterH: 'Pour qui cherchez-vous ?',
+    filters: { all: 'Toutes les offres', school: 'Écoles et jeunesse', org: 'Organisations et équipes', community: 'Communautés et initiatives' } as Record<'all' | Aud, string>,
+    count: (n: number) => (n === 1 ? '1 offre' : `${n} offres`),
+    forLabel: 'Convient pour :',
+    formatsLabel: 'Formats possibles',
+    offers: [
+      { id: 'developpement-organisationnel', icon: 'people', accent: 'gold', title: 'Développement organisationnel attentif aux rapports de pouvoir et accompagnement de processus',
+        hook: 'Pour les organisations qui veulent que la diversité dépasse la charte.',
+        text: 'Qui décide, qui est écouté, qui reste dehors ? Avec la direction et l’équipe, nous regardons les structures, les procédures et la culture : de l’offre d’emploi aux voies de réclamation, jusqu’à la coopération avec des partenaires du Sud global. Il en ressort des étapes concrètes, adaptées à votre organisation.',
+        formats: ['État des lieux avec la direction et l’équipe', 'Journées de stratégie et séminaires', 'Accompagnement d’un processus de changement sur plusieurs mois', 'Conseil sur les voies de réclamation et la protection'], for: ['org'] },
+      { id: 'mediation-facilitation', icon: 'hand', accent: 'blue', title: 'Médiation et facilitation',
+        hook: 'Quand cela devient difficile, ou quand beaucoup de personnes doivent avoir leur mot à dire.',
+        text: 'Nous animons des journées d’étude, des tables rondes, des processus de participation et des dialogues communautaires pour que chacun puisse s’exprimer. Lors de conflits dans des équipes, des associations ou entre partenaires, nous intervenons comme médiatrices et médiateurs, en gardant à l’esprit le rôle du pouvoir et des discriminations.',
+        formats: ['Animation d’événements et de processus de participation', 'Médiation lors de conflits dans une équipe ou une association', 'Entretiens de clarification entre partenaires'], for: ['org', 'community'], links: [['Ubuntu Talks : un exemple de dialogue communautaire animé', 'ubuntu-talks-2026']] },
+      { id: 'empowerment', icon: 'heart', accent: 'red', title: 'Ateliers d’empowerment',
+        hook: 'Des espaces où l’on n’a pas besoin d’expliquer qui l’on est.',
+        text: 'Pour les personnes noires, les personnes racisées et les personnes ayant une histoire d’exil ou de migration : des espaces protégés pour partager des expériences, reconnaître ses forces, connaître ses droits et s’organiser. Pour les jeunes, les parents, les personnes engagées et les professionnels.',
+        formats: ['Atelier pour groupes de jeunes', 'Série d’ateliers pour adultes, parents ou bénévoles', 'Rencontres d’échange et de mise en réseau'], for: ['community', 'school'] },
+      { id: 'antiracisme', icon: 'star', accent: 'purple', title: 'Antiracisme et critical whiteness',
+        hook: 'Comprendre le racisme, voir sa propre position, agir avec plus d’assurance.',
+        text: 'Comment le racisme agit-il au quotidien à l’école, dans le conseil, l’administration ou la vie associative, même quand personne ne le veut ? Nous travaillons avec des cas tirés de votre domaine, réfléchissons à la blanchité et aux privilèges et nous entraînons à réagir dans des situations difficiles.',
+        formats: ['Atelier d’introduction pour les équipes', 'Formation pour enseignants et professionnels de l’éducation', 'Approfondissement pour la direction et les ressources humaines'], for: ['org', 'school'] },
+      { id: 'education-globale', icon: 'globe', accent: 'green', title: 'Éducation globale et décolonisation',
+        hook: 'Le monde en classe, avec des voix d’Ouganda.',
+        text: 'Des journées de projet et des cycles sur les objectifs de développement durable, l’histoire coloniale de Berlin, la justice éducative et la décolonisation des savoirs, de l’architecture et de l’agriculture. Des collègues d’Ouganda participent en direct, pour que l’on parle avec des personnes du Sud global et pas seulement d’elles.',
+        formats: ['Journée de projet pour une classe', 'Série d’ateliers avec sortie', 'Formation pour enseignants', 'Soirée ouverte au public'], for: ['school', 'community'], links: [['L’éducation pour tous …?! (P 26/214)', 'p26-214-bildung-fuer-alle'], ['Terre, semences et héritage (P 26/224)', 'p26-224-erde-saat-erbe']] },
+    ] as Offer[],
+    howH: 'Notre façon de travailler',
+    how: [
+      ['D’abord écouter', 'Nous demandons ce que vous voulez atteindre et qui participe avant de proposer un programme.'],
+      ['En binôme', 'Le plus souvent, deux personnes aux regards différents animent, souvent une de chaque association.'],
+      ['Faire plutôt qu’écouter', 'Peu d’exposés, beaucoup d’échanges, d’exercices et de cas tirés de votre quotidien.'],
+      ['Lever les obstacles', 'Langage facile, interprétation ou garde d’enfants se décident ensemble.'],
+    ],
+    stepsH: 'Votre offre en quatre étapes',
+    steps: [
+      ['Demande', 'Dites-nous qui participe, sur quoi le travail doit porter et quelles dates vous conviennent.'],
+      ['Premier échange', 'Lors d’une courte conversation, nous clarifions les objectifs, le cadre et les attentes.'],
+      ['Programme et coûts', 'Vous recevez une proposition avec le déroulé et les coûts. Nous réfléchissons volontiers avec vous à des financements.'],
+      ['Réalisation et bilan', 'Ensuite, nous faisons le point ensemble : qu’est-ce qui a marché, de quoi avez-vous encore besoin ?'],
+    ],
+    ctaH: 'Demander une offre',
+    ctaText: 'Écrivez-nous un e-mail. Nous répondons en général dans la semaine.',
+    ctaBtn: 'Écrire un e-mail',
+    subject: 'Demande : atelier ou formation',
+    body: 'Bonjour Bantu e.V.,\n\nnous nous intéressons à l’offre suivante :\n\nParticipants (qui, combien) :\nThème et objectif :\nDates souhaitées :\nLieu ou en ligne :\n\nCordialement',
+    contact: 'Vous préférez appeler ?',
+    crumbs: 'Travail en Allemagne',
+  },
+} as const;
+const c = (content as any)[lang] ?? content.en;
+const offers = c.offers as Offer[];
+const mailto = `mailto:${org.email}?subject=${encodeURIComponent(c.subject)}&body=${encodeURIComponent(c.body)}`;
+const audKeys: ('all' | Aud)[] = ['all', 'school', 'org', 'community'];
+---
+<Base lang={lang} title={c.title} description={c.lead} >
+  <PageHead lang={lang} title={c.title} lead={c.lead} eyebrow={c.eyebrow} crumbs={[{ label: c.crumbs, href: r('inland', lang) }]} />
+
+  <section class="section section--tight">
+    <div class="wrap partner-band">
+      <a class="partner-band__logo" href="https://www.africavenir.org" rel="noopener"><img src={href('/partners/africavenir.webp')} alt="AfricAvenir International e.V." width="300" height="88" loading="lazy" /></a>
+      <div>
+        <h2 class="h3">{c.partnerH}</h2>
+        <p>{c.partnerText}</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--tight" aria-labelledby="h-filter">
+    <div class="wrap">
+      <div class="filter" data-offer-filter>
+        <h2 id="h-filter" class="h3">{c.filterH}</h2>
+        <div class="filter__buttons" role="group" aria-labelledby="h-filter">
+          {audKeys.map((k) => <button type="button" class="chip" data-filter={k} aria-pressed={k === 'all' ? 'true' : 'false'}>{c.filters[k]}</button>)}
+        </div>
+        <p class="filter__status small muted" role="status" data-one={c.count(1)} data-many={c.count(9).replace('9', '{n}')}>{c.count(offers.length)}</p>
+      </div>
+
+      <ol class="offers">
+        {offers.map((o, i) => (
+          <li class={`offer accent--${o.accent}`} id={o.id} data-for={o.for.join(' ')}>
+            <article aria-labelledby={`h-${o.id}`}>
+              <div class="offer__head">
+                <span class="icon-badge"><Icon name={o.icon as any} /></span>
+                <div>
+                  <span class="offer__no" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+                  <h3 id={`h-${o.id}`}>{o.title}</h3>
+                  <p class="offer__hook">{o.hook}</p>
+                </div>
+              </div>
+              <p>{o.text}</p>
+              <h4>{c.formatsLabel}</h4>
+              <ul class="offer__formats">{o.formats.map((f) => <li>{f}</li>)}</ul>
+              <p class="offer__for"><span class="small muted">{c.forLabel}</span> {o.for.map((a) => <span class="tag">{c.filters[a]}</span>)}</p>
+              {o.links && <p class="offer__links">{o.links.map(([label, slug]) => <a class="link-arrow" href={projectPath(lang, slug)}>{label}</a>)}</p>}
+            </article>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="section section--alt" aria-labelledby="h-how">
+    <div class="wrap two-col">
+      <div>
+        <h2 id="h-how">{c.howH}</h2>
+        <ul class="how">{c.how.map(([h, t]: string[]) => <li><strong>{h}</strong><span>{t}</span></li>)}</ul>
+      </div>
+      <div>
+        <h2>{c.stepsH}</h2>
+        <ol class="steps">{c.steps.map(([h, t]: string[]) => <li><strong>{h}</strong><span>{t}</span></li>)}</ol>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="h-cta">
+    <div class="wrap">
+      <div class="cta-panel">
+        <div>
+          <h2 id="h-cta">{c.ctaH}</h2>
+          <p>{c.ctaText}</p>
+          <p class="cta-panel__phone"><strong>{c.contact}</strong><br /><Phones lang={lang} variant="plain" /></p>
+        </div>
+        <a class="btn btn--gold" href={mailto}><Icon name="mail" /> {c.ctaBtn}</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<script>
+  const box = document.querySelector<HTMLElement>('[data-offer-filter]');
+  if (box) {
+    const buttons = Array.from(box.querySelectorAll<HTMLButtonElement>('[data-filter]'));
+    const status = box.querySelector<HTMLElement>('.filter__status')!;
+    const items = Array.from(document.querySelectorAll<HTMLElement>('.offer'));
+    buttons.forEach((b) => b.addEventListener('click', () => {
+      const f = b.dataset.filter!;
+      buttons.forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+      let n = 0;
+      items.forEach((it) => {
+        const show = f === 'all' || (it.dataset.for || '').split(' ').includes(f);
+        it.hidden = !show;
+        if (show) n++;
+      });
+      status.textContent = n === 1 ? status.dataset.one! : (status.dataset.many || '{n}').replace('{n}', String(n));
+    }));
+  }
+</script>
+
+<style>
+  .h3 { font-size: 1.3rem; }
+  .partner-band { display: grid; grid-template-columns: 260px 1fr; gap: 2rem; align-items: center; padding: 1.5rem; background: var(--surface); border: 1px solid var(--line); border-radius: 20px; }
+  .partner-band__logo { display: grid; place-items: center; background: #fff; border-radius: 14px; padding: 1rem; border: 1px solid var(--line); }
+  .partner-band__logo img { width: 100%; height: auto; max-width: 240px; }
+  .partner-band h2 { margin-top: 0; }
+  .partner-band p { margin-bottom: 0; max-width: 70ch; }
+  @media (max-width: 720px) { .partner-band { grid-template-columns: 1fr; } }
+  .filter { margin-bottom: 1.5rem; }
+  .filter__buttons { display: flex; flex-wrap: wrap; gap: .5rem; margin: .75rem 0 .5rem; }
+  .chip { min-height: 44px; padding: .45rem 1rem; border-radius: 999px; border: 2px solid var(--ink); background: transparent; color: var(--ink); font: 700 .95rem var(--font-sans); cursor: pointer; }
+  .chip:hover { background: var(--bg-2); }
+  .chip[aria-pressed='true'] { background: var(--ink); color: var(--bg); }
+  .offers { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr)); gap: 1.25rem; }
+  .offer { margin: 0; background: var(--surface); border: 1px solid var(--line); border-top: 6px solid var(--accent, var(--gold)); border-radius: 18px; padding: 1.4rem 1.4rem 1.2rem; scroll-margin-top: calc(var(--header-h, 90px) + 1rem); }
+  .offer[hidden] { display: none; }
+  .offer__head { display: flex; gap: 1rem; align-items: flex-start; margin-bottom: .75rem; }
+  .offer__head > div { min-width: 0; }
+  .offer__head .icon-badge { flex-shrink: 0; }
+  .offer__no { font: 700 .8rem var(--font-sans); letter-spacing: .12em; color: var(--muted); }
+  .offer h3 { margin: .1rem 0 .35rem; font-size: 1.25rem; line-height: 1.25; hyphens: auto; overflow-wrap: break-word; }
+  .offer__hook { margin: 0; font-style: italic; color: var(--ink-2); }
+  .offer h4 { font-size: .95rem; margin: 1rem 0 .4rem; }
+  .offer__formats { margin: 0; padding-left: 1.2rem; }
+  .offer__formats li { margin-bottom: .25rem; }
+  .offer__for { display: flex; flex-wrap: wrap; gap: .35rem; align-items: center; margin: 1rem 0 0; }
+  .offer__links { display: flex; flex-direction: column; gap: .3rem; margin: .9rem 0 0; }
+  .how, .steps { padding: 0; margin: 1rem 0 0; display: grid; gap: .9rem; }
+  .how { list-style: none; }
+  .how li, .steps li { display: flex; flex-direction: column; gap: .15rem; margin: 0; padding: .9rem 1rem; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; }
+  .steps { list-style: none; counter-reset: s; }
+  .steps li { counter-increment: s; position: relative; padding-left: 3.4rem; }
+  .steps li::before { content: counter(s); position: absolute; left: 1rem; top: .9rem; width: 1.8rem; height: 1.8rem; border-radius: 50%; display: grid; place-items: center; background: var(--gold); color: #000; font-weight: 700; }
+  .cta-panel { display: flex; justify-content: space-between; align-items: center; gap: 2rem; padding: 2rem; border-radius: 22px; background: var(--deep); color: var(--on-deep); }
+  .cta-panel h2 { color: var(--on-deep); margin-top: 0; }
+  .cta-panel p { color: var(--on-deep); max-width: 60ch; }
+  .cta-panel :global(a:not(.btn)) { color: var(--on-deep); }
+  .cta-panel .btn { flex-shrink: 0; }
+  @media (max-width: 760px) { .cta-panel { flex-direction: column; align-items: flex-start; } }
+  .accent--gold { --accent: var(--gold); }
+  .accent--green { --accent: var(--green); }
+  .accent--blue { --accent: var(--blue); }
+  .accent--red { --accent: var(--c-coral); }
+  .accent--purple { --accent: var(--c-mauve); }
+</style>

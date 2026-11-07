@@ -9,19 +9,20 @@ import { org } from '../data/site';
 interface Props { lang: Lang; mode: 'news' | 'events' }
 const { lang, mode } = Astro.props;
 const de = lang === 'de';
+const fr = lang === 'fr';
 const t = ui[lang];
 const { upcoming, past } = await getEvents(lang);
 const news = (await getNews(lang)).filter((n) => n.data.type !== 'event');
-const title = mode === 'news' ? (de ? 'Aktuelles' : 'News') : (de ? 'Veranstaltungen' : 'Events');
+const title = mode === 'news' ? (de ? 'Aktuelles' : fr ? 'Actualités' : 'News') : (de ? 'Veranstaltungen' : fr ? 'Événements' : 'Events');
 const lead = mode === 'news'
-  ? (de ? 'Neuigkeiten, Ankündigungen und Termine von Bantu e.V.' : 'News, announcements and events from Bantu e.V.')
-  : (de ? 'Workshops, Begegnungen und Schulungen – meist kostenfrei und mit Kinderbetreuung.' : 'Workshops, encounters and trainings – mostly free of charge and with childcare.');
+  ? (de ? 'Neuigkeiten, Ankündigungen und Termine von Bantu e.V.' : fr ? 'Actualités, annonces et événements de Bantu e.V.' : 'News, announcements and events from Bantu e.V.')
+  : (de ? 'Workshops, Begegnungen und Schulungen, meist kostenfrei und mit Kinderbetreuung.' : fr ? 'Ateliers, rencontres et formations, le plus souvent gratuits et avec garde d’enfants.' : 'Workshops, encounters and trainings, mostly free of charge and with childcare.');
 ---
 <Base lang={lang} title={title} description={lead} altHref={r(mode, de ? 'en' : 'de')}>
   <PageHead lang={lang} title={title} lead={lead}>
     <div class="btn-row tabs">
-      <a class={`btn ${mode === 'news' ? 'btn--dark' : 'btn--outline'}`} href={r('news', lang)} aria-current={mode === 'news' ? 'page' : undefined}>{de ? 'Neuigkeiten' : 'News'}</a>
-      <a class={`btn ${mode === 'events' ? 'btn--dark' : 'btn--outline'}`} href={r('events', lang)} aria-current={mode === 'events' ? 'page' : undefined}>{de ? 'Veranstaltungen' : 'Events'}</a>
+      <a class={`btn ${mode === 'news' ? 'btn--dark' : 'btn--outline'}`} href={r('news', lang)} aria-current={mode === 'news' ? 'page' : undefined}>{de ? 'Neuigkeiten' : fr ? 'Actualités' : 'News'}</a>
+      <a class={`btn ${mode === 'events' ? 'btn--dark' : 'btn--outline'}`} href={r('events', lang)} aria-current={mode === 'events' ? 'page' : undefined}>{de ? 'Veranstaltungen' : fr ? 'Événements' : 'Events'}</a>
     </div>
   </PageHead>
 
@@ -37,9 +38,9 @@ const lead = mode === 'news'
   {mode === 'news' && (
     <section class="section section--alt">
       <div class="wrap">
-        <h2>{de ? 'Neuigkeiten' : 'Latest news'}</h2>
+        <h2>{de ? 'Neuigkeiten' : fr ? 'Dernières nouvelles' : 'Latest news'}</h2>
         <div class="grid grid--3">{news.map((n) => <NewsCard lang={lang} item={n} />)}</div>
-        <p class="small muted rss">RSS: <a href={r('news', lang).replace(/\/$/, '') + '/rss.xml'}>{de ? 'Neuigkeiten abonnieren' : 'Subscribe to news'}</a> · Instagram: <a href={org.socials[0].url}>@bantu_ev</a></p>
+        <p class="small muted rss">RSS: <a href={r('news', lang).replace(/\/$/, '') + '/rss.xml'}>{de ? 'Neuigkeiten abonnieren' : fr ? 'S’abonner aux actualités' : 'Subscribe to news'}</a> · Instagram: <a href={org.socials[0].url}>@bantu_ev</a></p>
       </div>
     </section>
   )}

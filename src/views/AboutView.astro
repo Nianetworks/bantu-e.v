@@ -8,10 +8,11 @@ import { timeline } from '../data/impact';
 interface Props { lang: Lang }
 const { lang } = Astro.props;
 const de = lang === 'de';
-const title = de ? 'Über uns' : 'About us';
+const fr = lang === 'fr';
+const title = de ? 'Über uns' : fr ? 'À propos' : 'About us';
 const lead = de
-  ? 'Bantu e.V. ist ein gemeinnütziger Verein für globale Bildung, Gerechtigkeit und Zusammenarbeit, 2019 in Berlin gegründet. Wir setzen uns dafür ein, dass marginalisierte Menschen in und außerhalb Deutschlands – besonders in der Region der Großen Seen Ostafrikas – Zugang zu Ressourcen erhalten, und tragen zur Dekolonisierung in Deutschland bei.'
-  : 'Bantu e.V. is a non-profit association for global education, justice and cooperation, founded in Berlin in 2019. We work to give marginalised people in and outside Germany – especially in the Great Lakes region of East Africa – access to resources, and we contribute to decolonisation in Germany.';
+  ? 'Bantu e.V. ist ein gemeinnütziger Verein für globale Bildung, Gerechtigkeit und Zusammenarbeit, 2019 in Berlin gegründet. Wir setzen uns dafür ein, dass marginalisierte Menschen in und außerhalb Deutschlands, besonders in der Region der Großen Seen Ostafrikas, Zugang zu Ressourcen erhalten, und tragen zur Dekolonisierung in Deutschland bei.'
+  : fr ? 'Bantu e.V. est une association à but non lucratif pour l’éducation globale, la justice et la coopération, fondée à Berlin en 2019. Nous agissons pour que les personnes marginalisées en Allemagne et ailleurs, en particulier dans la région des Grands Lacs d’Afrique de l’Est, aient accès aux ressources, et nous contribuons à la décolonisation en Allemagne.' : 'Bantu e.V. is a non-profit association for global education, justice and cooperation, founded in Berlin in 2019. We work to give marginalised people in and outside Germany, especially in the Great Lakes region of East Africa, access to resources, and we contribute to decolonisation in Germany.';
 ---
 <Base lang={lang} title={title} description={lead} altHref={r('about', de ? 'en' : 'de')}>
   <PageHead lang={lang} title={title} lead={lead} />
@@ -19,36 +20,36 @@ const lead = de
   <section class="section">
     <div class="wrap two-col">
       <div id="name">
-        <div class="eyebrow">{de ? 'Unser Name' : 'Our name'}</div>
-        <h2>{de ? 'Abantu – Menschen' : 'Abantu – people'}</h2>
+        <div class="eyebrow">{de ? 'Unser Name' : fr ? 'Notre nom' : 'Our name'}</div>
+        <h2>{de ? 'Abantu: Menschen' : fr ? 'Abantu : les êtres humains' : 'Abantu: people'}</h2>
         <p>{de
-          ? '„Bantu“ kommt von Abantu, dem Wort für „Menschen“ in vielen Sprachen Afrikas südlich der Sahara. Wir haben den Namen gewählt, weil wir überzeugt sind: Menschen unterschiedlicher Herkunft und Kulturen erreichen gemeinsam viel mehr – und unsere Unterschiede machen unsere Arbeit stärker.'
-          : '“Bantu” comes from Abantu, the word for “people” in many languages of sub-Saharan Africa. We chose the name because we believe that people from different backgrounds and cultures achieve much more together – and that our differences make our work stronger.'}</p>
+          ? '„Bantu“ kommt von Abantu, dem Wort für „Menschen“ in vielen Sprachen Afrikas südlich der Sahara. Wir haben den Namen gewählt, weil wir überzeugt sind: Menschen unterschiedlicher Herkunft und Kulturen erreichen gemeinsam viel mehr, und unsere Unterschiede machen unsere Arbeit stärker.'
+          : fr ? '« Bantu » vient d’Abantu, le mot qui signifie « personnes » dans de nombreuses langues d’Afrique subsaharienne. Nous avons choisi ce nom parce que nous sommes convaincus que des personnes d’origines et de cultures différentes accomplissent bien plus ensemble, et que nos différences rendent notre travail plus fort.' : '“Bantu” comes from Abantu, the word for “people” in many languages of sub-Saharan Africa. We chose the name because we believe that people from different backgrounds and cultures achieve much more together, and that our differences make our work stronger.'}</p>
         <p>{de
-          ? 'Unsere Arbeit gründet auf Ubuntu – einem Begriff aus dem isiZulu und isiXhosa, der auch in anderen afrikanischen Sprachen, etwa im Westen Ugandas, gelebt wird. Er steht für Großzügigkeit, Rücksicht und Menschlichkeit gegenüber anderen: Niemand ist Mensch für sich allein. Mit unseren Partner*innen bündeln wir deshalb Ressourcen, Wissen und Fürsorge.'
-          : 'Our work is grounded in Ubuntu – a term from isiZulu and isiXhosa that is also lived in other African languages, for example in western Uganda. It stands for generosity, consideration and humanity towards others: nobody is human on their own. That is why we pool resources, knowledge and care with our partners.'}</p>
+          ? 'Unsere Arbeit gründet auf Ubuntu, einem Begriff aus dem isiZulu und isiXhosa, der auch in anderen afrikanischen Sprachen, etwa im Westen Ugandas, gelebt wird. Er steht für Großzügigkeit, Rücksicht und Menschlichkeit gegenüber anderen: Niemand ist Mensch für sich allein. Mit unseren Partner*innen bündeln wir deshalb Ressourcen, Wissen und Fürsorge.'
+          : fr ? 'Notre travail repose sur Ubuntu, un terme issu de l’isiZulu et de l’isiXhosa, vécu aussi dans d’autres langues africaines, par exemple dans l’ouest de l’Ouganda. Il exprime la générosité, l’attention et l’humanité envers les autres : personne n’est humain tout seul. C’est pourquoi nous mettons en commun ressources, savoirs et soins avec nos partenaires.' : 'Our work is grounded in Ubuntu, a term from isiZulu and isiXhosa that is also lived in other African languages, for example in western Uganda. It stands for generosity, consideration and humanity towards others: nobody is human on their own. That is why we pool resources, knowledge and care with our partners.'}</p>
         <blockquote>{org.claim[lang]}</blockquote>
       </div>
       <div id={de ? 'geschichte' : 'story'}>
-        <div class="eyebrow">{de ? 'Unsere Geschichte' : 'Our story'}</div>
-        <h2>{de ? 'Gegründet aus Überzeugung' : 'Founded out of conviction'}</h2>
+        <div class="eyebrow">{de ? 'Unsere Geschichte' : fr ? 'Notre histoire' : 'Our story'}</div>
+        <h2>{de ? 'Gegründet aus Überzeugung' : fr ? 'Fondée par conviction' : 'Founded out of conviction'}</h2>
         <p>{de
           ? 'Bantu e.V. wurde 2019 in Berlin von einer kleinen Gruppe von Menschen aus Uganda und Deutschland gegründet, die zu einer Welt beitragen wollten, in der alle ein gerechtes und würdevolles Leben führen können. In der Gründungsphase haben wir uns viel Zeit genommen, das Konzept der „Entwicklungs“-Zusammenarbeit zu hinterfragen und unsere eigene Position zu reflektieren. Daraus sind unsere Mission, unsere Ziele und Werte entstanden.'
-          : 'Bantu e.V. was founded in Berlin in 2019 by a small group of people from Uganda and Germany who wanted to help build a world where everyone can live a just and dignified life. During our founding phase we took a lot of time to question the concept of “development” cooperation and to reflect on our own position. Our mission, goals and values grew out of that process.'}</p>
+          : fr ? 'Bantu e.V. a été fondée à Berlin en 2019 par un petit groupe de personnes venues d’Ouganda et d’Allemagne qui voulaient contribuer à un monde où chacun puisse vivre dans la justice et la dignité. Pendant la phase de création, nous avons pris beaucoup de temps pour interroger la notion de coopération « au développement » et pour réfléchir à notre propre position. Notre mission, nos objectifs et nos valeurs sont nés de ce processus.' : 'Bantu e.V. was founded in Berlin in 2019 by a small group of people from Uganda and Germany who wanted to help build a world where everyone can live a just and dignified life. During our founding phase we took a lot of time to question the concept of “development” cooperation and to reflect on our own position. Our mission, goals and values grew out of that process.'}</p>
         <p>{de
           ? 'Seitdem sind viele Menschen dazugekommen. Unser Büro liegt in der Kameruner Straße in Berlin-Wedding, mitten im Afrikanischen Viertel.'
-          : 'Many people have joined us since. Our office is on Kameruner Straße in Berlin-Wedding, in the heart of the African Quarter.'}</p>
+          : fr ? 'Depuis, beaucoup de personnes nous ont rejoints. Notre bureau se trouve dans la Kameruner Straße à Berlin-Wedding, au cœur du Quartier africain.' : 'Many people have joined us since. Our office is on Kameruner Straße in Berlin-Wedding, in the heart of the African Quarter.'}</p>
       </div>
     </div>
   </section>
 
   <section class="section section--alt" id="mission">
     <div class="wrap">
-      <div class="eyebrow">{de ? 'Vision, Mission, Werte' : 'Vision, mission, values'}</div>
+      <div class="eyebrow">{de ? 'Vision, Mission, Werte' : fr ? 'Vision, mission, valeurs' : 'Vision, mission, values'}</div>
       <div class="grid grid--3">
-        <div class="panel"><h3>Vision</h3><p>{de ? 'Eine Welt, in der alle Menschen ein gerechtes und würdevolles Leben führen können.' : 'A world in which all people can live a just and dignified life.'}</p></div>
-        <div class="panel"><h3>Mission</h3><p>{de ? 'Wir fordern und fördern nachhaltige Entwicklung – mit einem kritischen Blick auf die politische Entwicklungszusammenarbeit und im Bewusstsein für neokoloniale Dynamiken in diesem Feld.' : 'We demand and promote sustainable development – with a critical view of political development cooperation and aware of the neo-colonial dynamics in this field.'}</p></div>
-        <div class="panel"><h3>{de ? 'Werte' : 'Values'}</h3><p><strong>Abantu</strong> – {de ? 'Menschen im Mittelpunkt.' : 'people at the centre.'}<br /><strong>Ubuntu</strong> – {de ? 'Ich bin, weil wir sind: Wir bündeln Ressourcen, Wissen und Fürsorge, um Gemeinschaften in der Diaspora, auf dem afrikanischen Kontinent und im Globalen Süden zu stärken.' : 'I am because we are: we pool resources, knowledge and care to strengthen communities in the diaspora, on the African continent and across the Global South.'}</p></div>
+        <div class="panel"><h3>Vision</h3><p>{de ? 'Eine Welt, in der alle Menschen ein gerechtes und würdevolles Leben führen können.' : fr ? 'Un monde où toutes les personnes peuvent vivre dans la justice et la dignité.' : 'A world in which all people can live a just and dignified life.'}</p></div>
+        <div class="panel"><h3>Mission</h3><p>{de ? 'Wir fordern und fördern nachhaltige Entwicklung, mit einem kritischen Blick auf die politische Entwicklungszusammenarbeit und im Bewusstsein für neokoloniale Dynamiken in diesem Feld.' : fr ? 'Nous exigeons et soutenons un développement durable, avec un regard critique sur la coopération au développement politique et en ayant conscience des dynamiques néocoloniales de ce domaine.' : 'We demand and promote sustainable development, with a critical view of political development cooperation and aware of the neo-colonial dynamics in this field.'}</p></div>
+        <div class="panel"><h3>{de ? 'Werte' : fr ? 'Valeurs' : 'Values'}</h3><p><strong>Abantu</strong>: {de ? 'Menschen im Mittelpunkt.' : fr ? 'l’humain au centre.' : 'people at the centre.'}<br /><strong>Ubuntu</strong>: {de ? 'Ich bin, weil wir sind: Wir bündeln Ressourcen, Wissen und Fürsorge, um Gemeinschaften in der Diaspora, auf dem afrikanischen Kontinent und im Globalen Süden zu stärken.' : fr ? 'Je suis parce que nous sommes : nous réunissons ressources, savoirs et soins pour renforcer les communautés de la diaspora, du continent africain et de tout le Sud global.' : 'I am because we are: we pool resources, knowledge and care to strengthen communities in the diaspora, on the African continent and across the Global South.'}</p></div>
       </div>
     </div>
   </section>
@@ -56,34 +57,34 @@ const lead = de
   <section class="section">
     <div class="wrap two-col">
       <div>
-        <div class="eyebrow">{de ? 'Wie wir arbeiten' : 'How we work'}</div>
-        <h2>{de ? 'Gemeinsam entscheiden' : 'Deciding together'}</h2>
+        <div class="eyebrow">{de ? 'Wie wir arbeiten' : fr ? 'Comment nous travaillons' : 'How we work'}</div>
+        <h2>{de ? 'Gemeinsam entscheiden' : fr ? 'Décider ensemble' : 'Deciding together'}</h2>
         <p>{de
           ? 'Wir organisieren uns soziokratisch: „Wer sich zusammenschließt, soll auch gemeinsam entscheiden.“ Die Arbeit verteilt sich auf selbstorganisierte Kreise, Entscheidungen treffen wir im Konsent statt per Mehrheitsbeschluss. Die rechtliche Vertretung liegt beim Vorstand nach § 26 BGB.'
-          : 'We organise ourselves sociocratically: “those who associate together should govern together.” Work is shared among self-organising circles, and we make decisions by consent rather than majority vote. Legal representation lies with the board under § 26 of the German Civil Code (BGB).'}</p>
+          : fr ? 'Nous nous organisons de manière sociocratique : « ceux qui s’associent doivent aussi gouverner ensemble ». Le travail est réparti entre des cercles autonomes, et nous décidons par consentement plutôt qu’à la majorité. La représentation légale relève du conseil d’administration selon le § 26 du Code civil allemand (BGB).' : 'We organise ourselves sociocratically: “those who associate together should govern together.” Work is shared among self-organising circles, and we make decisions by consent rather than majority vote. Legal representation lies with the board under § 26 of the German Civil Code (BGB).'}</p>
         <p>{de
           ? 'In der internationalen Zusammenarbeit beantragen wir Fördermittel in Deutschland und setzen die Projekte gemeinsam mit Partnerorganisationen vor Ort um, die ihre Gemeinden am besten kennen.'
-          : 'In international cooperation we apply for funding in Germany and implement projects together with local partner organisations that know their communities best.'}</p>
-        <a class="link-arrow" href={r('people', lang)}>{de ? 'Die Menschen hinter Bantu e.V.' : 'The people behind Bantu e.V.'}</a>
+          : fr ? 'Dans la coopération internationale, nous recherchons des financements en Allemagne et mettons en œuvre les projets avec des organisations partenaires locales qui connaissent le mieux leurs communautés.' : 'In international cooperation we apply for funding in Germany and implement projects together with local partner organisations that know their communities best.'}</p>
+        <a class="link-arrow" href={r('people', lang)}>{de ? 'Die Menschen hinter Bantu e.V.' : fr ? 'Les personnes derrière Bantu e.V.' : 'The people behind Bantu e.V.'}</a>
       </div>
       <div class="panel">
-        <h3>{de ? 'Gemeinnützige Zwecke' : 'Charitable purposes'}</h3>
-        <p class="small muted">{de ? `Freistellungsbescheid des ${org.tax.office} vom ${org.tax.exemptionNotice}` : `Exemption notice of the Berlin tax office for corporations (${org.tax.exemptionNotice})`}</p>
+        <h3>{de ? 'Gemeinnützige Zwecke' : fr ? 'Buts d’intérêt général' : 'Charitable purposes'}</h3>
+        <p class="small muted">{de ? `Freistellungsbescheid des ${org.tax.office} vom ${org.tax.exemptionNotice}` : fr ? `Avis d’exonération du centre des impôts des collectivités de Berlin (${org.tax.exemptionNotice})` : `Exemption notice of the Berlin tax office for corporations (${org.tax.exemptionNotice})`}</p>
         <ul>{org.tax.purposes[lang].map((p) => <li>{p}</li>)}</ul>
         <dl class="kv small">
-          <dt>{de ? 'Vereinsregister' : 'Register'}</dt><dd>{org.register.court}, {org.register.number}</dd>
-          <dt>{de ? 'Steuernummer' : 'Tax number'}</dt><dd>{org.tax.number}</dd>
-          <dt>{de ? 'Gegründet' : 'Founded'}</dt><dd>{org.founded}</dd>
+          <dt>{de ? 'Vereinsregister' : fr ? 'Registre' : 'Register'}</dt><dd>{org.register.court}, {org.register.number}</dd>
+          <dt>{de ? 'Steuernummer' : fr ? 'Numéro fiscal' : 'Tax number'}</dt><dd>{org.tax.number}</dd>
+          <dt>{de ? 'Gegründet' : fr ? 'Fondée en' : 'Founded'}</dt><dd>{org.founded}</dd>
         </dl>
-        <a class="link-arrow" href={r('reports', lang, de ? '#transparenz' : '#transparency')}>{de ? 'Transparenz & Berichte' : 'Transparency & reports'}</a>
+        <a class="link-arrow" href={r('reports', lang, de ? '#transparenz' : '#transparency')}>{de ? 'Transparenz & Berichte' : fr ? 'Transparence et rapports' : 'Transparency & reports'}</a>
       </div>
     </div>
   </section>
 
   <section class="section section--alt">
     <div class="wrap">
-      <div class="eyebrow">{de ? 'Meilensteine' : 'Milestones'}</div>
-      <h2>{de ? 'Sieben Jahre Bantu e.V.' : 'Seven years of Bantu e.V.'}</h2>
+      <div class="eyebrow">{de ? 'Meilensteine' : fr ? 'Étapes clés' : 'Milestones'}</div>
+      <h2>{de ? 'Sieben Jahre Bantu e.V.' : fr ? 'Sept ans de Bantu e.V.' : 'Seven years of Bantu e.V.'}</h2>
       <ol class="timeline">
         {timeline.map((m) => <li><span class="timeline__year">{m.year}</span><p>{m.text[lang]}</p></li>)}
       </ol>

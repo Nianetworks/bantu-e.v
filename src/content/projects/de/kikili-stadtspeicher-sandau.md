@@ -1,7 +1,7 @@
 ---
-title: "Kikili – Stadtspeicher Sandau"
+title: "Kikili: Stadtspeicher Sandau"
 subtitle: "Ein inklusiver Dritter Ort im kleinsten Städtchen Sachsen-Anhalts"
-summary: "In Sandau (Elbe) wird der denkmalgeschützte ehemalige Stadtspeicher zu einem Ort für Begegnung, Kultur, Bildung und Erinnerung – umgesetzt von Kikili, mit Bantu e.V. als Trägerverein."
+summary: "In Sandau (Elbe) wird der denkmalgeschützte ehemalige Stadtspeicher zu einem Ort für Begegnung, Kultur, Bildung und Erinnerung, umgesetzt von Kikili, mit Bantu e.V. als Trägerverein."
 programme: inland
 status: active
 country: "Deutschland"
@@ -23,9 +23,9 @@ sources:
   - "Projektordner Tag des offenen Denkmals Sandau 2026"
 ---
 
-Sandau an der Elbe ist mit rund 800 Einwohner*innen die kleinste Stadt Sachsen-Anhalts. Das ehrenamtliche Engagement ist groß – doch für junge Menschen, queere Personen und Menschen mit Migrationserfahrung gibt es kaum Räume, sich einzubringen.
+Sandau an der Elbe ist mit rund 800 Einwohner*innen die kleinste Stadt Sachsen-Anhalts. Das ehrenamtliche Engagement ist groß, doch für junge Menschen, queere Personen und Menschen mit Migrationserfahrung gibt es kaum Räume, sich einzubringen.
 
-**Kikili** will das ändern: Der denkmalgeschützte **ehemalige Stadtspeicher** an der Ecke Elb-, Havelberger und Mauerstraße wird gesichert, saniert und als inklusiver „Dritter Ort“ belebt – mit
+**Kikili** will das ändern: Der denkmalgeschützte **ehemalige Stadtspeicher** an der Ecke Elb-, Havelberger und Mauerstraße wird gesichert, saniert und als inklusiver „Dritter Ort“ belebt, mit
 
 - einem Ort der Erinnerung, der lokale Geschichte zugänglich macht,
 - Bildungsangeboten, Workshops und Veranstaltungen für Jung und Alt,
@@ -37,4 +37,4 @@ Bantu e.V. begleitet Kikili seit 2022 als **Trägerverein**: Wir stellen Verwalt
 
 ## Unterstützen
 
-Spenden für Kikili gehen auf das Konto von Bantu e.V. bei der GLS Gemeinschaftsbank – bitte mit dem Verwendungszweck **„Kikili e.V. Spende“**. Mehr Informationen: [kikili.de](https://www.kikili.de)
+Spenden für Kikili gehen auf das Konto von Bantu e.V. bei der GLS Gemeinschaftsbank, bitte mit dem Verwendungszweck **„Kikili e.V. Spende“**. Mehr Informationen: [kikili.de](https://www.kikili.de)

@@ -11,16 +11,17 @@ import { heroSlides } from '../data/heroSlides';
 interface Props { lang: Lang }
 const { lang } = Astro.props;
 const de = lang === 'de';
+const fr = lang === 'fr';
 const n = heroSlides.length;
 const src = (f: string, small = false) => href(`/images/hero/${f}${small ? '-800' : ''}.webp`);
 const labels = {
-  region: de ? 'Fotos aus unseren Projekten' : 'Photos from our projects',
-  pauseShort: de ? 'Pause' : 'Pause',
-  playShort: de ? 'Abspielen' : 'Play',
-  prev: de ? 'Vorheriges Foto' : 'Previous photo',
-  next: de ? 'Nächstes Foto' : 'Next photo',
-  project: de ? 'Zum Projekt' : 'View project',
-  suffix: de ? ' (Diashow)' : ' slideshow',
+  region: de ? 'Fotos aus unseren Projekten' : fr ? 'Photos de nos projets' : 'Photos from our projects',
+  pauseShort: de ? 'Pause' : fr ? 'Pause' : 'Pause',
+  playShort: de ? 'Abspielen' : fr ? 'Lecture' : 'Play',
+  prev: de ? 'Vorheriges Foto' : fr ? 'Photo précédente' : 'Previous photo',
+  next: de ? 'Nächstes Foto' : fr ? 'Photo suivante' : 'Next photo',
+  project: de ? 'Zum Projekt' : fr ? 'Voir le projet' : 'View project',
+  suffix: de ? ' (Diashow)' : fr ? ' (diaporama)' : ' slideshow',
 };
 ---
 <div class="hs__bg" aria-hidden="true">

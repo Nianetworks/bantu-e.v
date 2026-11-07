@@ -2,7 +2,7 @@
 title: "Ubuntu Talks on 15 November at VHS Berlin Mitte"
 date: 2026-11-07
 type: event
-summary: "A day of encounter for the African diaspora and neighbours in Mitte – story circles, topic tables, a culture dinner and childcare. Free entry."
+summary: "A day of encounter for the African diaspora and neighbours in Mitte: story circles, topic tables, a culture dinner and childcare. Free entry."
 eventStart: 2026-11-15T11:00:00+01:00
 eventEnd: 2026-11-15T19:00:00+01:00
 eventTime: "11:00–19:00"
@@ -19,7 +19,7 @@ attachment: { href: "/downloads/flyer/ubuntu-talks-15-11-2026-flyer.pdf", label:
 
 **“Woven Together: Shared Spaces, Shaped Identities.”** Under this motto, Bantu e.V. and the Federation of Ugandans in Germany e.V. invite you to Ubuntu Talks.
 
-Doors open at 11:00 with a voluntary space for prayer and reflection; the official start is at 12:00. Then: story circles about arriving in Berlin-Mitte, a conversation about Ubuntu – humanity in a polarised society –, topic tables and, to close, a culture dinner to which everyone can bring a dish from their community. There is a warm dinner for all.
+Doors open at 11:00 with a voluntary space for prayer and reflection; the official start is at 12:00. Then: story circles about arriving in Berlin-Mitte, a conversation about Ubuntu: humanity in a polarised society, topic tables and, to close, a culture dinner to which everyone can bring a dish from their community. There is a warm dinner for all.
 
 Childcare, a safe space, a quiet room and German/English interpretation are provided; please request other languages or sign language as early as possible. Online participation is possible via a closed video conference.
 

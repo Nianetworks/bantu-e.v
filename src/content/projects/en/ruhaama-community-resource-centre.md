@@ -7,11 +7,14 @@ programme: international
 status: completed
 country: "Uganda"
 location: "Ruhaama, Ntungamo district"
-period: "2021 – 2023 (two phases)"
+period: "2021–2023 (two phases)"
 start: 2021-01-01
 end: 2023-12-31
 partners: ["Anchored Bridges Initiatives (ABI), then Ability Beyond the Iris"]
-funders: ["Stiftung Nord-Süd-Brücken"]
+funders: ["Stiftung Nord-Süd-Brücken (small-projects fund) with funds from the BMZ"]
+fundingLogos:
+  - { src: "/funders/nord-sued-bruecken.svg", alt: "Stiftung Nord-Süd-Brücken", width: 170 }
+  - { src: "/funders/bmz-logo.png", alt: "Federal Ministry for Economic Cooperation and Development", width: 190 }
 sdgs: [4, 9]
 stats:
   - { value: "225", label: "IT course participants" }
@@ -24,7 +27,7 @@ successStory: true
 order: 6
 ---
 
-Digital skills shape educational and job opportunities – yet in rural areas even access to a computer is often missing. With our partner ABI we therefore set up a **Community Resource Centre** next to Rwengoma Primary School in Ruhaama (Ntungamo district).
+Digital skills shape educational and job opportunities, yet in rural areas even access to a computer is often missing. With our partner ABI we therefore set up a **Community Resource Centre** next to Rwengoma Primary School in Ruhaama (Ntungamo district).
 
 - **Phase 1 (P 21/23):** setting up and equipping the centre with computers and e-learning for people of all ages.
 - **Phase 2 (P 22/29, until December 2023):** consolidation, IT courses and tutoring.
@@ -33,4 +36,4 @@ Digital skills shape educational and job opportunities – yet in rural areas ev
 
 - **225 participants** took IT courses, **175** graduated with a certificate.
 - **350 pupils** were reached through tutoring.
-- The centre has remained a community meeting place – in 2024 the participants of our youth exchange celebrated International Women’s Day there.
+- The centre has remained a community meeting place: in 2024 the participants of our youth exchange celebrated International Women’s Day there.

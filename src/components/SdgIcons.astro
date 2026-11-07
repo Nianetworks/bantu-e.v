@@ -1,0 +1,34 @@
+---
+// Official SDG icons with the goal's name as alt text. Each icon links to the UN page of the goal.
+import { href, ui, type Lang } from '../i18n';
+import { sdgNames } from '../data/sdgs';
+interface Props { lang: Lang; goals: number[]; size?: 'sm' | 'md' | 'lg'; label?: boolean }
+const { lang, goals, size = 'md', label = false } = Astro.props;
+const list = [...new Set(goals)].filter((n) => sdgNames[n]).sort((a, b) => a - b);
+const nn = (n: number) => String(n).padStart(2, '0');
+---
+{list.length > 0 && (
+  <ul class={`sdg-icons sdg-icons--${size}`} role="list">
+    {list.map((n) => (
+      <li>
+        <a href={`https://sdgs.un.org/goals/goal${n}`} rel="noopener" target="_blank">
+          <img src={href(`/sdg/sdg-${nn(n)}.webp`)} alt={`SDG ${n}: ${(sdgNames[n] as any)[lang] ?? sdgNames[n].en}`} width="240" height="240" loading="lazy" />
+          {label && <span class="sdg-icons__label">{(sdgNames[n] as any)[lang] ?? sdgNames[n].en}</span>}
+          <span class="sr-only"> {ui[lang].newWindow}</span>
+        </a>
+      </li>
+    ))}
+  </ul>
+)}
+<style>
+  .sdg-icons { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: .5rem; }
+  .sdg-icons li { margin: 0; }
+  .sdg-icons a { display: flex; flex-direction: column; gap: .35rem; text-decoration: none; color: var(--ink); border-radius: 6px; }
+  .sdg-icons img { display: block; width: var(--sdg, 72px); height: var(--sdg, 72px); border-radius: 4px; }
+  .sdg-icons a:hover img { outline: 3px solid var(--ink); outline-offset: 2px; }
+  .sdg-icons--sm { --sdg: 52px; gap: .4rem; }
+  .sdg-icons--md { --sdg: 72px; }
+  .sdg-icons--lg { --sdg: 96px; gap: .75rem; }
+  .sdg-icons__label { font-size: .8rem; font-weight: 600; line-height: 1.25; max-width: var(--sdg, 72px); hyphens: auto; overflow-wrap: break-word; }
+  :global(html[data-theme='contrast']) .sdg-icons img { outline: 2px solid currentColor; }
+</style>

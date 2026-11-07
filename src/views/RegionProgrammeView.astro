@@ -1,0 +1,126 @@
+---
+// One programme inside one work area, e.g. /inlandsarbeit/bildung/ (Education in Germany)
+// or /auslandsarbeit/globale-zusammenarbeit/ (Global cooperation abroad).
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import SdgIcons from '../components/SdgIcons.astro';
+import Icon from '../components/Icon.astro';
+import { r, type Lang } from '../i18n';
+import { getProjects, slugOf, type Project } from '../lib/content';
+import { programmes, regions, programmePath, regionPath, regionProgrammePath, type ProgrammeKey, type Region } from '../data/programmes';
+
+interface Props { lang: Lang; region: Region; programme: ProgrammeKey }
+const { lang, region, programme } = Astro.props;
+const de = lang === 'de';
+const fr = lang === 'fr';
+const rg = regions.find((x) => x.key === region)!;
+const other = regions.find((x) => x.key !== region)!;
+const prog = programmes.find((p) => p.key === programme)!;
+const all = await getProjects(lang);
+const bySlug = new Map(all.map((p) => [slugOf(p.id), p]));
+const items = prog.projects.map((s) => bySlug.get(s)).filter((x): x is Project => !!x);
+const here = items.filter((p) => p.data.programme === region);
+const there = items.filter((p) => p.data.programme !== region);
+const services = (prog.services ?? []).filter((s) => s.region === region);
+const active = here.filter((p) => p.data.status !== 'completed');
+const done = here.filter((p) => p.data.status === 'completed');
+const goals = [...new Set([...prog.sdgs, ...here.flatMap((p) => p.data.sdgs)])];
+const siblings = programmes.filter((p) => p.projects.some((s) => bySlug.get(s)?.data.programme === region) || p.services?.some((sv) => sv.region === region));
+const title = prog.title[lang];
+const area = rg.title[lang];
+---
+<Base lang={lang} title={`${title} · ${area}`} description={prog.lead[lang]} altHref={regionProgrammePath(de ? 'en' : 'de', region, programme)}>
+  <PageHead lang={lang} title={title} lead={prog.short[lang]} eyebrow={`${area} · ${de ? 'Programm' : fr ? 'Programme' : 'Programme'} ${prog.no}`}
+    crumbs={[{ label: area, href: regionPath(lang, region) }]} />
+
+  <section class={`section section--tight accent--${prog.accent}`}>
+    <div class="wrap rp-intro">
+      <div class="rp-intro__text">
+        <p class="lead">{prog.lead[lang]}</p>
+        <h2 class="h3">{de ? 'Schwerpunkte' : fr ? 'Axes principaux' : 'Focus areas'}</h2>
+        <ul class="rp-focus">{prog.focus[lang].map((f) => <li>{f}</li>)}</ul>
+      </div>
+      <aside class="panel rp-side" aria-labelledby="h-sdg">
+        <h2 id="h-sdg" class="h3">{de ? 'Unser Beitrag zu den Nachhaltigkeitszielen' : fr ? 'Notre contribution aux objectifs de développement durable' : 'Our contribution to the Sustainable Development Goals'}</h2>
+        <SdgIcons lang={lang} goals={goals} size="sm" />
+        <p class="small muted rp-side__count">{here.length} {here.length === 1 ? (de ? 'Projekt' : fr ? 'projet' : 'project') : (de ? 'Projekte' : fr ? 'projets' : 'projects')} · {active.length} {de ? 'laufend' : fr ? 'en cours' : 'ongoing'}</p>
+      </aside>
+    </div>
+  </section>
+
+  {services.map((s) => (
+    <section class="section section--tight" id={s.anchor[lang]} aria-labelledby={`h-${s.anchor[lang]}`}>
+      <div class="wrap">
+        <div class="panel service">
+          <div>
+            <h2 id={`h-${s.anchor[lang]}`} class="h3">{s.title[lang]}</h2>
+            <p>{s.text[lang]}</p>
+          </div>
+          {s.cta && <a class="btn btn--dark" href={r(s.cta.route, lang)}>{s.cta.label[lang]} <Icon name="arrow" /></a>}
+        </div>
+      </div>
+    </section>
+  ))}
+
+  {active.length > 0 && (
+    <section class="section section--tight" aria-labelledby="h-active">
+      <div class="wrap">
+        <h2 id="h-active">{de ? 'Laufende Projekte' : fr ? 'Projets en cours' : 'Current projects'}</h2>
+        <div class="grid grid--3">{active.map((p) => <ProjectCard lang={lang} project={p} />)}</div>
+      </div>
+    </section>
+  )}
+  {done.length > 0 && (
+    <section class="section section--alt" aria-labelledby="h-done">
+      <div class="wrap">
+        <h2 id="h-done">{de ? 'Abgeschlossene Projekte' : fr ? 'Projets terminés' : 'Completed projects'}</h2>
+        <div class="grid grid--3">{done.map((p) => <ProjectCard lang={lang} project={p} />)}</div>
+      </div>
+    </section>
+  )}
+
+  <nav class="section section--tight" aria-label={de ? `Weitere Programme: ${area}` : fr ? `Autres programmes : ${area}` : `More programmes: ${area}`}>
+    <div class="wrap">
+      <h2 class="h3">{de ? `Weitere Programme in der ${region === 'inland' ? 'Inlandsarbeit' : 'Internationalen Zusammenarbeit'}` : fr ? `Autres programmes : ${area}` : `More programmes: ${area}`}</h2>
+      <ul class="rp-siblings">
+        {siblings.filter((p) => p.key !== programme).map((p) => (
+          <li><a class={`accent--${p.accent}`} href={regionProgrammePath(lang, region, p.key)}><span class="icon-badge"><Icon name={p.icon as any} /></span><span><strong>{p.title[lang]}</strong><span class="small muted">{p.short[lang]}</span></span></a></li>
+        ))}
+      </ul>
+      <p class="rp-links">
+        {there.length > 0 && <a class="link-arrow" href={regionProgrammePath(lang, other.key, programme)}>{title}: {other.title[lang]} ({there.length} {there.length === 1 ? (de ? 'Projekt' : fr ? 'projet' : 'project') : (de ? 'Projekte' : fr ? 'projets' : 'projects')})</a>}
+        <a class="link-arrow" href={programmePath(lang, programme)}>{de ? 'Das ganze Programm im Überblick' : fr ? 'Le programme complet en bref' : 'The whole programme at a glance'}</a>
+        <a class="link-arrow" href={regionPath(lang, region)}>{de ? 'Zurück zur Übersicht' : fr ? 'Retour à la vue d’ensemble' : 'Back to the overview'}: {area}</a>
+      </p>
+    </div>
+  </nav>
+</Base>
+<style>
+  .rp-intro { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); gap: 2rem; align-items: start; }
+  @media (max-width: 860px) { .rp-intro { grid-template-columns: 1fr; } }
+  .rp-intro__text .lead { margin-top: 0; }
+  .rp-focus { padding-left: 1.2rem; }
+  .rp-focus li { margin-bottom: .4rem; }
+  .rp-side { border-top: 6px solid var(--accent, var(--gold)); }
+  .rp-side h2 { font-size: 1.05rem; }
+  .rp-side__count { margin: 1rem 0 0; }
+  .h3 { font-size: 1.3rem; }
+  .service { display: flex; justify-content: space-between; align-items: center; gap: 1.5rem; border-left: 6px solid var(--ink); scroll-margin-top: calc(var(--header-h, 90px) + 1rem); }
+  .service > div { min-width: 0; }
+  .service h2 { margin-top: 0; hyphens: auto; overflow-wrap: break-word; }
+  .service p { margin-bottom: 0; max-width: 75ch; }
+  .service .btn { flex-shrink: 0; }
+  @media (max-width: 760px) { .service { flex-direction: column; align-items: flex-start; } }
+  .rp-siblings { list-style: none; padding: 0; margin: 0 0 1.25rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: .9rem; }
+  .rp-siblings li { margin: 0; }
+  .rp-siblings a { display: flex; gap: .9rem; align-items: center; height: 100%; padding: 1rem 1.1rem; background: var(--surface); border: 1px solid var(--line); border-left: 6px solid var(--accent, var(--gold)); border-radius: 14px; color: var(--ink); text-decoration: none; }
+  .rp-siblings a > span:last-child { display: flex; flex-direction: column; min-width: 0; }
+  .rp-siblings a:hover strong { text-decoration: underline; }
+  .rp-links { display: flex; flex-wrap: wrap; gap: .5rem 1.75rem; margin: 0; }
+  .accent--gold { --accent: var(--gold); }
+  .accent--green { --accent: var(--green); }
+  .accent--blue { --accent: var(--blue); }
+  .accent--red { --accent: var(--c-coral); }
+  .accent--purple { --accent: var(--c-mauve); }
+</style>

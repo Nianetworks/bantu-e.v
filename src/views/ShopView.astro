@@ -9,22 +9,23 @@ import { features, org } from '../data/site';
 interface Props { lang: Lang }
 const { lang } = Astro.props;
 const de = lang === 'de';
+const fr = lang === 'fr';
 const t = ui[lang];
 const title = 'Shop';
 const lead = de
   ? 'Kaufen und schenken mit Sinn: Die Erlöse unseres kleinen Shops kommen den Projekten von Bantu e.V. zugute.'
-  : 'Shop and give with purpose: proceeds from our small shop support the projects of Bantu e.V.';
+  : fr ? 'Acheter et offrir avec du sens : les recettes de notre petite boutique soutiennent les projets de Bantu e.V.' : 'Shop and give with purpose: proceeds from our small shop support the projects of Bantu e.V.';
 const tones = { gifts: 'gold', coffee: 'sand', merch: 'blue', crafts: 'green' } as const;
 ---
 <Base lang={lang} title={title} description={lead} altHref={r('shop', de ? 'en' : 'de')}>
   <PageHead lang={lang} title={title} lead={lead}>
-    <nav class="cat-nav" aria-label={de ? 'Kategorien' : 'Categories'}>
+    <nav class="cat-nav" aria-label={de ? 'Kategorien' : fr ? 'Catégories' : 'Categories'}>
       {categories.map((c) => <a class="tag" href={`#${c.id}`}>{c.name[lang]}</a>)}
     </nav>
   </PageHead>
 
   {!features.shopCheckoutOpen && (
-    <div class="wrap" style="margin-top:1.5rem"><p class="notice">{t.shopClosedNote} {de ? 'Spendengeschenke sind bereits jetzt möglich.' : 'Gift donations are already possible.'}</p></div>
+    <div class="wrap" style="margin-top:1.5rem"><p class="notice">{t.shopClosedNote} {de ? 'Spendengeschenke sind bereits jetzt möglich.' : fr ? 'Les dons-cadeaux sont déjà possibles.' : 'Gift donations are already possible.'}</p></div>
   )}
 
   {categories.map((c, i) => {
@@ -40,7 +41,7 @@ const tones = { gifts: 'gold', coffee: 'sand', merch: 'blue', crafts: 'green' } 
                   {p.image ? <img src={href(p.image)} alt={p.name[lang]} class="prod-img" /> : <Placeholder lang={lang} ratio="4 / 3" tone={tones[c.id]} label={p.photoBrief?.[lang]} compact={c.id === 'gifts'} />}
                   <div class="card__body">
                     <div class="card__meta">
-                      <span class={`tag ${p.status === 'available' ? 'tag--active' : 'tag--planned'}`}>{p.status === 'available' ? (c.id === 'gifts' ? (de ? 'Jetzt möglich' : 'Available now') : (de ? 'Verfügbar' : 'Available')) : t.comingSoon}</span>
+                      <span class={`tag ${p.status === 'available' ? 'tag--active' : 'tag--planned'}`}>{p.status === 'available' ? (c.id === 'gifts' ? (de ? 'Jetzt möglich' : fr ? 'Disponible dès maintenant' : 'Available now') : (de ? 'Verfügbar' : fr ? 'Disponible' : 'Available')) : t.comingSoon}</span>
                     </div>
                     <h3><a class="stretched" href={productPath(lang, p.slug)}>{p.name[lang]}</a></h3>
                     <p>{p.short[lang]}</p>
@@ -51,8 +52,8 @@ const tones = { gifts: 'gold', coffee: 'sand', merch: 'blue', crafts: 'green' } 
             </div>
           ) : (
             <div class="panel empty">
-              <p>{de ? 'Handgemachte Produkte unserer Partner*innen folgen. Sie möchten informiert werden, sobald es losgeht?' : 'Handmade products by our partners will follow. Would you like to be notified when they are available?'}</p>
-              <a class="btn btn--outline" href={`mailto:${org.email}?subject=${encodeURIComponent(de ? 'Shop: Handwerk vormerken' : 'Shop: notify me about crafts')}`}>{t.notify}</a>
+              <p>{de ? 'Handgemachte Produkte unserer Partner*innen folgen. Sie möchten informiert werden, sobald es losgeht?' : fr ? 'Les produits artisanaux de nos partenaires suivront. Souhaitez-vous être prévenu de leur disponibilité ?' : 'Handmade products by our partners will follow. Would you like to be notified when they are available?'}</p>
+              <a class="btn btn--outline" href={`mailto:${org.email}?subject=${encodeURIComponent(de ? 'Shop: Handwerk vormerken' : fr ? 'Boutique : me prévenir pour l’artisanat' : 'Shop: notify me about crafts')}`}>{t.notify}</a>
             </div>
           )}
         </div>
@@ -64,7 +65,7 @@ const tones = { gifts: 'gold', coffee: 'sand', merch: 'blue', crafts: 'green' } 
     <div class="wrap small muted shop-legal">
       <p>{de
         ? 'Spendengeschenke sind Spenden an Bantu e.V. und keine Käufe; auf Wunsch erhalten Sie eine Zuwendungsbestätigung. Für Waren gelten nach Eröffnung des Shops unsere AGB, die Widerrufsbelehrung und die Versandbedingungen.'
-        : 'Gift donations are donations to Bantu e.V., not purchases; we issue a donation receipt on request. Once the shop opens, our terms and conditions, cancellation policy and shipping terms apply to goods.'}</p>
+        : fr ? 'Les dons-cadeaux sont des dons à Bantu e.V., pas des achats ; nous délivrons un reçu fiscal sur demande. À l’ouverture de la boutique, nos conditions générales, notre politique de rétractation et nos conditions de livraison s’appliqueront aux marchandises.' : 'Gift donations are donations to Bantu e.V., not purchases; we issue a donation receipt on request. Once the shop opens, our terms and conditions, cancellation policy and shipping terms apply to goods.'}</p>
     </div>
   </section>
 </Base>

@@ -10,10 +10,12 @@ const { lang } = Astro.props;
 const de = lang === 'de';
 const t = de
   ? { title: 'Darstellung anpassen', text: 'Textgröße', theme: 'Farben', std: 'Standard', dark: 'Dunkel', contrast: 'Hoher Kontrast', font: 'Gut lesbare Schrift', spacing: 'Mehr Abstand', links: 'Links hervorheben', motion: 'Bewegung stoppen', read: 'Seite vorlesen', stop: 'Vorlesen stoppen', reset: 'Alles zurücksetzen', close: 'Schließen', more: 'Erklärung zur Barrierefreiheit', easy: 'Einfache Sprache', note: 'Ihre Einstellungen bleiben nur in diesem Browser gespeichert.', on: 'an', off: 'aus' }
+  : lang === 'fr'
+  ? { title: 'Adapter l’affichage', text: 'Taille du texte', theme: 'Couleurs', std: 'Standard', dark: 'Sombre', contrast: 'Contraste élevé', font: 'Police facile à lire', spacing: 'Plus d’espacement', links: 'Mettre les liens en évidence', motion: 'Arrêter les animations', read: 'Lire la page à voix haute', stop: 'Arrêter la lecture', reset: 'Tout réinitialiser', close: 'Fermer', more: 'Déclaration d’accessibilité', easy: 'Facile à lire', note: 'Vos réglages restent enregistrés uniquement dans ce navigateur.', on: 'activé', off: 'désactivé' }
   : { title: 'Adjust the display', text: 'Text size', theme: 'Colours', std: 'Default', dark: 'Dark', contrast: 'High contrast', font: 'Easy-to-read font', spacing: 'More spacing', links: 'Highlight links', motion: 'Stop motion', read: 'Read page aloud', stop: 'Stop reading', reset: 'Reset all', close: 'Close', more: 'Accessibility statement', easy: 'Easy read', note: 'Your settings are only stored in this browser.', on: 'on', off: 'off' };
 const sizes = [['md', 'A', '100 %'], ['lg', 'A+', '112 %'], ['xl', 'A++', '125 %'], ['xxl', 'A+++', '150 %']];
 ---
-<div id="a11y-panel" class="a11y-panel" role="region" aria-labelledby="a11y-title" hidden data-lang={lang}>
+<div id="a11y-panel" class="a11y-panel" role="region" aria-labelledby="a11y-title" hidden data-lang={lang} data-on={t.on} data-off={t.off} data-reset-done={lang === 'de' ? 'Einstellungen zurückgesetzt' : lang === 'fr' ? 'Réglages réinitialisés' : 'Settings reset'}>
   <div class="a11y-panel__head">
     <h2 id="a11y-title"><Icon name="access" /> {t.title}</h2>
     <button type="button" class="a11y-close" data-a11y-close aria-label={t.close}><Icon name="close" /></button>
@@ -103,13 +105,12 @@ const sizes = [['md', 'A', '100 %'], ['lg', 'A+', '112 %'], ['xl', 'A++', '125 %
       prefs[k] = isToggle && prefs[k] === v ? '' : v;
       save(prefs); apply();
       const label = b.textContent?.trim() || b.getAttribute('aria-label') || '';
-      const de = panel.dataset.lang === 'de';
-      status.textContent = isToggle ? `${label}: ${prefs[k] ? (de ? 'an' : 'on') : (de ? 'aus' : 'off')}` : label;
+      status.textContent = isToggle ? `${label}: ${prefs[k] ? panel.dataset.on : panel.dataset.off}` : label;
     });
   });
   panel.querySelector('[data-a11y-reset]')?.addEventListener('click', () => {
     prefs = {}; save(prefs); apply();
-    status.textContent = panel.dataset.lang === 'de' ? 'Einstellungen zurückgesetzt' : 'Settings reset';
+    status.textContent = panel.dataset.resetDone || 'Settings reset';
   });
   apply();
 
@@ -127,7 +128,7 @@ const sizes = [['md', 'A', '100 %'], ['lg', 'A+', '112 %'], ['xl', 'A++', '125 %
       clone.querySelectorAll('[aria-hidden="true"], .deco, script, style, .sr-only').forEach((n) => n.remove());
       const text = (clone.innerText || clone.textContent || '').replace(/\s+\n/g, '\n').trim();
       const chunks = text.split(/(?<=[.!?:])\s+|\n+/).map((s) => s.trim()).filter(Boolean);
-      const langCode = html.lang === 'de' ? 'de-DE' : 'en-GB';
+      const langCode = html.lang === 'de' ? 'de-DE' : html.lang === 'fr' ? 'fr-FR' : 'en-GB';
       const voice = speechSynthesis.getVoices().find((v) => v.lang.startsWith(html.lang));
       speechSynthesis.cancel();
       chunks.forEach((c, i) => {

@@ -7,13 +7,14 @@ import { org } from '../data/site';
 interface Props { lang: Lang }
 const { lang } = Astro.props;
 const de = lang === 'de';
+const fr = lang === 'fr';
 const t = ui[lang];
-const title = de ? 'Spenden' : 'Donate';
+const title = de ? 'Spenden' : fr ? 'Faire un don' : 'Donate';
 const lead = de
-  ? 'Jede Spende – ob groß oder klein – macht einen Unterschied. Bantu e.V. ist als gemeinnützig anerkannt; Spenden sind steuerlich absetzbar.'
-  : 'Every donation – large or small – makes a difference. Bantu e.V. is a recognised non-profit; donations are tax-deductible in Germany.';
+  ? 'Jede Spende, ob groß oder klein, macht einen Unterschied. Bantu e.V. ist als gemeinnützig anerkannt; Spenden sind steuerlich absetzbar.'
+  : fr ? 'Chaque don, petit ou grand, compte. Bantu e.V. est une association reconnue d’intérêt général ; les dons sont déductibles des impôts en Allemagne.' : 'Every donation, large or small, makes a difference. Bantu e.V. is a recognised non-profit; donations are tax-deductible in Germany.';
 const purposes = [
-  { ref: 'Pearl Kita', slug: 'p26-230-pearl-kita-kampala', de: 'Pearl Kindertagesstätte Kampala – Eigenanteil 1.390 €', en: 'Pearl Kindergarten Kampala – our share €1,390' },
+  { ref: 'Pearl Kita', slug: 'p26-230-pearl-kita-kampala', de: 'Pearl Kindertagesstätte Kampala: Eigenanteil 1.390 €', en: 'Pearl Kindergarten Kampala: our share €1,390' },
   { ref: 'Wasser Ruziba', slug: 'p26-186-wasser-fuer-ruziba', de: 'Wasser für Ruziba, Burundi', en: 'Water for Ruziba, Burundi' },
   { ref: 'Bildung Berlin', slug: 'p26-214-bildung-fuer-alle', de: 'Bildungsarbeit in Berlin (Schulungen, Workshops, Begegnungen)', en: 'Education work in Berlin (trainings, workshops, encounters)' },
   { ref: 'Spende', slug: '', de: 'Wo es am meisten gebraucht wird', en: 'Where it is needed most' },
@@ -27,19 +28,19 @@ const purposes = [
       <div class="wrap">
         <div class="panel online">
           <div class="online__text">
-            <h2 id="h-online">{de ? 'Online spenden' : 'Donate online'}</h2>
+            <h2 id="h-online">{de ? 'Online spenden' : fr ? 'Faire un don en ligne' : 'Donate online'}</h2>
             <p>{de
-              ? 'Mit unserem Online-Spendenformular spenden Sie einmalig oder regelmäßig (monatlich oder jährlich) – per SEPA-Lastschrift oder Überweisung auf unser Konto bei der GLS Bank. Sie erhalten eine Zuwendungsbestätigung.'
-              : 'Use our online donation form to give once or regularly (monthly or yearly) – by SEPA direct debit or bank transfer to our account at GLS Bank. You will receive a donation receipt.'}</p>
+              ? 'Mit unserem Online-Spendenformular spenden Sie einmalig oder regelmäßig (monatlich oder jährlich), per SEPA-Lastschrift oder Überweisung auf unser Konto bei der GLS Bank. Sie erhalten eine Zuwendungsbestätigung.'
+              : fr ? 'Avec notre formulaire de don en ligne, vous pouvez donner une fois ou régulièrement (chaque mois ou chaque année), par prélèvement SEPA ou par virement sur notre compte à la GLS Bank. Vous recevez un reçu fiscal.' : 'Use our online donation form to give once or regularly (monthly or yearly), by SEPA direct debit or bank transfer to our account at GLS Bank. You will receive a donation receipt.'}</p>
             <div class="btn-row">
-              <a class="btn btn--gold" href={org.donation.pageUrl} target="_blank" rel="noopener">{de ? 'Zum Spendenformular' : 'Open the donation form'}</a>
-              <button class="btn btn--outline" type="button" id="load-form" aria-controls="donation-form" aria-expanded="false" data-widget={org.donation.widgetUrl}>{de ? 'Formular hier anzeigen' : 'Show the form on this page'}</button>
+              <a class="btn btn--gold" href={org.donation.pageUrl} target="_blank" rel="noopener">{de ? 'Zum Spendenformular' : fr ? 'Ouvrir le formulaire de don' : 'Open the donation form'}</a>
+              <button class="btn btn--outline" type="button" id="load-form" aria-controls="donation-form" aria-expanded="false" data-widget={org.donation.widgetUrl}>{de ? 'Formular hier anzeigen' : fr ? 'Afficher le formulaire sur cette page' : 'Show the form on this page'}</button>
             </div>
             <p class="small muted">{de
               ? 'Das Formular wird von unserem Dienstleister twingle bereitgestellt. Erst wenn Sie einen der Knöpfe nutzen, werden Daten (z. B. Ihre IP-Adresse) an twingle übertragen.'
-              : 'The form is provided by our service provider twingle. Data (e.g. your IP address) is only transferred to twingle when you use one of the buttons.'} <a href={r('privacy', lang)}>{de ? 'Mehr zum Datenschutz' : 'More on privacy'}</a></p>
+              : fr ? 'Le formulaire est fourni par notre prestataire twingle. Des données (par exemple votre adresse IP) ne sont transmises à twingle que lorsque vous utilisez l’un des boutons.' : 'The form is provided by our service provider twingle. Data (e.g. your IP address) is only transferred to twingle when you use one of the buttons.'} <a href={r('privacy', lang)}>{de ? 'Mehr zum Datenschutz' : fr ? 'En savoir plus sur la confidentialité' : 'More on privacy'}</a></p>
           </div>
-          <div id="donation-form" class="online__form" hidden tabindex="-1" aria-label={de ? 'Online-Spendenformular' : 'Online donation form'}></div>
+          <div id="donation-form" class="online__form" hidden tabindex="-1" aria-label={de ? 'Online-Spendenformular' : fr ? 'Formulaire de don en ligne' : 'Online donation form'}></div>
         </div>
       </div>
     </section>
@@ -48,25 +49,25 @@ const purposes = [
   <section class="section section--tight">
     <div class="wrap donate">
       <div class="panel bank">
-        <h2>{de ? 'Per Überweisung' : 'By bank transfer'}</h2>
+        <h2>{de ? 'Per Überweisung' : fr ? 'Par virement' : 'By bank transfer'}</h2>
         <dl class="kv bank__kv">
-          <dt>{de ? 'Empfänger' : 'Account holder'}</dt><dd>{org.bank.holder}</dd>
+          <dt>{de ? 'Empfänger' : fr ? 'Titulaire du compte' : 'Account holder'}</dt><dd>{org.bank.holder}</dd>
           <dt>IBAN</dt><dd><code id="iban">{org.bank.iban}</code> <button class="copy" type="button" data-copy="iban" data-done={t.copied}>{t.copy}</button></dd>
           <dt>BIC</dt><dd><code>{org.bank.bic}</code></dd>
           <dt>Bank</dt><dd>{org.bank.bank}</dd>
-          <dt>{de ? 'Verwendungszweck' : 'Reference'}</dt><dd><code id="ref">Spende</code> <button class="copy" type="button" data-copy="ref" data-done={t.copied}>{t.copy}</button></dd>
+          <dt>{de ? 'Verwendungszweck' : fr ? 'Motif du virement' : 'Reference'}</dt><dd><code id="ref">Spende</code> <button class="copy" type="button" data-copy="ref" data-done={t.copied}>{t.copy}</button></dd>
         </dl>
-        <p class="small muted">{de ? 'Für eine Zuwendungsbestätigung geben Sie bitte Ihren Namen und Ihre Anschrift im Verwendungszweck an oder schreiben Sie uns kurz.' : 'For a donation receipt, please include your name and address in the reference or send us a short e-mail.'}</p>
+        <p class="small muted">{de ? 'Für eine Zuwendungsbestätigung geben Sie bitte Ihren Namen und Ihre Anschrift im Verwendungszweck an oder schreiben Sie uns kurz.' : fr ? 'Pour recevoir un reçu fiscal, indiquez votre nom et votre adresse dans le motif du virement ou envoyez-nous un court e-mail.' : 'For a donation receipt, please include your name and address in the reference or send us a short e-mail.'}</p>
         {org.paypalUrl && <p><a class="btn btn--outline" href={org.paypalUrl} rel="noopener">PayPal</a></p>}
       </div>
       <div>
-        <h2>{de ? 'Wofür möchten Sie spenden?' : 'What would you like to support?'}</h2>
-        <p class="muted">{de ? 'Wählen Sie einen Zweck – der Verwendungszweck links passt sich an.' : 'Choose a purpose – the reference on the left updates.'}</p>
-        <div class="purposes" role="radiogroup" aria-label={de ? 'Spendenzweck' : 'Purpose'}>
+        <h2>{de ? 'Wofür möchten Sie spenden?' : fr ? 'Que souhaitez-vous soutenir ?' : 'What would you like to support?'}</h2>
+        <p class="muted">{de ? 'Wählen Sie einen Zweck. Der Verwendungszweck links passt sich an.' : fr ? 'Choisissez un objectif. Le motif à gauche s’adapte.' : 'Choose a purpose. The reference on the left updates.'}</p>
+        <div class="purposes" role="radiogroup" aria-label={de ? 'Spendenzweck' : fr ? 'Objectif' : 'Purpose'}>
           {purposes.map((p, i) => (
             <label class="purpose">
               <input type="radio" name="purpose" value={p.ref} checked={i === purposes.length - 1} />
-              <span><strong>{p[lang]}</strong><br /><span class="small muted">{de ? 'Verwendungszweck' : 'Reference'}: „{p.ref}“</span>{p.slug && <> · <a href={projectPath(lang, p.slug)}>{de ? 'Projekt' : 'Project'}</a></>}</span>
+              <span><strong>{p[lang]}</strong><br /><span class="small muted">{de ? 'Verwendungszweck' : fr ? 'Motif du virement' : 'Reference'}: „{p.ref}“</span>{p.slug && <> · <a href={projectPath(lang, p.slug)}>{de ? 'Projekt' : fr ? 'Projet' : 'Project'}</a></>}</span>
             </label>
           ))}
         </div>
@@ -77,18 +78,18 @@ const purposes = [
   <section class="section section--alt">
     <div class="wrap grid grid--3">
       <div class="panel">
-        <h3>{de ? 'Zuwendungsbestätigung' : 'Donation receipt'}</h3>
-        <p>{de ? 'Wir stellen Zuwendungsbestätigungen für das Finanzamt aus. Für Spenden bis 300 € reicht in der Regel der Kontoauszug als Nachweis (vereinfachter Zuwendungsnachweis).' : 'We issue official donation receipts (Zuwendungsbestätigung) for German tax purposes. For donations up to €300 a bank statement is usually sufficient.'}</p>
+        <h3>{de ? 'Zuwendungsbestätigung' : fr ? 'Reçu fiscal' : 'Donation receipt'}</h3>
+        <p>{de ? 'Wir stellen Zuwendungsbestätigungen für das Finanzamt aus. Für Spenden bis 300 € reicht in der Regel der Kontoauszug als Nachweis (vereinfachter Zuwendungsnachweis).' : fr ? 'Nous délivrons des reçus fiscaux officiels (Zuwendungsbestätigung) pour l’administration fiscale allemande. Pour les dons jusqu’à 300 €, un relevé bancaire suffit en général.' : 'We issue official donation receipts (Zuwendungsbestätigung) for German tax purposes. For donations up to €300 a bank statement is usually sufficient.'}</p>
       </div>
       <div class="panel">
-        <h3>{de ? 'Regelmäßig helfen' : 'Give regularly'}</h3>
-        <p>{de ? 'Als Mitglied oder Fördermitglied unterstützen Sie uns verlässlich – schon ab 5 € im Monat.' : 'As a member or supporting member you give us reliable support – from €5 a month.'}</p>
-        <a class="link-arrow" href={r('join', lang, '#membership')}>{de ? 'Mitglied werden' : 'Become a member'}</a>
+        <h3>{de ? 'Regelmäßig helfen' : fr ? 'Donner régulièrement' : 'Give regularly'}</h3>
+        <p>{de ? 'Als Mitglied oder Fördermitglied unterstützen Sie uns verlässlich, schon ab 5 € im Monat.' : fr ? 'En tant que membre ou membre bienfaiteur, vous nous soutenez durablement, dès 5 € par mois.' : 'As a member or supporting member you give us reliable support, from €5 a month.'}</p>
+        <a class="link-arrow" href={r('join', lang, '#membership')}>{de ? 'Mitglied werden' : fr ? 'Devenir membre' : 'Become a member'}</a>
       </div>
       <div class="panel">
-        <h3>{de ? 'Transparenz' : 'Transparency'}</h3>
-        <p>{de ? 'Jedes Projekt wird getrennt abgerechnet. In unseren Transparenzberichten legen wir offen, woher unser Geld kommt und wofür wir es einsetzen.' : 'Every project is accounted for separately. Our transparency reports show where our money comes from and how we use it.'}</p>
-        <a class="link-arrow" href={r('reports', lang)}>{de ? 'Zu den Berichten' : 'View reports'}</a>
+        <h3>{de ? 'Transparenz' : fr ? 'Transparence' : 'Transparency'}</h3>
+        <p>{de ? 'Jedes Projekt wird getrennt abgerechnet. In unseren Transparenzberichten legen wir offen, woher unser Geld kommt und wofür wir es einsetzen.' : fr ? 'Chaque projet fait l’objet d’un décompte séparé. Nos rapports de transparence montrent d’où vient notre argent et comment nous l’utilisons.' : 'Every project is accounted for separately. Our transparency reports show where our money comes from and how we use it.'}</p>
+        <a class="link-arrow" href={r('reports', lang)}>{de ? 'Zu den Berichten' : fr ? 'Voir les rapports' : 'View reports'}</a>
       </div>
     </div>
   </section>

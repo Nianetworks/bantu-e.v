@@ -9,58 +9,60 @@ import { downloads } from '../data/downloads';
 interface Props { lang: Lang }
 const { lang } = Astro.props;
 const de = lang === 'de';
+const fr = lang === 'fr';
 const reports = downloads.filter((d) => d.group === 'reports');
 const years = [...new Set(reports.map((d) => d.year!))].sort((a, b) => b - a);
-const title = de ? 'Jahres- & Transparenzberichte' : 'Annual & transparency reports';
+const title = de ? 'Jahres- & Transparenzberichte' : fr ? 'Rapports annuels et de transparence' : 'Annual & transparency reports';
 const lead = de
   ? 'Wir legen offen, wer wir sind, was wir tun, woher unser Geld kommt und wofür wir es ausgeben.'
-  : 'We disclose who we are, what we do, where our money comes from and how we spend it.';
-const boardText = org.board.map((b) => `${b.name} – ${b.role[lang]}`).join('; ');
+  : fr ? 'Nous rendons public qui nous sommes, ce que nous faisons, d’où vient notre argent et comment nous l’utilisons.' : 'We disclose who we are, what we do, where our money comes from and how we spend it.';
+const boardText = org.board.map((b) => `${b.name}, ${b.role[lang]}`).join('; ');
 const itz = [
-  { n: 1, t: de ? 'Name, Sitz, Anschrift, Gründungsjahr' : 'Name, seat, address, year founded', v: `${org.legalName}, ${org.address.street}, ${org.address.zip} ${org.address.city} · ${de ? 'gegründet' : 'founded'} ${org.founded}` },
-  { n: 2, t: de ? 'Satzung und Ziele' : 'Statutes and objectives', v: de ? 'Ziele: siehe „Über uns“. Die Satzung senden wir auf Anfrage zu; die geänderte Fassung veröffentlichen wir nach Eintragung im Vereinsregister.' : 'Objectives: see “About us”. We send the statutes on request; the amended version will be published once registered.', link: r('about', lang, '#mission') },
-  { n: 3, t: de ? 'Steuerbegünstigung' : 'Tax-exempt status', v: de ? `Gemeinnützig anerkannt durch das ${org.tax.office}, Freistellungsbescheid vom ${org.tax.exemptionNotice}, Steuernummer ${org.tax.number}.` : `Recognised as non-profit by the Berlin tax office for corporations, exemption notice of ${org.tax.exemptionNotice}, tax number ${org.tax.number}.` },
-  { n: 4, t: de ? 'Entscheidungsträger*innen' : 'Key decision-makers', v: boardText, link: r('people', lang) },
-  { n: 5, t: de ? 'Tätigkeitsbericht' : 'Activity report', v: de ? 'Jährliche Transparenzberichte seit 2020 (unten).' : 'Annual transparency reports since 2020 (below).' },
-  { n: 6, t: de ? 'Personalstruktur' : 'Staff structure', v: de ? 'Ein hauptamtlicher Vorstand; projektbezogene Beschäftigte und Honorarkräfte; Ehrenamtliche (Stand Tätigkeitsbericht 2023–2025).' : 'One salaried board member; project-based staff and freelancers; volunteers (as of the 2023–2025 activity report).' },
-  { n: 7, t: de ? 'Mittelherkunft' : 'Sources of funds', v: de ? 'Öffentliche Zuwendungen und Stiftungsmittel, Mitgliedsbeiträge, Spenden – Details in den Transparenzberichten.' : 'Public grants and foundation funding, membership fees, donations – details in the transparency reports.' },
-  { n: 8, t: de ? 'Mittelverwendung' : 'Use of funds', v: de ? 'Jedes Förderprojekt wird separat abgerechnet und mit Verwendungsnachweis belegt – Details in den Transparenzberichten.' : 'Each funded project is accounted for separately with a proof of use – details in the transparency reports.' },
-  { n: 9, t: de ? 'Gesellschaftsrechtliche Verbundenheit' : 'Affiliations with third parties', v: de ? 'Bantu e.V. war Trägerverein von tubman.network (seit Januar 2024 eigenständiger Verein, laufende Projekte bis 2025 von uns verwaltet) und ist seit 2022 Trägerverein von Kikili e.V. i.G. (Sandau). Darüber hinaus bestehen keine gesellschaftsrechtlichen Verbindungen zu Dritten.' : 'Bantu e.V. was the fiscal sponsor of tubman.network (an independent association since January 2024; we managed ongoing projects until 2025) and has been the fiscal sponsor of Kikili e.V. i.G. (Sandau) since 2022. There are no other corporate affiliations with third parties.' },
-  { n: 10, t: de ? 'Zuwendungen über 10 % des Jahresbudgets' : 'Funders above 10% of the annual budget', v: de ? 'Siehe jeweiliger Transparenzbericht.' : 'See the respective transparency report.' },
+  { n: 1, t: de ? 'Name, Sitz, Anschrift, Gründungsjahr' : fr ? 'Nom, siège, adresse, année de création' : 'Name, seat, address, year founded', v: `${org.legalName}, ${org.address.street}, ${org.address.zip} ${org.address.city} · ${de ? 'gegründet' : fr ? 'fondée' : 'founded'} ${org.founded}` },
+  { n: 2, t: de ? 'Satzung und Ziele' : fr ? 'Statuts et objectifs' : 'Statutes and objectives', v: de ? 'Ziele: siehe „Über uns“. Die Satzung senden wir auf Anfrage zu; die geänderte Fassung veröffentlichen wir nach Eintragung im Vereinsregister.' : fr ? 'Objectifs : voir « À propos ». Nous envoyons les statuts sur demande ; la version modifiée sera publiée après son inscription au registre.' : 'Objectives: see “About us”. We send the statutes on request; the amended version will be published once registered.', link: r('about', lang, '#mission') },
+  { n: 3, t: de ? 'Steuerbegünstigung' : fr ? 'Exonération fiscale' : 'Tax-exempt status', v: de ? `Gemeinnützig anerkannt durch das ${org.tax.office}, Freistellungsbescheid vom ${org.tax.exemptionNotice}, Steuernummer ${org.tax.number}.` : fr ? `Reconnue d’intérêt général par le centre des impôts des collectivités de Berlin, avis d’exonération du ${org.tax.exemptionNotice}, numéro fiscal ${org.tax.number}.` : `Recognised as non-profit by the Berlin tax office for corporations, exemption notice of ${org.tax.exemptionNotice}, tax number ${org.tax.number}.` },
+  { n: 4, t: de ? 'Entscheidungsträger*innen' : fr ? 'Personnes décisionnaires' : 'Key decision-makers', v: boardText, link: r('people', lang) },
+  { n: 5, t: de ? 'Tätigkeitsbericht' : fr ? 'Rapport d’activité' : 'Activity report', v: de ? 'Jährliche Transparenzberichte seit 2020 (unten).' : fr ? 'Rapports de transparence annuels depuis 2020 (ci-dessous).' : 'Annual transparency reports since 2020 (below).' },
+  { n: 6, t: de ? 'Personalstruktur' : fr ? 'Structure du personnel' : 'Staff structure', v: de ? 'Ein hauptamtlicher Vorstand; projektbezogene Beschäftigte und Honorarkräfte; Ehrenamtliche (Stand Tätigkeitsbericht 2023–2025).' : fr ? 'Un membre du conseil d’administration salarié ; personnel et intervenants rémunérés par projet ; bénévoles (selon le rapport d’activité 2023–2025).' : 'One salaried board member; project-based staff and freelancers; volunteers (as of the 2023–2025 activity report).' },
+  { n: 7, t: de ? 'Mittelherkunft' : fr ? 'Origine des fonds' : 'Sources of funds', v: de ? 'Öffentliche Zuwendungen und Stiftungsmittel, Mitgliedsbeiträge, Spenden. Details in den Transparenzberichten.' : fr ? 'Subventions publiques et fonds de fondations, cotisations, dons. Détails dans les rapports de transparence.' : 'Public grants and foundation funding, membership fees, donations. Details in the transparency reports.' },
+  { n: 8, t: de ? 'Mittelverwendung' : fr ? 'Utilisation des fonds' : 'Use of funds', v: de ? 'Jedes Förderprojekt wird separat abgerechnet und mit Verwendungsnachweis belegt. Details in den Transparenzberichten.' : fr ? 'Chaque projet financé fait l’objet d’un décompte séparé avec justificatif d’utilisation. Détails dans les rapports de transparence.' : 'Each funded project is accounted for separately with a proof of use. Details in the transparency reports.' },
+  { n: 9, t: de ? 'Gesellschaftsrechtliche Verbundenheit' : fr ? 'Liens avec des tiers' : 'Affiliations with third parties', v: de ? 'Bantu e.V. war Trägerverein von tubman.network (seit Januar 2024 eigenständiger Verein, laufende Projekte bis 2025 von uns verwaltet) und ist seit 2022 Trägerverein von Kikili e.V. i.G. (Sandau). Darüber hinaus bestehen keine gesellschaftsrechtlichen Verbindungen zu Dritten.' : fr ? 'Bantu e.V. a été l’association porteuse de tubman.network (association indépendante depuis janvier 2024 ; nous avons géré les projets en cours jusqu’en 2025) et porte Kikili e.V. i.G. (Sandau) depuis 2022. Il n’existe pas d’autres liens juridiques avec des tiers.' : 'Bantu e.V. was the fiscal sponsor of tubman.network (an independent association since January 2024; we managed ongoing projects until 2025) and has been the fiscal sponsor of Kikili e.V. i.G. (Sandau) since 2022. There are no other corporate affiliations with third parties.' },
+  { n: 10, t: de ? 'Zuwendungen über 10 % des Jahresbudgets' : fr ? 'Bailleurs au-delà de 10 % du budget annuel' : 'Funders above 10% of the annual budget', v: de ? 'Siehe jeweiliger Transparenzbericht.' : fr ? 'Voir le rapport de transparence correspondant.' : 'See the respective transparency report.' },
 ];
 ---
 <Base lang={lang} title={title} description={lead} altHref={r('reports', de ? 'en' : 'de')}>
-  <PageHead lang={lang} title={title} lead={lead} crumbs={[{ label: de ? 'Wirkung' : 'Impact', href: r('impact', lang) }]} />
+  <PageHead lang={lang} title={title} lead={lead} crumbs={[{ label: de ? 'Wirkung' : fr ? 'Impact' : 'Impact', href: r('impact', lang) }]} />
 
   <section class="section section--tight">
     <div class="wrap">
-      <h2>{de ? 'Berichte zum Herunterladen' : 'Reports to download'}</h2>
+      <h2>{de ? 'Berichte zum Herunterladen' : fr ? 'Rapports à télécharger' : 'Reports to download'}</h2>
+      <p>{de ? 'Für jedes Jahr gibt es einen Jahresbericht (Tätigkeit, Projekte und Finanzen) und den Transparenzbericht nach den zehn Punkten der Initiative Transparente Zivilgesellschaft, jeweils auf Deutsch und Englisch. Alle Berichte sind vom Vorstand unterzeichnet.' : fr ? 'Pour chaque année, il existe un rapport annuel (activités, projets et finances) et le rapport de transparence selon les dix points de l’Initiative pour une société civile transparente, en allemand et en anglais. Tous les rapports sont signés par le conseil d’administration.' : 'For each year there is an annual report (activities, projects and finances) and the transparency report following the ten points of the Transparent Civil Society Initiative, in German and English. All reports are signed by the board.'}</p>
       <div class="years">
         {years.map((y) => (
           <div class="year panel">
             <div class="year__num">{y}</div>
             <div class="year__links">
               {reports.filter((d) => d.year === y).map((d) => (
-                <a href={href(d.file)} download>{d.lang === 'DE' ? (de ? 'Transparenzbericht (Deutsch)' : 'German edition') : (de ? 'Transparency Report (Englisch)' : 'English edition')} <span class="muted small">PDF · {d.size}</span></a>
+                <a href={href(d.file)} download>{d.title[lang]} <span class="muted small">PDF · {d.size}</span></a>
               ))}
             </div>
           </div>
         ))}
       </div>
-      <p class="small muted" style="margin-top:1rem">{de ? 'Die Einnahmen-Überschuss-Rechnung 2025 veröffentlichen wir nach Abgabe der Steuererklärung.' : 'We will publish the 2025 income and expenditure statement after the tax return has been filed.'}</p>
+      <p class="small muted" style="margin-top:1rem">{de ? 'Die Einnahmen-Überschuss-Rechnung 2025 veröffentlichen wir nach Abgabe der Steuererklärung.' : fr ? 'Nous publierons le compte de recettes et dépenses 2025 après le dépôt de la déclaration fiscale.' : 'We will publish the 2025 income and expenditure statement after the tax return has been filed.'}</p>
     </div>
   </section>
 
   <section class="section section--alt" id={de ? 'transparenz' : 'transparency'}>
     <div class="wrap">
-      <div class="eyebrow">{de ? 'Transparenz' : 'Transparency'}</div>
-      <h2>{de ? 'Zehn Angaben, die jede gemeinnützige Organisation machen sollte' : 'Ten disclosures every non-profit should make'}</h2>
-      <p class="lead">{de ? 'Wir orientieren uns an den zehn Punkten der Initiative Transparente Zivilgesellschaft.' : 'We follow the ten points of the Transparent Civil Society Initiative (Initiative Transparente Zivilgesellschaft).'}</p>
+      <div class="eyebrow">{de ? 'Transparenz' : fr ? 'Transparence' : 'Transparency'}</div>
+      <h2>{de ? 'Zehn Angaben, die jede gemeinnützige Organisation machen sollte' : fr ? 'Dix informations que toute organisation d’intérêt général devrait publier' : 'Ten disclosures every non-profit should make'}</h2>
+      <p class="lead">{de ? 'Wir orientieren uns an den zehn Punkten der Initiative Transparente Zivilgesellschaft.' : fr ? 'Nous suivons les dix points de l’Initiative pour une société civile transparente (Initiative Transparente Zivilgesellschaft).' : 'We follow the ten points of the Transparent Civil Society Initiative (Initiative Transparente Zivilgesellschaft).'}</p>
       <ol class="itz">
         {itz.map((i) => (
           <li>
             <span class="itz__n">{i.n}</span>
-            <div><h3>{i.t}</h3><p>{i.v}{i.link && <> <a href={i.link}>{de ? 'Mehr' : 'More'}</a></>}</p></div>
+            <div><h3>{i.t}</h3><p>{i.v}{i.link && <> <a href={i.link}>{de ? 'Mehr' : fr ? 'Plus' : 'More'}</a></>}</p></div>
           </li>
         ))}
       </ol>

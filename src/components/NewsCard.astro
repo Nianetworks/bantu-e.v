@@ -9,7 +9,7 @@ const t = ui[lang];
 const H = `h${headingLevel}`;
 const isEvent = d.type === 'event' && d.eventStart;
 const multiDay = isEvent && d.eventEnd && formatDate(d.eventStart!, lang) !== formatDate(d.eventEnd, lang);
-const when = !isEvent ? '' : multiDay ? `${formatDate(d.eventStart!, lang, { day: 'numeric', month: 'short' })} – ${formatDate(d.eventEnd!, lang, { day: 'numeric', month: 'short', year: 'numeric' })}` : formatLongDate(d.eventStart!, lang);
+const when = !isEvent ? '' : multiDay ? `${formatDate(d.eventStart!, lang, { day: 'numeric', month: 'short' })}–${formatDate(d.eventEnd!, lang, { day: 'numeric', month: 'short', year: 'numeric' })}` : formatLongDate(d.eventStart!, lang);
 const day = isEvent ? formatDate(d.eventStart!, lang, { day: 'numeric' }) : '';
 const mon = isEvent ? formatDate(d.eventStart!, lang, { month: 'short' }) : '';
 ---

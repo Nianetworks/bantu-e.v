@@ -1,12 +1,12 @@
 ---
-title: "Black Engagement Matters – Building Black Resilience"
-subtitle: "Schwarzes Engagement stärken – zum Abschluss der UN-Dekade für Menschen afrikanischer Abstammung"
+title: "Black Engagement Matters: Building Black Resilience"
+subtitle: "Schwarzes Engagement stärken: zum Abschluss der UN-Dekade für Menschen afrikanischer Abstammung"
 summary: "Zehn Schwarze Ressourcenpersonen wurden geschult, 30 Schwarze Organisationen bundesweit vernetzt."
 programme: inland
 status: completed
 country: "Deutschland"
 location: "bundesweit"
-period: "2023 – 2024"
+period: "2023–2024"
 start: 2023-01-01
 end: 2024-12-31
 implementer: "tubman.network e.V."

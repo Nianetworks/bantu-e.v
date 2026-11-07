@@ -8,24 +8,35 @@ import { org } from '../data/site';
 interface Props { lang: Lang }
 const { lang } = Astro.props;
 const de = lang === 'de';
-const title = de ? 'Barrierefreiheit' : 'Accessibility';
+const fr = lang === 'fr';
+const title = de ? 'Barrierefreiheit' : fr ? 'Accessibilité' : 'Accessibility';
 const lead = de
-  ? 'Unsere Website soll für alle Menschen gut nutzbar sein – auch für blinde und sehbehinderte Menschen, für Menschen mit motorischen oder kognitiven Einschränkungen und für alle, die mit dem Smartphone unterwegs sind.'
-  : 'Our website should work well for everyone – including blind and partially sighted people, people with motor or cognitive impairments, and everyone using a phone.';
+  ? 'Unsere Website soll für alle Menschen gut nutzbar sein, auch für blinde und sehbehinderte Menschen, für Menschen mit motorischen oder kognitiven Einschränkungen und für alle, die mit dem Smartphone unterwegs sind.'
+  : fr ? 'Notre site doit être facile à utiliser pour tout le monde, y compris pour les personnes aveugles et malvoyantes, les personnes ayant des limitations motrices ou cognitives et toutes celles qui naviguent sur smartphone.' : 'Our website should work well for everyone, including blind and partially sighted people, people with motor or cognitive impairments, and everyone using a phone.';
 const features = de
   ? [
-      ['text', 'Schrift vergrößern', 'In vier Stufen bis 150 % – das Layout passt sich an. Zusätzlich funktioniert der Browser-Zoom (Strg/Cmd und +) bis 400 %.'],
+      ['text', 'Schrift vergrößern', 'In vier Stufen bis 150 %. Das Layout passt sich an. Zusätzlich funktioniert der Browser-Zoom (Strg/Cmd und +) bis 400 %.'],
       ['contrast', 'Hoher Kontrast und dunkle Ansicht', 'Gelbe und weiße Schrift auf Schwarz oder eine augenschonende dunkle Ansicht.'],
-      ['easy', 'Gut lesbare Schrift', 'Atkinson Hyperlegible – entwickelt vom Braille Institute für Menschen mit Sehbehinderung.'],
+      ['easy', 'Gut lesbare Schrift', 'Atkinson Hyperlegible, entwickelt vom Braille Institute für Menschen mit Sehbehinderung.'],
       ['spacing', 'Mehr Abstand', 'Größerer Zeilen-, Wort- und Buchstabenabstand erleichtert das Lesen, z. B. bei Legasthenie.'],
       ['link', 'Links hervorheben', 'Alle Links werden unterstrichen und farbig hinterlegt.'],
       ['pause', 'Bewegung stoppen', 'Animationen werden abgeschaltet, auch die Foto-Diashow auf der Startseite (sie lässt sich außerdem jederzeit mit „Pause“ anhalten und mit den Pfeil-Knöpfen Bild für Bild ansehen; jedes Foto ist in einer Bildunterschrift beschrieben). Wir respektieren auch die Einstellung „Bewegung reduzieren“ Ihres Geräts.'],
       ['speaker', 'Seite vorlesen', 'Ihr Browser liest den Inhalt der Seite vor. Die Sprachausgabe läuft auf Ihrem Gerät; es werden keine Daten an uns oder Dritte übertragen.'],
     ]
+  : fr
+  ? [
+      ['text', 'Agrandir le texte', 'En quatre niveaux jusqu’à 150 %. La mise en page s’adapte. Le zoom du navigateur (Ctrl/Cmd et +) fonctionne aussi jusqu’à 400 %.'],
+      ['contrast', 'Contraste élevé et mode sombre', 'Texte jaune et blanc sur fond noir, ou un affichage sombre qui ménage les yeux.'],
+      ['easy', 'Police facile à lire', 'Atkinson Hyperlegible, conçue par le Braille Institute pour les personnes malvoyantes.'],
+      ['spacing', 'Plus d’espacement', 'Un interligne et des espaces plus grands facilitent la lecture, par exemple en cas de dyslexie.'],
+      ['link', 'Mettre les liens en évidence', 'Tous les liens sont soulignés et surlignés.'],
+      ['pause', 'Arrêter les animations', 'Les animations sont désactivées, y compris le diaporama de la page d’accueil (qu’on peut aussi arrêter à tout moment avec « Pause » et parcourir photo par photo avec les flèches ; chaque photo est décrite dans une légende). Nous respectons aussi le réglage « réduire les animations » de votre appareil.'],
+      ['speaker', 'Lire la page à voix haute', 'Votre navigateur lit la page à voix haute. La synthèse vocale fonctionne sur votre appareil ; aucune donnée n’est transmise à nous ou à des tiers.'],
+    ]
   : [
-      ['text', 'Bigger text', 'In four steps up to 150% – the layout adapts. Browser zoom (Ctrl/Cmd and +) also works up to 400%.'],
+      ['text', 'Bigger text', 'In four steps up to 150%. The layout adapts. Browser zoom (Ctrl/Cmd and +) also works up to 400%.'],
       ['contrast', 'High contrast and dark mode', 'Yellow and white text on black, or a gentle dark view.'],
-      ['easy', 'Easy-to-read font', 'Atkinson Hyperlegible – designed by the Braille Institute for people with low vision.'],
+      ['easy', 'Easy-to-read font', 'Atkinson Hyperlegible, designed by the Braille Institute for people with low vision.'],
       ['spacing', 'More spacing', 'Larger line, word and letter spacing makes reading easier, e.g. with dyslexia.'],
       ['link', 'Highlight links', 'All links are underlined and highlighted.'],
       ['pause', 'Stop motion', 'Animations are switched off, including the photo slideshow on the home page (which can also be stopped at any time with “Pause” and browsed photo by photo with the arrow buttons; every photo is described in a caption). We also respect your device’s “reduce motion” setting.'],
@@ -35,15 +46,15 @@ const features = de
 <Base lang={lang} title={title} description={lead} altHref={r('accessibility', de ? 'en' : 'de')}>
   <PageHead lang={lang} title={title} lead={lead}>
     <div class="btn-row" style="margin-top:1.25rem">
-      <button type="button" class="btn btn--gold" data-a11y-toggle aria-expanded="false" aria-controls="a11y-panel"><Icon name="access" /> {de ? 'Darstellung jetzt anpassen' : 'Adjust the display now'}</button>
-      <a class="btn btn--outline" href={r('easy', lang)}><Icon name="easy" /> {de ? 'Einfache Sprache' : 'Easy read'}</a>
+      <button type="button" class="btn btn--gold" data-a11y-toggle aria-expanded="false" aria-controls="a11y-panel"><Icon name="access" /> {de ? 'Darstellung jetzt anpassen' : fr ? 'Adapter l’affichage maintenant' : 'Adjust the display now'}</button>
+      <a class="btn btn--outline" href={r('easy', lang)}><Icon name="easy" /> {de ? 'Einfache Sprache' : fr ? 'Facile à lire' : 'Easy read'}</a>
     </div>
   </PageHead>
 
   <section class="section section--tight">
     <div class="wrap">
-      <h2>{de ? 'So passen Sie die Website an' : 'How to adjust the website'}</h2>
-      <p class="lead">{de ? 'Oben auf jeder Seite finden Sie den Knopf „Barrierefreiheit“. Ihre Einstellungen werden nur in Ihrem Browser gespeichert.' : 'You will find the “Accessibility” button at the top of every page. Your settings are only stored in your browser.'}</p>
+      <h2>{de ? 'So passen Sie die Website an' : fr ? 'Comment adapter le site' : 'How to adjust the website'}</h2>
+      <p class="lead">{de ? 'Oben auf jeder Seite finden Sie den Knopf „Barrierefreiheit“. Ihre Einstellungen werden nur in Ihrem Browser gespeichert.' : fr ? 'Vous trouverez le bouton « Accessibilité » en haut de chaque page. Vos réglages sont enregistrés uniquement dans votre navigateur.' : 'You will find the “Accessibility” button at the top of every page. Your settings are only stored in your browser.'}</p>
       <ul class="features">
         {features.map(([icon, h, p]) => (
           <li class="panel"><span class="icon-badge"><Icon name={icon as any} /></span><div><h3>{h}</h3><p>{p}</p></div></li>
@@ -55,22 +66,31 @@ const features = de
   <section class="section section--alt">
     <div class="wrap two-col">
       <div>
-        <h2>{de ? 'Mit Tastatur und Screenreader' : 'With keyboard and screen reader'}</h2>
+        <h2>{de ? 'Mit Tastatur und Screenreader' : fr ? 'Avec le clavier et un lecteur d’écran' : 'With keyboard and screen reader'}</h2>
         <ul>
           {de ? (
             <>
               <li><strong>Sprunglinks:</strong> Mit der Tabulatortaste erscheinen zuerst Links „Zum Inhalt“, „Zur Navigation“ und „Zum Kontakt“.</li>
               <li><strong>Menüs</strong> öffnen Sie mit Enter oder Leertaste und schließen sie mit Escape.</li>
-              <li><strong>Überschriften und Bereiche</strong> sind sauber ausgezeichnet – Screenreader wie NVDA, JAWS, VoiceOver und TalkBack können direkt dorthin springen.</li>
+              <li><strong>Überschriften und Bereiche</strong> sind sauber ausgezeichnet: Screenreader wie NVDA, JAWS, VoiceOver und TalkBack können direkt dorthin springen.</li>
               <li><strong>Bilder</strong> haben Alternativtexte; rein dekorative Grafiken werden ausgeblendet.</li>
               <li><strong>Links in neuem Fenster</strong> werden angesagt.</li>
               <li><strong>Sprache:</strong> Deutsche und englische Seiten sind entsprechend gekennzeichnet, damit die Sprachausgabe richtig betont.</li>
+            </>
+          ) : fr ? (
+            <>
+              <li><strong>Liens d’accès rapide :</strong> avec la touche Tab apparaissent d’abord « Aller au contenu », « Aller à la navigation » et « Aller au contact ».</li>
+              <li><strong>Les menus</strong> s’ouvrent avec Entrée ou Espace et se ferment avec Échap.</li>
+              <li><strong>Titres et zones</strong> sont correctement balisés : les lecteurs d’écran comme NVDA, JAWS, VoiceOver et TalkBack peuvent y accéder directement.</li>
+              <li><strong>Les images</strong> ont des alternatives textuelles ; les graphiques purement décoratifs sont masqués.</li>
+              <li><strong>Les liens qui ouvrent une nouvelle fenêtre</strong> sont annoncés.</li>
+              <li><strong>Langue :</strong> les pages en allemand, en anglais et en français sont balisées pour que la synthèse vocale les prononce correctement.</li>
             </>
           ) : (
             <>
               <li><strong>Skip links:</strong> press Tab to reveal “Skip to content”, “Skip to navigation” and “Skip to contact”.</li>
               <li><strong>Menus</strong> open with Enter or Space and close with Escape.</li>
-              <li><strong>Headings and regions</strong> are properly marked up – screen readers such as NVDA, JAWS, VoiceOver and TalkBack can jump to them directly.</li>
+              <li><strong>Headings and regions</strong> are properly marked up: screen readers such as NVDA, JAWS, VoiceOver and TalkBack can jump to them directly.</li>
               <li><strong>Images</strong> have text alternatives; purely decorative graphics are hidden.</li>
               <li><strong>Links that open a new window</strong> are announced.</li>
               <li><strong>Language:</strong> German and English pages are marked so speech output pronounces them correctly.</li>
@@ -79,7 +99,7 @@ const features = de
         </ul>
       </div>
       <div>
-        <h2>{de ? 'Was wir außerdem beachten' : 'What else we take care of'}</h2>
+        <h2>{de ? 'Was wir außerdem beachten' : fr ? 'Ce à quoi nous veillons aussi' : 'What else we take care of'}</h2>
         <ul>
           {de ? (
             <>
@@ -87,8 +107,17 @@ const features = de
               <li>Ausreichende Farbkontraste (mind. 4,5 : 1 für Text) und sichtbarer Tastaturfokus.</li>
               <li>Schaltflächen und Links sind mindestens 44 × 44 Pixel groß.</li>
               <li>Keine Zeitlimits, keine automatisch startenden Videos oder Töne, keine Pop-ups.</li>
-              <li>Keine Cookies und kein Tracking – kein Cookie-Banner, der im Weg steht.</li>
+              <li>Keine Cookies und kein Tracking, kein Cookie-Banner, der im Weg steht.</li>
               <li>Die Inhalte sind auch ohne JavaScript lesbar.</li>
+            </>
+          ) : fr ? (
+            <>
+              <li>Notre objectif est la conformité aux <strong>WCAG 2.2, niveau AA</strong> (selon la norme allemande BITV 2.0).</li>
+              <li>Des contrastes suffisants (au moins 4,5:1 pour le texte) et un focus clavier visible.</li>
+              <li>Les boutons et les liens mesurent au moins 44 × 44 pixels.</li>
+              <li>Pas de limite de temps, pas de vidéo ni de son en lecture automatique, pas de fenêtres surgissantes.</li>
+              <li>Pas de cookies ni de suivi, donc pas de bandeau de cookies qui gêne.</li>
+              <li>Les contenus restent lisibles sans JavaScript.</li>
             </>
           ) : (
             <>
@@ -96,7 +125,7 @@ const features = de
               <li>Sufficient colour contrast (at least 4.5:1 for text) and a visible keyboard focus.</li>
               <li>Buttons and links are at least 44 × 44 pixels.</li>
               <li>No time limits, no auto-playing video or sound, no pop-ups.</li>
-              <li>No cookies and no tracking – so no cookie banner in the way.</li>
+              <li>No cookies and no tracking, so no cookie banner in the way.</li>
               <li>Content is readable without JavaScript.</li>
             </>
           )}
@@ -108,9 +137,9 @@ const features = de
   <section class="section">
     <div class="wrap two-col">
       <div>
-        <h2>{de ? 'Erklärung zur Barrierefreiheit' : 'Accessibility statement'}</h2>
-        <p>{de ? 'Stand: 07.11.2026. Grundlage ist eine Selbstbewertung mit automatisierten Tests (axe-core) und manueller Prüfung mit Tastatur.' : 'Status: 7 November 2026. Based on a self-assessment with automated tests (axe-core) and manual keyboard testing.'}</p>
-        <h3>{de ? 'Bekannte Einschränkungen' : 'Known limitations'}</h3>
+        <h2>{de ? 'Erklärung zur Barrierefreiheit' : fr ? 'Déclaration d’accessibilité' : 'Accessibility statement'}</h2>
+        <p>{de ? 'Stand: 07.11.2026. Grundlage ist eine Selbstbewertung mit automatisierten Tests (axe-core) und manueller Prüfung mit Tastatur.' : fr ? 'État : 7 novembre 2026. Sur la base d’une auto-évaluation avec des tests automatisés (axe-core) et des tests manuels au clavier.' : 'Status: 7 November 2026. Based on a self-assessment with automated tests (axe-core) and manual keyboard testing.'}</p>
+        <h3>{de ? 'Bekannte Einschränkungen' : fr ? 'Limites connues' : 'Known limitations'}</h3>
         <ul>
           {de ? (
             <>
@@ -118,6 +147,14 @@ const features = de
               <li>Flyer und Grafiken enthalten teilweise Text im Bild; die wichtigen Informationen stehen zusätzlich als Text auf der Seite.</li>
               <li>Viele Projektfotos fehlen noch; sie werden mit Alternativtexten ergänzt.</li>
               <li>Unsere Seite in Einfacher Sprache ist nicht von einer Prüfgruppe für Leichte Sprache geprüft.</li>
+            </>
+          ) : fr ? (
+            <>
+              <li>Certains documents PDF (rapports, formulaires, dépliants) ne sont pas encore entièrement accessibles. Sur demande, nous envoyons volontiers les contenus dans un format accessible.</li>
+              <li>Les dépliants et graphiques contiennent parfois du texte en image ; les informations essentielles figurent aussi en texte sur la page.</li>
+              <li>Beaucoup de photos de projets manquent encore ; elles seront ajoutées avec des alternatives textuelles.</li>
+              <li>Notre page en langage facile n’a pas été vérifiée par un groupe de relecture spécialisé.</li>
+              <li>Les versions française et anglaise sont des traductions ; en cas de doute, la version allemande fait foi.</li>
             </>
           ) : (
             <>
@@ -130,9 +167,9 @@ const features = de
         </ul>
       </div>
       <div class="panel feedback">
-        <h2>{de ? 'Barriere gefunden?' : 'Found a barrier?'}</h2>
-        <p>{de ? 'Wenn Ihnen etwas nicht zugänglich ist oder Sie Inhalte in einem anderen Format brauchen, melden Sie sich bitte – wir kümmern uns darum.' : 'If something is not accessible to you or you need content in another format, please get in touch – we will take care of it.'}</p>
-        <p><a class="btn btn--dark" href={`mailto:${org.email}?subject=${encodeURIComponent(de ? 'Barriere auf der Website' : 'Accessibility barrier on the website')}`}><Icon name="mail" /> {org.email}</a></p>
+        <h2>{de ? 'Barriere gefunden?' : fr ? 'Vous avez trouvé un obstacle ?' : 'Found a barrier?'}</h2>
+        <p>{de ? 'Wenn Ihnen etwas nicht zugänglich ist oder Sie Inhalte in einem anderen Format brauchen, melden Sie sich bitte. Wir kümmern uns darum.' : fr ? 'Si un contenu ne vous est pas accessible ou si vous en avez besoin dans un autre format, contactez-nous. Nous nous en occupons.' : 'If something is not accessible to you or you need content in another format, please get in touch. We will take care of it.'}</p>
+        <p><a class="btn btn--dark" href={`mailto:${org.email}?subject=${encodeURIComponent(de ? 'Barriere auf der Website' : fr ? 'Obstacle d’accessibilité sur le site' : 'Accessibility barrier on the website')}`}><Icon name="mail" /> {org.email}</a></p>
         <p><a href={`tel:${org.phoneHref}`}><Icon name="phone" class="ic" /> {org.phone}</a></p>
       </div>
     </div>

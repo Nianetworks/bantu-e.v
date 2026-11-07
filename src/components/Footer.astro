@@ -1,37 +1,40 @@
 ---
 import Icon from './Icon.astro';
+import Phones from './Phones.astro';
+import SocialLinks from './SocialLinks.astro';
 import { href, r, ui, type Lang } from '../i18n';
 import { org } from '../data/site';
 interface Props { lang: Lang }
 const { lang } = Astro.props;
 const t = ui[lang];
 const de = lang === 'de';
+const fr = lang === 'fr';
 const year = new Date().getFullYear();
 const cols = [
   {
     title: 'Organisation',
     links: [
-      [de ? 'Über uns' : 'About us', r('about', lang)],
-      [de ? 'Menschen' : 'People', r('people', lang)],
-      [de ? 'Transparenz' : 'Transparency', r('reports', lang, de ? '#transparenz' : '#transparency')],
+      [de ? 'Über uns' : fr ? 'À propos' : 'About us', r('about', lang)],
+      [de ? 'Menschen' : fr ? 'Équipe' : 'People', r('people', lang)],
+      [de ? 'Transparenz' : fr ? 'Transparence' : 'Transparency', r('reports', lang, de ? '#transparenz' : '#transparency')],
       ['Downloads', r('downloads', lang)],
     ],
   },
   {
-    title: de ? 'Unsere Arbeit' : 'Our work',
+    title: de ? 'Unsere Arbeit' : fr ? 'Notre travail' : 'Our work',
     links: [
-      [de ? 'Inlandsarbeit' : 'Work in Germany', r('inland', lang)],
-      [de ? 'Internationale Zusammenarbeit' : 'International cooperation', r('international', lang)],
-      [de ? 'Programme' : 'Programmes', r('programmes', lang)],
-      [de ? 'Wirkung' : 'Impact', r('impact', lang)],
-      [de ? 'Veranstaltungen' : 'Events', r('events', lang)],
+      [de ? 'Inlandsarbeit' : fr ? 'Travail en Allemagne' : 'Work in Germany', r('inland', lang)],
+      [de ? 'Internationale Zusammenarbeit' : fr ? 'Coopération internationale' : 'International cooperation', r('international', lang)],
+      [de ? 'Programme' : fr ? 'Programmes' : 'Programmes', r('programmes', lang)],
+      [de ? 'Wirkung' : fr ? 'Impact' : 'Impact', r('impact', lang)],
+      [de ? 'Veranstaltungen' : fr ? 'Événements' : 'Events', r('events', lang)],
     ],
   },
   {
-    title: de ? 'Unterstützen' : 'Support',
+    title: de ? 'Unterstützen' : fr ? 'Soutenir' : 'Support',
     links: [
       [t.donate, r('donate', lang)],
-      [de ? 'Mitglied werden' : 'Become a member', r('join', lang, '#membership')],
+      [de ? 'Mitglied werden' : fr ? 'Devenir membre' : 'Become a member', r('join', lang, '#membership')],
       ['Shop', r('shop', lang)],
       [t.contact, r('contact', lang)],
     ],
@@ -45,12 +48,15 @@ const cols = [
   <div class="wrap footer-grid">
     <div class="footer-brand">
       <img class="keep-color" src={href('/brand/bantu-logo-on-dark.png')} width="120" height="142" alt="Bantu e.V." />
+      <p class="footer-motto" lang={lang}>{org.motto[lang]}</p>
       <p>{t.footerAbout}</p>
       <address>
         <span class="addr-line"><Icon name="pin" /> {org.address.street}, {org.address.zip} {org.address.city}</span>
         <a class="addr-line" href={`mailto:${org.email}`}><Icon name="mail" /> {org.email}</a>
-        <a class="addr-line" href={`tel:${org.phoneHref}`}><Icon name="phone" /> {org.phone}</a>
+        <Phones lang={lang} variant="footer" />
       </address>
+      <h2 class="footer-title footer-title--social">{de ? 'Folgen Sie uns' : fr ? 'Suivez-nous' : 'Follow us'}</h2>
+      <SocialLinks lang={lang} variant="dark" />
     </div>
     {cols.map((c) => (
       <nav aria-label={c.title}>
@@ -62,14 +68,13 @@ const cols = [
   <div class="wrap footer-a11y">
     <a href={r('accessibility', lang)}><Icon name="access" /> {t.a11y}</a>
     <a href={r('easy', lang)}><Icon name="easy" /> {t.easy}</a>
-    <span class="muted-dark">{de ? 'Keine Cookies · kein Tracking' : 'No cookies · no tracking'}</span>
+    <span class="muted-dark">{de ? 'Keine Cookies · kein Tracking' : fr ? 'Pas de cookies · pas de suivi' : 'No cookies · no tracking'}</span>
   </div>
   <div class="wrap footer-bottom">
     <p>© {year} {org.legalName} · {org.register.court}, {org.register.number}</p>
     <p class="footer-legal">
-      <a href={r('imprint', lang)}>{de ? 'Impressum' : 'Imprint'}</a>
-      <a href={r('privacy', lang)}>{de ? 'Datenschutz' : 'Privacy'}</a>
-      {org.socials.map((s) => <a href={s.url} rel="noopener" target="_blank">{s.name}<span class="sr-only"> {t.newWindow}</span></a>)}
+      <a href={r('imprint', lang)}>{de ? 'Impressum' : fr ? 'Mentions légales' : 'Imprint'}</a>
+      <a href={r('privacy', lang)}>{de ? 'Datenschutz' : fr ? 'Confidentialité' : 'Privacy'}</a>
     </p>
   </div>
 </footer>
@@ -80,11 +85,13 @@ const cols = [
   .footer-grid { display: grid; grid-template-columns: 1.6fr repeat(3, 1fr); gap: 2rem; padding-block: 2.5rem 2rem; }
   .footer-brand img { width: 120px; margin-bottom: 1rem; }
   .footer-brand p { max-width: 40ch; color: var(--on-deep-muted); }
+  .footer-brand .footer-motto { font-family: var(--font-serif); font-style: italic; font-size: 1.15rem; line-height: 1.4; color: #ffd34d; margin-bottom: .75rem; }
   address { font-style: normal; display: grid; gap: .35rem; }
   .addr-line { display: inline-flex; gap: .5rem; align-items: center; }
   .addr-line .icon { width: 1.1em; height: 1.1em; color: #ffd34d; }
   .site-footer a { color: var(--on-deep); text-decoration: none; }
   .site-footer a:hover { color: #ffd34d; text-decoration: underline; }
+  .footer-title--social { margin: 1.5rem 0 .6rem; }
   .footer-title { font-family: var(--font-sans); font-size: .85rem; letter-spacing: .14em; text-transform: uppercase; color: #ffd34d; margin-bottom: .9rem; }
   ul { list-style: none; padding: 0; margin: 0; }
   li { margin: 0; }

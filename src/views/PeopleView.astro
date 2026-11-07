@@ -1,4 +1,5 @@
 ---
+import OrgCard from '../components/OrgCard.astro';
 import Base from '../layouts/Base.astro';
 import PageHead from '../components/PageHead.astro';
 import Placeholder from '../components/Placeholder.astro';
@@ -9,20 +10,21 @@ import { org } from '../data/site';
 interface Props { lang: Lang }
 const { lang } = Astro.props;
 const de = lang === 'de';
+const fr = lang === 'fr';
 const visible = people.filter((p) => p.consent);
 const board = visible.filter((p) => p.group === 'board');
 const team = visible.filter((p) => p.group !== 'board');
-const title = de ? 'Menschen' : 'People';
+const title = de ? 'Menschen' : fr ? 'Équipe' : 'People';
 const lead = de
   ? 'Bantu e.V. lebt von Menschen: Vorstand, Mitglieder, Honorarkräfte, Ehrenamtliche und Partnerorganisationen in Uganda, Burundi und Berlin.'
-  : 'Bantu e.V. is its people: board, members, freelancers, volunteers and partner organisations in Uganda, Burundi and Berlin.';
+  : fr ? 'Bantu e.V., ce sont ses membres : conseil d’administration, adhérents, intervenants indépendants, bénévoles et organisations partenaires en Ouganda, au Burundi et à Berlin.' : 'Bantu e.V. is its people: board, members, freelancers, volunteers and partner organisations in Uganda, Burundi and Berlin.';
 ---
 <Base lang={lang} title={title} description={lead} altHref={r('people', de ? 'en' : 'de')}>
-  <PageHead lang={lang} title={title} lead={lead} crumbs={[{ label: de ? 'Über uns' : 'About us', href: r('about', lang) }]} />
+  <PageHead lang={lang} title={title} lead={lead} crumbs={[{ label: de ? 'Über uns' : fr ? 'À propos' : 'About us', href: r('about', lang) }]} />
 
   <section class="section section--tight">
     <div class="wrap">
-      <h2>{de ? 'Vorstand' : 'Board'}</h2>
+      <h2>{de ? 'Vorstand' : fr ? 'Conseil d’administration' : 'Board'}</h2>
       <div class="grid grid--3">
         {board.map((p) => (
           <article class="card person">
@@ -39,8 +41,8 @@ const lead = de
         <div class="panel note">
           <p>{de
             ? `Die Vorstandsmitglieder vertreten den Verein nach § 26 BGB. Maßgeblich ist die Eintragung im Vereinsregister (${org.register.court}, ${org.register.number}).`
-            : `Board members represent the association under § 26 BGB. The entry in the register of associations (${org.register.court}, ${org.register.number}) is authoritative.`}</p>
-          <p class="small muted">{de ? 'Der Vorstand wurde von der Mitgliederversammlung am 30.06.2024 für zwei Jahre gewählt. Die Mitglieder des Vorstands leben in Deutschland, Uganda und Irland.' : 'The board was elected by the general assembly on 30.06.2024 for two years. Its members live in Germany, Uganda and Ireland.'}</p>
+            : fr ? `Les membres du conseil d’administration représentent l’association selon le § 26 BGB. L’inscription au registre des associations (${org.register.court}, ${org.register.number}) fait foi.` : `Board members represent the association under § 26 BGB. The entry in the register of associations (${org.register.court}, ${org.register.number}) is authoritative.`}</p>
+          <p class="small muted">{de ? 'Der Vorstand wurde von der Mitgliederversammlung am 30.06.2024 für zwei Jahre gewählt. Die Mitglieder des Vorstands leben in Deutschland, Uganda und Irland.' : fr ? 'Le conseil d’administration a été élu par l’assemblée générale le 30.06.2024 pour deux ans. Ses membres vivent en Allemagne, en Ouganda et en Irlande.' : 'The board was elected by the general assembly on 30.06.2024 for two years. Its members live in Germany, Uganda and Ireland.'}</p>
         </div>
       </div>
     </div>
@@ -50,10 +52,10 @@ const lead = de
     <div class="wrap">
       <div class="section-head">
         <div>
-          <h2>{de ? 'Team, Honorarkräfte und Ehrenamtliche' : 'Team, freelancers and volunteers'}</h2>
+          <h2>{de ? 'Team, Honorarkräfte und Ehrenamtliche' : fr ? 'Équipe, intervenants et bénévoles' : 'Team, freelancers and volunteers'}</h2>
           <p>{de
-            ? 'Unsere Projekte tragen Projektkoordinator*innen, Trainer*innen und Referent*innen, Kinderbetreuer*innen, Übersetzer*innen und viele Ehrenamtliche – in Berlin und online aus aller Welt. Wir stellen hier nur Menschen mit Namen und Foto vor, die dem ausdrücklich zugestimmt haben.'
-            : 'Our projects are carried by project coordinators, trainers and speakers, childcare workers, interpreters and many volunteers – in Berlin and online from around the world. We only show people by name and photo here if they have explicitly agreed.'}</p>
+            ? 'Unsere Projekte tragen Projektkoordinator*innen, Trainer*innen und Referent*innen, Kinderbetreuer*innen, Übersetzer*innen und viele Ehrenamtliche, in Berlin und online aus aller Welt. Wir stellen hier nur Menschen mit Namen und Foto vor, die dem ausdrücklich zugestimmt haben.'
+            : fr ? 'Nos projets sont portés par des coordinatrices et coordinateurs, des formateurs et intervenants, des personnes qui gardent les enfants, des interprètes et de nombreux bénévoles, à Berlin et en ligne depuis le monde entier. Nous ne montrons ici des personnes avec nom et photo que si elles l’ont expressément accepté.' : 'Our projects are carried by project coordinators, trainers and speakers, childcare workers, interpreters and many volunteers, in Berlin and online from around the world. We only show people by name and photo here if they have explicitly agreed.'}</p>
         </div>
       </div>
       {team.length > 0
@@ -66,32 +68,33 @@ const lead = de
         : <div class="grid grid--4 roles">
             {(de
               ? [['Projektkoordination', 'plant und begleitet unsere Projekte in Berlin'], ['Trainer*innen & Referent*innen', 'gestalten Workshops und Schulungstage'], ['Ehrenamtliche', 'helfen bei Veranstaltungen, Übersetzung und Öffentlichkeitsarbeit'], ['Freiwillige', 'z. B. über das Europäische Solidaritätskorps']]
+              : fr ? [['Coordination de projets', 'planifie et accompagne nos projets à Berlin'], ['Formateurs et intervenants', 'conçoivent des ateliers et des journées de formation'], ['Bénévoles', 'aident lors des événements, pour la traduction et la communication'], ['Volontaires internationaux', 'par exemple via le Corps européen de solidarité']]
               : [['Project coordination', 'plans and supports our projects in Berlin'], ['Trainers & speakers', 'design workshops and training days'], ['Volunteers', 'help with events, translation and communications'], ['International volunteers', 'e.g. through the European Solidarity Corps']]
             ).map(([h, p]) => <div class="panel"><h3>{h}</h3><p>{p}</p></div>)}
           </div>}
-      <p style="margin-top:1.5rem"><a class="btn btn--dark" href={r('join', lang, '#volunteer')}>{de ? 'Mitmachen' : 'Join the team'}</a></p>
+      <p style="margin-top:1.5rem"><a class="btn btn--dark" href={r('join', lang, '#volunteer')}>{de ? 'Mitmachen' : fr ? 'Rejoindre l’équipe' : 'Join the team'}</a></p>
     </div>
   </section>
 
   <section class="section" id={de ? 'partner' : 'partners'}>
     <div class="wrap">
-      <h2>{de ? 'Partnerorganisationen' : 'Partner organisations'}</h2>
-      <p class="lead">{de ? 'Wir arbeiten nicht für, sondern mit Gemeinschaften – ohne Hierarchie, mit Vertrauen.' : 'We work with communities, not for them – without hierarchy, with trust.'}</p>
-      <h3 class="subhead">{de ? 'In Uganda und Burundi' : 'In Uganda and Burundi'}</h3>
+      <h2>{de ? 'Partnerorganisationen' : fr ? 'Organisations partenaires' : 'Partner organisations'}</h2>
+      <p class="lead">{de ? 'Wir arbeiten nicht für Gemeinschaften, sondern mit ihnen: ohne Hierarchie und mit Vertrauen.' : fr ? 'Nous travaillons avec les communautés, pas pour elles : sans hiérarchie et avec confiance.' : 'We work with communities, not for them: without hierarchy and with trust.'}</p>
+      <h3 class="subhead">{de ? 'In Uganda und Burundi' : fr ? 'En Ouganda et au Burundi' : 'In Uganda and Burundi'}</h3>
       <div class="grid grid--3">
-        {partnersSouth.map((o) => <div class="panel org"><h4>{o.url ? <a href={o.url} rel="noopener">{o.name}</a> : o.name}</h4><p class="small muted">{o.place}{o.since ? ` · ${de ? 'Partner seit' : 'partner since'} ${o.since}` : ''}</p><p>{o.text[lang]}</p>{o.url && <p class="org__url small">{o.url.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '')}</p>}</div>)}
+        {partnersSouth.map((o) => <OrgCard lang={lang} org={o} />)}
       </div>
-      <h3 class="subhead">{de ? 'In Deutschland' : 'In Germany'}</h3>
-      <div class="grid grid--4">
-        {partnersNorth.map((o) => <div class="panel org"><h4>{o.url ? <a href={o.url} rel="noopener">{o.name}</a> : o.name}</h4><p class="small muted">{o.place}</p><p>{o.text[lang]}</p>{o.url && <p class="org__url small">{o.url.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '')}</p>}</div>)}
+      <h3 class="subhead">{de ? 'In Deutschland' : fr ? 'En Allemagne' : 'In Germany'}</h3>
+      <div class="grid grid--3">
+        {partnersNorth.map((o) => <OrgCard lang={lang} org={o} />)}
       </div>
     </div>
   </section>
 
   <section class="section section--sand section--tight">
     <div class="wrap">
-      <h2 id={de ? 'foerderer' : 'funders'}>{de ? 'Förderer unserer Projekte' : 'Funders of our projects'}</h2>
-      <p>{de ? 'Wir danken allen Förderern, die unsere Arbeit möglich machen. Die Logos führen zu den Websites der Förderer.' : 'We thank all funders who make our work possible. The logos link to the funders’ websites.'}</p>
+      <h2 id={de ? 'foerderer' : 'funders'}>{de ? 'Förderer unserer Projekte' : fr ? 'Bailleurs de nos projets' : 'Funders of our projects'}</h2>
+      <p>{de ? 'Wir danken allen Förderern, die unsere Arbeit möglich machen. Die Logos führen zu den Websites der Förderer.' : fr ? 'Nous remercions tous les bailleurs qui rendent notre travail possible. Les logos mènent à leurs sites.' : 'We thank all funders who make our work possible. The logos link to the funders’ websites.'}</p>
       <ul class="funder-grid">
         {funders.map((f) => (
           <li>
@@ -103,7 +106,7 @@ const lead = de
           </li>
         ))}
       </ul>
-      <p class="small muted">{de ? 'Vielen Dank auch an alle Mitglieder und Spender*innen.' : 'Thank you also to all members and donors.'}</p>
+      <p class="small muted">{de ? 'Vielen Dank auch an alle Mitglieder und Spender*innen.' : fr ? 'Merci aussi à tous nos membres et donateurs.' : 'Thank you also to all members and donors.'}</p>
     </div>
   </section>
 </Base>

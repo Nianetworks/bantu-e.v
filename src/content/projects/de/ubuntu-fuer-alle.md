@@ -1,12 +1,12 @@
 ---
 title: "Ubuntu für alle & Equal Rights for All"
 subtitle: "Unterstützung für Schwarze und BIPoC-Geflüchtete aus der Ukraine in Berlin"
-summary: "Nach Kriegsbeginn 2022 unterstützten wir rund 1.800 BIPoC-Geflüchtete aus der Ukraine – mit Beratung, Sprachkursen, Jobvermittlung und Empowerment."
+summary: "Nach Kriegsbeginn 2022 unterstützten wir rund 1.800 BIPoC-Geflüchtete aus der Ukraine, mit Beratung, Sprachkursen, Jobvermittlung und Empowerment."
 programme: inland
 status: completed
 country: "Deutschland"
 location: "Berlin"
-period: "2022 – 2023"
+period: "2022–2023"
 start: 2022-01-01
 end: 2023-12-31
 funders: ["Deutsche Stiftung für Engagement und Ehrenamt (DSEE)", "Deutsche Fernsehlotterie / Deutsches Hilfswerk"]
@@ -20,7 +20,7 @@ sources:
   - "Bantu_eV_Taetigkeitsbericht_2023_2025.pdf (3.2, 9.1)"
 ---
 
-Als der Krieg in der Ukraine begann, flohen auch viele Schwarze Menschen und People of Color nach Berlin – Studierende, Arbeitnehmer*innen und Familien, die auf der Flucht und bei der Ankunft oft zusätzliche Diskriminierung erlebten.
+Als der Krieg in der Ukraine begann, flohen auch viele Schwarze Menschen und People of Color nach Berlin: Studierende, Arbeitnehmer*innen und Familien, die auf der Flucht und bei der Ankunft oft zusätzliche Diskriminierung erlebten.
 
 Mit **Ubuntu für alle** (gefördert von der DSEE) haben wir 2022 rund **1.800 BIPoC-Geflüchtete aus der Ukraine** unterstützt. 2023 setzten wir die Arbeit mit **Equal Rights for All** fort (gefördert von der Deutschen Fernsehlotterie / Deutsches Hilfswerk):
 

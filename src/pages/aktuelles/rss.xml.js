@@ -5,7 +5,7 @@ import { newsPath } from '../../i18n';
 export async function GET(context) {
   const items = await getNews('de');
   return rss({
-    title: 'Bantu e.V. – Aktuelles',
+    title: 'Bantu e.V.: Aktuelles',
     description: 'Neuigkeiten und Veranstaltungen von Bantu e.V., Berlin',
     site: context.site,
     items: items.map((n) => ({

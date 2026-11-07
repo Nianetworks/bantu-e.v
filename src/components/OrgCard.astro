@@ -1,0 +1,30 @@
+---
+// Partner organisation with logo plate (white, or dark for light logos), linked name and short text.
+import { href, type Lang } from '../i18n';
+import { orgLogo, type Org } from '../data/people';
+interface Props { lang: Lang; org: Org; level?: 'h3' | 'h4' }
+const { lang, org: o, level = 'h4' } = Astro.props;
+const de = lang === 'de';
+const fr = lang === 'fr';
+const logo = orgLogo(o, lang);
+const H = level;
+const initials = o.name.replace(/\(.*?\)/g, '').split(/[\s.-]+/).filter((w) => /^[A-ZÄÖÜ]/.test(w)).slice(0, 3).map((w) => w[0]).join('');
+---
+<div class="panel org">
+  <div class={`org__plate ${o.logoDark ? 'org__plate--dark' : ''}`} aria-hidden="true">
+    {logo ? <img src={href(logo)} alt="" loading="lazy" /> : <span class="org__initials">{initials}</span>}
+  </div>
+  <H class="org__name">{o.url ? <a href={o.url} rel="noopener">{o.name}</a> : o.name}</H>
+  <p class="small muted">{o.place}{o.since ? ` · ${de ? 'Partner seit' : fr ? 'partenaire depuis' : 'partner since'} ${o.since}` : ''}</p>
+  <p>{o.text[lang] ?? o.text.en}</p>
+  {o.url && <p class="org__url small">{o.url.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '')}</p>}
+</div>
+<style>
+  .org { display: flex; flex-direction: column; }
+  .org__plate { display: grid; place-items: center; height: 96px; margin: -.25rem -.25rem 1rem; padding: .75rem 1rem; background: #fff; border: 1px solid var(--line); border-radius: 12px; }
+  .org__plate--dark { background: #2b1d16; border-color: #2b1d16; }
+  .org__plate img { max-width: 100%; max-height: 70px; width: auto; height: auto; object-fit: contain; }
+  .org__initials { font: 700 1.6rem var(--font-serif); color: #3a3a3a; letter-spacing: .06em; }
+  .org__name { margin: 0 0 .2rem; font-size: 1.1rem; line-height: 1.3; overflow-wrap: break-word; }
+  .org__url { margin-top: auto; color: var(--muted); overflow-wrap: anywhere; }
+</style>

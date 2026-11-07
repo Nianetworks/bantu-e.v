@@ -8,21 +8,31 @@ import { org } from '../data/site';
 interface Props { lang: Lang }
 const { lang } = Astro.props;
 const de = lang === 'de';
-const title = de ? 'Bantu e.V. in Einfacher Sprache' : 'Bantu e.V. – easy read';
+const fr = lang === 'fr';
+const title = de ? 'Bantu e.V. in Einfacher Sprache' : fr ? 'Bantu e.V. : facile à lire' : 'Bantu e.V.: easy read';
 type Block = { icon: string; h: string; lines: string[]; link?: [string, string] };
 const blocks: Block[] = de
   ? [
       { icon: 'people', h: 'Wer sind wir?', lines: ['Wir sind ein Verein.', 'Der Verein heißt Bantu e.V.', 'Unser Büro ist in Berlin.', 'Uns gibt es seit 2019.', 'Bantu heißt: Menschen.'] },
-      { icon: 'heart', h: 'Was ist uns wichtig?', lines: ['Alle Menschen sollen gerecht leben können.', 'Alle Menschen sollen gut lernen können.', 'Wir helfen uns gegenseitig.', 'Unser Motto ist: Ich bin, weil wir sind.'] },
+      { icon: 'heart', h: 'Was ist uns wichtig?', lines: ['Alle Menschen sollen gerecht leben können.', 'Alle Menschen sollen gut lernen können.', 'Wir helfen uns gegenseitig.', 'Unser Motto ist: Gemeinsam bauen wir nachhaltige und selbstbestimmte Gemeinschaften.'] },
       { icon: 'globe', h: 'Was machen wir in Afrika?', lines: ['Wir arbeiten mit Vereinen in Uganda und Burundi.', 'Diese Vereine kennen die Menschen vor Ort.', 'Zusammen eröffnen wir einen Kindergarten in Kampala.', 'Zusammen bauen wir einen Brunnen für sauberes Wasser in Burundi.', 'Junge Frauen haben mit unserer Hilfe einen Beruf gelernt.'], link: ['Mehr über unsere Arbeit in Afrika', 'international'] },
       { icon: 'school', h: 'Was machen wir in Berlin?', lines: ['Wir machen Workshops an Schulen.', 'Dort lernen Schüler und Schülerinnen über Afrika und Gerechtigkeit.', 'Wir machen Treffen für Menschen aus Afrika und ihre Nachbarn.', 'Die Treffen sind meistens kostenlos.', 'Oft gibt es eine Betreuung für Kinder.'], link: ['Mehr über unsere Arbeit in Berlin', 'inland'] },
       { icon: 'calendar', h: 'Wann sind Treffen?', lines: ['Alle Termine stehen auf der Seite Veranstaltungen.', 'Sie können sich per E-Mail anmelden.'], link: ['Zu den Terminen', 'events'] },
       { icon: 'hand', h: 'Wie können Sie mitmachen?', lines: ['Sie können Mitglied werden.', 'Das kostet 5 Euro im Monat.', 'Wenn Sie wenig Geld haben: 2 Euro 50.', 'Sie können auch ohne Geld helfen.', 'Zum Beispiel bei Festen oder beim Übersetzen.'], link: ['Mitmachen', 'join'] },
       { icon: 'gift', h: 'Wie können Sie spenden?', lines: ['Sie können uns Geld überweisen.', 'Das Geld geht in unsere Projekte.', 'Sie bekommen eine Bestätigung für das Finanzamt.'], link: ['Zur Spenden-Seite', 'donate'] },
     ]
+  : fr ? [
+      { icon: 'people', h: 'Qui sommes-nous ?', lines: ['Nous sommes une association.', 'Elle s’appelle Bantu e.V.', 'Notre bureau est à Berlin.', 'Nous existons depuis 2019.', 'Bantu veut dire : les êtres humains.'] },
+      { icon: 'heart', h: 'Qu’est-ce qui compte pour nous ?', lines: ['Tout le monde doit pouvoir vivre de façon juste.', 'Tout le monde doit pouvoir bien apprendre.', 'Nous nous aidons les uns les autres.', 'Notre devise : Ensemble, nous bâtissons des communautés durables et autonomes.'] },
+      { icon: 'globe', h: 'Que faisons-nous en Afrique ?', lines: ['Nous travaillons avec des associations en Ouganda et au Burundi.', 'Ces associations connaissent les gens sur place.', 'Ensemble, nous ouvrons un jardin d’enfants à Kampala.', 'Ensemble, nous construisons un point d’eau propre au Burundi.', 'Avec notre aide, des jeunes femmes ont appris un métier.'], link: ['En savoir plus sur notre travail en Afrique', 'international'] },
+      { icon: 'school', h: 'Que faisons-nous à Berlin ?', lines: ['Nous faisons des ateliers dans les écoles.', 'Les élèves y apprennent des choses sur l’Afrique et la justice.', 'Nous organisons des rencontres pour des personnes venues d’Afrique et leurs voisins.', 'Les rencontres sont presque toujours gratuites.', 'Souvent, il y a une garde pour les enfants.'], link: ['En savoir plus sur notre travail à Berlin', 'inland'] },
+      { icon: 'calendar', h: 'Quand ont lieu les rencontres ?', lines: ['Toutes les dates sont sur la page Événements.', 'Vous pouvez vous inscrire par e-mail.'], link: ['Voir les dates', 'events'] },
+      { icon: 'hand', h: 'Comment participer ?', lines: ['Vous pouvez devenir membre.', 'Cela coûte 5 euros par mois.', 'Si vous avez peu d’argent : 2 euros 50.', 'Vous pouvez aussi aider sans argent.', 'Par exemple lors de fêtes ou en traduisant.'], link: ['S’engager', 'join'] },
+      { icon: 'gift', h: 'Comment faire un don ?', lines: ['Vous pouvez nous virer de l’argent.', 'L’argent va dans nos projets.', 'Vous recevez une attestation pour les impôts.'], link: ['Aller à la page des dons', 'donate'] },
+    ]
   : [
       { icon: 'people', h: 'Who are we?', lines: ['We are an association.', 'It is called Bantu e.V.', 'Our office is in Berlin.', 'We started in 2019.', 'Bantu means: people.'] },
-      { icon: 'heart', h: 'What matters to us?', lines: ['Everyone should be able to live a fair life.', 'Everyone should be able to learn well.', 'We help each other.', 'Our motto is: I am because we are.'] },
+      { icon: 'heart', h: 'What matters to us?', lines: ['Everyone should be able to live a fair life.', 'Everyone should be able to learn well.', 'We help each other.', 'Our motto is: Together, we build sustainable and empowered communities.'] },
       { icon: 'globe', h: 'What do we do in Africa?', lines: ['We work with groups in Uganda and Burundi.', 'These groups know the local people.', 'Together we are opening a kindergarten in Kampala.', 'Together we are building a well for clean water in Burundi.', 'Young women learned a job with our help.'], link: ['More about our work in Africa', 'international'] },
       { icon: 'school', h: 'What do we do in Berlin?', lines: ['We run workshops in schools.', 'Students learn about Africa and fairness.', 'We organise meetings for people from Africa and their neighbours.', 'Most meetings are free.', 'There is often childcare.'], link: ['More about our work in Berlin', 'inland'] },
       { icon: 'calendar', h: 'When are the meetings?', lines: ['All dates are on the events page.', 'You can sign up by e-mail.'], link: ['See the dates', 'events'] },
@@ -30,12 +40,12 @@ const blocks: Block[] = de
       { icon: 'gift', h: 'How can you donate?', lines: ['You can send us money by bank transfer.', 'The money goes to our projects.', 'You get a receipt for the tax office.'], link: ['Go to the donation page', 'donate'] },
     ];
 ---
-<Base lang={lang} title={title} description={de ? 'Informationen über Bantu e.V. in Einfacher Sprache.' : 'Information about Bantu e.V. in easy read.'} altHref={r('easy', de ? 'en' : 'de')}>
+<Base lang={lang} title={title} description={de ? 'Informationen über Bantu e.V. in Einfacher Sprache.' : fr ? 'Informations sur Bantu e.V. en langage facile.' : 'Information about Bantu e.V. in easy read.'} altHref={r('easy', de ? 'en' : 'de')}>
   <section class="easy-head">
     <div class="narrow">
-      <p class="eyebrow">{de ? 'Einfache Sprache' : 'Easy read'}</p>
+      <p class="eyebrow">{de ? 'Einfache Sprache' : fr ? 'Facile à lire' : 'Easy read'}</p>
       <h1>{title}</h1>
-      <p class="easy-intro">{de ? 'Auf dieser Seite erklären wir unseren Verein in einfachen Worten.' : 'On this page we explain our association in simple words.'}</p>
+      <p class="easy-intro">{de ? 'Auf dieser Seite erklären wir unseren Verein in einfachen Worten.' : fr ? 'Sur cette page, nous expliquons notre association avec des mots simples.' : 'On this page we explain our association in simple words.'}</p>
     </div>
   </section>
   <section class="section section--tight">
@@ -53,9 +63,10 @@ const blocks: Block[] = de
       <section class="easy-block">
         <span class="icon-badge icon-badge--easy"><Icon name="mail" /></span>
         <div>
-          <h2>{de ? 'Haben Sie Fragen?' : 'Do you have questions?'}</h2>
-          <p>{de ? 'Schreiben Sie uns eine E-Mail:' : 'Send us an e-mail:'}<br /><a href={`mailto:${org.email}`}>{org.email}</a></p>
-          <p>{de ? 'Oder rufen Sie uns an:' : 'Or call us:'}<br /><a href={`tel:${org.phoneHref}`}>{org.phone}</a></p>
+          <h2>{de ? 'Haben Sie Fragen?' : fr ? 'Vous avez des questions ?' : 'Do you have questions?'}</h2>
+          <p>{de ? 'Schreiben Sie uns eine E-Mail:' : fr ? 'Envoyez-nous un e-mail :' : 'Send us an e-mail:'}<br /><a href={`mailto:${org.email}`}>{org.email}</a></p>
+          <p>{de ? 'Oder rufen Sie im Büro an:' : fr ? 'Ou appelez le bureau :' : 'Or call the office:'}<br /><a href={`tel:${org.officePhoneHref}`}>{org.officePhone}</a></p>
+          <p>{de ? 'Handy: ' : fr ? 'Portable : ' : 'Mobile: '}<a href={`tel:${org.phoneHref}`}>{org.phone}</a><br />{de ? 'Am Handy sind wir von 16 Uhr bis 20 Uhr da.' : fr ? 'Nous répondons au portable de 16 h à 20 h.' : 'We answer the mobile from 4 pm to 8 pm.'}<br />{de ? 'Sie können auch über Signal, Threema, Telegram oder WhatsApp schreiben.' : fr ? 'Vous pouvez aussi écrire par Signal, Threema, Telegram ou WhatsApp.' : 'You can also write via Signal, Threema, Telegram or WhatsApp.'}</p>
         </div>
       </section>
     </div>

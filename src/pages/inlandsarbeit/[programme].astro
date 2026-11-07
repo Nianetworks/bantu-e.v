@@ -1,0 +1,9 @@
+---
+import RegionProgrammeView from '../../views/RegionProgrammeView.astro';
+import { regionProgrammeParams } from '../../lib/regionParams';
+export async function getStaticPaths() {
+  return regionProgrammeParams('de', 'inland');
+}
+const { programme } = Astro.props;
+---
+<RegionProgrammeView lang="de" region="inland" programme={programme} />

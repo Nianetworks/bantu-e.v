@@ -4,21 +4,40 @@
 // works with keyboard, touch and screen readers – no hover-only menus).
 import Icon from './Icon.astro';
 import A11yPanel from './A11yPanel.astro';
-import { href, mainNav, r, ui, type Lang } from '../i18n';
+import { href, langNames, mainNav, projectPath, r, ui, type Lang } from '../i18n';
 import { org } from '../data/site';
-interface Props { lang: Lang; altHref?: string }
-const { lang, altHref } = Astro.props;
+import { getProjects, slugOf, type Project } from '../lib/content';
+import { programmes, regions, regionPath, regionProgrammePath, type Region } from '../data/programmes';
+interface Props { lang: Lang; switchLinks: { lang: Lang; href: string; exact: boolean }[] }
+const { lang, switchLinks } = Astro.props;
 const t = ui[lang];
 const de = lang === 'de';
+const fr = lang === 'fr';
 const nav = mainNav(lang);
-const other: Lang = de ? 'en' : 'de';
-const switchHref = altHref ?? r('home', other);
+// Mega menus for the two work areas: programme -> projects in that area.
+const allProjects = await getProjects(lang);
+const bySlug = new Map(allProjects.map((p) => [slugOf(p.id), p]));
+const megaFor = (region: Region) => {
+  const rg = regions.find((x) => x.key === region)!;
+  const groups = programmes
+    .map((p) => ({
+      prog: p,
+      href: regionProgrammePath(lang, region, p.key),
+      items: p.projects.map((s) => bySlug.get(s)).filter((x): x is Project => !!x && x.data.programme === region),
+      extra: region === 'inland' && p.key === 'education' ? [{ label: de ? 'Bildungsangebote: Workshops und Begleitung' : fr ? 'Ateliers, formations et accompagnement' : 'Workshops, training and support', href: r('offers', lang) }]
+        : region === 'inland' && p.key === 'migration' ? [{ label: de ? 'Verfahrensberatung' : fr ? 'Conseil sur les procédures' : 'Procedural advice', href: regionProgrammePath(lang, region, p.key) + (de ? '#beratung' : '#advice') }] : [],
+    }))
+    .filter((g) => g.items.length > 0 || g.extra.length > 0);
+  return { rg, groups };
+};
+const megas = { inland: megaFor('inland'), international: megaFor('international') };
+const shortTitle = (p: Project) => p.data.title.replace(/\s+[–—]\s+/, ': ');
 const current = Astro.url.pathname;
 const isCurrent = (h: string) => h !== r('home', lang) && current.startsWith(h.split('#')[0]);
 
 // Compact (burger) navigation: used on small screens and – because large text needs more room –
 // at wider breakpoints when the visitor has enlarged the text in the accessibility settings.
-const compactRules = ['.header-inner { min-height: 72px; }', '.logo-plate { padding: 8px 10px; margin-bottom: -66px; }', '.nav-toggle { display: inline-flex; align-items: center; gap: .55rem; min-height: var(--tap); background: var(--ink); color: var(--bg); border: 0; border-radius: 999px; padding: .55rem 1.1rem; font: 700 1rem var(--font-sans); cursor: pointer; }', '.nav-list { display: none; position: fixed; inset: var(--header-h, 112px) 0 0 0; background: var(--bg); flex-direction: column; align-items: stretch; gap: 0; padding: 5rem var(--gutter) 2.5rem; overflow-y: auto; border-top: 1px solid var(--line); }', '.is-scrolled .nav-list { padding-top: 1rem; }', '.nav-list.is-open { display: flex; }', '.nav-list > li { border-bottom: 1px solid var(--line); }', '.nav-link { width: 100%; justify-content: space-between; font-size: 1.15rem; padding: .85rem .25rem; }', '.sub { position: static; box-shadow: none; border: 0; padding: 0 0 .75rem .5rem; min-width: 0; background: transparent; }', '.nav-extra { border-bottom: 0 !important; margin: 1.5rem 0 0 !important; }', '.nav-donate { width: 100%; }'];
+const compactRules = ['.header-inner { min-height: 72px; }', '.logo-plate { padding: 8px 10px; margin-bottom: -66px; }', '.nav-toggle { display: inline-flex; align-items: center; gap: .55rem; min-height: var(--tap); background: var(--ink); color: var(--bg); border: 0; border-radius: 999px; padding: .55rem 1.1rem; font: 700 1rem var(--font-sans); cursor: pointer; }', '.nav-list { display: none; position: fixed; inset: var(--header-h, 112px) 0 0 0; background: var(--bg); flex-direction: column; align-items: stretch; gap: 0; padding: 5rem var(--gutter) 2.5rem; overflow-y: auto; border-top: 1px solid var(--line); }', '.is-scrolled .nav-list { padding-top: 1rem; }', '.nav-list.is-open { display: flex; }', '.nav-list > li { border-bottom: 1px solid var(--line); }', '.nav-link { width: 100%; justify-content: space-between; font-size: 1.15rem; padding: .85rem .25rem; }', '.sub { position: static; box-shadow: none; border: 0; padding: 0 0 .75rem .5rem; min-width: 0; background: transparent; }', '.nav-extra { border-bottom: 0 !important; margin: 1.5rem 0 0 !important; }', '.nav-disclosure[aria-expanded="true"] + .mega { display: block; }', '.mega__intro { border-right: 0; padding: 0 0 .75rem; }', '.mega__lead, .mega__places { display: none; }', '.mega__cols { grid-template-columns: 1fr; gap: .75rem; }', '.nav-donate { width: 100%; }'];
 const levels: [string, number][] = [['', 1120], ['html[data-text="lg"] ', 1260], ['html[data-text="xl"] ', 1400], ['html[data-text="xxl"] ', 1700]];
 const compactCss = levels.map(([pre, w]) => `@media (max-width: ${w}px) { ${compactRules.map((rule) => rule.split('{')[0].split(',').map((sel) => pre + sel.trim()).join(', ') + ' {' + rule.split('{').slice(1).join('{')).join(' ')} }`).join('\n');
 ---
@@ -31,25 +50,61 @@ const compactCss = levels.map(([pre, w]) => `@media (max-width: ${w}px) { ${comp
           <Icon name="access" /> {t.a11y}
         </button>
         <a class="util-link" href={`mailto:${org.email}`}><Icon name="mail" /> <span class="hide-sm">{org.email}</span><span class="sr-only show-sm">E-Mail</span></a>
-        <a class="util-link lang-switch" href={switchHref} hreflang={other} lang={other}>
-          <span aria-hidden="true">{other.toUpperCase()}</span><span class="sr-only">{t.otherLang}</span>
-        </a>
+        <nav class="langs" aria-label={t.language}>
+          <ul>
+            {switchLinks.map((s) => (
+              <li><a class="lang-link" href={s.href} hreflang={s.lang} lang={s.lang} aria-current={s.lang === lang ? 'true' : undefined}><span aria-hidden="true">{s.lang.toUpperCase()}</span><span class="sr-only">{langNames[s.lang]}</span></a></li>
+            ))}
+          </ul>
+        </nav>
       </div>
     </div>
   </div>
   <div class="wrap header-inner">
-    <a class="logo-plate" href={r('home', lang)} aria-label={de ? 'Bantu e.V. – zur Startseite' : 'Bantu e.V. – home page'}>
+    <a class="logo-plate" href={r('home', lang)} aria-label={de ? 'Bantu e.V.: zur Startseite' : fr ? 'Bantu e.V. : page d’accueil' : 'Bantu e.V.: home page'}>
       <img class="logo-full keep-color" src={href('/brand/bantu-logo.png')} width="120" height="142" alt="" />
       <img class="logo-emblem keep-color" src={href('/brand/bantu-emblem.png')} width="52" height="52" alt="" />
     </a>
-    <nav id="main-nav" class="main-nav" aria-label={de ? 'Hauptmenü' : 'Main menu'}>
+    <nav id="main-nav" class="main-nav" aria-label={de ? 'Hauptmenü' : fr ? 'Menu principal' : 'Main menu'}>
       <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-list">
         <Icon name="menu" /><span>{t.menu}</span>
       </button>
       <ul id="nav-list" class="nav-list">
         {nav.map((item, i) => (
-          <li class={item.children ? 'has-sub' : ''}>
-            {item.children ? (
+          <li class={item.mega ? 'has-sub has-mega' : item.children ? 'has-sub' : ''}>
+            {item.mega ? (
+              <>
+                <button type="button" class="nav-link nav-disclosure" aria-expanded="false" aria-controls={`sub-${i}`} data-current={isCurrent(item.href) ? 'true' : undefined}>
+                  {item.label}<Icon name="chevron" class="chev" />
+                </button>
+                <div class="sub mega" id={`sub-${i}`}>
+                  <div class="mega__intro">
+                    <a class="mega__overview" href={item.href} aria-current={current === item.href ? 'page' : undefined}>
+                      <span class="mega__eyebrow">{de ? 'Überblick' : fr ? 'Vue d’ensemble' : 'Overview'}</span>
+                      <strong>{item.label}</strong>
+                      <span class="mega__places">{megas[item.mega].rg.places[lang]}</span>
+                    </a>
+                    <p class="mega__lead">{megas[item.mega].rg.navLead[lang]}</p>
+                    <a class="mega__more" href={r('programmes', lang)}>{de ? 'Alle Programme' : fr ? 'Tous les programmes' : 'All programmes'} <Icon name="arrow" /></a>
+                    <a class="mega__more" href={r('projects', lang)}>{t.allProjects} <Icon name="arrow" /></a>
+                  </div>
+                  <ul class="mega__cols">
+                    {megas[item.mega].groups.map((g) => (
+                      <li class={`mega__col accent--${g.prog.accent}`}>
+                        <a class="mega__prog" href={g.href} aria-current={current === g.href ? 'page' : undefined}>
+                          <span class="mega__no">{de ? 'Programm' : fr ? 'Programme' : 'Programme'} {g.prog.no}</span>
+                          {g.prog.title[lang]}
+                        </a>
+                        <ul>
+                          {g.items.map((p) => <li><a href={projectPath(lang, slugOf(p.id))}>{shortTitle(p)}{p.data.status === 'completed' && <span class="mega__done"> · {t.projectStatus.completed}</span>}</a></li>)}
+                          {g.extra.map((x) => <li><a href={x.href}>{x.label}</a></li>)}
+                        </ul>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </>
+            ) : item.children ? (
               <>
                 <button type="button" class="nav-link nav-disclosure" aria-expanded="false" aria-controls={`sub-${i}`} data-current={isCurrent(item.href) ? 'true' : undefined}>
                   {item.label}<Icon name="chevron" class="chev" />
@@ -134,7 +189,12 @@ const compactCss = levels.map(([pre, w]) => `@media (max-width: ${w}px) { ${comp
   .util-link .icon { width: 1.15em; height: 1.15em; }
   .util-btn { background: transparent; border: 0; font: 600 .9rem var(--font-sans); cursor: pointer; }
   .util-btn[aria-expanded='true'] { background: var(--gold); color: #000; }
-  .lang-switch { border: 1.5px solid rgba(255,255,255,.6); letter-spacing: .06em; margin-left: .25rem; }
+  .langs ul { list-style: none; margin: 0 0 0 .35rem; padding: 0; display: flex; align-items: center; }
+  .langs li { margin: 0; display: flex; align-items: center; }
+  .langs li + li::before { content: ''; width: 1px; height: 1.1em; background: rgba(255,255,255,.45); }
+  .lang-link { display: inline-flex; align-items: center; justify-content: center; min-width: 40px; min-height: 36px; padding: .3rem .55rem; color: var(--on-deep); font-weight: 700; letter-spacing: .06em; text-decoration: none; border-radius: 8px; }
+  .lang-link:hover { background: rgba(255,255,255,.12); text-decoration: underline; }
+  .lang-link[aria-current='true'] { color: #ffd34d; text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: .3em; }
   .show-sm { display: none; }
 
   .header-inner { display: flex; align-items: center; justify-content: space-between; min-height: 84px; gap: 1rem; position: relative; }
@@ -159,6 +219,30 @@ const compactCss = levels.map(([pre, w]) => `@media (max-width: ${w}px) { ${comp
   .sub a { display: flex; align-items: center; min-height: var(--tap); padding: .5rem .8rem; border-radius: 10px; text-decoration: none; color: var(--ink); font-weight: 600; }
   .sub a:hover, .sub a[aria-current='page'] { background: var(--bg-2); text-decoration: underline; }
   .nav-extra { margin-left: .6rem !important; }
+  .has-mega { position: static !important; }
+  .mega { left: 0; right: 0; min-width: 0; padding: 1.25rem; grid-template-columns: minmax(220px, 1fr) 3fr; gap: 1.5rem; }
+  .nav-disclosure[aria-expanded='true'] + .mega { display: grid; }
+  .mega__intro { display: flex; flex-direction: column; gap: .6rem; padding: .25rem .5rem .25rem .25rem; border-right: 1px solid var(--line); }
+  .mega .mega__overview, .mega .mega__prog { align-items: flex-start; text-align: left; text-decoration: none; }
+  .mega .mega__prog { hyphens: manual; }
+  .mega__overview { display: flex; flex-direction: column; gap: .15rem; padding: .75rem .85rem; border-radius: 12px; background: var(--bg-2); text-decoration: none; color: var(--ink); }
+  .mega__overview strong { font: 700 1.25rem/1.2 var(--font-serif); }
+  .mega__overview:hover strong { text-decoration: underline; }
+  .mega__eyebrow, .mega__no { font-size: .74rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+  .mega__places { font-size: .9rem; color: var(--ink-2); }
+  .mega__lead { margin: 0; font-size: .92rem; color: var(--ink-2); line-height: 1.5; }
+  .mega__more { display: inline-flex; align-items: center; gap: .35rem; min-height: var(--tap); font-weight: 700; color: var(--ink); }
+  .mega__more svg { width: 1em; height: 1em; }
+  .mega__cols { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 1rem 1.25rem; align-content: start; }
+  .mega__col { margin: 0; border-top: 4px solid var(--accent, var(--gold)); padding-top: .5rem; }
+  .mega__col ul { list-style: none; margin: 0; padding: 0; }
+  .mega__col li { margin: 0; }
+  .mega__prog { display: flex; flex-direction: column; text-decoration: none; color: var(--ink); font: 700 1.05rem/1.25 var(--font-sans); padding: .35rem .5rem .5rem; border-radius: 8px; min-height: var(--tap); }
+  .mega__prog:hover { background: var(--bg-2); text-decoration: underline; }
+  .mega .mega__col a:not(.mega__prog) { display: block; min-height: 0; padding: .45rem .5rem; font-weight: 500; font-size: .95rem; line-height: 1.35; border-radius: 8px; color: var(--ink); text-decoration: none; }
+  .mega .mega__col a:not(.mega__prog):hover { background: var(--bg-2); text-decoration: underline; }
+  .mega__done { color: var(--muted); font-size: .85em; }
+  .accent--gold { --accent: var(--gold); } .accent--green { --accent: var(--green); } .accent--blue { --accent: var(--blue); } .accent--red { --accent: var(--c-coral); } .accent--purple { --accent: var(--c-mauve); }
   .nav-toggle { display: none; }
 
   @media (max-width: 560px) {

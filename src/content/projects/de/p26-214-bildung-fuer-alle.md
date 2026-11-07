@@ -1,7 +1,7 @@
 ---
 title: "Bildung für alle …?!"
 subtitle: "Globales Lernen zu inklusivem und gerechtem Zugang zu hochwertiger Bildung (SDG 4 / SDG 10)"
-summary: "Vier Schulungstage zu Bildungsgerechtigkeit zwischen Uganda und Deutschland – in Berlin und online, mit Expert*innen live aus Kampala."
+summary: "Vier Schulungstage zu Bildungsgerechtigkeit zwischen Uganda und Deutschland, in Berlin und online, mit Expert*innen live aus Kampala."
 code: "P 26/214"
 programme: inland
 status: active
@@ -14,6 +14,7 @@ partners: ["AfricAvenir International e.V.", "Anchored Bridges Initiatives (ABI)
 funders: ["Engagement Global mit Mitteln des BMZ", "Stiftung Nord-Süd-Brücken (SDG-Programm)"]
 fundingNote: "Gefördert durch ENGAGEMENT GLOBAL mit Mitteln des BMZ"
 fundingLogos:
+  - { src: "/funders/nord-sued-bruecken.svg", alt: "Stiftung Nord-Süd-Brücken", width: 170 }
   - { src: "/funders/bmz-logo.png", alt: "Bundesministerium für wirtschaftliche Zusammenarbeit und Entwicklung", width: 190 }
   - { src: "/funders/engagement-global-logo.png", alt: "Engagement Global", width: 200 }
 disclaimer: "Für den Inhalt dieser Publikation ist allein Bantu e.V. verantwortlich; die hier dargestellten Positionen geben nicht den Standpunkt von Engagement Global gGmbH und dem Bundesministerium für wirtschaftliche Zusammenarbeit und Entwicklung wieder."
@@ -29,7 +30,7 @@ sources:
   - "P 26-214/01_…/01_Fördervertrag_&_Bewilligung/Bewilligung_P26-214_SNSB-SDG_2026-11-05.pdf"
 ---
 
-Warum haben manche Kinder Zugang zu guter Bildung und andere nicht – in Kampala wie in Berlin? Die Schulungsreihe zeigt, wie Bildungsbarrieren in Uganda und in Deutschland zusammenhängen: koloniale Bildungsstrukturen, ungleiche Ressourcen, Ausschlüsse nach Behinderung, Geschlecht und Herkunft. Expert*innen der Anchored Bridges Initiatives sind an jedem Tag live aus Kampala zugeschaltet. Gemeinsam entwickeln wir realistische nächste Schritte für die eigene Bildungs- oder Engagementpraxis.
+Warum haben manche Kinder Zugang zu guter Bildung und andere nicht, in Kampala wie in Berlin? Die Schulungsreihe zeigt, wie Bildungsbarrieren in Uganda und in Deutschland zusammenhängen: koloniale Bildungsstrukturen, ungleiche Ressourcen, Ausschlüsse nach Behinderung, Geschlecht und Herkunft. Expert*innen der Anchored Bridges Initiatives sind an jedem Tag live aus Kampala zugeschaltet. Gemeinsam entwickeln wir realistische nächste Schritte für die eigene Bildungs- oder Engagementpraxis.
 
 ## Termine (jeder Tag einzeln buchbar)
 
@@ -38,7 +39,7 @@ Warum haben manche Kinder Zugang zu guter Bildung und andere nicht – in Kampal
 | Sa 21.11.2026 | Bildungsgerechtigkeit im globalen Vergleich |
 | Sa 28.11.2026 | Bildungsrechte und inklusive Bildung |
 | Sa 05.12.2026 | Bildungsfinanzierung und lokale Handlungsspielräume |
-| Sa 12.12.2026 | Bildungsgerechtigkeit in die eigene Praxis übertragen – mit Abschluss |
+| Sa 12.12.2026 | Bildungsgerechtigkeit in die eigene Praxis übertragen, mit Abschluss |
 
 Jeweils **10:00–15:00 Uhr**, vor Ort in einem barrierefreien Raum in Berlin (Adresse mit der Anmeldebestätigung) oder online über Zoom. Kostenfrei, mit Mittagessen vor Ort, Teilnahmebescheinigung und kostenfreier Kinderbetreuung (bitte bei der Anmeldung angeben).
 
@@ -51,6 +52,6 @@ Jeweils **10:00–15:00 Uhr**, vor Ort in einem barrierefreien Raum in Berlin (A
 
 ## Anmeldung
 
-Per E-Mail an [info@bantu-ev.org](mailto:info@bantu-ev.org?subject=Anmeldung%20Bildung%20f%C3%BCr%20alle) – bitte Name, Kontakt, Termin(e), Teilnahme vor Ort oder online und ggf. Kinderbetreuung angeben. Anmeldeschluss ist jeweils der Dienstag vor dem Termin (für den 21.11. also Di, 17.11.2026). Die Plätze vor Ort sind begrenzt; mindestens fünf Plätze je Termin sind für Menschen ohne institutionelle Anbindung reserviert.
+Per E-Mail an [info@bantu-ev.org](mailto:info@bantu-ev.org?subject=Anmeldung%20Bildung%20f%C3%BCr%20alle). Bitte Name, Kontakt, Termin(e), Teilnahme vor Ort oder online und ggf. Kinderbetreuung angeben. Anmeldeschluss ist jeweils der Dienstag vor dem Termin (für den 21.11. also Di, 17.11.2026). Die Plätze vor Ort sind begrenzt; mindestens fünf Plätze je Termin sind für Menschen ohne institutionelle Anbindung reserviert.
 
 Fragen: Boaz Murinzi Murema · [boazmurinzi@bantu-ev.org](mailto:boazmurinzi@bantu-ev.org) · +49 176 3421 3765
