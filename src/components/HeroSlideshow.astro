@@ -17,7 +17,8 @@ const labels = {
   region: de ? 'Fotos aus unseren Projekten' : 'Photos from our projects',
   pauseShort: de ? 'Pause' : 'Pause',
   playShort: de ? 'Abspielen' : 'Play',
-  show: de ? 'Foto {i} von {n} zeigen' : 'Show photo {i} of {n}',
+  prev: de ? 'Vorheriges Foto' : 'Previous photo',
+  next: de ? 'Nächstes Foto' : 'Next photo',
   project: de ? 'Zum Projekt' : 'View project',
   suffix: de ? ' (Diashow)' : ' slideshow',
 };
@@ -43,14 +44,10 @@ const labels = {
       <span class="hs__ic hs__ic--play"><Icon name="play" /></span>
       <span class="hs__toggle-text">{labels.pauseShort}</span><span class="sr-only">{labels.suffix}</span>
     </button>
-    <ul class="hs__dots">
-      {heroSlides.map((s, i) => (
-        <li>
-          <button type="button" class="hs__dot" data-hs-dot={i} aria-label={labels.show.replace('{i}', String(i + 1)).replace('{n}', String(n))} aria-current={i === 0 ? 'true' : undefined} data-caption={s.caption[lang]} data-href={s.project ? projectPath(lang, s.project) : ''}>
-            <span aria-hidden="true"></span>
-          </button>
-        </li>
-      ))}
+    <button class="hs__nav" type="button" data-hs-prev aria-label={labels.prev}><Icon name="chevron" class="hs__prev-ic" /></button>
+    <button class="hs__nav" type="button" data-hs-next aria-label={labels.next}><Icon name="chevron" class="hs__next-ic" /></button>
+    <ul class="hs__data" hidden>
+      {heroSlides.map((s) => <li data-hs-item data-caption={s.caption[lang]} data-href={s.project ? projectPath(lang, s.project) : ''}></li>)}
     </ul>
   </div>
 </div>
@@ -63,7 +60,7 @@ const labels = {
     const root = document.documentElement;
     const toggle = panel.querySelector<HTMLButtonElement>('[data-hs-toggle]')!;
     const toggleText = panel.querySelector<HTMLElement>('.hs__toggle-text')!;
-    const dots = Array.from(panel.querySelectorAll<HTMLButtonElement>('[data-hs-dot]'));
+    const items = Array.from(panel.querySelectorAll<HTMLElement>('[data-hs-item]'));
     const caption = panel.querySelector<HTMLElement>('#hs-caption')!;
     const text = panel.querySelector<HTMLElement>('[data-hs-text]')!;
     const index = panel.querySelector<HTMLElement>('[data-hs-index]')!;
@@ -87,8 +84,7 @@ const labels = {
       load(imgs[current]);
       load(imgs[(current + 1) % imgs.length]);
       imgs.forEach((img, k) => img.classList.toggle('is-active', k === current));
-      dots.forEach((d, k) => (k === current ? d.setAttribute('aria-current', 'true') : d.removeAttribute('aria-current')));
-      const dot = dots[current];
+      const dot = items[current];
       text.textContent = dot.dataset.caption || '';
       index.textContent = String(current + 1);
       if (link) { link.hidden = !dot.dataset.href; if (dot.dataset.href) link.href = dot.dataset.href; }
@@ -104,7 +100,8 @@ const labels = {
     };
 
     toggle.addEventListener('click', () => { userPaused = playing; setPlaying(!playing); });
-    dots.forEach((d, k) => d.addEventListener('click', () => { userPaused = true; setPlaying(false); show(k); }));
+    panel.querySelector('[data-hs-prev]')?.addEventListener('click', () => { userPaused = true; setPlaying(false); show(current - 1); });
+    panel.querySelector('[data-hs-next]')?.addEventListener('click', () => { userPaused = true; setPlaying(false); show(current + 1); });
     document.addEventListener('visibilitychange', () => {
       if (document.hidden) { window.clearInterval(timer); }
       else if (playing) setPlaying(true);
@@ -147,12 +144,11 @@ const labels = {
   .hs__ic--play { display: none; }
   .is-paused .hs__ic--play { display: inline-flex; }
   .is-paused .hs__ic--pause { display: none; }
-  .hs__dots { display: flex; gap: 0; list-style: none; margin: 0; padding: 0; }
-  .hs__dots li { margin: 0; }
-  .hs__dot { width: 44px; height: 44px; display: grid; place-items: center; background: none; border: 0; padding: 0; cursor: pointer; border-radius: 50%; }
-  .hs__dot span { width: 12px; height: 12px; border-radius: 50%; border: 2px solid var(--on-deep); background: transparent; }
-  .hs__dot[aria-current='true'] span { background: var(--on-deep); transform: scale(1.15); }
-  .hs__dot:hover span { background: rgba(255,255,255,.5); }
+  .hs__nav { width: 44px; height: 44px; display: grid; place-items: center; border-radius: 50%; border: 2px solid currentColor; background: transparent; color: var(--on-deep); cursor: pointer; }
+  .hs__nav:hover { background: rgba(255,255,255,.12); }
+  .hs__nav :global(svg) { width: 20px; height: 20px; }
+  .hs__nav :global(.hs__prev-ic) { transform: rotate(90deg); }
+  .hs__nav :global(.hs__next-ic) { transform: rotate(-90deg); }
 
   :global(html[data-theme='contrast']) .hs__bg { display: none; }
   :global(html[data-theme='contrast']) .hs__panel { background: var(--deep); border-color: currentColor; }

@@ -1,0 +1,180 @@
+---
+// Region page: Inlandsarbeit (work in Germany) or Internationale Zusammenarbeit (Auslandsarbeit).
+// Lists the programmes that have projects in this region, each with its projects.
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import Icon from '../components/Icon.astro';
+import { href, r, type Lang } from '../i18n';
+import { getProjects, slugOf, type Project } from '../lib/content';
+import { programmes, regions, programmePath, regionPath, trusteeships, type Region } from '../data/programmes';
+import { partnersNorth, partnersSouth } from '../data/people';
+
+interface Props { lang: Lang; region: Region }
+const { lang, region } = Astro.props;
+const de = lang === 'de';
+const reg = regions.find((x) => x.key === region)!;
+const other = regions.find((x) => x.key !== region)!;
+const all = await getProjects(lang);
+const bySlug = new Map(all.map((p) => [slugOf(p.id), p]));
+const groups = programmes
+  .map((p) => ({
+    prog: p,
+    items: p.projects.map((s) => bySlug.get(s)).filter((x): x is Project => !!x && x.data.programme === region),
+    services: (p.services ?? []).filter((s) => s.region === region),
+  }))
+  .filter((g) => g.items.length > 0 || g.services.length > 0);
+const inRegion = groups.flatMap((g) => g.items);
+const running = inRegion.filter((p) => p.data.status !== 'completed').length;
+const partners = region === 'international' ? partnersSouth : partnersNorth;
+const title = de && region === 'international' ? 'Internationale Zusammenarbeit (Auslandsarbeit)' : reg.title[lang];
+---
+<Base lang={lang} title={title} description={reg.lead[lang]} altHref={regionPath(de ? 'en' : 'de', region)}>
+  <PageHead lang={lang} title={title} lead={reg.lead[lang]} eyebrow={de ? 'Unsere Arbeit' : 'Our work'} crumbs={[{ label: de ? 'Programme' : 'Programmes', href: r('programmes', lang) }]} />
+
+  <section class="section section--tight" aria-label={de ? 'Auf einen Blick' : 'At a glance'}>
+    <div class="wrap">
+      <ul class="facts-row">
+        <li><span class="facts-row__value">{groups.length}</span><span class="facts-row__label">{de ? 'Programme' : 'programmes'}</span></li>
+        <li><span class="facts-row__value">{inRegion.length}</span><span class="facts-row__label">{de ? 'Projekte' : 'projects'}</span></li>
+        <li><span class="facts-row__value">{running}</span><span class="facts-row__label">{de ? 'laufend' : 'ongoing'}</span></li>
+        <li><span class="facts-row__value facts-row__value--text">{reg.places[lang]}</span><span class="facts-row__label">{de ? 'Wo wir arbeiten' : 'Where we work'}</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <nav class="section section--tight" aria-label={de ? 'Programme in diesem Bereich' : 'Programmes in this area'}>
+    <div class="wrap">
+      <h2 class="h3">{de ? 'Programme in diesem Bereich' : 'Programmes in this area'}</h2>
+      <ol class="toc">
+        {groups.map((g) => (
+          <li>
+            <a href={`#${g.prog.key}`} class={`toc__link accent--${g.prog.accent}`}>
+              <span class="icon-badge"><Icon name={g.prog.icon} /></span>
+              <span><span class="toc__no">{de ? 'Programm' : 'Programme'} {g.prog.no}</span><strong>{g.prog.title[lang]}</strong><span class="toc__count">{g.items.length} {g.items.length === 1 ? (de ? 'Projekt' : 'project') : (de ? 'Projekte' : 'projects')}</span></span>
+            </a>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </nav>
+
+  {groups.map((g, i) => (
+    <section id={g.prog.key} class={`section ${i % 2 === 0 ? 'section--alt' : ''} prog-block accent--${g.prog.accent}`} aria-labelledby={`h-${g.prog.key}`}>
+      <div class="wrap">
+        <div class="prog-block__head">
+          <div>
+            <div class="eyebrow">{de ? 'Programm' : 'Programme'} {g.prog.no} · {g.prog.short[lang]}</div>
+            <h2 id={`h-${g.prog.key}`}>{g.prog.title[lang]}</h2>
+            <p>{g.prog.lead[lang]}</p>
+          </div>
+          <a class="btn btn--outline" href={programmePath(lang, g.prog.key)}>{de ? 'Zum Programm' : 'View programme'} <Icon name="arrow" /></a>
+        </div>
+        {g.services.map((s) => (
+          <div class="panel service">
+            <div>
+              <h3>{s.title[lang]}</h3>
+              <p>{s.text[lang]}</p>
+            </div>
+            {s.cta && <a class="btn btn--dark" href={r(s.cta.route, lang)}>{s.cta.label[lang]}</a>}
+          </div>
+        ))}
+        {g.items.length > 0 && (
+          <div class="grid grid--3">{g.items.map((p) => <ProjectCard lang={lang} project={p} />)}</div>
+        )}
+      </div>
+    </section>
+  ))}
+
+  <section class="section" aria-labelledby="h-how">
+    <div class="wrap two-col how">
+      <div>
+        <div class="eyebrow">{de ? 'Arbeitsweise' : 'Approach'}</div>
+        <h2 id="h-how">{de ? 'So arbeiten wir' : 'How we work'}</h2>
+      </div>
+      <ul class="how__list">{reg.principles[lang].map((p) => <li><Icon name="star" /> <span>{p}</span></li>)}</ul>
+    </div>
+  </section>
+
+  <section class="section section--sand" aria-labelledby="h-partners">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">{de ? 'Gemeinsam' : 'Together'}</div>
+          <h2 id="h-partners">{region === 'international' ? (de ? 'Unsere Partner in Uganda und Burundi' : 'Our partners in Uganda and Burundi') : (de ? 'Unsere Partner in Deutschland' : 'Our partners in Germany')}</h2>
+        </div>
+        <a class="link-arrow" href={r('people', lang, de ? '#partner' : '#partners')}>{de ? 'Alle Partner und Förderer' : 'All partners and funders'}</a>
+      </div>
+      <ul class="partner-list">
+        {partners.map((o) => (
+          <li>{o.url ? <a href={o.url} rel="noopener">{o.name}</a> : <span>{o.name}</span>}<span class="small muted"> · {o.place}</span></li>
+        ))}
+      </ul>
+      {region === 'inland' && (
+        <p class="small">{de ? 'Als Trägerverein ermöglichen wir außerdem die Arbeit von ' : 'As a fiscal sponsor we also enable the work of '}{trusteeships.map((ts, k) => <>{k > 0 && (de ? ' und ' : ' and ')}<a href={ts.url} rel="noopener">{ts.name}</a></>)}. <a href={r('programmes', lang, de ? '#traegerschaften' : '#fiscal-sponsorship')}>{de ? 'Mehr zu unseren Trägerschaften' : 'More on fiscal sponsorship'}</a></p>
+      )}
+    </div>
+  </section>
+
+  <section class="section section--tight">
+    <div class="wrap">
+      <a class="other" href={regionPath(lang, other.key)}>
+        <img src={href(other.image)} alt="" loading="lazy" width="800" height="533" />
+        <span class="other__text">
+          <span class="eyebrow">{de ? 'Auch das ist Bantu e.V.' : 'Also part of Bantu e.V.'}</span>
+          <strong>{de && other.key === 'international' ? 'Internationale Zusammenarbeit (Auslandsarbeit)' : other.title[lang]}</strong>
+          <span>{other.places[lang]}</span>
+        </span>
+        <Icon name="arrow" />
+      </a>
+    </div>
+  </section>
+</Base>
+<style>
+  .facts-row { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1rem; }
+  @media (max-width: 860px) { .facts-row { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  .facts-row li { margin: 0; padding: 1.1rem 1.2rem; background: var(--surface); border: 1px solid var(--line); border-radius: 16px; display: flex; flex-direction: column; gap: .2rem; min-width: 0; }
+  .facts-row__value { font: 700 clamp(1.8rem, 3vw, 2.4rem)/1.1 var(--font-serif); color: var(--ink); }
+  .facts-row__value--text { font-size: clamp(1.05rem, 1.6vw, 1.25rem); line-height: 1.3; padding-top: .35rem; }
+  .facts-row__label { font-size: .9rem; color: var(--muted); }
+  .h3 { font-size: 1.35rem; }
+  .toc { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr)); gap: .9rem; }
+  .toc li { margin: 0; }
+  .toc__link { display: flex; gap: .9rem; align-items: center; height: 100%; padding: 1rem 1.1rem; background: var(--surface); border: 1px solid var(--line); border-left: 6px solid var(--accent, var(--gold)); border-radius: 14px; color: var(--ink); text-decoration: none; min-height: 44px; }
+  .toc__link:hover strong { text-decoration: underline; }
+  .toc__link > span:last-child { display: flex; flex-direction: column; min-width: 0; }
+  .toc__no { font-size: .78rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+  .toc__count { font-size: .9rem; color: var(--muted); }
+  .prog-block { scroll-margin-top: calc(var(--header-h, 90px) + 1rem); border-top: 6px solid var(--accent, var(--gold)); }
+  .prog-block__head { display: flex; justify-content: space-between; align-items: flex-end; gap: 1.5rem; margin-bottom: 1.5rem; }
+  .prog-block__head > div { min-width: 0; }
+  .prog-block__head h2 { hyphens: auto; overflow-wrap: break-word; }
+  .prog-block__head p { max-width: 70ch; color: var(--ink-2); margin-bottom: 0; }
+  .prog-block__head .btn { flex-shrink: 0; }
+  @media (max-width: 760px) { .prog-block__head { flex-direction: column; align-items: flex-start; } }
+  .service { display: flex; justify-content: space-between; align-items: center; gap: 1.5rem; margin-bottom: 1.25rem; border-left: 6px solid var(--ink); }
+  .service > div { min-width: 0; }
+  .service h3 { margin-top: 0; font-size: 1.2rem; hyphens: auto; overflow-wrap: break-word; }
+  .service p { margin-bottom: 0; max-width: 75ch; }
+  .service .btn { flex-shrink: 0; }
+  @media (max-width: 760px) { .service { flex-direction: column; align-items: flex-start; } }
+  .accent--gold { --accent: var(--gold); }
+  .accent--green { --accent: var(--green); }
+  .accent--blue { --accent: var(--blue); }
+  .accent--red { --accent: var(--c-coral); }
+  .accent--purple { --accent: var(--c-mauve); }
+  .how { align-items: start; }
+  .how__list { list-style: none; padding: 0; margin: 0; display: grid; gap: .8rem; }
+  .how__list li { display: flex; gap: .7rem; align-items: flex-start; margin: 0; font-size: 1.05rem; }
+  .how__list :global(svg) { flex-shrink: 0; margin-top: .2rem; color: var(--accent-text, var(--ink)); }
+  .partner-list { list-style: none; padding: 0; margin: 0 0 1rem; columns: 2 320px; column-gap: 2.5rem; }
+  .partner-list li { break-inside: avoid; padding: .55rem 0; border-bottom: 1px solid var(--line); margin: 0; }
+  .partner-list a { font-weight: 700; color: var(--ink); text-underline-offset: .18em; }
+  .partner-list span:first-child { font-weight: 700; }
+  .other { display: grid; grid-template-columns: 260px 1fr auto; gap: 1.5rem; align-items: center; background: var(--surface); border: 1px solid var(--line); border-radius: 20px; overflow: hidden; color: var(--ink); text-decoration: none; padding-right: 1.5rem; }
+  .other img { width: 100%; height: 100%; min-height: 150px; object-fit: cover; }
+  .other__text { display: flex; flex-direction: column; gap: .25rem; padding: 1.25rem 0; min-width: 0; }
+  .other__text strong { font: 700 clamp(1.3rem, 2.2vw, 1.7rem)/1.2 var(--font-serif); }
+  .other:hover strong { text-decoration: underline; }
+  @media (max-width: 640px) { .other { grid-template-columns: 1fr; padding: 0 0 1.25rem; } .other__text { padding: 0 1.25rem; } .other > :global(svg) { margin-left: 1.25rem; } }
+</style>
