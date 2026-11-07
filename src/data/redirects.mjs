@@ -38,4 +38,14 @@ export const wordpressRedirects = {
   '/de/mitmachen': '/mitmachen/',
   '/de/kontakt': '/kontakt/',
   '/de/spenden': '/spenden/',
+  // Ubuntu Talks moved from 15.11. to 22.11.2026 (correction by the chair, 07.11.2026): old event URLs
+  '/aktuelles/ubuntu-talks-15-11-2026': '/aktuelles/ubuntu-talks-22-11-2026/',
+  '/en/news/ubuntu-talks-15-11-2026': '/en/news/ubuntu-talks-22-11-2026/',
+  '/fr/actualites/ubuntu-talks-15-11-2026': '/fr/actualites/ubuntu-talks-22-11-2026/',
+};
+
+// Files that no longer exist -> page with the current information. Only for the Apache server (.htaccess),
+// not for the Astro meta-refresh pages (those cannot replace a PDF path).
+export const fileRedirects = {
+  '/downloads/flyer/ubuntu-talks-15-11-2026-flyer.pdf': '/aktuelles/ubuntu-talks-22-11-2026/',
 };

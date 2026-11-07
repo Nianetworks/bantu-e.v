@@ -82,5 +82,5 @@ The server (cPanel account `bantuev`) runs `~/bin/bantu-site-deploy.sh` every 10
 5. Real photos per `docs/04_Foto-Briefing.md`; replace placeholders (`image`, `imageAlt` in front matter).
 6. Board: confirm registration of the new board at the Amtsgericht; collect consented photos/short bios.
 7. Shop: legal/tax checklist, prices, product photos, Stripe Payment Links → `checkoutUrl`, then `shopCheckoutOpen = true`; add AGB/Widerruf pages.
-8. After 15.11.2026: turn Ubuntu Talks into a review (status completed, photos with consent, results).
+8. After 22.11.2026 (date corrected from 15.11. on 07.11.2026): turn Ubuntu Talks into a review (status completed, photos with consent, results).
 9. Optional: a privacy-friendly form backend (`features.formEndpoint`), newsletter, Decap CMS for non-technical editing.

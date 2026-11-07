@@ -7,8 +7,8 @@ programme: inland
 status: active
 country: "Deutschland"
 location: "VHS Berlin Mitte, Linienstraße 162, 10115 Berlin"
-period: "Begegnungstag am Sonntag, 15.11.2026"
-start: 2026-11-15
+period: "Begegnungstag am Sonntag, 22.11.2026"
+start: 2026-11-22
 end: 2026-12-31
 partners: ["Federation of Ugandans in Germany e.V. (FUG)", "Ubuntu Unfiltered (Foto und Video)", "VHS Berlin Mitte (Raum)"]
 funders: ["Bezirksamt Berlin-Mitte", "MITTEinander aktiv: Fördertopf Partizipation 2026 (koordiniert von Club Dialog e.V.)"]
@@ -34,7 +34,7 @@ Berlin-Mitte ist ein vielfältiger Bezirk: Menschen aus Ostafrika und vom ganzen
 
 > „Niemand existiert für sich allein. Wie in einem feinen, kraftvollen Spinnennetz hält uns die Verbindung zu anderen. Bei den Ubuntu Talks öffnen wir Shared Spaces: Räume des Austauschs, in denen unsere Geschichten aufeinandertreffen und ein lebendiges, sich ständig neu formendes Netz aus Identitäten weben.“
 
-## Programm am Sonntag, 15.11.2026
+## Programm am Sonntag, 22.11.2026
 
 | Zeit | Programmpunkt |
 |---|---|
@@ -53,9 +53,7 @@ Den ganzen Tag: Kaffee, Tee und Snacks · Kinderbetreuung durch eine pädagogisc
 
 Eintritt frei. Der Raum 2.02 in der VHS Berlin Mitte ist stufenlos zugänglich. Online-Teilnahme über eine geschlossene Videokonferenz (Link nach Anmeldung); es gibt keinen Livestream. Anmeldung per E-Mail an [info@bantu-ev.org](mailto:info@bantu-ev.org?subject=Anmeldung%20Ubuntu%20Talks) oder telefonisch unter +49 176 3421 3765.
 
-[Flyer herunterladen (PDF)](/downloads/flyer/ubuntu-talks-15-11-2026-flyer.pdf)
-
 Aus dem Tag soll ein fortbestehender **Ubuntu-Kreis** entstehen, der sich auch nach Projektende trifft.
 
 Mit freundlicher Unterstützung des Bezirksamts Mitte von Berlin, Volkshochschule Berlin Mitte.
-<!-- OPEN: Logos von MITTEinander aktiv und Bezirksamt Berlin-Mitte als fundingLogos ergänzen (Pflicht laut § 11 Fördervereinbarung). Nach dem 15.11. Status/Text auf Rückblick umstellen. -->
+<!-- OPEN: Logos von MITTEinander aktiv und Bezirksamt Berlin-Mitte als fundingLogos ergänzen (Pflicht laut § 11 Fördervereinbarung). Nach dem 22.11. Status/Text auf Rückblick umstellen. Datum am 07.11.2026 vom Vorsitzenden von 15.11. auf 22.11.2026 korrigiert; Flyer mit neuem Datum fehlt noch. -->

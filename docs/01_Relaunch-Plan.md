@@ -72,7 +72,7 @@ Alte WordPress-URLs leiten automatisch weiter (`src/data/redirects.mjs`).
 | International | Ruhaama Community Resource Centre | P 21/23, P 22/29 | abgeschlossen |
 | Inland | Erde, Saat und Erbe (BIKO) | P 26/224 | laufend – **Pflichtseite bis 13.11.2026** |
 | Inland | Bildung für alle …?! (SDG) | P 26/214 | laufend |
-| Inland | Ubuntu Talks | MI2026-24B | laufend (15.11.2026) |
+| Inland | Ubuntu Talks | MI2026-24B | laufend (22.11.2026, vorher 15.11.) |
 | Inland | Black Engagement Matters | – | abgeschlossen |
 | Inland | Ubuntu für alle & Equal Rights for All | – | abgeschlossen |
 | Inland | Safer Spaces & ParentCircle (Tubman.Network) | – | abgeschlossen |

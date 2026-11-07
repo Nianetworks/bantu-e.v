@@ -7,8 +7,8 @@ programme: inland
 status: active
 country: "Germany"
 location: "VHS Berlin Mitte, Linienstraße 162, 10115 Berlin"
-period: "Day of encounter on Sunday, 15 November 2026"
-start: 2026-11-15
+period: "Day of encounter on Sunday, 22 November 2026"
+start: 2026-11-22
 end: 2026-12-31
 partners: ["Federation of Ugandans in Germany e.V. (FUG)", "Ubuntu Unfiltered (photo and video)", "VHS Berlin Mitte (venue)"]
 funders: ["Berlin-Mitte District Office", "MITTEinander aktiv: participation fund 2026 (coordinated by Club Dialog e.V.)"]
@@ -30,7 +30,7 @@ Berlin-Mitte is a diverse district: people from East Africa and across the Afric
 
 **Ubuntu Talks** starts here. The name draws on the Ubuntu philosophy: *“I am because we are.”* Participants shape their neighbourhood. They are not recipients of help.
 
-## Programme on Sunday, 15 November 2026
+## Programme on Sunday, 22 November 2026
 
 | Time | Programme |
 |---|---|
@@ -48,7 +48,5 @@ All day: coffee, tea and snacks · childcare by a qualified educator (11:00–19
 ## Taking part
 
 Free entry. Room 2.02 at VHS Berlin Mitte is step-free. Online participation via a closed video conference (link after registration); there is no livestream. Register by e-mail to [info@bantu-ev.org](mailto:info@bantu-ev.org?subject=Registration%20Ubuntu%20Talks) or by phone at +49 176 3421 3765.
-
-[Download the flyer (PDF)](/downloads/flyer/ubuntu-talks-15-11-2026-flyer.pdf)
 
 The day aims to start a lasting **Ubuntu circle** that keeps meeting after the project ends.
