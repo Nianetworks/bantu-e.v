@@ -2,7 +2,12 @@
 import Base from '../layouts/Base.astro';
 import PageHead from '../components/PageHead.astro';
 import Placeholder from '../components/Placeholder.astro';
-import { projectPath, r, type Lang } from '../i18n';
+import SdgIcons from '../components/SdgIcons.astro';
+import Icon from '../components/Icon.astro';
+import { href, projectPath, r, type Lang } from '../i18n';
+import { sdgNames } from '../data/sdgs';
+import { partnersNorth, partnersSouth } from '../data/people';
+import { org } from '../data/site';
 import { getProjects, slugOf } from '../lib/content';
 import { impact } from '../data/impact';
 
@@ -10,16 +15,40 @@ interface Props { lang: Lang }
 const { lang } = Astro.props;
 const de = lang === 'de';
 const fr = lang === 'fr';
-const stories = (await getProjects(lang)).filter((p) => p.data.successStory);
-const title = de ? 'Wirkung & Erfolgsgeschichten' : fr ? 'Impact et réussites' : 'Impact & success stories';
+const all = await getProjects(lang);
+const stories = all.filter((p) => p.data.successStory);
+// SDG contribution: derived from the SDGs listed in each project's front matter.
+const bySdg = new Map<number, typeof all>();
+all.forEach((p) => p.data.sdgs.forEach((g) => bySdg.set(g, [...(bySdg.get(g) ?? []), p])));
+const sdgList = [...bySdg.entries()].sort((a, b) => a[0] - b[0]);
+const year = new Date().getFullYear();
+const facts = [
+  { v: String(all.length), l: de ? 'Projekte seit 2019' : fr ? 'projets depuis 2019' : 'projects since 2019' },
+  { v: '3', l: de ? 'Länder: Uganda, Burundi, Deutschland' : fr ? 'pays : Ouganda, Burundi, Allemagne' : 'countries: Uganda, Burundi, Germany' },
+  { v: String(partnersSouth.length + partnersNorth.length), l: de ? 'Partnerorganisationen' : fr ? 'organisations partenaires' : 'partner organisations' },
+  { v: String(sdgList.length), l: de ? 'Nachhaltigkeitsziele, zu denen wir beitragen' : fr ? 'objectifs de développement durable auxquels nous contribuons' : 'Sustainable Development Goals we contribute to' },
+];
+const title = de ? 'Unsere Wirkung' : fr ? 'Notre impact' : 'Our impact';
 const lead = de
   ? 'Was unsere Projekte bewirkt haben, mit Zahlen aus unseren Abschlussberichten und den Geschichten dahinter.'
   : fr ? 'Ce que nos projets ont permis, avec des chiffres tirés de nos rapports finaux et les histoires qui les accompagnent.' : 'What our projects have achieved, with figures from our final reports and the stories behind them.';
 ---
 <Base lang={lang} title={title} description={lead} altHref={r('impact', de ? 'en' : 'de')}>
-  <PageHead lang={lang} title={title} lead={lead} />
+  <PageHead lang={lang} title={title} lead={lead} eyebrow={de ? 'Was sich verändert' : fr ? 'Ce qui change' : 'What changes'} />
 
-  <section class="section section--deep">
+  <nav class="section section--tight" aria-label={de ? 'Auf dieser Seite' : fr ? 'Sur cette page' : 'On this page'}>
+    <div class="wrap">
+      <ul class="facts">{facts.map((f) => <li><span class="facts__v">{f.v}</span><span class="facts__l">{f.l}</span></li>)}</ul>
+      <ul class="jump">
+        <li><a href="#zahlen">{de ? 'Wirkung in Zahlen' : fr ? 'L’impact en chiffres' : 'Impact in numbers'}</a></li>
+        <li><a href="#sdg">{de ? 'Beitrag zu den Nachhaltigkeitszielen' : fr ? 'Contribution aux ODD' : 'Contribution to the SDGs'}</a></li>
+        <li><a href="#geschichten">{de ? 'Erfolgsgeschichten' : fr ? 'Réussites' : 'Success stories'}</a></li>
+        <li><a href={r('reports', lang)}>{de ? 'Jahres- und Transparenzberichte' : fr ? 'Rapports annuels et de transparence' : 'Annual and transparency reports'}</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <section class="section section--deep" id="zahlen">
     <div class="wrap">
       <h2>{de ? 'Wirkung in Zahlen' : fr ? 'L’impact en chiffres' : 'Impact in numbers'}</h2>
       <div class="stat-grid">
@@ -35,17 +64,37 @@ const lead = de
     </div>
   </section>
 
-  <section class="section">
+  <section class="section section--alt" id="sdg" aria-labelledby="h-sdg">
+    <div class="wrap">
+      <div class="eyebrow">Agenda 2030</div>
+      <h2 id="h-sdg">{de ? 'Unser Beitrag zu den Nachhaltigkeitszielen' : fr ? 'Notre contribution aux objectifs de développement durable' : 'Our contribution to the Sustainable Development Goals'}</h2>
+      <p class="lead-sm">{de ? 'Jedes unserer Projekte trägt zu einem oder mehreren der 17 Ziele der Vereinten Nationen bei. Hier sehen Sie, welche Projekte zu welchem Ziel gehören.' : fr ? 'Chacun de nos projets contribue à un ou plusieurs des 17 objectifs des Nations unies. Vous voyez ici quels projets relèvent de quel objectif.' : 'Each of our projects contributes to one or more of the 17 United Nations goals. Here you can see which projects belong to which goal.'}</p>
+      <ul class="sdg-grid">
+        {sdgList.map(([g, ps]) => (
+          <li class="sdg-card">
+            <img src={href(`/sdg/sdg-${String(g).padStart(2, '0')}.webp`)} alt="" width="240" height="240" loading="lazy" />
+            <details>
+              <summary><strong>SDG {g}: {(sdgNames[g] as any)[lang]}</strong><span class="small muted">{ps.length} {ps.length === 1 ? (de ? 'Projekt' : fr ? 'projet' : 'project') : (de ? 'Projekte' : fr ? 'projets' : 'projects')}</span></summary>
+              <ul>{ps.map((p) => <li><a href={projectPath(lang, slugOf(p.id))}>{p.data.title}</a></li>)}</ul>
+            </details>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" id="geschichten">
     <div class="wrap">
       <h2>{de ? 'Erfolgsgeschichten' : fr ? 'Réussites' : 'Success stories'}</h2>
       <div class="stories">
         {stories.map((p, i) => (
           <article class={`story ${i % 2 ? 'story--flip' : ''}`}>
-            <div class="story__media"><Placeholder lang={lang} label={p.data.photoBrief} ratio="4 / 3" tone={p.data.programme === 'international' ? 'gold' : 'blue'} /></div>
+            <div class="story__media">{p.data.image ? <img src={href(p.data.image)} alt={p.data.imageAlt ?? ''} loading="lazy" width="800" height="600" /> : <Placeholder lang={lang} label={p.data.photoBrief} ratio="4 / 3" tone={p.data.programme === 'international' ? 'gold' : 'blue'} />}</div>
             <div class="story__text">
               <div class="card__meta"><span class="tag">{p.data.country}</span><span class="tag">{p.data.period}</span></div>
               <h3>{p.data.title}</h3>
               <p>{p.data.summary}</p>
+              {p.data.sdgs.length > 0 && <div class="story__sdgs"><SdgIcons lang={lang} goals={p.data.sdgs} size="xs" /></div>}
               {p.data.stats.length > 0 && <ul class="story__stats">{p.data.stats.map((s) => <li><strong>{s.value}</strong> {s.label}</li>)}</ul>}
               <a class="link-arrow" href={projectPath(lang, slugOf(p.id))}>{de ? 'Ganze Geschichte lesen' : fr ? 'Lire toute l’histoire' : 'Read the full story'}</a>
             </div>
@@ -66,6 +115,28 @@ const lead = de
   </section>
 </Base>
 <style>
+  .facts { list-style: none; padding: 0; margin: 0 0 1.25rem; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1rem; }
+  @media (max-width: 900px) { .facts { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  .facts li { margin: 0; padding: 1.1rem 1.2rem; background: var(--surface); border: 1px solid var(--line); border-top: 5px solid var(--gold); border-radius: 16px; display: flex; flex-direction: column; gap: .2rem; min-width: 0; }
+  .facts li:nth-child(2) { border-top-color: var(--green); } .facts li:nth-child(3) { border-top-color: var(--blue); } .facts li:nth-child(4) { border-top-color: var(--c-coral); }
+  .facts__v { font: 700 clamp(1.9rem, 3.4vw, 2.6rem)/1.1 var(--font-serif); color: var(--ink); }
+  .facts__l { font-size: .95rem; color: var(--ink-2); }
+  .jump { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: .5rem; }
+  .jump li { margin: 0; }
+  .jump a { display: inline-flex; align-items: center; min-height: 44px; padding: .45rem 1rem; border-radius: 999px; border: 2px solid var(--ink); color: var(--ink); font-weight: 700; text-decoration: none; }
+  .jump a:hover { background: var(--ink); color: var(--bg); }
+  #zahlen, #sdg, #geschichten { scroll-margin-top: calc(var(--header-h, 90px) + 1rem); }
+  .lead-sm { max-width: 70ch; color: var(--ink-2); }
+  .sdg-grid { list-style: none; padding: 0; margin: 1.5rem 0 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr)); gap: 1rem; align-items: start; }
+  .sdg-card { margin: 0; display: grid; grid-template-columns: 72px 1fr; gap: .9rem; padding: .8rem; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; }
+  .sdg-card img { width: 72px; height: 72px; border-radius: 4px; }
+  .sdg-card details { min-width: 0; }
+  .sdg-card summary { cursor: pointer; display: flex; flex-direction: column; gap: .15rem; min-height: 44px; line-height: 1.3; }
+  .sdg-card summary strong { hyphens: auto; overflow-wrap: break-word; }
+  .sdg-card details ul { margin: .6rem 0 0; padding-left: 1.1rem; font-size: .95rem; }
+  .sdg-card details li { margin-bottom: .3rem; }
+  .story__sdgs { margin: 0 0 .8rem; }
+  .story__media img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block; }
   .stat--link { text-decoration: none; display: block; }
   .stat--link:hover { border-color: var(--gold); }
   .stories { display: grid; gap: clamp(2rem, 5vw, 3.5rem); }

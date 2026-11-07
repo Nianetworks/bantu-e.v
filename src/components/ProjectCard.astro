@@ -1,6 +1,7 @@
 ---
 import Placeholder from './Placeholder.astro';
 import Icon from './Icon.astro';
+import SdgIcons from './SdgIcons.astro';
 import { href, projectPath, ui, type Lang } from '../i18n';
 import { slugOf, type Project } from '../lib/content';
 import { projectIcon } from '../lib/icons';
@@ -17,6 +18,7 @@ const H = `h${headingLevel}`;
     {d.image
       ? <img src={href(d.image)} alt="" loading="lazy" width="640" height="400" />
       : <Placeholder lang={lang} tone={tone} compact icon={projectIcon(slug)} />}
+    {d.sdgs.length > 0 && <div class="pcard__sdgs"><SdgIcons lang={lang} goals={d.sdgs} size="xs" linked={false} /></div>}
   </div>
   <div class="card__body">
     <div class="card__meta">
@@ -34,7 +36,11 @@ const H = `h${headingLevel}`;
 <style>
   .pcard { border-top: 6px solid var(--gold); }
   .pcard--inland { border-top-color: var(--blue); }
-  .pcard__media img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; }
+  .pcard__media { position: relative; }
+  .pcard__media > img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; }
+  .pcard__sdgs { position: absolute; left: .65rem; bottom: .65rem; z-index: 1; padding: .3rem; background: #fff; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,.18); }
+  .pcard__sdgs :global(.sdg-icons) { flex-wrap: nowrap; }
+  :global(html[data-theme='contrast']) .pcard__sdgs { background: #000; outline: 2px solid currentColor; }
   .pcard__foot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .4rem 1rem; font-size: .9rem; color: var(--muted); }
   .pcard__foot span { display: inline-flex; align-items: center; gap: .35rem; }
   .code { font-weight: 700; color: var(--ink-2); }

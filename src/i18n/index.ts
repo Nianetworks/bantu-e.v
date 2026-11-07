@@ -207,7 +207,7 @@ export const ui = {
   },
 } as const;
 
-export type NavItem = { label: string; href: string; mega?: 'inland' | 'international'; children?: { label: string; href: string }[] };
+export type NavItem = { label: string; short?: string; href: string; mega?: 'inland' | 'international'; children?: { label: string; href: string }[] };
 
 export function mainNav(lang: Lang): NavItem[] {
   const de = lang === 'de';
@@ -221,13 +221,23 @@ export function mainNav(lang: Lang): NavItem[] {
         { label: de ? 'Vorstand und Team' : fr ? 'Conseil d’administration et équipe' : 'Board and team', href: r('people', lang) },
         { label: de ? 'Partner und Förderer' : fr ? 'Partenaires et bailleurs' : 'Partners and funders', href: r('people', lang, de ? '#partner' : '#partners') },
         { label: de ? 'Alle Programme im Überblick' : fr ? 'Tous les programmes en bref' : 'All programmes at a glance', href: r('programmes', lang) },
-        { label: de ? 'Wirkung' : fr ? 'Impact' : 'Impact', href: r('impact', lang) },
+        { label: de ? 'Transparenz' : fr ? 'Transparence' : 'Transparency', href: r('reports', lang, de ? '#transparenz' : '#transparency') },
+      ],
+    },
+    { label: de ? 'Inlandsarbeit' : fr ? 'Travail en Allemagne' : 'Work in Germany', short: fr ? 'En Allemagne' : undefined, href: r('inland', lang), mega: 'inland' },
+    { label: de ? 'Internationale Zusammenarbeit' : fr ? 'Coopération internationale' : 'International Cooperation', href: r('international', lang), mega: 'international' },
+    {
+      label: de ? 'Wirkung' : fr ? 'Impact' : 'Impact',
+      href: r('impact', lang),
+      children: [
+        { label: de ? 'Unsere Wirkung im Überblick' : fr ? 'Notre impact en bref' : 'Our impact at a glance', href: r('impact', lang) },
+        { label: de ? 'Wirkung in Zahlen' : fr ? 'L’impact en chiffres' : 'Impact in numbers', href: r('impact', lang, '#zahlen') },
+        { label: de ? 'Beitrag zu den Nachhaltigkeitszielen' : fr ? 'Contribution aux ODD' : 'Contribution to the SDGs', href: r('impact', lang, '#sdg') },
+        { label: de ? 'Erfolgsgeschichten' : fr ? 'Réussites' : 'Success stories', href: r('impact', lang, '#geschichten') },
         { label: de ? 'Jahres- und Transparenzberichte' : fr ? 'Rapports annuels et de transparence' : 'Annual and transparency reports', href: r('reports', lang) },
         { label: 'Downloads', href: r('downloads', lang) },
       ],
     },
-    { label: de ? 'Inlandsarbeit' : fr ? 'Travail en Allemagne' : 'Work in Germany', href: r('inland', lang), mega: 'inland' },
-    { label: de ? 'Internationale Zusammenarbeit' : fr ? 'Coopération internationale' : 'International Cooperation', href: r('international', lang), mega: 'international' },
     {
       label: de ? 'Aktuelles' : fr ? 'Actualités' : 'News',
       href: r('news', lang),

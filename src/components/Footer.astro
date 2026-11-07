@@ -50,13 +50,6 @@ const cols = [
       <img class="keep-color" src={href('/brand/bantu-logo-on-dark.png')} width="120" height="142" alt="Bantu e.V." />
       <p class="footer-motto" lang={lang}>{org.motto[lang]}</p>
       <p>{t.footerAbout}</p>
-      <address>
-        <span class="addr-line"><Icon name="pin" /> {org.address.street}, {org.address.zip} {org.address.city}</span>
-        <a class="addr-line" href={`mailto:${org.email}`}><Icon name="mail" /> {org.email}</a>
-        <Phones lang={lang} variant="footer" />
-      </address>
-      <h2 class="footer-title footer-title--social">{de ? 'Folgen Sie uns' : fr ? 'Suivez-nous' : 'Follow us'}</h2>
-      <SocialLinks lang={lang} variant="dark" />
     </div>
     {cols.map((c) => (
       <nav aria-label={c.title}>
@@ -64,6 +57,21 @@ const cols = [
         <ul>{c.links.map(([label, url]) => <li><a href={url}>{label}</a></li>)}</ul>
       </nav>
     ))}
+    <div class="footer-contact">
+      <h2 class="footer-title footer-contact__h">{t.contact}</h2>
+      <address class="footer-contact__grid">
+        <span class="addr-block"><Icon name="pin" /><span><strong>{de ? 'Büro' : fr ? 'Bureau' : 'Office'}</strong><br />{org.address.street}<br />{org.address.zip} {org.address.city}</span></span>
+        <span class="addr-block"><Icon name="mail" /><span><strong>{de ? 'Postanschrift (für Briefe)' : fr ? 'Adresse postale (courrier)' : 'Postal address (letters)'}</strong><br />{org.shortName}<br />{org.postbox.line}<br />{org.postbox.zip} {org.postbox.city}</span></span>
+        <span class="footer-contact__reach">
+          <a class="addr-line" href={`mailto:${org.email}`}><Icon name="mail" /> {org.email}</a>
+          <Phones lang={lang} variant="footer" />
+        </span>
+        <span class="footer-social">
+          <strong class="footer-social__h">{de ? 'Folgen Sie uns' : fr ? 'Suivez-nous' : 'Follow us'}</strong>
+          <SocialLinks lang={lang} variant="dark" />
+        </span>
+      </address>
+    </div>
   </div>
   <div class="wrap footer-a11y">
     <a href={r('accessibility', lang)}><Icon name="access" /> {t.a11y}</a>
@@ -82,7 +90,16 @@ const cols = [
   .site-footer { background: var(--deep); color: var(--on-deep); font-size: 1rem; position: relative; }
   .footer-rings { display: flex; justify-content: center; gap: 12px; padding-top: 2.5rem; }
   .footer-rings span { width: 16px; height: 16px; border-radius: 50%; border: 4px solid; }
-  .footer-grid { display: grid; grid-template-columns: 1.6fr repeat(3, 1fr); gap: 2rem; padding-block: 2.5rem 2rem; }
+  .footer-grid { display: grid; grid-template-columns: 1.5fr repeat(3, minmax(0, 1fr)); gap: 2rem 2.25rem; padding-block: 2.5rem 2rem; align-items: start; }
+  .footer-grid > * { min-width: 0; }
+  .footer-contact { grid-column: 1 / -1; border-top: 1px solid rgba(255,255,255,.14); padding-top: 1.75rem; }
+  .footer-contact__grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1.25rem 2rem; align-items: start; }
+  .footer-contact__reach { display: grid; gap: .5rem; }
+  .footer-social { display: grid; gap: .6rem; }
+  .footer-social__h { color: #ffd34d; font-size: .85rem; letter-spacing: .14em; text-transform: uppercase; }
+  .addr-block { display: flex; gap: .5rem; align-items: flex-start; line-height: 1.5; }
+  .addr-block .icon { width: 1.1em; height: 1.1em; color: #ffd34d; flex-shrink: 0; margin-top: .25em; }
+  .addr-block strong { color: #fff; font-weight: 700; }
   .footer-brand img { width: 120px; margin-bottom: 1rem; }
   .footer-brand p { max-width: 40ch; color: var(--on-deep-muted); }
   .footer-brand .footer-motto { font-family: var(--font-serif); font-style: italic; font-size: 1.15rem; line-height: 1.4; color: #ffd34d; margin-bottom: .75rem; }
@@ -91,7 +108,6 @@ const cols = [
   .addr-line .icon { width: 1.1em; height: 1.1em; color: #ffd34d; }
   .site-footer a { color: var(--on-deep); text-decoration: none; }
   .site-footer a:hover { color: #ffd34d; text-decoration: underline; }
-  .footer-title--social { margin: 1.5rem 0 .6rem; }
   .footer-title { font-family: var(--font-sans); font-size: .85rem; letter-spacing: .14em; text-transform: uppercase; color: #ffd34d; margin-bottom: .9rem; }
   ul { list-style: none; padding: 0; margin: 0; }
   li { margin: 0; }
@@ -102,6 +118,8 @@ const cols = [
   .footer-bottom { border-top: 1px solid rgba(255,255,255,.14); padding-block: 1.25rem 2.25rem; display: flex; flex-wrap: wrap; justify-content: space-between; gap: .5rem 2rem; font-size: .9rem; color: var(--on-deep-muted); }
   .footer-bottom p { margin: 0; }
   .footer-legal { display: flex; flex-wrap: wrap; gap: 1.1rem; }
-  @media (max-width: 900px) { .footer-grid { grid-template-columns: 1fr 1fr; } .footer-brand { grid-column: 1 / -1; } }
+  @media (max-width: 1100px) { .footer-contact__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 900px) { .footer-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } .footer-brand { grid-column: 1 / -1; } }
+  @media (max-width: 640px) { .footer-grid { grid-template-columns: 1fr 1fr; } .footer-contact__grid { grid-template-columns: 1fr; } }
   @media (max-width: 520px) { .footer-grid { grid-template-columns: 1fr; } }
 </style>

@@ -2,8 +2,8 @@
 // Official SDG icons with the goal's name as alt text. Each icon links to the UN page of the goal.
 import { href, ui, type Lang } from '../i18n';
 import { sdgNames } from '../data/sdgs';
-interface Props { lang: Lang; goals: number[]; size?: 'sm' | 'md' | 'lg'; label?: boolean }
-const { lang, goals, size = 'md', label = false } = Astro.props;
+interface Props { lang: Lang; goals: number[]; size?: 'xs' | 'sm' | 'md' | 'lg'; label?: boolean; linked?: boolean }
+const { lang, goals, size = 'md', label = false, linked = true } = Astro.props;
 const list = [...new Set(goals)].filter((n) => sdgNames[n]).sort((a, b) => a - b);
 const nn = (n: number) => String(n).padStart(2, '0');
 ---
@@ -11,11 +11,15 @@ const nn = (n: number) => String(n).padStart(2, '0');
   <ul class={`sdg-icons sdg-icons--${size}`} role="list">
     {list.map((n) => (
       <li>
-        <a href={`https://sdgs.un.org/goals/goal${n}`} rel="noopener" target="_blank">
-          <img src={href(`/sdg/sdg-${nn(n)}.webp`)} alt={`SDG ${n}: ${(sdgNames[n] as any)[lang] ?? sdgNames[n].en}`} width="240" height="240" loading="lazy" />
-          {label && <span class="sdg-icons__label">{(sdgNames[n] as any)[lang] ?? sdgNames[n].en}</span>}
-          <span class="sr-only"> {ui[lang].newWindow}</span>
-        </a>
+        {linked ? (
+          <a href={`https://sdgs.un.org/goals/goal${n}`} rel="noopener" target="_blank">
+            <img src={href(`/sdg/sdg-${nn(n)}.webp`)} alt={`SDG ${n}: ${(sdgNames[n] as any)[lang] ?? sdgNames[n].en}`} width="240" height="240" loading="lazy" />
+            {label && <span class="sdg-icons__label">{(sdgNames[n] as any)[lang] ?? sdgNames[n].en}</span>}
+            <span class="sr-only"> {ui[lang].newWindow}</span>
+          </a>
+        ) : (
+          <img src={href(`/sdg/sdg-${nn(n)}.webp`)} alt={`SDG ${n}: ${(sdgNames[n] as any)[lang] ?? sdgNames[n].en}`} title={`SDG ${n}: ${(sdgNames[n] as any)[lang] ?? sdgNames[n].en}`} width="240" height="240" loading="lazy" />
+        )}
       </li>
     ))}
   </ul>
@@ -26,6 +30,7 @@ const nn = (n: number) => String(n).padStart(2, '0');
   .sdg-icons a { display: flex; flex-direction: column; gap: .35rem; text-decoration: none; color: var(--ink); border-radius: 6px; }
   .sdg-icons img { display: block; width: var(--sdg, 72px); height: var(--sdg, 72px); border-radius: 4px; }
   .sdg-icons a:hover img { outline: 3px solid var(--ink); outline-offset: 2px; }
+  .sdg-icons--xs { --sdg: 38px; gap: .3rem; }
   .sdg-icons--sm { --sdg: 52px; gap: .4rem; }
   .sdg-icons--md { --sdg: 72px; }
   .sdg-icons--lg { --sdg: 96px; gap: .75rem; }

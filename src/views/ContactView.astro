@@ -22,7 +22,7 @@ const osm = 'https://www.openstreetmap.org/search?query=Kameruner%20Str.%201%2C%
         <h2 class="h3">{org.shortName}</h2>
         <dl class="kv">
           <dt>{de ? 'Büro' : fr ? 'Bureau' : 'Office'}</dt><dd>{org.address.street}<br />{org.address.zip} {org.address.city}<br /><a href={osm} rel="noopener" target="_blank">{de ? 'Auf der Karte (OpenStreetMap)' : fr ? 'Carte (OpenStreetMap)' : 'Map (OpenStreetMap)'}</a></dd>
-          <dt>{de ? 'Post' : fr ? 'Courrier' : 'Post'}</dt><dd>{org.postbox.line}<br />{org.postbox.zip} {org.postbox.city}</dd>
+          <dt>{de ? 'Postanschrift (für Briefe und Schriftverkehr)' : fr ? 'Adresse postale (courrier et correspondance)' : 'Postal address (letters and correspondence)'}</dt><dd>{org.postbox.line}<br />{org.postbox.zip} {org.postbox.city}</dd>
           <dt>E-Mail</dt><dd><a href={`mailto:${org.email}`}>{org.email}</a></dd>
           <dt>{de ? 'Telefon' : fr ? 'Téléphone' : 'Phone'}</dt><dd><Phones lang={lang} /></dd>
           <dt>Social Media</dt><dd><SocialLinks lang={lang} /></dd>
