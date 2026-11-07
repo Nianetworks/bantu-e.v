@@ -3,8 +3,7 @@
 // logo, main navigation with disclosure menus (buttons with aria-expanded; Esc closes;
 // works with keyboard, touch and screen readers – no hover-only menus).
 import Icon from './Icon.astro';
-import A11yPanel from './A11yPanel.astro';
-import { href, langNames, mainNav, projectPath, r, ui, type Lang } from '../i18n';
+import { archiveId, archiveLabel, href, langNames, mainNav, projectPath, r, ui, type Lang } from '../i18n';
 import { org } from '../data/site';
 import { getProjects, slugOf, type Project } from '../lib/content';
 import { programmes, regions, regionPath, regionProgrammePath, type Region } from '../data/programmes';
@@ -14,20 +13,25 @@ const t = ui[lang];
 const de = lang === 'de';
 const fr = lang === 'fr';
 const nav = mainNav(lang);
-// Mega menus for the two work areas: programme -> projects in that area.
+const logoAlt = de ? 'Bantu e.V., zur Startseite' : fr ? 'Bantu e.V., page d’accueil' : 'Bantu e.V., home page';
+// Mega menus for the two work areas: programme -> CURRENT projects in that area.
+// Completed projects are not listed here; one link leads to the archive on the all-projects page.
+// A programme stays in the menu (as a category link) when the area has only completed projects in it.
 const allProjects = await getProjects(lang);
 const bySlug = new Map(allProjects.map((p) => [slugOf(p.id), p]));
 const megaFor = (region: Region) => {
   const rg = regions.find((x) => x.key === region)!;
   const groups = programmes
-    .map((p) => ({
+    .map((p) => ({ p, inRegion: p.projects.map((s) => bySlug.get(s)).filter((x): x is Project => !!x && x.data.programme === region) }))
+    .map(({ p, inRegion }) => ({
       prog: p,
       href: regionProgrammePath(lang, region, p.key),
-      items: p.projects.map((s) => bySlug.get(s)).filter((x): x is Project => !!x && x.data.programme === region),
+      any: inRegion.length > 0,
+      items: inRegion.filter((x) => x.data.status !== 'completed'),
       extra: region === 'inland' && p.key === 'education' ? [{ label: de ? 'Bildungsangebote: Workshops und Begleitung' : fr ? 'Ateliers, formations et accompagnement' : 'Workshops, training and support', href: r('offers', lang) }]
         : region === 'inland' && p.key === 'migration' ? [{ label: de ? 'Verfahrensberatung' : fr ? 'Conseil sur les procédures' : 'Procedural advice', href: regionProgrammePath(lang, region, p.key) + (de ? '#beratung' : '#advice') }] : [],
     }))
-    .filter((g) => g.items.length > 0 || g.extra.length > 0);
+    .filter((g) => g.any || g.extra.length > 0);
   return { rg, groups };
 };
 const megas = { inland: megaFor('inland'), international: megaFor('international') };
@@ -46,7 +50,7 @@ const compactCss = levels.map(([pre, w]) => `@media (max-width: ${w}px) { ${comp
     <div class="wrap utility__inner">
       <a class="util-link" href={r('easy', lang)}><Icon name="easy" /> {t.easy}</a>
       <div class="utility__right">
-        <button type="button" class="util-link util-btn" data-a11y-toggle aria-expanded="false" aria-controls="a11y-panel">
+        <button type="button" class="util-link util-btn" data-a11y-toggle aria-haspopup="dialog" aria-controls="a11y-panel">
           <Icon name="access" /> {t.a11y}
         </button>
         <a class="util-link" href={`mailto:${org.email}`}><Icon name="mail" /> <span class="hide-sm">{org.email}</span><span class="sr-only show-sm">E-Mail</span></a>
@@ -61,9 +65,11 @@ const compactCss = levels.map(([pre, w]) => `@media (max-width: ${w}px) { ${comp
     </div>
   </div>
   <div class="wrap header-inner">
-    <a class="logo-plate" href={r('home', lang)} aria-label={de ? 'Bantu e.V.: zur Startseite' : fr ? 'Bantu e.V. : page d’accueil' : 'Bantu e.V.: home page'}>
-      <img class="logo-full keep-color" src={href('/brand/bantu-logo.png')} width="120" height="142" alt="" />
-      <img class="logo-emblem keep-color" src={href('/brand/bantu-emblem.png')} width="52" height="52" alt="" />
+    {/* The link gets its name from the visible image's alt text. Only one of the two images is displayed at a time
+        (full logo at the top, emblem once the page is scrolled), so both carry the same alt and it is never read twice. */}
+    <a class="logo-plate" href={r('home', lang)}>
+      <img class="logo-full keep-color" src={href('/brand/bantu-logo.png')} width="120" height="142" alt={logoAlt} />
+      <img class="logo-emblem keep-color" src={href('/brand/bantu-emblem.png')} width="52" height="52" alt={logoAlt} />
     </a>
     <nav id="main-nav" class="main-nav" aria-label={de ? 'Hauptmenü' : fr ? 'Menu principal' : 'Main menu'}>
       <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-list">
@@ -85,8 +91,8 @@ const compactCss = levels.map(([pre, w]) => `@media (max-width: ${w}px) { ${comp
                       <span class="mega__places">{megas[item.mega].rg.places[lang]}</span>
                     </a>
                     <p class="mega__lead">{megas[item.mega].rg.navLead[lang]}</p>
-                    <a class="mega__more" href={r('programmes', lang)}>{de ? 'Alle Programme' : fr ? 'Tous les programmes' : 'All programmes'} <Icon name="arrow" /></a>
                     <a class="mega__more" href={r('projects', lang)}>{t.allProjects} <Icon name="arrow" /></a>
+                    <a class="mega__more mega__archive" href={r('projects', lang, `#${archiveId[lang]}`)}>{archiveLabel[lang]} <Icon name="arrow" /></a>
                   </div>
                   <ul class="mega__cols">
                     {megas[item.mega].groups.map((g) => (
@@ -95,10 +101,12 @@ const compactCss = levels.map(([pre, w]) => `@media (max-width: ${w}px) { ${comp
                           <span class="mega__no">{de ? 'Programm' : fr ? 'Programme' : 'Programme'} {g.prog.no}</span>
                           {g.prog.title[lang]}
                         </a>
-                        <ul>
-                          {g.items.map((p) => <li><a href={projectPath(lang, slugOf(p.id))}>{shortTitle(p)}{p.data.status === 'completed' && <span class="mega__done"> · {t.projectStatus.completed}</span>}</a></li>)}
-                          {g.extra.map((x) => <li><a href={x.href}>{x.label}</a></li>)}
-                        </ul>
+                        {(g.items.length > 0 || g.extra.length > 0) && (
+                          <ul>
+                            {g.items.map((p) => <li><a href={projectPath(lang, slugOf(p.id))}>{shortTitle(p)}</a></li>)}
+                            {g.extra.map((x) => <li><a href={x.href}>{x.label}</a></li>)}
+                          </ul>
+                        )}
                       </li>
                     ))}
                   </ul>
@@ -124,7 +132,6 @@ const compactCss = levels.map(([pre, w]) => `@media (max-width: ${w}px) { ${comp
       </ul>
     </nav>
   </div>
-  <A11yPanel lang={lang} />
 </header>
 
 <script>
@@ -241,7 +248,7 @@ const compactCss = levels.map(([pre, w]) => `@media (max-width: ${w}px) { ${comp
   .mega__prog:hover { background: var(--bg-2); text-decoration: underline; }
   .mega .mega__col a:not(.mega__prog) { display: block; min-height: 0; padding: .45rem .5rem; font-weight: 500; font-size: .95rem; line-height: 1.35; border-radius: 8px; color: var(--ink); text-decoration: none; }
   .mega .mega__col a:not(.mega__prog):hover { background: var(--bg-2); text-decoration: underline; }
-  .mega__done { color: var(--muted); font-size: .85em; }
+  .mega__archive { font-weight: 600; color: var(--ink-2); }
   .accent--gold { --accent: var(--gold); } .accent--green { --accent: var(--green); } .accent--blue { --accent: var(--blue); } .accent--red { --accent: var(--c-coral); } .accent--purple { --accent: var(--c-mauve); }
   .nav-toggle { display: none; }
 

@@ -1,4 +1,5 @@
 ---
+import { eventNode } from '../lib/schema';
 import Base from '../layouts/Base.astro';
 import PageHead from '../components/PageHead.astro';
 import { render } from 'astro:content';
@@ -14,8 +15,10 @@ const d = item.data;
 const { Content } = await render(item);
 const isEvent = d.type === 'event' && d.eventStart;
 const sameDay = isEvent && (!d.eventEnd || formatDate(d.eventStart!, lang) === formatDate(d.eventEnd, lang));
+const ev = eventNode(item, lang, Astro.site);
+const eventSchema = ev ? [ev] : [];
 ---
-<Base lang={lang} title={d.title} description={d.summary} altHref={hasAlt ? newsPath(de ? 'en' : 'de', slugOf(item.id)) : undefined} image={d.image}>
+<Base lang={lang} title={d.title} description={d.summary} altHref={hasAlt ? newsPath(de ? 'en' : 'de', slugOf(item.id)) : undefined} image={d.image} schema={eventSchema}>
   <PageHead lang={lang} title={d.title} lead={d.summary} eyebrow={t.type[d.type]}
     crumbs={[{ label: isEvent ? (de ? 'Veranstaltungen' : fr ? 'Événements' : 'Events') : (de ? 'Aktuelles' : fr ? 'Actualités' : 'News'), href: isEvent ? r('events', lang) : r('news', lang) }]}>
     {!isEvent && <p class="small muted"><time datetime={d.date.toISOString()}>{formatDate(d.date, lang, { day: 'numeric', month: 'long', year: 'numeric' })}</time></p>}

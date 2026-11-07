@@ -63,9 +63,11 @@
 }
 
 /* ---- User settings (set by the accessibility toolbar) ---- */
-html[data-text="lg"] { font-size: 112.5%; }
-html[data-text="xl"] { font-size: 125%; }
-html[data-text="xxl"] { font-size: 150%; }
+/* Text size from the display panel: one scale factor, available to every component as --font-scale. */
+html { --font-scale: 1; font-size: calc(100% * var(--font-scale)); }
+html[data-text="lg"] { --font-scale: 1.125; }
+html[data-text="xl"] { --font-scale: 1.25; }
+html[data-text="xxl"] { --font-scale: 1.5; }
 html[data-font="readable"] { --font-serif: 'Atkinson Hyperlegible', Verdana, sans-serif; --font-sans: 'Atkinson Hyperlegible', Verdana, sans-serif; }
 html[data-spacing="wide"] { --lh: 1.95; --ls: .04em; --ws: .12em; }
 html[data-spacing="wide"] p, html[data-spacing="wide"] li { margin-bottom: 1.4em; }
@@ -271,3 +273,10 @@ code { font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: .95em;
 .dl-groups > *, .section-head > *, .itz li > *, .years > *, .features li > *, .mini-list li > *, .easy-block > * { min-width: 0; }
 .mini-list li { flex-wrap: wrap; }
 [hidden] { display: none !important; }
+
+/* ---- Rendering performance ----
+   .cv: sections far below the first screen are only laid out and painted when they come near the viewport.
+   Content stays in the accessibility tree and in find-in-page. "auto" remembers the real height after the
+   first render, so the scrollbar does not jump. */
+.cv { content-visibility: auto; contain-intrinsic-size: auto 760px; }
+@media print { .cv { content-visibility: visible; } }

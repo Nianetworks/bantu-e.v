@@ -4,6 +4,9 @@
 // prefers reduced motion or switched on "stop motion" in the accessibility panel, pauses in background tabs.
 // Photos are decorative for the layout (aria-hidden); each one is described in the visible caption.
 // High-contrast theme hides the photos completely.
+// Markup: only the first photo is a real <img> in the page (preloaded in HomeView). The other photos
+// sit in an inert <template> (valid HTML, nothing is downloaded) and are mounted one at a time by the
+// script below, just before they are shown. Caption and project link travel as data-* on each <img>.
 import Icon from './Icon.astro';
 import { href, projectPath, type Lang } from '../i18n';
 import { heroSlides } from '../data/heroSlides';
@@ -14,6 +17,8 @@ const de = lang === 'de';
 const fr = lang === 'fr';
 const n = heroSlides.length;
 const src = (f: string, small = false) => href(`/images/hero/${f}${small ? '-800' : ''}.webp`);
+const srcset = (f: string) => `${src(f, true)} 800w, ${src(f)} 1600w`;
+const [first, ...rest] = heroSlides;
 const labels = {
   region: de ? 'Fotos aus unseren Projekten' : fr ? 'Photos de nos projets' : 'Photos from our projects',
   pauseShort: de ? 'Pause' : fr ? 'Pause' : 'Pause',
@@ -25,19 +30,20 @@ const labels = {
 };
 ---
 <div class="hs__bg" aria-hidden="true">
-  {heroSlides.map((s, i) => (
-    i === 0
-      ? <img class="hs__img is-active" src={src(s.file)} srcset={`${src(s.file, true)} 800w, ${src(s.file)} 1600w`} sizes="100vw" alt="" width="1600" height="1066" decoding="async" fetchpriority="high" />
-      : <img class="hs__img" data-src={src(s.file)} data-srcset={`${src(s.file, true)} 800w, ${src(s.file)} 1600w`} sizes="100vw" alt="" width="1600" height="1066" decoding="async" />
-  ))}
+  <img class="hs__img is-active" src={src(first.file)} srcset={srcset(first.file)} sizes="100vw" alt="" width="1600" height="1066" decoding="async" fetchpriority="high" data-caption={first.caption[lang]} data-href={first.project ? projectPath(lang, first.project) : ''} />
   <div class="hs__shade"></div>
 </div>
+{rest.length > 0 && (
+  <template data-hs-slides>
+    {rest.map((s) => <img class="hs__img" src={src(s.file)} srcset={srcset(s.file)} sizes="100vw" alt="" width="1600" height="1066" decoding="async" data-caption={s.caption[lang]} data-href={s.project ? projectPath(lang, s.project) : ''} />)}
+  </template>
+)}
 
 <div class="hs__panel" role="group" aria-label={labels.region} data-hs data-short-pause={labels.pauseShort} data-short-play={labels.playShort}>
   <p class="hs__caption" id="hs-caption">
     <span class="hs__count"><span data-hs-index>1</span>/{n}</span>
-    <span data-hs-text>{heroSlides[0].caption[lang]}</span>
-    {heroSlides[0].project && <a class="hs__link" data-hs-link href={projectPath(lang, heroSlides[0].project)}>{labels.project}</a>}
+    <span data-hs-text>{first.caption[lang]}</span>
+    {first.project && <a class="hs__link" data-hs-link href={projectPath(lang, first.project)}>{labels.project}</a>}
   </p>
   <div class="hs__controls">
     <button class="hs__toggle" type="button" data-hs-toggle>
@@ -47,21 +53,23 @@ const labels = {
     </button>
     <button class="hs__nav" type="button" data-hs-prev aria-label={labels.prev}><Icon name="chevron" class="hs__prev-ic" /></button>
     <button class="hs__nav" type="button" data-hs-next aria-label={labels.next}><Icon name="chevron" class="hs__next-ic" /></button>
-    <ul class="hs__data" hidden>
-      {heroSlides.map((s) => <li data-hs-item data-caption={s.caption[lang]} data-href={s.project ? projectPath(lang, s.project) : ''}></li>)}
-    </ul>
   </div>
 </div>
 
 <script>
   const INTERVAL = 7000;
   const panel = document.querySelector<HTMLElement>('[data-hs]');
-  const imgs = Array.from(document.querySelectorAll<HTMLImageElement>('.hs__img'));
-  if (panel && imgs.length > 1) {
+  const bg = document.querySelector<HTMLElement>('.hs__bg');
+  const tpl = document.querySelector<HTMLTemplateElement>('template[data-hs-slides]');
+  const firstImg = bg?.querySelector<HTMLImageElement>('.hs__img');
+  const tplImgs = Array.from(tpl?.content.querySelectorAll<HTMLImageElement>('img') ?? []);
+  // One slot per slide: the first is already in the page, the others stay in the template until needed.
+  const slides: (HTMLImageElement | null)[] = firstImg ? [firstImg, ...tplImgs.map(() => null)] : [];
+  if (panel && bg && slides.length > 1) {
     const root = document.documentElement;
+    const shade = bg.querySelector('.hs__shade');
     const toggle = panel.querySelector<HTMLButtonElement>('[data-hs-toggle]')!;
     const toggleText = panel.querySelector<HTMLElement>('.hs__toggle-text')!;
-    const items = Array.from(panel.querySelectorAll<HTMLElement>('[data-hs-item]'));
     const caption = panel.querySelector<HTMLElement>('#hs-caption')!;
     const text = panel.querySelector<HTMLElement>('[data-hs-text]')!;
     const index = panel.querySelector<HTMLElement>('[data-hs-index]')!;
@@ -73,22 +81,24 @@ const labels = {
     let playing = false;
     let userPaused = false;
 
-    const load = (img: HTMLImageElement) => {
-      if (img.dataset.src) {
-        img.srcset = img.dataset.srcset || '';
-        img.src = img.dataset.src;
-        delete img.dataset.src;
+    // Mount slide i from the template (downloads the photo) unless it is already in the page.
+    const load = (i: number): HTMLImageElement => {
+      if (!slides[i]) {
+        const img = document.importNode(tplImgs[i - 1], true);
+        bg.insertBefore(img, shade);
+        void img.offsetWidth; // commit opacity 0 first, so the cross-fade also runs for a freshly mounted slide
+        slides[i] = img;
       }
+      return slides[i]!;
     };
     const show = (i: number) => {
-      current = (i + imgs.length) % imgs.length;
-      load(imgs[current]);
-      load(imgs[(current + 1) % imgs.length]);
-      imgs.forEach((img, k) => img.classList.toggle('is-active', k === current));
-      const dot = items[current];
-      text.textContent = dot.dataset.caption || '';
+      current = (i + slides.length) % slides.length;
+      const img = load(current);
+      load((current + 1) % slides.length);
+      slides.forEach((x) => x?.classList.toggle('is-active', x === img));
+      text.textContent = img.dataset.caption || '';
       index.textContent = String(current + 1);
-      if (link) { link.hidden = !dot.dataset.href; if (dot.dataset.href) link.href = dot.dataset.href; }
+      if (link) { link.hidden = !img.dataset.href; if (img.dataset.href) link.href = img.dataset.href; }
     };
     const setPlaying = (on: boolean) => {
       playing = on;
@@ -113,7 +123,7 @@ const labels = {
     mq.addEventListener?.('change', () => { if (motionOff()) setPlaying(false); });
 
     // Preload the second photo after the page has loaded, then start (unless motion is off).
-    window.addEventListener('load', () => load(imgs[1]), { once: true });
+    window.addEventListener('load', () => load(1), { once: true });
     setPlaying(!motionOff());
   } else if (panel) {
     panel.querySelector('.hs__controls')?.remove();

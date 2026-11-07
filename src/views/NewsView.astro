@@ -4,6 +4,7 @@ import PageHead from '../components/PageHead.astro';
 import NewsCard from '../components/NewsCard.astro';
 import { r, ui, type Lang } from '../i18n';
 import { getEvents, getNews } from '../lib/content';
+import { eventNode } from '../lib/schema';
 import { org } from '../data/site';
 
 interface Props { lang: Lang; mode: 'news' | 'events' }
@@ -12,13 +13,14 @@ const de = lang === 'de';
 const fr = lang === 'fr';
 const t = ui[lang];
 const { upcoming, past } = await getEvents(lang);
+const schema = mode === 'events' ? upcoming.map((e) => eventNode(e, lang, Astro.site)).filter((x): x is Record<string, unknown> => !!x) : [];
 const news = (await getNews(lang)).filter((n) => n.data.type !== 'event');
 const title = mode === 'news' ? (de ? 'Aktuelles' : fr ? 'Actualités' : 'News') : (de ? 'Veranstaltungen' : fr ? 'Événements' : 'Events');
 const lead = mode === 'news'
   ? (de ? 'Neuigkeiten, Ankündigungen und Termine von Bantu e.V.' : fr ? 'Actualités, annonces et événements de Bantu e.V.' : 'News, announcements and events from Bantu e.V.')
   : (de ? 'Workshops, Begegnungen und Schulungen, meist kostenfrei und mit Kinderbetreuung.' : fr ? 'Ateliers, rencontres et formations, le plus souvent gratuits et avec garde d’enfants.' : 'Workshops, encounters and trainings, mostly free of charge and with childcare.');
 ---
-<Base lang={lang} title={title} description={lead} altHref={r(mode, de ? 'en' : 'de')}>
+<Base lang={lang} title={title} description={lead} altHref={r(mode, de ? 'en' : 'de')} schema={schema}>
   <PageHead lang={lang} title={title} lead={lead}>
     <div class="btn-row tabs">
       <a class={`btn ${mode === 'news' ? 'btn--dark' : 'btn--outline'}`} href={r('news', lang)} aria-current={mode === 'news' ? 'page' : undefined}>{de ? 'Neuigkeiten' : fr ? 'Actualités' : 'News'}</a>

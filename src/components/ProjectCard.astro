@@ -5,7 +5,7 @@ import SdgIcons from './SdgIcons.astro';
 import { href, projectPath, ui, type Lang } from '../i18n';
 import { slugOf, type Project } from '../lib/content';
 import { projectIcon } from '../lib/icons';
-interface Props { lang: Lang; project: Project; headingLevel?: 2 | 3 }
+interface Props { lang: Lang; project: Project; headingLevel?: 2 | 3 | 4 }
 const { lang, project, headingLevel = 3 } = Astro.props;
 const d = project.data;
 const t = ui[lang];

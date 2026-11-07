@@ -40,6 +40,9 @@ export function r(key: RouteKey, lang: Lang, hash = ''): string {
 }
 export const projectPath = (lang: Lang, slug: string) => href(`${routes.projects[lang]}${slug}/`);
 export const newsPath = (lang: Lang, slug: string) => href(`${routes.news[lang]}${slug}/`);
+/** Anchor of the "completed projects" archive on the all-projects page. */
+export const archiveId: Record<Lang, string> = { de: 'archiv', en: 'archive', fr: 'archives' };
+export const archiveLabel: Record<Lang, string> = { de: 'Archiv: abgeschlossene Projekte', en: 'Archive: completed projects', fr: 'Archives : projets terminés' };
 export const productPath = (lang: Lang, slug: string) => href(`${routes.shop[lang]}${slug}/`);
 
 const tz = 'Europe/Berlin';

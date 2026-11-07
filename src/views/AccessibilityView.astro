@@ -46,7 +46,7 @@ const features = de
 <Base lang={lang} title={title} description={lead} altHref={r('accessibility', de ? 'en' : 'de')}>
   <PageHead lang={lang} title={title} lead={lead}>
     <div class="btn-row" style="margin-top:1.25rem">
-      <button type="button" class="btn btn--gold" data-a11y-toggle aria-expanded="false" aria-controls="a11y-panel"><Icon name="access" /> {de ? 'Darstellung jetzt anpassen' : fr ? 'Adapter l’affichage maintenant' : 'Adjust the display now'}</button>
+      <button type="button" class="btn btn--gold" data-a11y-toggle aria-haspopup="dialog" aria-controls="a11y-panel"><Icon name="access" /> {de ? 'Darstellung jetzt anpassen' : fr ? 'Adapter l’affichage maintenant' : 'Adjust the display now'}</button>
       <a class="btn btn--outline" href={r('easy', lang)}><Icon name="easy" /> {de ? 'Einfache Sprache' : fr ? 'Facile à lire' : 'Easy read'}</a>
     </div>
   </PageHead>

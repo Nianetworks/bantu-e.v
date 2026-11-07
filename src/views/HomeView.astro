@@ -11,6 +11,8 @@ import { href, r, projectPath, ui, type Lang } from '../i18n';
 import { getEvents, getNews, getProjects } from '../lib/content';
 import { impact } from '../data/impact';
 import { org } from '../data/site';
+import { heroSlides } from '../data/heroSlides';
+import { eventNode } from '../lib/schema';
 
 interface Props { lang: Lang }
 const { lang } = Astro.props;
@@ -28,8 +30,13 @@ const quick = [
   { icon: 'heart', label: t.donate, text: de ? 'Mit Zuwendungsbestätigung' : fr ? 'Avec reçu fiscal' : 'With donation receipt', href: r('donate', lang) },
   { icon: 'hand', label: de ? 'Mitmachen' : fr ? 'S’engager' : 'Get involved', text: de ? 'Mitglied, Ehrenamt, Kooperation' : fr ? 'Adhésion, bénévolat, partenariats' : 'Membership, volunteering, partnerships', href: r('join', lang) },
 ] as const;
+// Structured data for upcoming events (they drop out automatically after the event; nightly rebuild).
+const schema = upcoming.map((e) => eventNode(e, lang, Astro.site)).filter((x): x is Record<string, unknown> => !!x);
+// First hero photo: preload with the same srcset/sizes as the <img>, so the browser fetches exactly one file.
+const heroFile = (small = false) => href(`/images/hero/${heroSlides[0].file}${small ? '-800' : ''}.webp`);
 ---
-<Base lang={lang} title={org.shortName} altHref={r('home', de ? 'en' : 'de')}>
+<Base lang={lang} title={org.shortName} altHref={r('home', de ? 'en' : 'de')} schema={schema}>
+  <link slot="head" rel="preload" as="image" type="image/webp" href={heroFile()} imagesrcset={`${heroFile(true)} 800w, ${heroFile()} 1600w`} imagesizes="100vw" fetchpriority="high" />
   <section class="hero hero--photo" aria-labelledby="hero-title">
     <div class="wrap hero__grid">
       <div class="hero__text">
@@ -80,7 +87,7 @@ const quick = [
     </section>
   )}
 
-  <section class="section" aria-labelledby="h-regions">
+  <section class="section cv" aria-labelledby="h-regions">
     <div class="wrap">
       <div class="section-head">
         <div>
@@ -108,7 +115,7 @@ const quick = [
     </div>
   </section>
 
-  <section class="section section--alt" aria-labelledby="h-prog">
+  <section class="section section--alt cv" aria-labelledby="h-prog">
     <div class="wrap">
       <div class="section-head">
         <div>
@@ -134,7 +141,7 @@ const quick = [
     </div>
   </section>
 
-  <section class="section section--deep" aria-labelledby="h-impact">
+  <section class="section section--deep cv" aria-labelledby="h-impact">
     <div class="wrap">
       <div class="section-head">
         <div>
@@ -157,7 +164,7 @@ const quick = [
     </div>
   </section>
 
-  <section class="section" aria-labelledby="h-proj">
+  <section class="section cv" aria-labelledby="h-proj">
     <div class="wrap">
       <div class="section-head">
         <div>
@@ -172,7 +179,7 @@ const quick = [
     </div>
   </section>
 
-  <section class="section section--alt" aria-labelledby="h-story">
+  <section class="section section--alt cv" aria-labelledby="h-story">
     <div class="wrap story">
       <div class="story__media">
         <Placeholder lang={lang} label={de ? 'Absolventinnen mit Zertifikaten, Ausbildung im Salon (mit Einverständnis)' : fr ? 'Diplômées avec leurs certificats, formation au salon (avec consentement)' : 'Graduates with certificates, training in the salon (with consent)'} ratio="4 / 3" tone="gold" icon="star" />
@@ -189,7 +196,7 @@ const quick = [
     </div>
   </section>
 
-  <section class="section" aria-labelledby="h-support">
+  <section class="section cv" aria-labelledby="h-support">
     <div class="wrap">
       <div class="section-head">
         <div>
@@ -222,7 +229,7 @@ const quick = [
     </div>
   </section>
 
-  <section class="section section--tight" aria-labelledby="h-access">
+  <section class="section section--tight cv" aria-labelledby="h-access">
     <div class="wrap access-band">
       <span class="icon-badge icon-badge--lg"><Icon name="access" /></span>
       <div>
@@ -231,14 +238,14 @@ const quick = [
           ? 'Schrift vergrößern, hoher Kontrast, dunkle Ansicht, gut lesbare Schrift oder Seite vorlesen lassen: Über „Barrierefreiheit“ oben auf jeder Seite passen Sie die Darstellung an. Wichtige Informationen gibt es auch in Einfacher Sprache.'
           : fr ? 'Texte plus grand, contraste élevé, mode sombre, police facile à lire ou lecture à voix haute : utilisez « Accessibilité » en haut de chaque page pour adapter l’affichage. Les informations essentielles existent aussi en langage facile.' : 'Bigger text, high contrast, dark mode, an easy-to-read font or having the page read aloud: use “Accessibility” at the top of every page to adjust the display. Key information is also available in easy read.'}</p>
         <div class="btn-row">
-          <button type="button" class="btn btn--dark" data-a11y-toggle aria-expanded="false" aria-controls="a11y-panel"><Icon name="access" /> {de ? 'Darstellung anpassen' : fr ? 'Adapter l’affichage' : 'Adjust display'}</button>
+          <button type="button" class="btn btn--dark" data-a11y-toggle aria-haspopup="dialog" aria-controls="a11y-panel"><Icon name="access" /> {de ? 'Darstellung anpassen' : fr ? 'Adapter l’affichage' : 'Adjust display'}</button>
           <a class="btn btn--outline" href={r('easy', lang)}><Icon name="easy" /> {t.easy}</a>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="section section--sand section--tight" aria-labelledby="h-partners">
+  <section class="section section--sand section--tight cv" aria-labelledby="h-partners">
     <div class="wrap">
       <div class="section-head">
         <div>
@@ -275,7 +282,8 @@ const quick = [
   .btn--ghost { border-color: rgba(255,255,255,.75); color: #fff; background: transparent; }
   .btn--ghost:hover { background: rgba(255,255,255,.1); color: #fff; }
 
-  .quick { position: relative; margin-top: -2.5rem; z-index: 2; }
+  /* Layout/style containment only: paint containment would clip the cards' shadows and hover lift. */
+  .quick { position: relative; margin-top: -2.5rem; z-index: 2; contain: layout style; }
   .quick__grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: .9rem; }
   .quick__item { min-width: 0; display: flex; gap: .9rem; align-items: center; background: var(--surface); color: var(--ink); text-decoration: none; border: 1px solid var(--line); border-radius: 18px; padding: 1rem 1.1rem; box-shadow: var(--shadow); min-height: 84px; transition: transform .15s, border-color .15s; }
   .quick__item:hover { transform: translateY(-2px); border-color: var(--line-strong); }

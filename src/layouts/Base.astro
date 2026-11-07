@@ -3,9 +3,11 @@ import '../styles/global.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import AnnouncementBar from '../components/AnnouncementBar.astro';
+import A11yPanel from '../components/A11yPanel.astro';
 import { href, languages, r, ui, type Lang } from '../i18n';
 import { alternatesFor } from '../lib/alternates';
 import { org } from '../data/site';
+import { organisationGraph } from '../lib/schema';
 
 interface Props {
   lang: Lang;
@@ -15,8 +17,10 @@ interface Props {
   altHref?: string;
   image?: string;
   noindex?: boolean;
+  /** Extra Schema.org nodes for this page (e.g. events), added to the site-wide JSON-LD graph. */
+  schema?: Record<string, unknown>[];
 }
-const { lang, title, description, altHref, image, noindex } = Astro.props;
+const { lang, title, description, altHref, image, noindex, schema = [] } = Astro.props;
 const t = ui[lang];
 const fullTitle = title === org.shortName ? `${org.shortName} | ${org.tagline[lang]}` : `${title} | ${org.shortName}`;
 const desc = description ?? t.footerAbout;
@@ -27,19 +31,10 @@ const alts = await alternatesFor(Astro.url.pathname);
 if (altHref && lang !== 'fr') alts[lang === 'de' ? 'en' : 'de'] ??= altHref;
 const hreflangs = languages.filter((l) => alts[l]).map((l) => ({ l, url: new URL(alts[l]!, Astro.site) }));
 const switchLinks = languages.map((l) => ({ lang: l, href: l === lang ? Astro.url.pathname : alts[l] ?? r('home', l), exact: !!alts[l] }));
-const jsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'NGO',
-  name: org.legalName,
-  alternateName: org.shortName,
-  url: org.web,
-  logo: new URL(href('/brand/bantu-logo.png'), Astro.site).toString(),
-  email: org.email,
-  telephone: org.officePhone,
-  foundingDate: String(org.founded),
-  address: { '@type': 'PostalAddress', streetAddress: org.address.street, postalCode: org.address.zip, addressLocality: org.address.city, addressCountry: 'DE' },
-  sameAs: org.socials.map((s) => s.url),
-};
+// One JSON-LD graph per page: organisation + website (always) and page-specific nodes (events, …).
+const jsonLd = { '@context': 'https://schema.org', '@graph': [...organisationGraph(lang, Astro.site), ...schema] };
+// "</" inside JSON must not end the script element.
+const jsonLdText = JSON.stringify(jsonLd).replace(/</g, '\\u003c');
 // Applied before first paint so saved accessibility settings never "flash".
 const prefsScript = `try{var p=JSON.parse(localStorage.getItem('bantu-a11y')||'{}'),h=document.documentElement;['text','theme','font','spacing','links','motion'].forEach(function(k){var v=p[k];if(v&&!(k==='text'&&v==='md')&&!(k==='theme'&&v==='light'))h.setAttribute('data-'+k,v)})}catch(e){}`;
 // External links: open in new tab and tell screen-reader users.
@@ -68,7 +63,8 @@ const extScript = `document.querySelectorAll('main a[href^="http"]').forEach(fun
     <link rel="icon" type="image/png" sizes="32x32" href={href('/favicon-32.png')} />
     <link rel="apple-touch-icon" href={href('/apple-touch-icon.png')} />
     <link rel="alternate" type="application/rss+xml" title={`${org.shortName} RSS`} href={href(lang === 'de' ? '/aktuelles/rss.xml' : lang === 'fr' ? '/fr/actualites/rss.xml' : '/en/news/rss.xml')} />
-    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+    <slot name="head" />
+    <script type="application/ld+json" set:html={jsonLdText} />
   </head>
   <body>
     <nav class="skip-links" aria-label={lang === 'de' ? 'Sprunglinks' : lang === 'fr' ? 'Liens d’accès rapide' : 'Skip links'}>
@@ -82,6 +78,7 @@ const extScript = `document.querySelectorAll('main a[href^="http"]').forEach(fun
       <slot />
     </main>
     <Footer lang={lang} />
+    <A11yPanel lang={lang} />
     <script is:inline set:html={extScript} />
   </body>
 </html>

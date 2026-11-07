@@ -6,7 +6,7 @@ import PageHead from '../components/PageHead.astro';
 import ProjectCard from '../components/ProjectCard.astro';
 import Icon from '../components/Icon.astro';
 import SdgIcons from '../components/SdgIcons.astro';
-import { r, ui, projectPath, type Lang } from '../i18n';
+import { archiveId, archiveLabel, r, ui, projectPath, type Lang } from '../i18n';
 import { getProjects, slugOf, type Project } from '../lib/content';
 import { programmes, management, trusteeships, programmePath, regions, regionPath, regionProgrammePath, type ProgrammeKey } from '../data/programmes';
 
@@ -177,37 +177,78 @@ const sponsorId = de ? 'traegerschaften' : 'fiscal-sponsorship';
     </>
   )}
 
-  {mode === 'all' && (
-    <>
-      {programmes.map((p, i) => {
-        const items = projectsOf(p.key);
-        return items.length > 0 && (
-          <section class={`section section--tight ${i % 2 ? 'section--alt' : ''}`} aria-labelledby={`h-${p.key}`}>
+  {mode === 'all' && (() => {
+    // Current projects first (grouped by programme), then the archive of completed projects (#archiv / #archive / #archives),
+    // which the mega menus link to.
+    const isDone = (x: Project) => x.data.status === 'completed';
+    const doneCount = all.filter(isDone).length;
+    const aid = archiveId[lang];
+    return (
+      <>
+        <div class="wrap jump-row">
+          <a class="link-arrow" href={`#${aid}`}>{archiveLabel[lang]} ({doneCount})</a>
+        </div>
+        {programmes.map((p, i) => {
+          const items = projectsOf(p.key).filter((x) => !isDone(x));
+          return items.length > 0 && (
+            <section class={`section section--tight ${i % 2 ? 'section--alt' : ''}`} aria-labelledby={`h-${p.key}`}>
+              <div class="wrap">
+                <div class="section-head">
+                  <div>
+                    <div class="eyebrow">{de ? 'Programm' : fr ? 'Programme' : 'Programme'} {p.no}</div>
+                    <h2 id={`h-${p.key}`}>{p.title[lang]}</h2>
+                  </div>
+                  <a class="link-arrow" href={programmePath(lang, p.key)}>{de ? 'Zum Programm' : fr ? 'Voir le programme' : 'View programme'}</a>
+                </div>
+                <div class="grid grid--3">{items.map((x) => <ProjectCard lang={lang} project={x} />)}</div>
+              </div>
+            </section>
+          );
+        })}
+        {unassigned.filter((x) => !isDone(x)).length > 0 && (
+          <section class="section section--tight">
+            <div class="wrap">
+              <h2>{de ? 'Weitere Projekte' : fr ? 'Autres projets' : 'More projects'}</h2>
+              <div class="grid grid--3">{unassigned.filter((x) => !isDone(x)).map((x) => <ProjectCard lang={lang} project={x} />)}</div>
+            </div>
+          </section>
+        )}
+        {doneCount > 0 && (
+          <section class="section section--sand archive" id={aid} aria-labelledby="h-archive">
             <div class="wrap">
               <div class="section-head">
                 <div>
-                  <div class="eyebrow">{de ? 'Programm' : fr ? 'Programme' : 'Programme'} {p.no}</div>
-                  <h2 id={`h-${p.key}`}>{p.title[lang]}</h2>
+                  <div class="eyebrow">{de ? 'Archiv' : fr ? 'Archives' : 'Archive'}</div>
+                  <h2 id="h-archive">{de ? 'Abgeschlossene Projekte' : fr ? 'Projets terminés' : 'Completed projects'}</h2>
+                  <p>{de ? 'Diese Projekte sind beendet. Berichte und Ergebnisse finden Sie auf den Projektseiten.' : fr ? 'Ces projets sont terminés. Vous trouverez les rapports et les résultats sur les pages des projets.' : 'These projects have ended. You will find reports and results on the project pages.'}</p>
                 </div>
-                <a class="link-arrow" href={programmePath(lang, p.key)}>{de ? 'Zum Programm' : fr ? 'Voir le programme' : 'View programme'}</a>
               </div>
-              <div class="grid grid--3">{items.map((x) => <ProjectCard lang={lang} project={x} />)}</div>
+              {programmes.map((p) => {
+                const items = projectsOf(p.key).filter(isDone);
+                return items.length > 0 && (
+                  <div class="archive__group">
+                    <h3>{de ? 'Programm' : fr ? 'Programme' : 'Programme'} {p.no}: {p.title[lang]}</h3>
+                    <div class="grid grid--3">{items.map((x) => <ProjectCard lang={lang} project={x} headingLevel={4} />)}</div>
+                  </div>
+                );
+              })}
+              {unassigned.filter(isDone).length > 0 && (
+                <div class="archive__group">
+                  <h3>{de ? 'Weitere Projekte' : fr ? 'Autres projets' : 'More projects'}</h3>
+                  <div class="grid grid--3">{unassigned.filter(isDone).map((x) => <ProjectCard lang={lang} project={x} headingLevel={4} />)}</div>
+                </div>
+              )}
             </div>
           </section>
-        );
-      })}
-      {unassigned.length > 0 && (
-        <section class="section section--tight">
-          <div class="wrap">
-            <h2>{de ? 'Weitere Projekte' : fr ? 'Autres projets' : 'More projects'}</h2>
-            <div class="grid grid--3">{unassigned.map((x) => <ProjectCard lang={lang} project={x} />)}</div>
-          </div>
-        </section>
-      )}
-    </>
-  )}
+        )}
+      </>
+    );
+  })()}
 </Base>
 <style>
+  .jump-row { display: flex; justify-content: flex-end; padding-top: 1rem; }
+  .archive__group + .archive__group { margin-top: 2.25rem; }
+  .archive__group h3 { margin: 0 0 1rem; }
   .prog-grid { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.25rem; }
   @media (max-width: 1000px) { .prog-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
   @media (max-width: 640px) { .prog-grid { grid-template-columns: 1fr; } }
