@@ -1,14 +1,14 @@
 ---
 title: "Kikili : le grenier municipal de Sandau"
 subtitle: "Un tiers-lieu inclusif dans la plus petite ville de Saxe-Anhalt"
-summary: "À Sandau (Elbe), l’ancien grenier municipal classé devient un lieu de rencontre, de culture, d’éducation et de mémoire, porté par Kikili, avec Bantu e.V. comme association porteuse."
+summary: "À Sandau (Elbe), l’ancien grenier municipal classé devient un lieu de rencontre, de culture, d’éducation et de mémoire, dirigé de manière autonome par Vicky Germain, maître d’ouvrage et cheffe de projet, avec Bantu e.V. comme association porteuse."
 programme: inland
 status: active
 country: "Allemagne"
 location: "Sandau (Elbe), Saxe-Anhalt"
 period: "depuis 2022"
 partners: ["Kikili e.V. i.G."]
-implementer: "Kikili e.V. i.G."
+implementer: "Kikili e.V. i.G., maître d’ouvrage et cheffe de projet : Vicky Germain"
 fiscalSponsorship: true
 funders: ["Dons"]
 sdgs: [10, 11]
@@ -27,9 +27,11 @@ Avec environ 800 habitants, Sandau, sur l’Elbe, est la plus petite ville de Sa
 - des activités éducatives, des ateliers et des événements pour tous les âges,
 - une plateforme pour les initiatives en faveur de la justice sociale, de l’environnement et de l’inclusion.
 
-## Notre rôle
+## Direction du projet et notre rôle
 
-Depuis 2022, Bantu e.V. accompagne Kikili comme **association porteuse** : nous apportons l’administration, le statut d’intérêt général et notre expérience jusqu’à ce que Kikili puisse fonctionner comme association autonome. Lors des **Journées du patrimoine, le 13.09.2026**, le grenier a accueilli un atelier de dessin de paysage et un concert.
+Le projet est **dirigé entièrement et de manière autonome par Mme Vicky Germain**, en tant que **maître d’ouvrage et cheffe de projet**.
+
+Depuis 2022, Bantu e.V. est l’**association porteuse** : nous mettons à disposition notre statut d’intérêt général et notre administration jusqu’à ce que Kikili soit inscrite comme association. Lors des **Journées du patrimoine, le 13.09.2026**, le grenier a accueilli un atelier de dessin de paysage et un concert.
 
 ## Soutenir
 

@@ -1,18 +1,16 @@
 ---
-title: "Safer Spaces & ParentCircle: mit Tubman.Network"
-subtitle: "Projekte für Schwarze Mütter, Eltern und Familien in unserer Trägerschaft"
-summary: "Als Trägerverein haben wir Projekte von tubman.network ermöglicht: unter anderem den Mama Circle für geflüchtete Mütter und den ParentCircle für BIPoC-Eltern."
+title: "Safer Spaces for Mothers: Mama Circle"
+subtitle: "Ein wöchentlicher Kreis in Berlin für afrikanische und afrodiasporische Mütter, die vor Krieg geflohen sind"
+summary: "Jeden Sonntag trafen sich geflüchtete Mütter und weibliche Bezugspersonen zu Austausch und Unterstützung, mit Kinderbetreuung während der Treffen und Beratung an vier Tagen pro Woche."
 programme: inland
 status: completed
 country: "Deutschland"
 location: "Berlin"
-period: "2021–2025"
-start: 2021-01-01
-end: 2025-12-31
-partners: ["tubman.network e.V."]
-implementer: "tubman.network e.V."
-fiscalSponsorship: true
-funders: ["Robert Bosch Stiftung (Safer Spaces / Mama Circle)", "Stiftung Nord-Süd-Brücken (ParentCircle)"]
+period: "2023–2024"
+start: 2023-01-01
+end: 2024-12-31
+implementer: "Bantu e.V. mit dem Team von Tubman.Network"
+funders: ["Robert Bosch Stiftung"]
 sdgs: [3, 5, 10]
 stats:
   - { value: "wöchentlich", label: "Mama-Circle-Treffen mit Kinderbetreuung" }
@@ -21,20 +19,21 @@ photoBrief: "Symbolbild: Treffpunkt/Raum des Mama Circle (keine erkennbaren Pers
 order: 22
 sources:
   - "Bantu_eV_Taetigkeitsbericht_2023_2025.pdf (1, 3.2, 4.1, 4.2)"
+  - "tubman.network/previous-projects/, abgerufen 08.11.2026"
+  - "Angabe des Vorsitzenden, 08.11.2026: Projekt von Bantu e.V., umgesetzt vom Team von Tubman.Network (ParentCircle war kein Projekt von Bantu e.V.)"
 ---
 
-Von 2021 bis Januar 2024 war Bantu e.V. **Trägerverein von Tubman.Network**, einem Netzwerk, das sich für Schwarze Eltern, Familien und Communities einsetzt. Im Januar 2024 wurde Tubman.Network als eigenständiger gemeinnütziger Verein eingetragen (tubman.network e.V.). Einzelne laufende Projekte, zuletzt der ParentCircle (2024–2025, gefördert von der Stiftung Nord-Süd-Brücken), haben wir noch bis 2025 verwaltet. Als Trägerverein haben wir die Fördermittel verwaltet, Verwendungsnachweise erstellt sowie Personal und Verträge betreut. Mehr über tubman.network: [tubman.network](https://tubman.network).
+Der **Mama Circle** war das Herzstück des Projekts **Safer Spaces for Mothers**, gefördert von der Robert Bosch Stiftung. Jeden Sonntag trafen sich in Berlin afrikanische und afrodiasporische Mütter und weibliche Bezugspersonen, die vor Krieg geflohen sind. Mutterschaft war dabei weit gefasst: Der Kreis stand allen offen, die für Kinder sorgen, auch Frauen, die noch keine Mütter sind.
 
-## Safer Spaces for Mothers: Mama Circle (2023–2024)
+## Was das Projekt bot
 
-Gefördert von der Robert Bosch Stiftung trafen sich afrikanische und afrodiasporische Mütter, die vor Krieg geflohen sind, jeden Sonntag im **Mama Circle** in Berlin:
-
-- Kinderbetreuung während der Treffen,
-- psychosoziale Beratung an vier Tagen pro Woche,
-- Begleitung zu Arzt- und Behördenterminen und Unterstützung im Alltag.
+- **Wöchentliche Treffen** für Austausch über Erfahrungen und kulturelle Traditionen, mit Impulsen zur Gesundheit von Frauen und Kindern.
+- **Kinderbetreuung** während jedes Treffens, damit die Mütter sich auf ihre eigenen Anliegen konzentrieren konnten.
+- **Bildungs- und psychosoziale Beratung** an vier Tagen pro Woche.
+- **Praktische Hilfe**: Vereinbarung von und Begleitung zu Arzt- und Behördenterminen.
 
 Ergebnis: ein stabiles soziales Netzwerk und eine gestärkte Mutter-Kind-Bindung.
 
-## ParentCircle
+## Umsetzung
 
-Im ParentCircle (2024–2025) fanden BIPoC-Eltern in wöchentlichen Treffen, beim gemeinsamen Kochen und Spielen mit den Kindern und in 1:1-Gesprächen Gemeinschaft, gegenseitige Unterstützung und gemeinsame Strategien im Umgang mit Diskriminierungserfahrungen im Alltag.
+Ein Projekt von Bantu e.V., umgesetzt vom Team von Tubman.Network. Tubman.Network arbeitete bis Januar 2024 unter dem Dach von Bantu e.V. und ist heute der eigenständige Verein [tubman.network e.V.](https://tubman.network).

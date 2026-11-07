@@ -114,8 +114,8 @@ const sponsorId = de ? 'traegerschaften' : 'fiscal-sponsorship';
                 <p class="small muted">{ts.place} · {ts.period[lang]}</p>
                 <h3><a href={ts.url} rel="noopener">{ts.name}</a></h3>
                 <p>{ts.text[lang]}</p>
-                <h4 class="sponsor__h">{de ? 'Projekte unter unserer Trägerschaft' : fr ? 'Projets portés par nous' : 'Projects under our sponsorship'}</h4>
-                <ul>{ts.projects[lang].map((x) => <li>{x}</li>)}</ul>
+                <h4 class="sponsor__h">{ts.projectsHeading?.[lang] ?? (de ? 'Projekte unter unserer Trägerschaft' : fr ? 'Projets portés par nous' : 'Projects under our sponsorship')}</h4>
+                <ul>{ts.projects[lang].map((x, k) => <li>{ts.slugs?.[k] ? <a href={projectPath(lang, ts.slugs[k]!)}>{x}</a> : x}</li>)}</ul>
               </article>
             ))}
           </div>

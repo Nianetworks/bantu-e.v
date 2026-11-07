@@ -1,14 +1,14 @@
 ---
 title: "Kikili: Sandau Town Granary"
 subtitle: "An inclusive third place in the smallest town of Saxony-Anhalt"
-summary: "In Sandau (Elbe) the listed former town granary is becoming a place for encounter, culture, education and remembrance, run by Kikili, with Bantu e.V. as fiscal sponsor."
+summary: "In Sandau (Elbe) the listed former town granary is becoming a place for encounter, culture, education and remembrance, managed independently by Vicky Germain as developer and project lead, with Bantu e.V. as fiscal sponsor."
 programme: inland
 status: active
 country: "Germany"
 location: "Sandau (Elbe), Saxony-Anhalt"
 period: "since 2022"
 partners: ["Kikili e.V. i.G."]
-implementer: "Kikili e.V. i.G."
+implementer: "Kikili e.V. i.G., developer (Bauherr*in) and project lead: Vicky Germain"
 fiscalSponsorship: true
 funders: ["Donations"]
 sdgs: [10, 11]
@@ -27,9 +27,11 @@ With around 800 residents, Sandau on the Elbe is the smallest town in Saxony-Anh
 - educational activities, workshops and events for young and old,
 - a platform for initiatives working on social justice, environmental protection and inclusion.
 
-## Our role
+## Project lead and our role
 
-Bantu e.V. has supported Kikili as its **fiscal sponsor** since 2022: we provide administration, charitable status and experience until Kikili can work independently as an association of its own. On **Heritage Open Day, 13.09.2026**, the granary hosted a landscape drawing workshop and a concert.
+The project is **managed fully and independently by Ms Vicky Germain** as **developer (Bauherr*in) and project lead**.
+
+Bantu e.V. has been its **fiscal sponsor** since 2022: we provide charitable status and administration until Kikili is registered as an association of its own. On **Heritage Open Day, 13.09.2026**, the granary hosted a landscape drawing workshop and a concert.
 
 ## Support
 

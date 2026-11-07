@@ -1,14 +1,14 @@
 ---
 title: "Kikili: Stadtspeicher Sandau"
 subtitle: "Ein inklusiver Dritter Ort im kleinsten Städtchen Sachsen-Anhalts"
-summary: "In Sandau (Elbe) wird der denkmalgeschützte ehemalige Stadtspeicher zu einem Ort für Begegnung, Kultur, Bildung und Erinnerung, umgesetzt von Kikili, mit Bantu e.V. als Trägerverein."
+summary: "In Sandau (Elbe) wird der denkmalgeschützte ehemalige Stadtspeicher zu einem Ort für Begegnung, Kultur, Bildung und Erinnerung, eigenständig geführt von Vicky Germain als Bauherr*in und Projektleitung, mit Bantu e.V. als Trägerverein."
 programme: inland
 status: active
 country: "Deutschland"
 location: "Sandau (Elbe), Sachsen-Anhalt"
 period: "seit 2022"
 partners: ["Kikili e.V. i.G."]
-implementer: "Kikili e.V. i.G."
+implementer: "Kikili e.V. i.G., Bauherr*in und Projektleitung: Vicky Germain"
 fiscalSponsorship: true
 funders: ["Spenden"]
 sdgs: [10, 11]
@@ -31,9 +31,11 @@ Sandau an der Elbe ist mit rund 800 Einwohner*innen die kleinste Stadt Sachsen-A
 - Bildungsangeboten, Workshops und Veranstaltungen für Jung und Alt,
 - einer Plattform für Initiativen zu sozialer Gerechtigkeit, Umweltschutz und Inklusion.
 
-## Unsere Rolle
+## Projektleitung und unsere Rolle
 
-Bantu e.V. begleitet Kikili seit 2022 als **Trägerverein**: Wir stellen Verwaltung, Gemeinnützigkeit und Erfahrung zur Verfügung, bis Kikili als eigener Verein selbstständig arbeiten kann. Zum **Tag des offenen Denkmals am 13.09.2026** fanden im Stadtspeicher ein Workshop zum Landschaftszeichnen und ein Konzert statt.
+Das Projekt wird **vollständig und eigenständig von Frau Vicky Germain** als **Bauherr*in und Projektleitung** geführt.
+
+Bantu e.V. ist seit 2022 **Trägerverein**: Wir stellen Gemeinnützigkeit und Verwaltung zur Verfügung, bis Kikili als eigener Verein eingetragen ist. Zum **Tag des offenen Denkmals am 13.09.2026** fanden im Stadtspeicher ein Workshop zum Landschaftszeichnen und ein Konzert statt.
 
 ## Unterstützen
 

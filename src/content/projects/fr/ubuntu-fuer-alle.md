@@ -18,11 +18,19 @@ successStory: true
 order: 21
 ---
 
-Quand la guerre en Ukraine a commencé, beaucoup de personnes noires et racisées ont aussi fui vers Berlin : des étudiants, des travailleurs et des familles, souvent confrontés à des discriminations supplémentaires pendant la fuite et à l’arrivée.
+Lorsque la guerre a éclaté en Ukraine, de nombreuses personnes noires et racisées ont elles aussi fui vers Berlin : étudiant·es, travailleur·ses et familles, qui ont souvent subi une discrimination supplémentaire pendant leur fuite et à leur arrivée.
 
-Avec **Ubuntu pour tous** (financé par la DSEE), nous avons soutenu environ **1 800 personnes réfugiées BIPoC venues d’Ukraine** en 2022. En 2023, nous avons poursuivi le travail avec **Equal Rights for All** (financé par la Deutsche Fernsehlotterie / Deutsches Hilfswerk) :
+## Ubuntu pour tous (2022)
 
-- cours de langue et aide à la recherche d’emploi,
-- événements culturels et ateliers d’empowerment,
-- soutien psychologique,
-- renforcement de l’autonomie et de la participation sociale.
+Grâce au financement de la DSEE, nous avons soutenu environ **1 800 personnes réfugiées BIPoC venues d’Ukraine** en 2022.
+
+## Equal Rights for All (2023)
+
+Financé par la Deutsche Fernsehlotterie / Deutsches Hilfswerk, Equal Rights for All a poursuivi ce travail. Le projet était entièrement porté par des personnes noires et racisées, qui offraient un accompagnement adapté aux réalités culturelles :
+
+- cours de langue en ligne et aide quotidienne aux candidatures,
+- événements culturels et ateliers d’empowerment chaque semaine,
+- soutien psychologique par des professionnel·les de la psychologie, de la psychologie de l’enfant, de la garde d’enfants, du yoga et de l’empowerment,
+- retours réguliers des participant·es, utilisés pour adapter l’offre.
+
+L’objectif : l’autonomie et la participation sociale. Equal Rights for All a été mis en œuvre par l’équipe de Tubman.Network, alors une initiative sous l’égide de Bantu e.V.

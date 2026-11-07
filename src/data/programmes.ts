@@ -158,35 +158,55 @@ export const management = {
   } as Record<Lang, string[]>,
 };
 
-/** Initiatives for which Bantu e.V. acts (or acted) as Trägerverein / fiscal sponsor. */
-export const trusteeships = [
+/** Initiatives for which Bantu e.V. acts (or acted) as Trägerverein / fiscal sponsor.
+ *  `slugs` runs parallel to `projects`: a project file name links the list item to its project page. */
+export type Trusteeship = {
+  name: string;
+  url: string;
+  place: string;
+  period: L;
+  text: L;
+  projectsHeading?: L;
+  projects: Record<Lang, string[]>;
+  slugs?: (string | undefined)[];
+};
+export const trusteeships: Trusteeship[] = [
   {
     name: 'tubman.network e.V.',
     url: 'https://tubman.network',
     place: 'Berlin',
-    period: { de: '2021–2025', en: '2021–2025', fr: '2021–2025' } as L,
+    // OPEN: end year. The last Bantu projects implemented by the Tubman team (Black Engagement Matters, Youth Eco Project) ended in 2024;
+    // "until 2025" referred only to ParentCircle, which the chair confirmed on 08.11.2026 is not a Bantu e.V. project.
+    period: { de: '2021–2024', en: '2021–2024', fr: '2021–2024' },
     text: {
-      de: 'tubman.network arbeitet mit Kindern, Jugendlichen, Familien und Communities afrikanischer und afro-diasporischer Herkunft: durch Bildung, psychosoziale Unterstützung, Empowerment und Kunst. Bantu e.V. war Trägerverein: Wir haben Fördermittel verwaltet, Verwendungsnachweise erstellt sowie Personal und Verträge betreut. Seit der Eintragung als eigener Verein (VR 40776 B) haben wir laufende Projekte bis 2025 abgewickelt.',
-      en: 'tubman.network works with children, young people, families and communities of African and Afro-diasporic heritage: through education, psychosocial support, empowerment and the arts. Bantu e.V. was its fiscal sponsor: we managed grants, prepared financial reports and handled staff and contracts. After tubman.network registered as an association of its own (VR 40776 B), we completed ongoing projects until 2025.', fr: 'tubman.network travaille avec des enfants, des jeunes, des familles et des communautés d’origine africaine et afro-diasporique : par l’éducation, le soutien psychosocial, l’empowerment et les arts. Bantu e.V. en était l’association porteuse : nous gérions les subventions, établissions les décomptes et nous occupions du personnel et des contrats. Après l’inscription de tubman.network comme association à part entière (VR 40776 B), nous avons mené à terme les projets en cours jusqu’en 2025.',
-    } as L,
+      de: 'tubman.network arbeitet mit Kindern, Jugendlichen, Familien und Communities afrikanischer und afro-diasporischer Herkunft: durch Bildung, psychosoziale Unterstützung, Empowerment und Kunst. Bis Januar 2024 war Tubman.Network eine Initiative unter dem Dach von Bantu e.V., seitdem ist es ein eigener Verein (VR 40776 B). Die Projekte unten waren Projekte von Bantu e.V.: Wir waren Träger, haben die Fördermittel verwaltet, Verwendungsnachweise erstellt sowie Personal und Verträge betreut; umgesetzt hat sie das Team von Tubman.Network. ParentCircle war ein Projekt von tubman.network e.V. selbst und kein Projekt von Bantu e.V.',
+      en: 'tubman.network works with children, young people, families and communities of African and Afro-diasporic heritage: through education, psychosocial support, empowerment and the arts. Until January 2024 Tubman.Network was an initiative under the umbrella of Bantu e.V.; since then it has been an association of its own (VR 40776 B). The projects below were Bantu e.V. projects: we were the responsible organisation, managed the grants, prepared the financial reports and handled staff and contracts; the Tubman.Network team implemented them. ParentCircle was a project of tubman.network e.V. itself, not of Bantu e.V.',
+      fr: 'tubman.network travaille avec des enfants, des jeunes, des familles et des communautés d’origine africaine et afro-diasporique : par l’éducation, le soutien psychosocial, l’empowerment et les arts. Jusqu’en janvier 2024, Tubman.Network était une initiative sous l’égide de Bantu e.V. ; depuis, c’est une association à part entière (VR 40776 B). Les projets ci-dessous étaient des projets de Bantu e.V. : nous en étions la structure responsable, gérions les subventions, établissions les décomptes et nous occupions du personnel et des contrats ; l’équipe de Tubman.Network les a mis en œuvre. ParentCircle était un projet de tubman.network e.V. lui-même, et non de Bantu e.V.',
+    },
+    projectsHeading: { de: 'Projekte von Bantu e.V., umgesetzt vom Team von Tubman.Network', en: 'Bantu e.V. projects implemented by the Tubman.Network team', fr: 'Projets de Bantu e.V. mis en œuvre par l’équipe de Tubman.Network' },
     projects: {
-      de: ['FashionEmpowerment (2023, Bezirksamt Berlin-Mitte)', 'Safer Spaces for Mothers: Mama Circle (2023–2024, Robert Bosch Stiftung)', 'Equal Rights for All (2023, Deutsche Fernsehlotterie)', 'Black Engagement Matters (2024, DSEE)', 'Youth Eco Project (2024, Erasmus+)', 'ParentCircle (2024–2025, Stiftung Nord-Süd-Brücken)'],
-      en: ['FashionEmpowerment (2023, Berlin-Mitte District Office)', 'Safer Spaces for Mothers: Mama Circle (2023–2024, Robert Bosch Stiftung)', 'Equal Rights for All (2023, Deutsche Fernsehlotterie)', 'Black Engagement Matters (2024, DSEE)', 'Youth Eco Project (2024, Erasmus+)', 'ParentCircle (2024–2025, Stiftung Nord-Süd-Brücken)'], fr: ['FashionEmpowerment (2023, Bezirksamt Berlin-Mitte)', 'Safer Spaces for Mothers : Mama Circle (2023–2024, Robert Bosch Stiftung)', 'Equal Rights for All (2023, Deutsche Fernsehlotterie)', 'Black Engagement Matters (2024, DSEE)', 'Youth Eco Project (2024, Erasmus+)', 'ParentCircle (2024–2025, Stiftung Nord-Süd-Brücken)'],
-    } as Record<Lang, string[]>,
+      de: ['FashionEmpowerment (2023, Bezirksamt Berlin-Mitte)', 'Safer Spaces for Mothers: Mama Circle (2023–2024, Robert Bosch Stiftung)', 'Equal Rights for All (2023, Deutsche Fernsehlotterie)', 'Black Engagement Matters (2023–2024, DSEE)', 'Youth Eco Project (2024, Erasmus+)'],
+      en: ['FashionEmpowerment (2023, Berlin-Mitte District Office)', 'Safer Spaces for Mothers: Mama Circle (2023–2024, Robert Bosch Stiftung)', 'Equal Rights for All (2023, Deutsche Fernsehlotterie)', 'Black Engagement Matters (2023–2024, DSEE)', 'Youth Eco Project (2024, Erasmus+)'],
+      fr: ['FashionEmpowerment (2023, Bezirksamt Berlin-Mitte)', 'Safer Spaces for Mothers : Mama Circle (2023–2024, Robert Bosch Stiftung)', 'Equal Rights for All (2023, Deutsche Fernsehlotterie)', 'Black Engagement Matters (2023–2024, DSEE)', 'Youth Eco Project (2024, Erasmus+)'],
+    },
+    slugs: ['fashion-empowerment', 'safer-spaces-tubman-network', 'ubuntu-fuer-alle', 'black-engagement-matters', 'youth-eco-project'],
   },
   {
     name: 'Kikili e.V. i.G.',
     url: 'https://www.kikili.de',
     place: 'Sandau (Elbe), Sachsen-Anhalt',
-    period: { de: 'seit 2022', en: 'since 2022', fr: 'depuis 2022' } as L,
+    period: { de: 'seit 2022', en: 'since 2022', fr: 'depuis 2022' },
     text: {
-      de: 'Kikili belebt in Sandau (Elbe), der kleinsten Stadt Sachsen-Anhalts, den denkmalgeschützten ehemaligen Stadtspeicher als inklusiven „Dritten Ort“: mit Erinnerungskultur, Bildungs- und Kulturangeboten für Jung und Alt und einer Plattform für Initiativen zu sozialer Gerechtigkeit, Umweltschutz und Inklusion. Bantu e.V. ist Trägerverein und begleitet Kikili beim Aufbau bis zur Eigenständigkeit.',
-      en: 'In Sandau (Elbe), the smallest town in Saxony-Anhalt, Kikili is reviving the listed former town granary (“Stadtspeicher”) as an inclusive “third place”: with remembrance culture, education and cultural activities for young and old and a platform for initiatives working on social justice, environmental protection and inclusion. Bantu e.V. is its fiscal sponsor and supports Kikili until it can stand on its own.', fr: 'À Sandau (Elbe), la plus petite ville de Saxe-Anhalt, Kikili fait revivre l’ancien grenier municipal classé (« Stadtspeicher ») comme « tiers-lieu » inclusif : avec un travail de mémoire, des activités éducatives et culturelles pour tous les âges et une plateforme pour des initiatives en faveur de la justice sociale, de l’environnement et de l’inclusion. Bantu e.V. en est l’association porteuse et accompagne Kikili jusqu’à son autonomie.',
-    } as L,
+      de: 'Kikili belebt in Sandau (Elbe), der kleinsten Stadt Sachsen-Anhalts, den denkmalgeschützten ehemaligen Stadtspeicher als inklusiven „Dritten Ort“: mit Erinnerungskultur, Bildungs- und Kulturangeboten für Jung und Alt und einer Plattform für Initiativen zu sozialer Gerechtigkeit, Umweltschutz und Inklusion. Das Projekt wird vollständig und eigenständig von Frau Vicky Germain als Bauherr*in und Projektleitung geführt. Bantu e.V. ist Trägerverein und stellt Gemeinnützigkeit und Verwaltung zur Verfügung, bis Kikili als eigener Verein eingetragen ist.',
+      en: 'In Sandau (Elbe), the smallest town in Saxony-Anhalt, Kikili is reviving the listed former town granary (“Stadtspeicher”) as an inclusive “third place”: with remembrance culture, education and cultural activities for young and old and a platform for initiatives working on social justice, environmental protection and inclusion. The project is managed fully and independently by Ms Vicky Germain as developer (Bauherr*in) and project lead. Bantu e.V. is its fiscal sponsor and provides charitable status and administration until Kikili is registered as an association of its own.',
+      fr: 'À Sandau (Elbe), la plus petite ville de Saxe-Anhalt, Kikili fait revivre l’ancien grenier municipal classé (« Stadtspeicher ») comme « tiers-lieu » inclusif : avec un travail de mémoire, des activités éducatives et culturelles pour tous les âges et une plateforme pour des initiatives en faveur de la justice sociale, de l’environnement et de l’inclusion. Le projet est dirigé entièrement et de manière autonome par Mme Vicky Germain, maître d’ouvrage et cheffe de projet. Bantu e.V. en est l’association porteuse et met à disposition son statut d’intérêt général et son administration jusqu’à ce que Kikili soit inscrite comme association.',
+    },
     projects: {
       de: ['Rettung und Belebung des Stadtspeichers Sandau', 'Tag des offenen Denkmals 2026 (13.09.2026): Workshop Landschaftszeichnen und Konzert'],
-      en: ['Rescue and revival of the Sandau town granary', 'Heritage Open Day 2026 (13.09.2026): landscape drawing workshop and concert'], fr: ['Sauvetage et renouveau du grenier municipal de Sandau', 'Journées du patrimoine 2026 (13.09.2026) : atelier de dessin de paysage et concert'],
-    } as Record<Lang, string[]>,
+      en: ['Rescue and revival of the Sandau town granary', 'Heritage Open Day 2026 (13.09.2026): landscape drawing workshop and concert'],
+      fr: ['Sauvetage et renouveau du grenier municipal de Sandau', 'Journées du patrimoine 2026 (13.09.2026) : atelier de dessin de paysage et concert'],
+    },
+    slugs: ['kikili-stadtspeicher-sandau'],
   },
 ];
 

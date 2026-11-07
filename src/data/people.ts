@@ -84,6 +84,7 @@ export const partnersSouth: Org[] = [
     name: 'Royal College Namugongo',
     place: 'Namugongo, Uganda',
     url: 'https://royalschools.ac.ug',
+    logo: '/partners/royal-college-namugongo.webp',
     text: {
       de: 'Schule, an der wir mit ABI Schulgeld für Kinder aus armen Familien übernommen und Rampen für einen stufenlosen Zugang gebaut haben.',
       en: 'School where, together with ABI, we covered school fees for children from poor families and built ramps for step-free access.', fr: 'École où, avec ABI, nous avons pris en charge les frais de scolarité d’enfants de familles pauvres et construit des rampes pour un accès sans marches.',
@@ -137,18 +138,20 @@ export const partnersNorth: Org[] = [
     name: 'tubman.network e.V.',
     place: 'Berlin',
     url: 'https://tubman.network',
+    logo: '/partners/tubman-network.webp',
     text: {
-      de: 'Organisation für Kinder, Jugendliche, Familien und Communities afrikanischer und afro-diasporischer Herkunft. Bantu e.V. war von 2021 bis 2025 Trägerverein ihrer Projekte.',
-      en: 'Organisation for children, young people, families and communities of African and Afro-diasporic heritage. Bantu e.V. was the fiscal sponsor of its projects from 2021 to 2025.', fr: 'Organisation pour les enfants, les jeunes, les familles et les communautés d’origine africaine et afro-diasporique. Bantu e.V. a été l’association porteuse de ses projets de 2021 à 2025.',
+      de: 'Organisation für Kinder, Jugendliche, Familien und Communities afrikanischer und afro-diasporischer Herkunft. Bis Januar 2024 eine Initiative unter dem Dach von Bantu e.V.; ihr Team hat von 2021 bis 2024 Projekte von Bantu e.V. umgesetzt. Heute ein eigener Verein.',
+      en: 'Organisation for children, young people, families and communities of African and Afro-diasporic heritage. An initiative under the umbrella of Bantu e.V. until January 2024; its team implemented Bantu e.V. projects from 2021 to 2024. Now an association of its own.', fr: 'Organisation pour les enfants, les jeunes, les familles et les communautés d’origine africaine et afro-diasporique. Initiative sous l’égide de Bantu e.V. jusqu’en janvier 2024 ; son équipe a mis en œuvre des projets de Bantu e.V. de 2021 à 2024. Aujourd’hui une association à part entière.',
     },
   },
   {
     name: 'Kikili e.V. i.G.',
     place: 'Sandau (Elbe)',
     url: 'https://www.kikili.de',
+    logo: '/partners/kikili.webp',
     text: {
-      de: 'Belebt den Stadtspeicher Sandau als inklusiven Dritten Ort. Bantu e.V. ist seit 2022 Trägerverein.',
-      en: 'Reviving the Sandau town granary as an inclusive third place. Bantu e.V. has been its fiscal sponsor since 2022.', fr: 'Fait revivre le grenier municipal de Sandau comme tiers-lieu inclusif. Bantu e.V. en est l’association porteuse depuis 2022.',
+      de: 'Belebt den Stadtspeicher Sandau als inklusiven Dritten Ort. Das Projekt wird vollständig und eigenständig von Frau Vicky Germain als Bauherr*in und Projektleitung geführt; Bantu e.V. ist seit 2022 Trägerverein.',
+      en: 'Reviving the Sandau town granary as an inclusive third place. The project is managed fully and independently by Ms Vicky Germain as developer (Bauherr*in) and project lead; Bantu e.V. has been its fiscal sponsor since 2022.', fr: 'Fait revivre le grenier municipal de Sandau comme tiers-lieu inclusif. Le projet est dirigé entièrement et de manière autonome par Mme Vicky Germain, maître d’ouvrage et cheffe de projet ; Bantu e.V. en est l’association porteuse depuis 2022.',
     },
   },
   {

@@ -18,13 +18,23 @@ successStory: true
 order: 21
 sources:
   - "Bantu_eV_Taetigkeitsbericht_2023_2025.pdf (3.2, 9.1)"
+  - "tubman.network/previous-projects/, abgerufen 08.11.2026"
+  - "Angabe des Vorsitzenden, 08.11.2026: Projekt von Bantu e.V., umgesetzt vom Team von Tubman.Network (ParentCircle war kein Projekt von Bantu e.V.)"
 ---
 
 Als der Krieg in der Ukraine begann, flohen auch viele Schwarze Menschen und People of Color nach Berlin: Studierende, Arbeitnehmer*innen und Familien, die auf der Flucht und bei der Ankunft oft zusätzliche Diskriminierung erlebten.
 
-Mit **Ubuntu für alle** (gefördert von der DSEE) haben wir 2022 rund **1.800 BIPoC-Geflüchtete aus der Ukraine** unterstützt. 2023 setzten wir die Arbeit mit **Equal Rights for All** fort (gefördert von der Deutschen Fernsehlotterie / Deutsches Hilfswerk):
+## Ubuntu für alle (2022)
 
-- Sprachkurse und Unterstützung bei der Jobsuche,
-- Kulturveranstaltungen und Empowerment-Workshops,
-- psychologische Unterstützung,
-- Stärkung von Selbständigkeit und sozialer Teilhabe.
+Mit Förderung der DSEE haben wir 2022 rund **1.800 BIPoC-Geflüchtete aus der Ukraine** unterstützt.
+
+## Equal Rights for All (2023)
+
+Gefördert von der Deutschen Fernsehlotterie / Deutsches Hilfswerk setzte Equal Rights for All die Arbeit fort. Das Projekt wurde vollständig von Schwarzen Menschen und People of Color getragen, die kultursensibel unterstützten:
+
+- Online-Sprachkurse und tägliche Hilfe bei Bewerbungen,
+- wöchentliche Kulturveranstaltungen und Empowerment-Workshops,
+- psychologische Unterstützung durch Fachkräfte aus Psychologie, Kinderpsychologie, Kinderbetreuung, Yoga und Empowerment-Arbeit,
+- regelmäßige Rückmeldungen der Teilnehmenden, nach denen das Angebot angepasst wurde.
+
+Ziel waren Selbstständigkeit und soziale Teilhabe. Umgesetzt hat Equal Rights for All das Team von Tubman.Network, damals eine Initiative unter dem Dach von Bantu e.V.

@@ -20,9 +20,17 @@ order: 21
 
 When the war in Ukraine began, many Black people and people of colour also fled to Berlin: students, workers and families who often faced additional discrimination while fleeing and on arrival.
 
-With **Ubuntu for All** (funded by the DSEE) we supported around **1,800 BIPoC refugees from Ukraine** in 2022. In 2023 we continued the work with **Equal Rights for All** (funded by Deutsche Fernsehlotterie / Deutsches Hilfswerk):
+## Ubuntu for All (2022)
 
-- language courses and job-search support,
-- cultural events and empowerment workshops,
-- psychological support,
-- strengthening independence and social participation.
+With funding from the DSEE we supported around **1,800 BIPoC refugees from Ukraine** in 2022.
+
+## Equal Rights for All (2023)
+
+Funded by Deutsche Fernsehlotterie / Deutsches Hilfswerk, Equal Rights for All continued the work. The project was run entirely by Black people and people of colour, who offered culturally sensitive support:
+
+- online language courses and daily help with job applications,
+- weekly cultural events and empowerment workshops,
+- psychological support from professionals in psychology, child psychology, childcare, yoga and empowerment work,
+- regular feedback from participants, used to adapt the programme to their needs.
+
+The aim was independence and social participation. Equal Rights for All was implemented by the Tubman.Network team, at that time an initiative under the umbrella of Bantu e.V.
