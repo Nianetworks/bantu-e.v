@@ -25,13 +25,13 @@ jobs:
             unzip -o -q "$z" -x '.github/*' '__MACOSX/*'
             git rm -q "$z"
           done
-      - name: Remove listed files (import/delete.txt, one path per line)
+      - name: 'Remove listed files (import/delete.txt, one path per line)'
         run: |
           if [ -f import/delete.txt ]; then
             grep -v '^#' import/delete.txt | sed '/^$/d' | while IFS= read -r f; do git rm -q --ignore-unmatch -- "$f"; done
             rm -f import/delete.txt
           fi
-      - name: Download listed files (import/fetch.txt, one line per file: <target path> <url>)
+      - name: 'Download listed files (import/fetch.txt, one line per file - target path and URL)'
         run: |
           if [ -f import/fetch.txt ]; then
             while read -r target url; do
