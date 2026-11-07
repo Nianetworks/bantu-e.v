@@ -1,7 +1,7 @@
-# One-off helper: unpacks an uploaded archive in import/ (photos, brand guidelines)
-# into the repository and pulls the Ruhaama photo from the old WordPress site.
-# Safe to delete after use.
-name: Import photos (one-off)
+# Helper for binary updates: unpacks ONE uploaded archive in import/ (photos, logos, PDFs, text files)
+# into the repository, removes files listed in import/delete.txt and downloads files listed in
+# import/fetch.txt ("<target path> <url> [width]"; .webp targets are converted, optionally resized).
+name: Import uploaded archive
 
 on:
   push:
@@ -18,6 +18,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Install image tools
+        run: sudo apt-get -qq update >/dev/null && sudo apt-get -qq install -y webp >/dev/null
       - name: Unpack uploaded archives
         run: |
           shopt -s nullglob
@@ -31,24 +33,26 @@ jobs:
             grep -v '^#' import/delete.txt | sed '/^$/d' | while IFS= read -r f; do git rm -q --ignore-unmatch -- "$f"; done
             rm -f import/delete.txt
           fi
-      - name: 'Download listed files (import/fetch.txt, one line per file - target path and URL)'
+      - name: 'Download listed files (import/fetch.txt: target path, URL, optional width)'
         run: |
           if [ -f import/fetch.txt ]; then
-            while read -r target url; do
+            while read -r target url width; do
               case "$target" in ''|'#'*) continue;; esac
               mkdir -p "$(dirname "$target")"
-              curl -fsSL -A 'BantuEV-Website-Import/1.0 (+https://www.bantu-ev.org)' -o "$target" "$url" && echo "ok: $target" || echo "FAILED: $url"
+              tmp="$(mktemp)"
+              if curl -fsSL -A 'BantuEV-Website-Import/1.0 (+https://www.bantu-ev.org)' -o "$tmp" "$url"; then
+                case "$target" in
+                  *.webp)
+                    if [ -n "$width" ] && [ "$width" != "0" ]; then cwebp -quiet -q 90 -alpha_q 100 -resize "$width" 0 "$tmp" -o "$target"; else cwebp -quiet -q 90 -alpha_q 100 "$tmp" -o "$target"; fi ;;
+                  *) cp "$tmp" "$target" ;;
+                esac
+                echo "ok: $target"
+              else
+                echo "FAILED: $url"
+              fi
+              rm -f "$tmp"
             done < import/fetch.txt
             rm -f import/fetch.txt
-          fi
-      - name: Fetch Ruhaama photo from the old website
-        run: |
-          sudo apt-get -qq update >/dev/null && sudo apt-get -qq install -y webp >/dev/null
-          mkdir -p public/images/projects
-          if curl -fsSL -o /tmp/ruhaama.jpg "https://www.bantu-ev.org/wp-content/uploads/2023/10/IMG_7232-scaled.jpeg"; then
-            cwebp -quiet -q 74 -resize 1280 0 /tmp/ruhaama.jpg -o public/images/projects/ruhaama-community-resource-centre.webp
-          else
-            echo "Old site not reachable - skipped"
           fi
       - name: Commit
         run: |
@@ -56,7 +60,7 @@ jobs:
           git config user.email "41898283+github-actions[bot]@users.noreply.github.com"
           git add -A -- . ':!.github'
           git diff --cached --quiet && exit 0
-          git commit -m "Import photos, donation form, homepage slideshow and live-server deploy (uploaded archive)"
+          git commit -m "Import uploaded archive (site update)"
           git push
       - name: Trigger build and deploy
         env:
