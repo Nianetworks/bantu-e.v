@@ -20,6 +20,9 @@ const projects = defineCollection({
     start: z.coerce.date().optional(),
     end: z.coerce.date().optional(),
     partners: z.array(z.string()).default([]),
+    /** Organisation that carried out the project when Bantu e.V. acted as Trägerverein (fiscal sponsor) */
+    implementer: z.string().optional(),
+    fiscalSponsorship: z.boolean().default(false),
     funders: z.array(z.string()).default([]),
     /** Exact funding sentence required by the funder (shown in a box at the end of the page) */
     fundingNote: z.string().optional(),

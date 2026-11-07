@@ -10,6 +10,8 @@ period: "2024"
 start: 2024-01-01
 end: 2024-12-31
 partners: ["Aspire Education Group GmbH (coordinator)", "Partner organisations from 6 European countries"]
+implementer: "tubman.network e.V."
+fiscalSponsorship: true
 funders: ["European Union (Erasmus+)"]
 sdgs: [8, 12, 13]
 photoBrief: "Youth Eco Conference at Berlin Global Village"

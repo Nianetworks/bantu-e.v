@@ -9,6 +9,8 @@ location: "Berlin-Wedding"
 period: "2023"
 start: 2023-01-01
 end: 2023-12-16
+implementer: "tubman.network e.V."
+fiscalSponsorship: true
 funders: ["Berlin-Mitte District Office"]
 sdgs: [4, 10]
 stats:

@@ -5,6 +5,7 @@ import NewsCard from '../components/NewsCard.astro';
 import Placeholder from '../components/Placeholder.astro';
 import Icon from '../components/Icon.astro';
 import HeroSlideshow from '../components/HeroSlideshow.astro';
+import { programmes, programmePath } from '../data/programmes';
 import { r, projectPath, ui, type Lang } from '../i18n';
 import { getEvents, getNews, getProjects } from '../lib/content';
 import { impact } from '../data/impact';
@@ -16,8 +17,6 @@ const de = lang === 'de';
 const t = ui[lang];
 const projects = await getProjects(lang);
 const featured = projects.filter((p) => p.data.featured && p.data.status === 'active').slice(0, 4);
-const intl = projects.filter((p) => p.data.programme === 'international');
-const inland = projects.filter((p) => p.data.programme === 'inland');
 const { upcoming } = await getEvents(lang);
 const news = (await getNews(lang)).filter((n) => n.data.type !== 'event').slice(0, 3);
 const spotlight = [...upcoming.slice(0, 2), ...news].slice(0, 3);
@@ -84,26 +83,24 @@ const quick = [
       <div class="section-head">
         <div>
           <div class="eyebrow">{de ? 'Programme' : 'Programmes'}</div>
-          <h2 id="h-prog">{de ? 'Zwei Programme, ein Gedanke' : 'Two programmes, one idea'}</h2>
-          <p>{de ? 'Wir arbeiten dort, wo wir verwurzelt sind: mit Partnerorganisationen in Ostafrika und mit Communities, Schulen und Initiativen in Berlin.' : 'We work where we have roots: with partner organisations in East Africa and with communities, schools and initiatives in Berlin.'}</p>
+          <h2 id="h-prog">{de ? 'Fünf Programme, ein Gedanke' : 'Five programmes, one idea'}</h2>
+          <p>{de ? 'Wir arbeiten dort, wo wir verwurzelt sind: mit Partnerorganisationen in Uganda und Burundi und mit Communities, Schulen und Initiativen in Deutschland.' : 'We work where we have roots: with partner organisations in Uganda and Burundi and with communities, schools and initiatives in Germany.'}</p>
         </div>
+        <a class="link-arrow" href={r('programmes', lang)}>{de ? 'Alle Programme' : 'All programmes'}</a>
       </div>
-      <div class="grid grid--2">
-        <article class="prog prog--intl">
-          <span class="icon-badge"><Icon name="globe" /></span>
-          <p class="prog__count">{intl.length} {de ? 'Projekte' : 'projects'} · Uganda · Burundi</p>
-          <h3><a href={r('international', lang)}>{t.programme.international}</a></h3>
-          <p>{de ? 'Frühkindliche und berufliche Bildung, Trinkwasser, Inklusion und digitale Teilhabe – gemeinsam mit lokalen Partnerorganisationen, die ihre Gemeinden am besten kennen.' : 'Early childhood and vocational education, drinking water, inclusion and digital access – together with local partners who know their communities best.'}</p>
-          <ul class="prog__list">{intl.filter((p) => p.data.status === 'active').map((p) => <li><a href={projectPath(lang, p.id.split('/')[1])}>{p.data.title}</a></li>)}</ul>
-        </article>
-        <article class="prog prog--inland">
-          <span class="icon-badge icon-badge--blue"><Icon name="people" /></span>
-          <p class="prog__count">{inland.length} {de ? 'Projekte' : 'projects'} · Berlin · {de ? 'bundesweit' : 'Germany-wide'}</p>
-          <h3><a href={r('inland', lang)}>{t.programme.inland}</a></h3>
-          <p>{de ? 'Globales Lernen an Schulen, Begegnung und Empowerment in der afrikanischen Diaspora, Unterstützung für Geflüchtete und Beiträge zur Dekolonisierung.' : 'Global learning in schools, encounter and empowerment in the African diaspora, support for refugees and contributions to decolonisation.'}</p>
-          <ul class="prog__list">{inland.filter((p) => p.data.status === 'active').map((p) => <li><a href={projectPath(lang, p.id.split('/')[1])}>{p.data.title}</a></li>)}</ul>
-        </article>
-      </div>
+      <ul class="prog-row">
+        {programmes.map((p) => {
+          const running = p.projects.filter((s) => projects.some((x) => x.id.split('/')[1] === s && x.data.status !== 'completed')).length;
+          return (
+            <li class={`prog prog--${p.accent}`}>
+              <span class="icon-badge"><Icon name={p.icon} /></span>
+              <p class="prog__count">{de ? 'Programm' : 'Programme'} {p.no}{running > 0 && <> · {running} {de ? 'laufend' : 'ongoing'}</>}</p>
+              <h3><a href={programmePath(lang, p.key)}>{p.title[lang]}</a></h3>
+              <p>{p.short[lang]}</p>
+            </li>
+          );
+        })}
+      </ul>
     </div>
   </section>
 
@@ -240,9 +237,19 @@ const quick = [
   .quick__item strong { display: block; font-size: 1.05rem; }
   .quick__text { display: block; font-size: .9rem; color: var(--muted); line-height: 1.35; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 
-  .prog { position: relative; display: flex; flex-direction: column; gap: .5rem; padding: clamp(1.5rem, 3vw, 2.2rem); border-radius: 22px; background: var(--surface); border: 1px solid var(--line); border-top: 8px solid var(--gold); }
-  .prog--inland { border-top-color: var(--blue); }
-  .prog h3 { font-size: clamp(1.45rem, 2.4vw, 1.95rem); margin: .2rem 0 0; }
+  .prog-row { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 1rem; }
+  @media (max-width: 1200px) { .prog-row { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  @media (max-width: 760px) { .prog-row { grid-template-columns: 1fr; } }
+  .prog { position: relative; display: flex; flex-direction: column; gap: .4rem; margin: 0; padding: 1.4rem; border-radius: 20px; background: var(--surface); border: 1px solid var(--line); border-top: 8px solid var(--gold); min-width: 0; }
+  .prog--green { border-top-color: var(--green); }
+  .prog--blue { border-top-color: var(--blue); }
+  .prog--red { border-top-color: var(--c-coral); }
+  .prog--purple { border-top-color: var(--c-mauve); }
+  .prog h3 a::after { content: ''; position: absolute; inset: 0; }
+  .prog:has(a:focus-visible) { outline: 3px solid var(--focus); outline-offset: 3px; }
+  .prog a:focus-visible { outline: none; }
+  .prog:hover { box-shadow: var(--shadow); }
+  .prog h3 { font-size: clamp(1.15rem, 1.5vw, 1.35rem); margin: .2rem 0 0; hyphens: auto; }
   .prog h3 a { color: var(--ink); text-decoration: none; }
   .prog h3 a:hover { text-decoration: underline; }
   .prog > p { margin: 0; color: var(--ink-2); }

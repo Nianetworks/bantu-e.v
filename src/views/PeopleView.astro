@@ -26,7 +26,9 @@ const lead = de
       <div class="grid grid--3">
         {board.map((p) => (
           <article class="card person">
-            {p.photo ? <img src={href(p.photo)} alt={p.name} width="600" height="600" /> : <Placeholder lang={lang} ratio="1 / 1" tone="gold" label={de ? 'Porträt' : 'Portrait'} />}
+            {p.photo
+              ? <img src={href(p.photo)} alt={p.name} width="600" height="600" />
+              : <div class="person__initials" aria-hidden="true">{p.name.split(' ').filter((w) => /^[A-ZÄÖÜ]/.test(w)).map((w) => w[0]).slice(0, 2).join('')}</div>}
             <div class="card__body">
               <h3>{p.name}</h3>
               <p class="role">{p.role[lang]}</p>
@@ -38,7 +40,7 @@ const lead = de
           <p>{de
             ? `Die Vorstandsmitglieder vertreten den Verein nach § 26 BGB. Maßgeblich ist die Eintragung im Vereinsregister (${org.register.court}, ${org.register.number}).`
             : `Board members represent the association under § 26 BGB. The entry in the register of associations (${org.register.court}, ${org.register.number}) is authoritative.`}</p>
-          <p class="small muted">{de ? 'Der Vorstand wird alle zwei Jahre im soziokratischen Wahlverfahren gewählt.' : 'The board is elected every two years using the sociocratic election process.'}</p>
+          <p class="small muted">{de ? 'Der Vorstand wurde von der Mitgliederversammlung am 30.06.2024 für zwei Jahre gewählt. Die Mitglieder des Vorstands leben in Deutschland, Uganda und Irland.' : 'The board was elected by the general assembly on 30.06.2024 for two years. Its members live in Germany, Uganda and Ireland.'}</p>
         </div>
       </div>
     </div>
@@ -77,19 +79,30 @@ const lead = de
       <p class="lead">{de ? 'Wir arbeiten nicht für, sondern mit Gemeinschaften – ohne Hierarchie, mit Vertrauen.' : 'We work with communities, not for them – without hierarchy, with trust.'}</p>
       <h3 class="subhead">{de ? 'In Uganda und Burundi' : 'In Uganda and Burundi'}</h3>
       <div class="grid grid--3">
-        {partnersSouth.map((o) => <div class="panel org"><h4>{o.name}</h4><p class="small muted">{o.place}{o.since ? ` · ${de ? 'Partner seit' : 'partner since'} ${o.since}` : ''}</p><p>{o.text[lang]}</p></div>)}
+        {partnersSouth.map((o) => <div class="panel org"><h4>{o.url ? <a href={o.url} rel="noopener">{o.name}</a> : o.name}</h4><p class="small muted">{o.place}{o.since ? ` · ${de ? 'Partner seit' : 'partner since'} ${o.since}` : ''}</p><p>{o.text[lang]}</p>{o.url && <p class="org__url small">{o.url.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '')}</p>}</div>)}
       </div>
       <h3 class="subhead">{de ? 'In Deutschland' : 'In Germany'}</h3>
       <div class="grid grid--4">
-        {partnersNorth.map((o) => <div class="panel org"><h4>{o.name}</h4><p class="small muted">{o.place}</p><p>{o.text[lang]}</p></div>)}
+        {partnersNorth.map((o) => <div class="panel org"><h4>{o.url ? <a href={o.url} rel="noopener">{o.name}</a> : o.name}</h4><p class="small muted">{o.place}</p><p>{o.text[lang]}</p>{o.url && <p class="org__url small">{o.url.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '')}</p>}</div>)}
       </div>
     </div>
   </section>
 
   <section class="section section--sand section--tight">
     <div class="wrap">
-      <h2>{de ? 'Förderer unserer Projekte' : 'Funders of our projects'}</h2>
-      <ul class="funders">{funders.map((f) => <li>{f[lang]}</li>)}</ul>
+      <h2 id={de ? 'foerderer' : 'funders'}>{de ? 'Förderer unserer Projekte' : 'Funders of our projects'}</h2>
+      <p>{de ? 'Wir danken allen Förderern, die unsere Arbeit möglich machen. Die Logos führen zu den Websites der Förderer.' : 'We thank all funders who make our work possible. The logos link to the funders’ websites.'}</p>
+      <ul class="funder-grid">
+        {funders.map((f) => (
+          <li>
+            <a class="funder" href={f.url} rel="noopener">
+              <span class="funder__logo">{f.logo ? <img src={href(f.logo)} alt="" loading="lazy" /> : <span class="funder__text" aria-hidden="true">{f.name[lang]}</span>}</span>
+              <span class="funder__name">{f.name[lang]}</span>
+              <span class="funder__note small">{f.note[lang]}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
       <p class="small muted">{de ? 'Vielen Dank auch an alle Mitglieder und Spender*innen.' : 'Thank you also to all members and donors.'}</p>
     </div>
   </section>
@@ -103,6 +116,17 @@ const lead = de
   .subhead { margin-top: 2rem; font-size: 1.15rem; font-family: var(--font-sans); letter-spacing: .02em; }
   .org h4 { margin-bottom: .2rem; }
   .org p:last-child { margin: 0; }
-  .funders { columns: 2 340px; column-gap: 2.5rem; }
-  .funders li { break-inside: avoid; }
+  .person__initials { height: 120px; display: grid; place-items: center; background: var(--gold-soft); color: var(--ink); font: 700 clamp(2.5rem, 6vw, 3.5rem) var(--font-serif); border-bottom: 1px solid var(--line); }
+  .org h4 a { color: var(--ink); text-underline-offset: .18em; }
+  .org__url { margin: .4rem 0 0 !important; color: var(--muted); word-break: break-all; }
+  .funder-grid { list-style: none; padding: 0; margin: 1.5rem 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 220px), 1fr)); gap: 1rem; }
+  .funder-grid li { margin: 0; }
+  .funder { display: flex; flex-direction: column; gap: .35rem; height: 100%; padding: 1rem; border-radius: 16px; background: var(--surface); border: 1px solid var(--line); color: var(--ink); text-decoration: none; }
+  .funder:hover { border-color: var(--line-strong); box-shadow: var(--shadow); }
+  .funder:hover .funder__name { text-decoration: underline; }
+  .funder__logo { display: grid; place-items: center; height: 96px; padding: .6rem; border-radius: 10px; background: #fff; margin-bottom: .4rem; }
+  .funder__logo img { max-width: 100%; max-height: 76px; width: auto; height: auto; object-fit: contain; }
+  .funder__text { font: 700 1rem/1.25 var(--font-sans); color: #1a1a1a; text-align: center; }
+  .funder__name { font-weight: 700; font-size: .98rem; line-height: 1.3; }
+  .funder__note { color: var(--muted); }
 </style>

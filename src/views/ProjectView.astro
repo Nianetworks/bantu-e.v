@@ -8,6 +8,7 @@ import NewsCard from '../components/NewsCard.astro';
 import { render } from 'astro:content';
 import { href, projectPath, r, ui, type Lang } from '../i18n';
 import { getNews, getProjects, slugOf, type Project } from '../lib/content';
+import { programmeOfProject, programmePath } from '../data/programmes';
 
 interface Props { lang: Lang; project: Project; hasAlt: boolean }
 const { lang, project, hasAlt } = Astro.props;
@@ -16,15 +17,17 @@ const t = ui[lang];
 const d = project.data;
 const slug = slugOf(project.id);
 const { Content } = await render(project);
-const related = (await getProjects(lang)).filter((p) => p.data.programme === d.programme && p.id !== project.id).slice(0, 3);
+const prog = programmeOfProject(slug);
+const related = prog
+  ? (await getProjects(lang)).filter((p) => prog.projects.includes(slugOf(p.id)) && p.id !== project.id).slice(0, 3)
+  : (await getProjects(lang)).filter((p) => p.data.programme === d.programme && p.id !== project.id).slice(0, 3);
 const news = (await getNews(lang)).filter((n) => n.data.project === slug).slice(0, 3);
 const otherLang: Lang = de ? 'en' : 'de';
-const progKey = d.programme;
 const donateRef = slug.includes('pearl') ? 'Pearl Kita' : slug.includes('ruziba') ? 'Wasser Ruziba' : null;
 ---
 <Base lang={lang} title={d.title} description={d.summary} altHref={hasAlt ? projectPath(otherLang, slug) : undefined} image={d.image}>
-  <PageHead lang={lang} title={d.title} lead={d.subtitle} eyebrow={t.programme[d.programme]}
-    crumbs={[{ label: de ? 'Programme' : 'Programmes', href: r('programmes', lang) }, { label: t.programme[progKey], href: r(progKey, lang) }]}>
+  <PageHead lang={lang} title={d.title} lead={d.subtitle} eyebrow={prog ? prog.title[lang] : t.programme[d.programme]}
+    crumbs={[{ label: de ? 'Programme' : 'Programmes', href: r('programmes', lang) }, ...(prog ? [{ label: prog.title[lang], href: programmePath(lang, prog.key) }] : [])]}>
     <div class="head-tags">
       <span class={`tag tag--${d.status}`}><span class="dot" aria-hidden="true"></span>{t.projectStatus[d.status]}</span>
       <span class="tag">{d.country}</span>
@@ -53,7 +56,9 @@ const donateRef = slug.includes('pearl') ? 'Pearl Kita' : slug.includes('ruziba'
         <div class="panel">
           <h2 class="side-title">{de ? 'Auf einen Blick' : 'At a glance'}</h2>
           <dl class="facts">
+            {prog && <><dt>{de ? 'Programm' : 'Programme'}</dt><dd><a href={programmePath(lang, prog.key)}>{prog.title[lang]}</a></dd></>}
             <dt>{t.period}</dt><dd>{d.period}</dd>
+            {d.implementer && <><dt>{de ? 'Umsetzung' : 'Implemented by'}</dt><dd>{d.implementer}{d.fiscalSponsorship && <> ({de ? 'Bantu e.V. als Trägerverein' : 'Bantu e.V. as fiscal sponsor'})</>}</dd></>}
             {d.location && <><dt>{t.location}</dt><dd>{d.location}</dd></>}
             <dt>{t.country}</dt><dd>{d.country}</dd>
             {d.code && <><dt>{t.code}</dt><dd>{d.code}</dd></>}

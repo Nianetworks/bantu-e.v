@@ -8,7 +8,7 @@ Aktuelle Liste jederzeit mit `npm run check:open`.
 3. **Logos Ubuntu Talks:** MITTEinander aktiv + Bezirksamt Berlin-Mitte (Pflicht laut Fördervereinbarung).
 
 ## Inhalte bestätigen
-4. Neuer Vorstand (Namen, Funktionen, Einwilligung, Eintragung beim Amtsgericht).
+4. Vorstand (MV 30.06.2024, Stand 07.11.2026) steht mit Namen und Funktion auf /menschen: Einverständnis aller Mitglieder schriftlich bestätigen; Eintragung beim Amtsgericht prüfen (Registerauszug 22.05.2026 zeigt noch den alten Vorstand); Fotos/Kurzbios nur mit Einwilligung.
 5. P 26/186 Ruziba: Laufzeitende, Fördersumme, Förderhinweis aus dem Fördervertrag.
 6. P 26/230 Pearl Kita: Förderhinweis/Logos EZ-Kleinprojektefonds.
 7. Ruhaama: 175 Zertifikate (Tätigkeitsbericht, Pearl-Antrag) oder 225 (Übersicht Transparenzbericht 2025)?
@@ -30,3 +30,10 @@ Aktuelle Liste jederzeit mit `npm run check:open`.
 17. Fotos der Startseite stammen aus dem Austausch „Okushoma kwa Boona“ (Mbarara 2024; Bildrechte laut Teilnahmevertrag § 6). Für Personen, die keinen Teilnahmevertrag unterschrieben haben (z. B. Partner, Gäste), Einverständnis bei ABI bestätigen lassen; bei Einwänden Foto in `src/data/heroSlides.ts` entfernen.
 18. twingle-Spendenformular: prüfen, ob Projekt/Zweck-Auswahl in twingle eingerichtet werden soll (derzeit ein allgemeines Formular).
 19. Alte WordPress-Sicherung auf dem Server (`~/wordpress_backup_2026-11-07/`) – Löschdatum mit dem Vorstand festlegen.
+
+## Programme und Projekte (07.11.2026)
+20. **Nutztiere & Landwirtschaft:** Ort/Region, Partnerorganisation, Zeitraum, Anzahl der Gruppen/Tiere und Förderer bestätigen (Projektseite zeigt bisher nur die Beschreibung aus dem Portfolio).
+21. **Royal College Namugongo:** Anzahl der Kinder mit Schulgeld, Zeitraum und Kosten der Rampen; Website der Schule (für den Link).
+22. **Förderer-Logos:** offizielle Logodateien für Land Berlin (SenBJF), Bezirksamt Berlin-Mitte / MITTEinander aktiv und Erasmus+ (EU-Emblem) anfordern – bis dahin Textkacheln. Logos von Robert Bosch Stiftung, DSEE, Deutsche Fernsehlotterie, Schmitz-Stiftungen und Aktion Tagwerk stammen aus Wikimedia Commons bzw. der Website der Stiftung Nord-Süd-Brücken.
+23. **Partner-Websites:** Links für NCDA, WIV-HR, FUG und Royal College fehlen.
+24. **Allgemeine Bildungsarbeit / Verfahrensberatung:** Ansprechperson, Sprachen, Termine bzw. Sprechzeiten ergänzen.

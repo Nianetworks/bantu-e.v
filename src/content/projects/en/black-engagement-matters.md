@@ -9,6 +9,8 @@ location: "nationwide"
 period: "2023 – 2024"
 start: 2023-01-01
 end: 2024-12-31
+implementer: "tubman.network e.V."
+fiscalSponsorship: true
 funders: ["German Foundation for Engagement and Volunteering (DSEE)"]
 sdgs: [10, 16, 17]
 stats:

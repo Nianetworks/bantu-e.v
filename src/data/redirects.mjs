@@ -21,6 +21,9 @@ export const wordpressRedirects = {
   '/programs': '/en/programmes/',
   '/contact': '/en/contact/',
   '/imprint-and-data-privacy': '/en/imprint/',
+  // Programme pages of the first relaunch version (two programmes, until 07.11.2026)
+  '/programme/inlandsarbeit': '/programme/',
+  '/en/programmes/work-in-germany': '/en/programmes/',
   // German pages (old /de/ prefix)
   '/de': '/',
   '/de/home-de': '/',

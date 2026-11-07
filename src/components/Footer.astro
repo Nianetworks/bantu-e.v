@@ -2,6 +2,7 @@
 import Icon from './Icon.astro';
 import { href, r, ui, type Lang } from '../i18n';
 import { org } from '../data/site';
+import { programmes, programmePath } from '../data/programmes';
 interface Props { lang: Lang }
 const { lang } = Astro.props;
 const t = ui[lang];
@@ -20,8 +21,7 @@ const cols = [
   {
     title: de ? 'Unsere Arbeit' : 'Our work',
     links: [
-      [de ? 'Internationale Zusammenarbeit' : 'International cooperation', r('international', lang)],
-      [de ? 'Inlandsarbeit' : 'Work in Germany', r('inland', lang)],
+      ...programmes.map((p) => [p.title[lang], programmePath(lang, p.key)] as [string, string]),
       [de ? 'Wirkung' : 'Impact', r('impact', lang)],
       [de ? 'Veranstaltungen' : 'Events', r('events', lang)],
     ],

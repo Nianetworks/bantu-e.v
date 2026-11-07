@@ -40,9 +40,8 @@ Stand: 07.11.2026 · Verantwortlich: Boaz Murinzi Murema (Vorstand) · Umsetzung
 | `/` | `/en/` | Hero, Wirkung in Zahlen, Aktuell & demnächst, Programme, laufende Projekte, Erfolgsgeschichte, Unterstützen, Partner |
 | `/ueber-uns/` | `/en/about/` | Name, Geschichte, Vision/Mission/Werte, Arbeitsweise (Soziokratie), gemeinnützige Zwecke, Meilensteine |
 | `/menschen/` | `/en/people/` | Vorstand, Team/Honorarkräfte/Ehrenamt (nur mit Einwilligung), Partner Süd/Nord, Förderer |
-| `/programme/` | `/en/programmes/` | Übersicht beider Programme |
-| `/programme/internationale-zusammenarbeit/` | `/en/programmes/international-cooperation/` | Arbeitsprinzipien, laufende und abgeschlossene Projekte |
-| `/programme/inlandsarbeit/` | `/en/programmes/work-in-germany/` | dto. |
+| `/programme/` | `/en/programmes/` | Übersicht: 5 Programme + Programmsteuerung, Trägerschaften (tubman.network, Kikili) |
+| `/programme/bildung/`, `/gesundheit/`, `/internationale-zusammenarbeit/`, `/engagement-und-rechte/`, `/migration-und-integration/` | `/en/programmes/education/` … | Schwerpunkte, Daueraufgaben, laufende und abgeschlossene Projekte (Zuordnung in `src/data/programmes.ts`) |
 | `/projekte/` + `/projekte/<slug>/` | `/en/projects/…` | alle 14 Projekte mit Steckbrief, Zahlen, Förderhinweis |
 | `/aktuelles/` + `/aktuelles/<slug>/` | `/en/news/…` | Neuigkeiten, Ankündigungen, RSS |
 | `/veranstaltungen/` | `/en/events/` | kommende und vergangene Termine |

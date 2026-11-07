@@ -1,3 +1,4 @@
+import { programmes, programmePath } from '../data/programmes';
 export type Lang = 'de' | 'en';
 export const languages: Lang[] = ['de', 'en'];
 
@@ -7,8 +8,6 @@ export const routes = {
   about: { de: '/ueber-uns/', en: '/en/about/' },
   people: { de: '/menschen/', en: '/en/people/' },
   programmes: { de: '/programme/', en: '/en/programmes/' },
-  international: { de: '/programme/internationale-zusammenarbeit/', en: '/en/programmes/international-cooperation/' },
-  inland: { de: '/programme/inlandsarbeit/', en: '/en/programmes/work-in-germany/' },
   projects: { de: '/projekte/', en: '/en/projects/' },
   news: { de: '/aktuelles/', en: '/en/news/' },
   events: { de: '/veranstaltungen/', en: '/en/events/' },
@@ -171,8 +170,9 @@ export function mainNav(lang: Lang): NavItem[] {
       label: de ? 'Programme' : 'Programmes',
       href: r('programmes', lang),
       children: [
-        { label: de ? 'Internationale Zusammenarbeit' : 'International cooperation', href: r('international', lang) },
-        { label: de ? 'Inlandsarbeit' : 'Work in Germany', href: r('inland', lang) },
+        { label: de ? 'Überblick' : 'Overview', href: r('programmes', lang) },
+        ...programmes.map((p) => ({ label: p.title[lang], href: programmePath(lang, p.key) })),
+        { label: de ? 'Trägerschaften' : 'Fiscal sponsorship', href: r('programmes', lang, de ? '#traegerschaften' : '#fiscal-sponsorship') },
         { label: de ? 'Alle Projekte' : 'All projects', href: r('projects', lang) },
       ],
     },

@@ -1,0 +1,9 @@
+---
+import ProgrammeView from '../../views/ProgrammeView.astro';
+import { programmes } from '../../data/programmes';
+export function getStaticPaths() {
+  return programmes.map((p) => ({ params: { slug: p.slug.de }, props: { key: p.key } }));
+}
+const { key } = Astro.props;
+---
+<ProgrammeView lang="de" programme={key} />

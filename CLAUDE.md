@@ -22,7 +22,8 @@ Preview build under a sub-path: `BASE_PATH=/bantu-e.v npm run build`.
 ## Structure
 ```
 src/data/site.ts        legal facts, contacts, bank, board, feature switches (shopCheckoutOpen, formEndpoint)
-src/data/people.ts      people (consent flag!), partner organisations, funders
+src/data/people.ts      people (consent flag!), partner organisations (with website links), funders (linked logos)
+src/data/programmes.ts  the 5 programmes + programme 6 (management), project-to-programme assignment, Trägerschaften
 src/data/shop.ts        shop categories + products (prices empty until the board sets them)
 src/data/downloads.ts   files offered on /downloads and /berichte (live in public/downloads/)
 src/data/impact.ts      verified impact figures + timeline
@@ -39,7 +40,7 @@ docs/                   plan, go-live/DNS, legal & shop, photo brief, editing gu
 ## Non-negotiable rules
 1. **Facts only from the association's documents.** Never invent project numbers, amounts, dates, names, quotes or results. If a figure is unknown, leave it out and add `<!-- OPEN: … -->` (Markdown) or `// OPEN: …` (TS). These notes are stripped from the public HTML by `scripts/postbuild-base-path.mjs`.
 2. **Legal identity** (`src/data/site.ts`): VR 37606 B, Amtsgericht Charlottenburg; Steuernummer 27/661/53393; Kameruner Str. 1, 13351 Berlin; Postfach 120344, 10593 Berlin; GLS IBAN DE47 4306 0967 1035 6810 00. Bantu e.V. is not Nia and not FUG – never mix their addresses.
-3. **Board:** decision of 07.11.2026 – show only the chair (Boaz Murinzi Murema) until the new board is elected and registered. Add new members only with written consent.
+3. **Board (updated 07.11.2026 on instruction of the chair):** the board elected on 30.06.2024 is shown on /menschen with names and roles only (Boaz Murinzi Murema – chair; Anne Behner – deputy; Michael Miiro – treasurer; Norah Masane – secretary; Aishah Nantumbwe – fundraising & resource mobilisation). Edith Tendo Okello stepped back. Never publish birth dates or private addresses; photos only with written consent. The Impressum names the chair as authorised representative (register extract 22.05.2026).
 4. **Privacy:** people appear with name/photo only with `consent: true`. No identifiable children without parental consent (Pearl Kita!). No embeds (YouTube, Google Maps, Instagram) – link instead. Fonts are self-hosted via @fontsource.
 5. **Funding acknowledgements are contractual.** Keep `fundingNote`, `fundingLogos`, `disclaimer` exactly as the funder requires (P 26/224 BIKO, P 26/214 Engagement Global/BMZ, MI2026-24B MITTEinander aktiv). Missing logos = OPEN items.
 6. **Brand (Guidelines v2.1, Nov 2026):** original logo only (globe + interwoven green/blue peace sign + 8 rings, name *below* the emblem). Never use the July-2026 redesign concepts or `bantu_logo.svg`. Stacked logo ≥ 120 px wide; emblem-only ≥ 48 px only in very small spaces. Colours: Gold #FEBF00, Green #3CB04B, Blue #749BCA, Black; text-safe #8A6200 / #2E8A3B / #3F6FA6. Fonts: Noto Serif (headlines), Archivo (text).
@@ -71,7 +72,7 @@ The server (cPanel account `bantuev`) runs `~/bin/bantu-site-deploy.sh` every 10
 3. Confirm data processing agreements (hosting provider, twingle) and the hosting provider's name in the privacy policy (OPEN notes in `LegalView.astro`).
 4. Add logos for MITTEinander aktiv / Bezirksamt Mitte (Ubuntu Talks) and EZ-KPF funding sentence (P 26/230, P 26/186).
 5. Real photos per `docs/04_Foto-Briefing.md`; replace placeholders (`image`, `imageAlt` in front matter).
-6. New board on /menschen and in `site.ts` once registered.
+6. Board: confirm registration of the new board at the Amtsgericht; collect consented photos/short bios.
 7. Shop: legal/tax checklist, prices, product photos, Stripe Payment Links → `checkoutUrl`, then `shopCheckoutOpen = true`; add AGB/Widerruf pages.
 8. After 15.11.2026: turn Ubuntu Talks into a review (status completed, photos with consent, results).
 9. Optional: a privacy-friendly form backend (`features.formEndpoint`), newsletter, Decap CMS for non-technical editing.
