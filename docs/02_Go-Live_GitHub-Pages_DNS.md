@@ -3,8 +3,8 @@
 Ziel: `https://www.bantu-ev.org` zeigt die neue Website, `bantu-ev.org` leitet dorthin weiter – **E-Mail (info@bantu-ev.org, boazmurinzi@bantu-ev.org) läuft unverändert weiter.**
 
 ## A. GitHub (einmalig)
-1. Repository → **Settings → Pages → Build and deployment → Source: GitHub Actions**.
-2. Repository → **Actions**: Workflow „Build and deploy to GitHub Pages“ läuft nach jedem Push. Vorschau-Adresse: `https://<github-name>.github.io/bantu-ev-website/`.
+1. Repository → **Settings → Pages → Build and deployment → Source: GitHub Actions** (erledigt am 07.11.2026).
+2. Repository → **Actions**: Workflow „Build and deploy to GitHub Pages“ läuft nach jedem Push. Vorschau-Adresse: **https://nianetworks.github.io/bantu-e.v/** (Repository: github.com/Nianetworks/bantu-e.v).
 3. Vorschau prüfen (DE/EN, Mobil, Downloads, Spenden-Seite).
 4. Empfohlen: Domain im GitHub-Konto verifizieren – **Profilbild → Settings → Pages → Add a domain** → `bantu-ev.org`; GitHub nennt einen TXT-Eintrag `_github-pages-challenge-<name>.bantu-ev.org`, den Sie beim DNS-Anbieter anlegen.
 
@@ -17,7 +17,7 @@ Ziel: `https://www.bantu-ev.org` zeigt die neue Website, `bantu-ev.org` leitet d
 ## C. DNS-Einträge für GitHub Pages
 | Name | Typ | Wert |
 |---|---|---|
-| `www` | CNAME | `<github-name>.github.io` |
+| `www` | CNAME | `nianetworks.github.io` |
 | `@` (bantu-ev.org) | A | `185.199.108.153` |
 | `@` | A | `185.199.109.153` |
 | `@` | A | `185.199.110.153` |
