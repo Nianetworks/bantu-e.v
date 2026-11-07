@@ -1,0 +1,958 @@
+From 4cc9293910aa8cad54f4383e3d3e472c503263ca Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Sat, 7 Nov 2026 21:14:28 +0100
+Subject: [PATCH] Display settings as modal dialog, leaner hero markup, mega
+ menus without completed projects, JSON-LD graph with events, rendering tweaks
+
+- A11yPanel: native <dialog> at the end of <body> (h1 is the first heading), showModal with focus return, backdrop click, full height on phones; --font-scale variable
+- Hero: only the first photo in the HTML (preloaded with imagesrcset), the other 10 in a <template>, captions as data attributes (no empty list, no img without src)
+- Logo link named by the image alt text
+- Mega menus list current projects only, plus one archive link; duplicate "All programmes" link removed
+- All projects page: current projects by programme, then #archiv/#archive/#archives with completed projects
+- Schema.org @graph: NGO (@id, slogan, both addresses), WebSite, Event nodes from event files (home, events, event pages)
+- content-visibility on lower homepage sections, layout/style containment on quick links, icon shape-rendering
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01D2JeGqUFJDvaNQJD3KYYr6
+---
+ CLAUDE.md                          |   7 +-
+ src/components/A11yPanel.astro     |  45 ++++++++-----
+ src/components/Header.astro        |  41 +++++++-----
+ src/components/HeroSlideshow.astro |  62 +++++++++--------
+ src/components/Icon.astro          |   2 +-
+ src/components/ProjectCard.astro   |   2 +-
+ src/i18n/index.ts                  |   3 +
+ src/layouts/Base.astro             |  27 ++++----
+ src/lib/schema.ts                  | 104 +++++++++++++++++++++++++++++
+ src/styles/global.css              |  15 ++++-
+ src/views/AccessibilityView.astro  |   2 +-
+ src/views/HomeView.astro           |  30 ++++++---
+ src/views/NewsItemView.astro       |   5 +-
+ src/views/NewsView.astro           |   4 +-
+ src/views/ProgrammeView.astro      |  87 +++++++++++++++++-------
+ 15 files changed, 318 insertions(+), 118 deletions(-)
+ create mode 100644 src/lib/schema.ts
+
+diff --git a/CLAUDE.md b/CLAUDE.md
+index 196bbd8..8885dd6 100644
+--- a/CLAUDE.md
++++ b/CLAUDE.md
+@@ -36,6 +36,7 @@ src/pages/**            thin DE routes + /en/ routes that render the views
+ src/i18n/index.ts       routes per language (de/en/fr), UI strings, main nav (mega menus for the two work areas)
+ src/lib/alternates.ts   maps every page to its DE/EN/FR versions (language switch DE · EN · FR, hreflang)
+ src/data/sdgs.ts        SDG names; icons in public/sdg/ (SdgIcons component)
++src/lib/schema.ts       JSON-LD @graph (NGO + WebSite on every page; Event nodes from news files with type: event)
+ public/partners/        partner logos (OrgCard); public/funders/ funder logos
+ public/                 brand assets, images, funder logos, downloads
+ docs/                   plan, go-live/DNS, legal & shop, photo brief, editing guide, open questions
+@@ -49,11 +50,11 @@ docs/                   plan, go-live/DNS, legal & shop, photo brief, editing gu
+ 5. **Funding acknowledgements are contractual.** Keep `fundingNote`, `fundingLogos`, `disclaimer` exactly as the funder requires (P 26/224 BIKO, P 26/214 Engagement Global/BMZ, MI2026-24B MITTEinander aktiv). Missing logos = OPEN items.
+ 6. **Brand (Guidelines v2.1, Nov 2026):** original logo only (globe + interwoven green/blue peace sign + 8 rings, name *below* the emblem). Never use the July-2026 redesign concepts or `bantu_logo.svg`. Stacked logo ≥ 120 px wide; emblem-only ≥ 48 px only in very small spaces. Colours: Gold #FEBF00, Green #3CB04B, Blue #749BCA, Black; text-safe #8A6200 / #2E8A3B / #3F6FA6. Fonts: Noto Serif (headlines), Archivo (text).
+ 7. **Language parity:** every project/news file exists in `de/`, `en/` and `fr/` with the same file name. German is binding for funder/authority wording (funding sentences stay German, with a translation after it). Views use `de ? 'DE' : fr ? 'FR' : 'EN'`. Write like a person: no em/en dashes as punctuation (ranges like 2021–2025 are fine), no filler phrases.
+-10. **Navigation:** Über uns · Inlandsarbeit · Internationale Zusammenarbeit (mega menus: programme → projects) · Aktuelles · Mitmachen. Region programme pages: `/inlandsarbeit/<programm>/`, `/auslandsarbeit/<programm>/`. Education offers with AfricAvenir: `/bildungsangebote/`.
++10. **Navigation:** Über uns · Inlandsarbeit · Internationale Zusammenarbeit (mega menus: programme → current projects; completed projects only via the archive link `/projekte/#archiv`, `/en/projects/#archive`, `/fr/projets/#archives`) · Wirkung · Aktuelles · Mitmachen. Region programme pages: `/inlandsarbeit/<programm>/`, `/auslandsarbeit/<programm>/`. Education offers with AfricAvenir: `/bildungsangebote/`.
+ 11. **Contacts:** office +49 (0)30 26934764; mobile +49 176 34213765 only 16:00–20:00, also Signal, Threema, Telegram, WhatsApp (`Phones` component).
+ 12. **Funding logos:** EZ-KPF projects show SNSB + BMZ; P 26/214 (SDG fund) SNSB + BMZ + Engagement Global; P 26/224 (BIKO) SNSB + SenBJF; Ubuntu Talks BA Mitte + Club Dialog. SDG icons on project, programme and area pages.
+ 8. **Accessibility is a core requirement (blind and partially sighted users):** target WCAG 2.2 AA. Semantic HTML and landmarks, one `h1`, no skipped heading levels, alt texts (decorative = `aria-hidden`), visible focus, contrast ≥ 4.5:1 in **all three themes** (light, dark, high contrast), targets ≥ 44 px, no hover-only interactions, no autoplay, `lang` on mixed-language text. Colours only via CSS variables in `global.css` (never hard-code text/background colours in components – they break dark/contrast mode). New pages must pass `node` axe check and the reflow check (see below) with text at 150 %.
+-   - Accessibility toolbar: `src/components/A11yPanel.astro` (text size, dark/high contrast, Atkinson Hyperlegible font, spacing, link highlighting, stop motion, read aloud via on-device speech synthesis). Settings live in `localStorage` key `bantu-a11y` and are applied as `data-*` attributes on `<html>`.
++   - Accessibility toolbar: `src/components/A11yPanel.astro` (text size, dark/high contrast, Atkinson Hyperlegible font, spacing, link highlighting, stop motion, read aloud via on-device speech synthesis). Native modal `<dialog>` rendered at the end of `<body>` by Base.astro (its h2 never precedes the page h1); open it with any button `[data-a11y-toggle] aria-haspopup="dialog"`. Settings live in `localStorage` key `bantu-a11y` and are applied as `data-*` attributes on `<html>`; text size also sets `--font-scale`.
+    - Pages: `/barrierefreiheit/` (statement + feedback) and `/einfache-sprache/` (easy read) – keep both up to date when content changes.
+ 9. **Shop:** checkout stays off (`features.shopCheckoutOpen = false`) until everything in `docs/03_Rechtliches_und_Shop-Checkliste.md` is done. Symbolic gifts are donations, not sales.
+ 
+@@ -70,7 +71,7 @@ Push to `main` → `.github/workflows/deploy.yml`:
+ - job `live`: production build (`SITE_URL=https://www.bantu-ev.org`, `BASE_PATH=/`, `HTACCESS=1`) force-pushed to branch `live`
+ The server (cPanel account `bantuev`) runs `~/bin/bantu-site-deploy.sh` every 10 minutes (cron) and checks out branch `live` into `~/public_html`; log in `~/logs/bantu-site-deploy.log`. Nightly rebuild at 03:17 UTC keeps "upcoming events" current. **Never change the DNS A record of bantu-ev.org – e-mail (MX) runs on the same server.** Details and rollback: `docs/02_Go-Live_GitHub-Pages_DNS.md`.
+ - `.htaccess` is generated by `scripts/postbuild-base-path.mjs` (canonical https://www., 301 redirects from `src/data/redirects.mjs`, 404, caching, security headers) – do not edit it on the server.
+-- Homepage slideshow (11 photos, prev/next/pause): photos in `public/images/hero/` (1600 px + `-800` version, WebP), captions in `src/data/heroSlides.ts`. Only photos with documented consent and without identifiable children.
++- Homepage slideshow (11 photos, prev/next/pause): photos in `public/images/hero/` (1600 px + `-800` version, WebP), captions in `src/data/heroSlides.ts`. Only the first photo is in the HTML (preloaded in HomeView); the others sit in a `<template>` and are mounted by script when needed. Only photos with documented consent and without identifiable children.
+ - Donations: twingle form (`org.donation` in `src/data/site.ts`), two-click loading on `/spenden/`.
+ 
+ ## Backlog (in priority order)
+diff --git a/src/components/A11yPanel.astro b/src/components/A11yPanel.astro
+index 7fcd044..7e957d9 100644
+--- a/src/components/A11yPanel.astro
++++ b/src/components/A11yPanel.astro
+@@ -3,6 +3,10 @@
+ // spacing, link highlighting, stop animations, read aloud (browser speech, on-device).
+ // Settings are stored only in this browser (localStorage) and applied before first paint
+ // by the inline script in Base.astro.
++// Rendered as a native modal <dialog> at the END of <body> (Base.astro), so its heading never
++// comes before the page's h1 in the document outline. showModal() gives focus containment,
++// Esc to close, an inert background and focus return to the button that opened it.
++// Triggers: any button with [data-a11y-toggle] (header, homepage, accessibility page).
+ import Icon from './Icon.astro';
+ import { r, type Lang } from '../i18n';
+ interface Props { lang: Lang }
+@@ -15,7 +19,7 @@ const t = de
+   : { title: 'Adjust the display', text: 'Text size', theme: 'Colours', std: 'Default', dark: 'Dark', contrast: 'High contrast', font: 'Easy-to-read font', spacing: 'More spacing', links: 'Highlight links', motion: 'Stop motion', read: 'Read page aloud', stop: 'Stop reading', reset: 'Reset all', close: 'Close', more: 'Accessibility statement', easy: 'Easy read', note: 'Your settings are only stored in this browser.', on: 'on', off: 'off' };
+ const sizes = [['md', 'A', '100 %'], ['lg', 'A+', '112 %'], ['xl', 'A++', '125 %'], ['xxl', 'A+++', '150 %']];
+ ---
+-<div id="a11y-panel" class="a11y-panel" role="region" aria-labelledby="a11y-title" hidden data-lang={lang} data-on={t.on} data-off={t.off} data-reset-done={lang === 'de' ? 'Einstellungen zurückgesetzt' : lang === 'fr' ? 'Réglages réinitialisés' : 'Settings reset'}>
++<dialog id="a11y-panel" class="a11y-panel" aria-labelledby="a11y-title" data-lang={lang} data-on={t.on} data-off={t.off} data-reset-done={lang === 'de' ? 'Einstellungen zurückgesetzt' : lang === 'fr' ? 'Réglages réinitialisés' : 'Settings reset'}>
+   <div class="a11y-panel__head">
+     <h2 id="a11y-title"><Icon name="access" /> {t.title}</h2>
+     <button type="button" class="a11y-close" data-a11y-close aria-label={t.close}><Icon name="close" /></button>
+@@ -57,18 +61,18 @@ const sizes = [['md', 'A', '100 %'], ['lg', 'A+', '112 %'], ['xl', 'A++', '125 %
+     <p class="small muted">{t.note}</p>
+   </div>
+   <p class="sr-only" aria-live="polite" data-a11y-status></p>
+-</div>
++</dialog>
+ 
+ <script>
+   type Prefs = Record<string, string>;
+   const KEY = 'bantu-a11y';
+   const html = document.documentElement;
+-  const panel = document.getElementById('a11y-panel') as HTMLElement;
++  const panel = document.getElementById('a11y-panel') as HTMLDialogElement;
+   const status = panel.querySelector('[data-a11y-status]') as HTMLElement;
+-  const triggers = () => Array.from(document.querySelectorAll<HTMLButtonElement>('[data-a11y-toggle]'));
+   const load = (): Prefs => { try { return JSON.parse(localStorage.getItem(KEY) || '{}'); } catch { return {}; } };
+   const save = (p: Prefs) => { try { localStorage.setItem(KEY, JSON.stringify(p)); } catch { /* storage blocked */ } };
+   let prefs = load();
++  let opener: HTMLElement | null = null;
+ 
+   const apply = () => {
+     ['text', 'theme', 'font', 'spacing', 'links', 'motion'].forEach((k) => {
+@@ -83,20 +87,27 @@ const sizes = [['md', 'A', '100 %'], ['lg', 'A+', '112 %'], ['xl', 'A++', '125 %
+     });
+   };
+ 
+-  const setOpen = (open: boolean, focusTrigger = false) => {
+-    panel.hidden = !open;
+-    triggers().forEach((t) => t.setAttribute('aria-expanded', String(open)));
+-    if (open) (panel.querySelector('button') as HTMLButtonElement)?.focus();
+-    else if (focusTrigger) triggers()[0]?.focus();
++  const open = () => {
++    if (panel.open) return;
++    if (typeof panel.showModal === 'function') panel.showModal();
++    else { panel.setAttribute('open', ''); (panel.querySelector('button') as HTMLButtonElement)?.focus(); }
+   };
++  const close = () => { if (typeof panel.close === 'function') panel.close(); else { panel.removeAttribute('open'); opener?.focus(); } };
+ 
+   document.addEventListener('click', (e) => {
+-    const target = e.target as HTMLElement;
+-    if (target.closest('[data-a11y-toggle]')) { setOpen(panel.hidden); return; }
+-    if (!panel.hidden && !panel.contains(target)) setOpen(false);
++    const trigger = (e.target as HTMLElement).closest<HTMLElement>('[data-a11y-toggle]');
++    if (trigger) { opener = trigger; if (panel.open) close(); else open(); }
+   });
+-  panel.querySelector('[data-a11y-close]')?.addEventListener('click', () => setOpen(false, true));
+-  panel.addEventListener('keydown', (e) => { if (e.key === 'Escape') setOpen(false, true); });
++  // A click on the backdrop (outside the dialog box) closes it; clicks on the box padding do not.
++  panel.addEventListener('click', (e) => {
++    if (e.target !== panel) return;
++    const b = panel.getBoundingClientRect();
++    const inside = e.clientX >= b.left && e.clientX <= b.right && e.clientY >= b.top && e.clientY <= b.bottom;
++    if (!inside) close();
++  });
++  panel.querySelector('[data-a11y-close]')?.addEventListener('click', close);
++  // Esc is handled natively by the dialog; always hand focus back to the button that opened it.
++  panel.addEventListener('close', () => { if (opener && document.activeElement !== opener) opener.focus(); });
+ 
+   panel.querySelectorAll<HTMLButtonElement>('[data-a11y]').forEach((b) => {
+     b.addEventListener('click', () => {
+@@ -145,7 +156,9 @@ const sizes = [['md', 'A', '100 %'], ['lg', 'A+', '112 %'], ['xl', 'A++', '125 %
+ </script>
+ 
+ <style>
+-  .a11y-panel { position: fixed; z-index: 120; top: calc(var(--util-h, 40px) + 6px); right: max(12px, calc((100vw - var(--wrap)) / 2)); width: min(420px, calc(100vw - 24px)); max-height: calc(100vh - var(--util-h, 40px) - 16px); overflow-y: auto; background: var(--surface); color: var(--ink); border: 2px solid var(--ink); border-radius: 20px; box-shadow: 0 20px 60px rgba(0,0,0,.25); padding: 1.1rem 1.2rem 1.2rem; }
++  .a11y-panel { position: fixed; inset: calc(var(--util-h, 40px) + 6px) max(12px, calc((100vw - var(--wrap)) / 2)) auto auto; margin: 0; width: min(420px, calc(100vw - 24px)); max-width: none; max-height: calc(100dvh - var(--util-h, 40px) - 16px); overflow-y: auto; overscroll-behavior: contain; background: var(--surface); color: var(--ink); border: 2px solid var(--ink); border-radius: 20px; box-shadow: 0 20px 60px rgba(0,0,0,.25); padding: 1.1rem 1.2rem 1.2rem; }
++  .a11y-panel:not([open]) { display: none; }
++  .a11y-panel::backdrop { background: rgb(0 0 0 / .32); }
+   .a11y-panel__head { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: .5rem; }
+   .a11y-panel h2 { font-family: var(--font-sans); font-size: 1.15rem; margin: 0; display: flex; gap: .5rem; align-items: center; }
+   .a11y-close { width: var(--tap); height: var(--tap); border-radius: 50%; border: 2px solid var(--line); background: transparent; color: var(--ink); cursor: pointer; display: grid; place-items: center; }
+@@ -163,5 +176,7 @@ const sizes = [['md', 'A', '100 %'], ['lg', 'A+', '112 %'], ['xl', 'A++', '125 %
+   .a11y-foot { margin-top: 1rem; border-top: 1px solid var(--line); padding-top: .9rem; }
+   .a11y-foot p { margin: .6rem 0 0; }
+   .icon { width: 1.2em; height: 1.2em; }
++  /* Phones: as a modal it does not need to sit below the (wrapping) utility bar – use the full height. */
++  @media (max-width: 700px) { .a11y-panel { inset: 12px 12px auto 12px; width: auto; max-height: calc(100dvh - 24px); } }
+   @media (max-width: 420px) { .toggles { grid-template-columns: 1fr; } }
+ </style>
+diff --git a/src/components/Header.astro b/src/components/Header.astro
+index 31b6114..73435ec 100644
+--- a/src/components/Header.astro
++++ b/src/components/Header.astro
+@@ -3,8 +3,7 @@
+ // logo, main navigation with disclosure menus (buttons with aria-expanded; Esc closes;
+ // works with keyboard, touch and screen readers – no hover-only menus).
+ import Icon from './Icon.astro';
+-import A11yPanel from './A11yPanel.astro';
+-import { href, langNames, mainNav, projectPath, r, ui, type Lang } from '../i18n';
++import { archiveId, archiveLabel, href, langNames, mainNav, projectPath, r, ui, type Lang } from '../i18n';
+ import { org } from '../data/site';
+ import { getProjects, slugOf, type Project } from '../lib/content';
+ import { programmes, regions, regionPath, regionProgrammePath, type Region } from '../data/programmes';
+@@ -14,20 +13,25 @@ const t = ui[lang];
+ const de = lang === 'de';
+ const fr = lang === 'fr';
+ const nav = mainNav(lang);
+-// Mega menus for the two work areas: programme -> projects in that area.
++const logoAlt = de ? 'Bantu e.V., zur Startseite' : fr ? 'Bantu e.V., page d’accueil' : 'Bantu e.V., home page';
++// Mega menus for the two work areas: programme -> CURRENT projects in that area.
++// Completed projects are not listed here; one link leads to the archive on the all-projects page.
++// A programme stays in the menu (as a category link) when the area has only completed projects in it.
+ const allProjects = await getProjects(lang);
+ const bySlug = new Map(allProjects.map((p) => [slugOf(p.id), p]));
+ const megaFor = (region: Region) => {
+   const rg = regions.find((x) => x.key === region)!;
+   const groups = programmes
+-    .map((p) => ({
++    .map((p) => ({ p, inRegion: p.projects.map((s) => bySlug.get(s)).filter((x): x is Project => !!x && x.data.programme === region) }))
++    .map(({ p, inRegion }) => ({
+       prog: p,
+       href: regionProgrammePath(lang, region, p.key),
+-      items: p.projects.map((s) => bySlug.get(s)).filter((x): x is Project => !!x && x.data.programme === region),
++      any: inRegion.length > 0,
++      items: inRegion.filter((x) => x.data.status !== 'completed'),
+       extra: region === 'inland' && p.key === 'education' ? [{ label: de ? 'Bildungsangebote: Workshops und Begleitung' : fr ? 'Ateliers, formations et accompagnement' : 'Workshops, training and support', href: r('offers', lang) }]
+         : region === 'inland' && p.key === 'migration' ? [{ label: de ? 'Verfahrensberatung' : fr ? 'Conseil sur les procédures' : 'Procedural advice', href: regionProgrammePath(lang, region, p.key) + (de ? '#beratung' : '#advice') }] : [],
+     }))
+-    .filter((g) => g.items.length > 0 || g.extra.length > 0);
++    .filter((g) => g.any || g.extra.length > 0);
+   return { rg, groups };
+ };
+ const megas = { inland: megaFor('inland'), international: megaFor('international') };
+@@ -46,7 +50,7 @@ const compactCss = levels.map(([pre, w]) => `@media (max-width: ${w}px) { ${comp
+     <div class="wrap utility__inner">
+       <a class="util-link" href={r('easy', lang)}><Icon name="easy" /> {t.easy}</a>
+       <div class="utility__right">
+-        <button type="button" class="util-link util-btn" data-a11y-toggle aria-expanded="false" aria-controls="a11y-panel">
++        <button type="button" class="util-link util-btn" data-a11y-toggle aria-haspopup="dialog" aria-controls="a11y-panel">
+           <Icon name="access" /> {t.a11y}
+         </button>
+         <a class="util-link" href={`mailto:${org.email}`}><Icon name="mail" /> <span class="hide-sm">{org.email}</span><span class="sr-only show-sm">E-Mail</span></a>
+@@ -61,9 +65,11 @@ const compactCss = levels.map(([pre, w]) => `@media (max-width: ${w}px) { ${comp
+     </div>
+   </div>
+   <div class="wrap header-inner">
+-    <a class="logo-plate" href={r('home', lang)} aria-label={de ? 'Bantu e.V.: zur Startseite' : fr ? 'Bantu e.V. : page d’accueil' : 'Bantu e.V.: home page'}>
+-      <img class="logo-full keep-color" src={href('/brand/bantu-logo.png')} width="120" height="142" alt="" />
+-      <img class="logo-emblem keep-color" src={href('/brand/bantu-emblem.png')} width="52" height="52" alt="" />
++    {/* The link gets its name from the visible image's alt text. Only one of the two images is displayed at a time
++        (full logo at the top, emblem once the page is scrolled), so both carry the same alt and it is never read twice. */}
++    <a class="logo-plate" href={r('home', lang)}>
++      <img class="logo-full keep-color" src={href('/brand/bantu-logo.png')} width="120" height="142" alt={logoAlt} />
++      <img class="logo-emblem keep-color" src={href('/brand/bantu-emblem.png')} width="52" height="52" alt={logoAlt} />
+     </a>
+     <nav id="main-nav" class="main-nav" aria-label={de ? 'Hauptmenü' : fr ? 'Menu principal' : 'Main menu'}>
+       <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-list">
+@@ -85,8 +91,8 @@ const compactCss = levels.map(([pre, w]) => `@media (max-width: ${w}px) { ${comp
+                       <span class="mega__places">{megas[item.mega].rg.places[lang]}</span>
+                     </a>
+                     <p class="mega__lead">{megas[item.mega].rg.navLead[lang]}</p>
+-                    <a class="mega__more" href={r('programmes', lang)}>{de ? 'Alle Programme' : fr ? 'Tous les programmes' : 'All programmes'} <Icon name="arrow" /></a>
+                     <a class="mega__more" href={r('projects', lang)}>{t.allProjects} <Icon name="arrow" /></a>
++                    <a class="mega__more mega__archive" href={r('projects', lang, `#${archiveId[lang]}`)}>{archiveLabel[lang]} <Icon name="arrow" /></a>
+                   </div>
+                   <ul class="mega__cols">
+                     {megas[item.mega].groups.map((g) => (
+@@ -95,10 +101,12 @@ const compactCss = levels.map(([pre, w]) => `@media (max-width: ${w}px) { ${comp
+                           <span class="mega__no">{de ? 'Programm' : fr ? 'Programme' : 'Programme'} {g.prog.no}</span>
+                           {g.prog.title[lang]}
+                         </a>
+-                        <ul>
+-                          {g.items.map((p) => <li><a href={projectPath(lang, slugOf(p.id))}>{shortTitle(p)}{p.data.status === 'completed' && <span class="mega__done"> · {t.projectStatus.completed}</span>}</a></li>)}
+-                          {g.extra.map((x) => <li><a href={x.href}>{x.label}</a></li>)}
+-                        </ul>
++                        {(g.items.length > 0 || g.extra.length > 0) && (
++                          <ul>
++                            {g.items.map((p) => <li><a href={projectPath(lang, slugOf(p.id))}>{shortTitle(p)}</a></li>)}
++                            {g.extra.map((x) => <li><a href={x.href}>{x.label}</a></li>)}
++                          </ul>
++                        )}
+                       </li>
+                     ))}
+                   </ul>
+@@ -124,7 +132,6 @@ const compactCss = levels.map(([pre, w]) => `@media (max-width: ${w}px) { ${comp
+       </ul>
+     </nav>
+   </div>
+-  <A11yPanel lang={lang} />
+ </header>
+ 
+ <script>
+@@ -241,7 +248,7 @@ const compactCss = levels.map(([pre, w]) => `@media (max-width: ${w}px) { ${comp
+   .mega__prog:hover { background: var(--bg-2); text-decoration: underline; }
+   .mega .mega__col a:not(.mega__prog) { display: block; min-height: 0; padding: .45rem .5rem; font-weight: 500; font-size: .95rem; line-height: 1.35; border-radius: 8px; color: var(--ink); text-decoration: none; }
+   .mega .mega__col a:not(.mega__prog):hover { background: var(--bg-2); text-decoration: underline; }
+-  .mega__done { color: var(--muted); font-size: .85em; }
++  .mega__archive { font-weight: 600; color: var(--ink-2); }
+   .accent--gold { --accent: var(--gold); } .accent--green { --accent: var(--green); } .accent--blue { --accent: var(--blue); } .accent--red { --accent: var(--c-coral); } .accent--purple { --accent: var(--c-mauve); }
+   .nav-toggle { display: none; }
+ 
+diff --git a/src/components/HeroSlideshow.astro b/src/components/HeroSlideshow.astro
+index a60d4a1..ab8aa22 100644
+--- a/src/components/HeroSlideshow.astro
++++ b/src/components/HeroSlideshow.astro
+@@ -4,6 +4,9 @@
+ // prefers reduced motion or switched on "stop motion" in the accessibility panel, pauses in background tabs.
+ // Photos are decorative for the layout (aria-hidden); each one is described in the visible caption.
+ // High-contrast theme hides the photos completely.
++// Markup: only the first photo is a real <img> in the page (preloaded in HomeView). The other photos
++// sit in an inert <template> (valid HTML, nothing is downloaded) and are mounted one at a time by the
++// script below, just before they are shown. Caption and project link travel as data-* on each <img>.
+ import Icon from './Icon.astro';
+ import { href, projectPath, type Lang } from '../i18n';
+ import { heroSlides } from '../data/heroSlides';
+@@ -14,6 +17,8 @@ const de = lang === 'de';
+ const fr = lang === 'fr';
+ const n = heroSlides.length;
+ const src = (f: string, small = false) => href(`/images/hero/${f}${small ? '-800' : ''}.webp`);
++const srcset = (f: string) => `${src(f, true)} 800w, ${src(f)} 1600w`;
++const [first, ...rest] = heroSlides;
+ const labels = {
+   region: de ? 'Fotos aus unseren Projekten' : fr ? 'Photos de nos projets' : 'Photos from our projects',
+   pauseShort: de ? 'Pause' : fr ? 'Pause' : 'Pause',
+@@ -25,19 +30,20 @@ const labels = {
+ };
+ ---
+ <div class="hs__bg" aria-hidden="true">
+-  {heroSlides.map((s, i) => (
+-    i === 0
+-      ? <img class="hs__img is-active" src={src(s.file)} srcset={`${src(s.file, true)} 800w, ${src(s.file)} 1600w`} sizes="100vw" alt="" width="1600" height="1066" decoding="async" fetchpriority="high" />
+-      : <img class="hs__img" data-src={src(s.file)} data-srcset={`${src(s.file, true)} 800w, ${src(s.file)} 1600w`} sizes="100vw" alt="" width="1600" height="1066" decoding="async" />
+-  ))}
++  <img class="hs__img is-active" src={src(first.file)} srcset={srcset(first.file)} sizes="100vw" alt="" width="1600" height="1066" decoding="async" fetchpriority="high" data-caption={first.caption[lang]} data-href={first.project ? projectPath(lang, first.project) : ''} />
+   <div class="hs__shade"></div>
+ </div>
++{rest.length > 0 && (
++  <template data-hs-slides>
++    {rest.map((s) => <img class="hs__img" src={src(s.file)} srcset={srcset(s.file)} sizes="100vw" alt="" width="1600" height="1066" decoding="async" data-caption={s.caption[lang]} data-href={s.project ? projectPath(lang, s.project) : ''} />)}
++  </template>
++)}
+ 
+ <div class="hs__panel" role="group" aria-label={labels.region} data-hs data-short-pause={labels.pauseShort} data-short-play={labels.playShort}>
+   <p class="hs__caption" id="hs-caption">
+     <span class="hs__count"><span data-hs-index>1</span>/{n}</span>
+-    <span data-hs-text>{heroSlides[0].caption[lang]}</span>
+-    {heroSlides[0].project && <a class="hs__link" data-hs-link href={projectPath(lang, heroSlides[0].project)}>{labels.project}</a>}
++    <span data-hs-text>{first.caption[lang]}</span>
++    {first.project && <a class="hs__link" data-hs-link href={projectPath(lang, first.project)}>{labels.project}</a>}
+   </p>
+   <div class="hs__controls">
+     <button class="hs__toggle" type="button" data-hs-toggle>
+@@ -47,21 +53,23 @@ const labels = {
+     </button>
+     <button class="hs__nav" type="button" data-hs-prev aria-label={labels.prev}><Icon name="chevron" class="hs__prev-ic" /></button>
+     <button class="hs__nav" type="button" data-hs-next aria-label={labels.next}><Icon name="chevron" class="hs__next-ic" /></button>
+-    <ul class="hs__data" hidden>
+-      {heroSlides.map((s) => <li data-hs-item data-caption={s.caption[lang]} data-href={s.project ? projectPath(lang, s.project) : ''}></li>)}
+-    </ul>
+   </div>
+ </div>
+ 
+ <script>
+   const INTERVAL = 7000;
+   const panel = document.querySelector<HTMLElement>('[data-hs]');
+-  const imgs = Array.from(document.querySelectorAll<HTMLImageElement>('.hs__img'));
+-  if (panel && imgs.length > 1) {
++  const bg = document.querySelector<HTMLElement>('.hs__bg');
++  const tpl = document.querySelector<HTMLTemplateElement>('template[data-hs-slides]');
++  const firstImg = bg?.querySelector<HTMLImageElement>('.hs__img');
++  const tplImgs = Array.from(tpl?.content.querySelectorAll<HTMLImageElement>('img') ?? []);
++  // One slot per slide: the first is already in the page, the others stay in the template until needed.
++  const slides: (HTMLImageElement | null)[] = firstImg ? [firstImg, ...tplImgs.map(() => null)] : [];
++  if (panel && bg && slides.length > 1) {
+     const root = document.documentElement;
++    const shade = bg.querySelector('.hs__shade');
+     const toggle = panel.querySelector<HTMLButtonElement>('[data-hs-toggle]')!;
+     const toggleText = panel.querySelector<HTMLElement>('.hs__toggle-text')!;
+-    const items = Array.from(panel.querySelectorAll<HTMLElement>('[data-hs-item]'));
+     const caption = panel.querySelector<HTMLElement>('#hs-caption')!;
+     const text = panel.querySelector<HTMLElement>('[data-hs-text]')!;
+     const index = panel.querySelector<HTMLElement>('[data-hs-index]')!;
+@@ -73,22 +81,24 @@ const labels = {
+     let playing = false;
+     let userPaused = false;
+ 
+-    const load = (img: HTMLImageElement) => {
+-      if (img.dataset.src) {
+-        img.srcset = img.dataset.srcset || '';
+-        img.src = img.dataset.src;
+-        delete img.dataset.src;
++    // Mount slide i from the template (downloads the photo) unless it is already in the page.
++    const load = (i: number): HTMLImageElement => {
++      if (!slides[i]) {
++        const img = document.importNode(tplImgs[i - 1], true);
++        bg.insertBefore(img, shade);
++        void img.offsetWidth; // commit opacity 0 first, so the cross-fade also runs for a freshly mounted slide
++        slides[i] = img;
+       }
++      return slides[i]!;
+     };
+     const show = (i: number) => {
+-      current = (i + imgs.length) % imgs.length;
+-      load(imgs[current]);
+-      load(imgs[(current + 1) % imgs.length]);
+-      imgs.forEach((img, k) => img.classList.toggle('is-active', k === current));
+-      const dot = items[current];
+-      text.textContent = dot.dataset.caption || '';
++      current = (i + slides.length) % slides.length;
++      const img = load(current);
++      load((current + 1) % slides.length);
++      slides.forEach((x) => x?.classList.toggle('is-active', x === img));
++      text.textContent = img.dataset.caption || '';
+       index.textContent = String(current + 1);
+-      if (link) { link.hidden = !dot.dataset.href; if (dot.dataset.href) link.href = dot.dataset.href; }
++      if (link) { link.hidden = !img.dataset.href; if (img.dataset.href) link.href = img.dataset.href; }
+     };
+     const setPlaying = (on: boolean) => {
+       playing = on;
+@@ -113,7 +123,7 @@ const labels = {
+     mq.addEventListener?.('change', () => { if (motionOff()) setPlaying(false); });
+ 
+     // Preload the second photo after the page has loaded, then start (unless motion is off).
+-    window.addEventListener('load', () => load(imgs[1]), { once: true });
++    window.addEventListener('load', () => load(1), { once: true });
+     setPlaying(!motionOff());
+   } else if (panel) {
+     panel.querySelector('.hs__controls')?.remove();
+diff --git a/src/components/Icon.astro b/src/components/Icon.astro
+index 151cffc..25b44ed 100644
+--- a/src/components/Icon.astro
++++ b/src/components/Icon.astro
+@@ -47,5 +47,5 @@ const paths = {
+ } as const;
+ const { name, size = 24, class: cls = 'icon', label } = Astro.props;
+ ---
+-<svg class={cls} width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"
++<svg class={cls} width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" shape-rendering="geometricPrecision"
+   aria-hidden={label ? undefined : 'true'} role={label ? 'img' : undefined} aria-label={label} focusable="false" set:html={paths[name]} />
+diff --git a/src/components/ProjectCard.astro b/src/components/ProjectCard.astro
+index 13ab40a..edf79c0 100644
+--- a/src/components/ProjectCard.astro
++++ b/src/components/ProjectCard.astro
+@@ -5,7 +5,7 @@ import SdgIcons from './SdgIcons.astro';
+ import { href, projectPath, ui, type Lang } from '../i18n';
+ import { slugOf, type Project } from '../lib/content';
+ import { projectIcon } from '../lib/icons';
+-interface Props { lang: Lang; project: Project; headingLevel?: 2 | 3 }
++interface Props { lang: Lang; project: Project; headingLevel?: 2 | 3 | 4 }
+ const { lang, project, headingLevel = 3 } = Astro.props;
+ const d = project.data;
+ const t = ui[lang];
+diff --git a/src/i18n/index.ts b/src/i18n/index.ts
+index 9d4a591..f0a7ab8 100644
+--- a/src/i18n/index.ts
++++ b/src/i18n/index.ts
+@@ -40,6 +40,9 @@ export function r(key: RouteKey, lang: Lang, hash = ''): string {
+ }
+ export const projectPath = (lang: Lang, slug: string) => href(`${routes.projects[lang]}${slug}/`);
+ export const newsPath = (lang: Lang, slug: string) => href(`${routes.news[lang]}${slug}/`);
++/** Anchor of the "completed projects" archive on the all-projects page. */
++export const archiveId: Record<Lang, string> = { de: 'archiv', en: 'archive', fr: 'archives' };
++export const archiveLabel: Record<Lang, string> = { de: 'Archiv: abgeschlossene Projekte', en: 'Archive: completed projects', fr: 'Archives : projets terminés' };
+ export const productPath = (lang: Lang, slug: string) => href(`${routes.shop[lang]}${slug}/`);
+ 
+ const tz = 'Europe/Berlin';
+diff --git a/src/layouts/Base.astro b/src/layouts/Base.astro
+index af7696c..00c3f9f 100644
+--- a/src/layouts/Base.astro
++++ b/src/layouts/Base.astro
+@@ -3,9 +3,11 @@ import '../styles/global.css';
+ import Header from '../components/Header.astro';
+ import Footer from '../components/Footer.astro';
+ import AnnouncementBar from '../components/AnnouncementBar.astro';
++import A11yPanel from '../components/A11yPanel.astro';
+ import { href, languages, r, ui, type Lang } from '../i18n';
+ import { alternatesFor } from '../lib/alternates';
+ import { org } from '../data/site';
++import { organisationGraph } from '../lib/schema';
+ 
+ interface Props {
+   lang: Lang;
+@@ -15,8 +17,10 @@ interface Props {
+   altHref?: string;
+   image?: string;
+   noindex?: boolean;
++  /** Extra Schema.org nodes for this page (e.g. events), added to the site-wide JSON-LD graph. */
++  schema?: Record<string, unknown>[];
+ }
+-const { lang, title, description, altHref, image, noindex } = Astro.props;
++const { lang, title, description, altHref, image, noindex, schema = [] } = Astro.props;
+ const t = ui[lang];
+ const fullTitle = title === org.shortName ? `${org.shortName} | ${org.tagline[lang]}` : `${title} | ${org.shortName}`;
+ const desc = description ?? t.footerAbout;
+@@ -27,19 +31,10 @@ const alts = await alternatesFor(Astro.url.pathname);
+ if (altHref && lang !== 'fr') alts[lang === 'de' ? 'en' : 'de'] ??= altHref;
+ const hreflangs = languages.filter((l) => alts[l]).map((l) => ({ l, url: new URL(alts[l]!, Astro.site) }));
+ const switchLinks = languages.map((l) => ({ lang: l, href: l === lang ? Astro.url.pathname : alts[l] ?? r('home', l), exact: !!alts[l] }));
+-const jsonLd = {
+-  '@context': 'https://schema.org',
+-  '@type': 'NGO',
+-  name: org.legalName,
+-  alternateName: org.shortName,
+-  url: org.web,
+-  logo: new URL(href('/brand/bantu-logo.png'), Astro.site).toString(),
+-  email: org.email,
+-  telephone: org.officePhone,
+-  foundingDate: String(org.founded),
+-  address: { '@type': 'PostalAddress', streetAddress: org.address.street, postalCode: org.address.zip, addressLocality: org.address.city, addressCountry: 'DE' },
+-  sameAs: org.socials.map((s) => s.url),
+-};
++// One JSON-LD graph per page: organisation + website (always) and page-specific nodes (events, …).
++const jsonLd = { '@context': 'https://schema.org', '@graph': [...organisationGraph(lang, Astro.site), ...schema] };
++// "</" inside JSON must not end the script element.
++const jsonLdText = JSON.stringify(jsonLd).replace(/</g, '\\u003c');
+ // Applied before first paint so saved accessibility settings never "flash".
+ const prefsScript = `try{var p=JSON.parse(localStorage.getItem('bantu-a11y')||'{}'),h=document.documentElement;['text','theme','font','spacing','links','motion'].forEach(function(k){var v=p[k];if(v&&!(k==='text'&&v==='md')&&!(k==='theme'&&v==='light'))h.setAttribute('data-'+k,v)})}catch(e){}`;
+ // External links: open in new tab and tell screen-reader users.
+@@ -68,7 +63,8 @@ const extScript = `document.querySelectorAll('main a[href^="http"]').forEach(fun
+     <link rel="icon" type="image/png" sizes="32x32" href={href('/favicon-32.png')} />
+     <link rel="apple-touch-icon" href={href('/apple-touch-icon.png')} />
+     <link rel="alternate" type="application/rss+xml" title={`${org.shortName} RSS`} href={href(lang === 'de' ? '/aktuelles/rss.xml' : lang === 'fr' ? '/fr/actualites/rss.xml' : '/en/news/rss.xml')} />
+-    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
++    <slot name="head" />
++    <script type="application/ld+json" set:html={jsonLdText} />
+   </head>
+   <body>
+     <nav class="skip-links" aria-label={lang === 'de' ? 'Sprunglinks' : lang === 'fr' ? 'Liens d’accès rapide' : 'Skip links'}>
+@@ -82,6 +78,7 @@ const extScript = `document.querySelectorAll('main a[href^="http"]').forEach(fun
+       <slot />
+     </main>
+     <Footer lang={lang} />
++    <A11yPanel lang={lang} />
+     <script is:inline set:html={extScript} />
+   </body>
+ </html>
+diff --git a/src/lib/schema.ts b/src/lib/schema.ts
+new file mode 100644
+index 0000000..56c32fe
+--- /dev/null
++++ b/src/lib/schema.ts
+@@ -0,0 +1,104 @@
++// Structured data (Schema.org JSON-LD) for search engines.
++// Base.astro always outputs one @graph with the organisation (NGO) and the website. Pages can add
++// further nodes (e.g. events) through the `schema` prop. Every fact comes from src/data/site.ts or from
++// the content files; nothing is written here by hand.
++import { href, newsPath, r, ui, type Lang } from '../i18n';
++import { org } from '../data/site';
++import { slugOf, type NewsItem } from './content';
++
++type Node = Record<string, unknown>;
++const SITE = 'https://www.bantu-ev.org';
++/** Absolute URL for a file path in public/ (base path added here). */
++const abs = (path: string, site?: URL) => new URL(href(path), site ?? SITE).toString();
++/** Absolute URL for a page path that already went through r()/newsPath() (base path already included). */
++const absPage = (path: string, site?: URL) => new URL(path, site ?? SITE).toString();
++export const orgId = `${SITE}/#organization`;
++export const websiteId = `${SITE}/#website`;
++
++/** ISO 8601 with the Berlin offset (e.g. 2026-11-15T11:00:00+01:00), as people expect for local events. */
++export function berlinIso(d: Date): string {
++  const parts = Object.fromEntries(
++    new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/Berlin', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit', hourCycle: 'h23', timeZoneName: 'longOffset' })
++      .formatToParts(d).map((p) => [p.type, p.value]),
++  );
++  const offset = (parts.timeZoneName || 'GMT+00:00').replace('GMT', '') || '+00:00';
++  return `${parts.year}-${parts.month}-${parts.day}T${parts.hour}:${parts.minute}:${parts.second}${offset}`;
++}
++
++export function organisationGraph(lang: Lang, site?: URL): Node[] {
++  return [
++    {
++      '@type': 'NGO',
++      '@id': orgId,
++      name: org.legalName,
++      alternateName: [org.shortName, org.legalNameEn],
++      url: absPage(r('home', lang), site),
++      logo: { '@type': 'ImageObject', url: abs('/brand/bantu-logo.png', site), width: 120, height: 142 },
++      image: abs('/brand/og-default.jpg', site),
++      slogan: org.tagline[lang],
++      description: ui[lang].footerAbout,
++      foundingDate: String(org.founded),
++      email: org.email,
++      telephone: org.officePhone.replace(' (0)', ' '),
++      address: [
++        { '@type': 'PostalAddress', streetAddress: org.address.street, postalCode: org.address.zip, addressLocality: org.address.city, addressCountry: 'DE' },
++        { '@type': 'PostalAddress', postOfficeBoxNumber: org.postbox.line.replace(/\D/g, ''), postalCode: org.postbox.zip, addressLocality: org.postbox.city, addressCountry: 'DE' },
++      ],
++      areaServed: [
++        { '@type': 'Country', name: 'Germany' },
++        { '@type': 'Country', name: 'Uganda' },
++        { '@type': 'Country', name: 'Burundi' },
++      ],
++      sameAs: org.socials.map((s) => s.url),
++    },
++    {
++      '@type': 'WebSite',
++      '@id': websiteId,
++      url: `${SITE}/`,
++      name: org.shortName,
++      inLanguage: ['de', 'en', 'fr'],
++      publisher: { '@id': orgId },
++    },
++  ];
++}
++
++/** "VHS Berlin Mitte, Linienstraße 162, 10115 Berlin, room 2.02" -> Place with a structured address. */
++function place(location: string): Node {
++  const parts = location.split(/,\s*/);
++  const z = parts.findIndex((p) => /^\d{5}\s/.test(p));
++  if (z >= 2) {
++    const [postalCode, ...city] = parts[z].split(/\s+/);
++    return {
++      '@type': 'Place',
++      name: parts.slice(0, z - 1).join(', '),
++      address: { '@type': 'PostalAddress', streetAddress: parts[z - 1], postalCode, addressLocality: city.join(' '), addressCountry: 'DE' },
++    };
++  }
++  return { '@type': 'Place', name: location, address: location };
++}
++
++/** Event node for a news item of type "event" (only when start date and location are set). */
++export function eventNode(item: NewsItem, lang: Lang, site?: URL): Node | null {
++  const d = item.data;
++  if (d.type !== 'event' || !d.eventStart || !d.location) return null;
++  const free = /free|kostenlos|frei|gratuit|libre/i.test(d.cost ?? '');
++  // "… and online" / "… und online" / "… et en ligne": venue plus video conference.
++  const online = /\bonline\b|en ligne/i.test(d.location);
++  const venue = place(d.location);
++  return {
++    '@type': 'Event',
++    '@id': `${absPage(newsPath(lang, slugOf(item.id)), site)}#event`,
++    name: d.title,
++    description: d.summary,
++    url: absPage(newsPath(lang, slugOf(item.id)), site),
++    startDate: berlinIso(d.eventStart),
++    ...(d.eventEnd ? { endDate: berlinIso(d.eventEnd) } : {}),
++    eventStatus: 'https://schema.org/EventScheduled',
++    eventAttendanceMode: `https://schema.org/${online ? 'Mixed' : 'Offline'}EventAttendanceMode`,
++    location: online ? [venue, { '@type': 'VirtualLocation', name: 'Online' }] : venue,
++    ...(d.image ? { image: [abs(d.image, site)] } : {}),
++    inLanguage: lang,
++    ...(free ? { isAccessibleForFree: true } : {}),
++    organizer: { '@id': orgId },
++  };
++}
+diff --git a/src/styles/global.css b/src/styles/global.css
+index 2a0f7a4..ac2cd08 100644
+--- a/src/styles/global.css
++++ b/src/styles/global.css
+@@ -63,9 +63,11 @@
+ }
+ 
+ /* ---- User settings (set by the accessibility toolbar) ---- */
+-html[data-text="lg"] { font-size: 112.5%; }
+-html[data-text="xl"] { font-size: 125%; }
+-html[data-text="xxl"] { font-size: 150%; }
++/* Text size from the display panel: one scale factor, available to every component as --font-scale. */
++html { --font-scale: 1; font-size: calc(100% * var(--font-scale)); }
++html[data-text="lg"] { --font-scale: 1.125; }
++html[data-text="xl"] { --font-scale: 1.25; }
++html[data-text="xxl"] { --font-scale: 1.5; }
+ html[data-font="readable"] { --font-serif: 'Atkinson Hyperlegible', Verdana, sans-serif; --font-sans: 'Atkinson Hyperlegible', Verdana, sans-serif; }
+ html[data-spacing="wide"] { --lh: 1.95; --ls: .04em; --ws: .12em; }
+ html[data-spacing="wide"] p, html[data-spacing="wide"] li { margin-bottom: 1.4em; }
+@@ -271,3 +273,10 @@ code { font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: .95em;
+ .dl-groups > *, .section-head > *, .itz li > *, .years > *, .features li > *, .mini-list li > *, .easy-block > * { min-width: 0; }
+ .mini-list li { flex-wrap: wrap; }
+ [hidden] { display: none !important; }
++
++/* ---- Rendering performance ----
++   .cv: sections far below the first screen are only laid out and painted when they come near the viewport.
++   Content stays in the accessibility tree and in find-in-page. "auto" remembers the real height after the
++   first render, so the scrollbar does not jump. */
++.cv { content-visibility: auto; contain-intrinsic-size: auto 760px; }
++@media print { .cv { content-visibility: visible; } }
+diff --git a/src/views/AccessibilityView.astro b/src/views/AccessibilityView.astro
+index 04e4a5a..484d92d 100644
+--- a/src/views/AccessibilityView.astro
++++ b/src/views/AccessibilityView.astro
+@@ -46,7 +46,7 @@ const features = de
+ <Base lang={lang} title={title} description={lead} altHref={r('accessibility', de ? 'en' : 'de')}>
+   <PageHead lang={lang} title={title} lead={lead}>
+     <div class="btn-row" style="margin-top:1.25rem">
+-      <button type="button" class="btn btn--gold" data-a11y-toggle aria-expanded="false" aria-controls="a11y-panel"><Icon name="access" /> {de ? 'Darstellung jetzt anpassen' : fr ? 'Adapter l’affichage maintenant' : 'Adjust the display now'}</button>
++      <button type="button" class="btn btn--gold" data-a11y-toggle aria-haspopup="dialog" aria-controls="a11y-panel"><Icon name="access" /> {de ? 'Darstellung jetzt anpassen' : fr ? 'Adapter l’affichage maintenant' : 'Adjust the display now'}</button>
+       <a class="btn btn--outline" href={r('easy', lang)}><Icon name="easy" /> {de ? 'Einfache Sprache' : fr ? 'Facile à lire' : 'Easy read'}</a>
+     </div>
+   </PageHead>
+diff --git a/src/views/HomeView.astro b/src/views/HomeView.astro
+index 4c13b0d..b216a54 100644
+--- a/src/views/HomeView.astro
++++ b/src/views/HomeView.astro
+@@ -11,6 +11,8 @@ import { href, r, projectPath, ui, type Lang } from '../i18n';
+ import { getEvents, getNews, getProjects } from '../lib/content';
+ import { impact } from '../data/impact';
+ import { org } from '../data/site';
++import { heroSlides } from '../data/heroSlides';
++import { eventNode } from '../lib/schema';
+ 
+ interface Props { lang: Lang }
+ const { lang } = Astro.props;
+@@ -28,8 +30,13 @@ const quick = [
+   { icon: 'heart', label: t.donate, text: de ? 'Mit Zuwendungsbestätigung' : fr ? 'Avec reçu fiscal' : 'With donation receipt', href: r('donate', lang) },
+   { icon: 'hand', label: de ? 'Mitmachen' : fr ? 'S’engager' : 'Get involved', text: de ? 'Mitglied, Ehrenamt, Kooperation' : fr ? 'Adhésion, bénévolat, partenariats' : 'Membership, volunteering, partnerships', href: r('join', lang) },
+ ] as const;
++// Structured data for upcoming events (they drop out automatically after the event; nightly rebuild).
++const schema = upcoming.map((e) => eventNode(e, lang, Astro.site)).filter((x): x is Record<string, unknown> => !!x);
++// First hero photo: preload with the same srcset/sizes as the <img>, so the browser fetches exactly one file.
++const heroFile = (small = false) => href(`/images/hero/${heroSlides[0].file}${small ? '-800' : ''}.webp`);
+ ---
+-<Base lang={lang} title={org.shortName} altHref={r('home', de ? 'en' : 'de')}>
++<Base lang={lang} title={org.shortName} altHref={r('home', de ? 'en' : 'de')} schema={schema}>
++  <link slot="head" rel="preload" as="image" type="image/webp" href={heroFile()} imagesrcset={`${heroFile(true)} 800w, ${heroFile()} 1600w`} imagesizes="100vw" fetchpriority="high" />
+   <section class="hero hero--photo" aria-labelledby="hero-title">
+     <div class="wrap hero__grid">
+       <div class="hero__text">
+@@ -80,7 +87,7 @@ const quick = [
+     </section>
+   )}
+ 
+-  <section class="section" aria-labelledby="h-regions">
++  <section class="section cv" aria-labelledby="h-regions">
+     <div class="wrap">
+       <div class="section-head">
+         <div>
+@@ -108,7 +115,7 @@ const quick = [
+     </div>
+   </section>
+ 
+-  <section class="section section--alt" aria-labelledby="h-prog">
++  <section class="section section--alt cv" aria-labelledby="h-prog">
+     <div class="wrap">
+       <div class="section-head">
+         <div>
+@@ -134,7 +141,7 @@ const quick = [
+     </div>
+   </section>
+ 
+-  <section class="section section--deep" aria-labelledby="h-impact">
++  <section class="section section--deep cv" aria-labelledby="h-impact">
+     <div class="wrap">
+       <div class="section-head">
+         <div>
+@@ -157,7 +164,7 @@ const quick = [
+     </div>
+   </section>
+ 
+-  <section class="section" aria-labelledby="h-proj">
++  <section class="section cv" aria-labelledby="h-proj">
+     <div class="wrap">
+       <div class="section-head">
+         <div>
+@@ -172,7 +179,7 @@ const quick = [
+     </div>
+   </section>
+ 
+-  <section class="section section--alt" aria-labelledby="h-story">
++  <section class="section section--alt cv" aria-labelledby="h-story">
+     <div class="wrap story">
+       <div class="story__media">
+         <Placeholder lang={lang} label={de ? 'Absolventinnen mit Zertifikaten, Ausbildung im Salon (mit Einverständnis)' : fr ? 'Diplômées avec leurs certificats, formation au salon (avec consentement)' : 'Graduates with certificates, training in the salon (with consent)'} ratio="4 / 3" tone="gold" icon="star" />
+@@ -189,7 +196,7 @@ const quick = [
+     </div>
+   </section>
+ 
+-  <section class="section" aria-labelledby="h-support">
++  <section class="section cv" aria-labelledby="h-support">
+     <div class="wrap">
+       <div class="section-head">
+         <div>
+@@ -222,7 +229,7 @@ const quick = [
+     </div>
+   </section>
+ 
+-  <section class="section section--tight" aria-labelledby="h-access">
++  <section class="section section--tight cv" aria-labelledby="h-access">
+     <div class="wrap access-band">
+       <span class="icon-badge icon-badge--lg"><Icon name="access" /></span>
+       <div>
+@@ -231,14 +238,14 @@ const quick = [
+           ? 'Schrift vergrößern, hoher Kontrast, dunkle Ansicht, gut lesbare Schrift oder Seite vorlesen lassen: Über „Barrierefreiheit“ oben auf jeder Seite passen Sie die Darstellung an. Wichtige Informationen gibt es auch in Einfacher Sprache.'
+           : fr ? 'Texte plus grand, contraste élevé, mode sombre, police facile à lire ou lecture à voix haute : utilisez « Accessibilité » en haut de chaque page pour adapter l’affichage. Les informations essentielles existent aussi en langage facile.' : 'Bigger text, high contrast, dark mode, an easy-to-read font or having the page read aloud: use “Accessibility” at the top of every page to adjust the display. Key information is also available in easy read.'}</p>
+         <div class="btn-row">
+-          <button type="button" class="btn btn--dark" data-a11y-toggle aria-expanded="false" aria-controls="a11y-panel"><Icon name="access" /> {de ? 'Darstellung anpassen' : fr ? 'Adapter l’affichage' : 'Adjust display'}</button>
++          <button type="button" class="btn btn--dark" data-a11y-toggle aria-haspopup="dialog" aria-controls="a11y-panel"><Icon name="access" /> {de ? 'Darstellung anpassen' : fr ? 'Adapter l’affichage' : 'Adjust display'}</button>
+           <a class="btn btn--outline" href={r('easy', lang)}><Icon name="easy" /> {t.easy}</a>
+         </div>
+       </div>
+     </div>
+   </section>
+ 
+-  <section class="section section--sand section--tight" aria-labelledby="h-partners">
++  <section class="section section--sand section--tight cv" aria-labelledby="h-partners">
+     <div class="wrap">
+       <div class="section-head">
+         <div>
+@@ -275,7 +282,8 @@ const quick = [
+   .btn--ghost { border-color: rgba(255,255,255,.75); color: #fff; background: transparent; }
+   .btn--ghost:hover { background: rgba(255,255,255,.1); color: #fff; }
+ 
+-  .quick { position: relative; margin-top: -2.5rem; z-index: 2; }
++  /* Layout/style containment only: paint containment would clip the cards' shadows and hover lift. */
++  .quick { position: relative; margin-top: -2.5rem; z-index: 2; contain: layout style; }
+   .quick__grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: .9rem; }
+   .quick__item { min-width: 0; display: flex; gap: .9rem; align-items: center; background: var(--surface); color: var(--ink); text-decoration: none; border: 1px solid var(--line); border-radius: 18px; padding: 1rem 1.1rem; box-shadow: var(--shadow); min-height: 84px; transition: transform .15s, border-color .15s; }
+   .quick__item:hover { transform: translateY(-2px); border-color: var(--line-strong); }
+diff --git a/src/views/NewsItemView.astro b/src/views/NewsItemView.astro
+index 11804e2..2ffd3d8 100644
+--- a/src/views/NewsItemView.astro
++++ b/src/views/NewsItemView.astro
+@@ -1,4 +1,5 @@
+ ---
++import { eventNode } from '../lib/schema';
+ import Base from '../layouts/Base.astro';
+ import PageHead from '../components/PageHead.astro';
+ import { render } from 'astro:content';
+@@ -14,8 +15,10 @@ const d = item.data;
+ const { Content } = await render(item);
+ const isEvent = d.type === 'event' && d.eventStart;
+ const sameDay = isEvent && (!d.eventEnd || formatDate(d.eventStart!, lang) === formatDate(d.eventEnd, lang));
++const ev = eventNode(item, lang, Astro.site);
++const eventSchema = ev ? [ev] : [];
+ ---
+-<Base lang={lang} title={d.title} description={d.summary} altHref={hasAlt ? newsPath(de ? 'en' : 'de', slugOf(item.id)) : undefined} image={d.image}>
++<Base lang={lang} title={d.title} description={d.summary} altHref={hasAlt ? newsPath(de ? 'en' : 'de', slugOf(item.id)) : undefined} image={d.image} schema={eventSchema}>
+   <PageHead lang={lang} title={d.title} lead={d.summary} eyebrow={t.type[d.type]}
+     crumbs={[{ label: isEvent ? (de ? 'Veranstaltungen' : fr ? 'Événements' : 'Events') : (de ? 'Aktuelles' : fr ? 'Actualités' : 'News'), href: isEvent ? r('events', lang) : r('news', lang) }]}>
+     {!isEvent && <p class="small muted"><time datetime={d.date.toISOString()}>{formatDate(d.date, lang, { day: 'numeric', month: 'long', year: 'numeric' })}</time></p>}
+diff --git a/src/views/NewsView.astro b/src/views/NewsView.astro
+index 8360dad..47c95a1 100644
+--- a/src/views/NewsView.astro
++++ b/src/views/NewsView.astro
+@@ -4,6 +4,7 @@ import PageHead from '../components/PageHead.astro';
+ import NewsCard from '../components/NewsCard.astro';
+ import { r, ui, type Lang } from '../i18n';
+ import { getEvents, getNews } from '../lib/content';
++import { eventNode } from '../lib/schema';
+ import { org } from '../data/site';
+ 
+ interface Props { lang: Lang; mode: 'news' | 'events' }
+@@ -12,13 +13,14 @@ const de = lang === 'de';
+ const fr = lang === 'fr';
+ const t = ui[lang];
+ const { upcoming, past } = await getEvents(lang);
++const schema = mode === 'events' ? upcoming.map((e) => eventNode(e, lang, Astro.site)).filter((x): x is Record<string, unknown> => !!x) : [];
+ const news = (await getNews(lang)).filter((n) => n.data.type !== 'event');
+ const title = mode === 'news' ? (de ? 'Aktuelles' : fr ? 'Actualités' : 'News') : (de ? 'Veranstaltungen' : fr ? 'Événements' : 'Events');
+ const lead = mode === 'news'
+   ? (de ? 'Neuigkeiten, Ankündigungen und Termine von Bantu e.V.' : fr ? 'Actualités, annonces et événements de Bantu e.V.' : 'News, announcements and events from Bantu e.V.')
+   : (de ? 'Workshops, Begegnungen und Schulungen, meist kostenfrei und mit Kinderbetreuung.' : fr ? 'Ateliers, rencontres et formations, le plus souvent gratuits et avec garde d’enfants.' : 'Workshops, encounters and trainings, mostly free of charge and with childcare.');
+ ---
+-<Base lang={lang} title={title} description={lead} altHref={r(mode, de ? 'en' : 'de')}>
++<Base lang={lang} title={title} description={lead} altHref={r(mode, de ? 'en' : 'de')} schema={schema}>
+   <PageHead lang={lang} title={title} lead={lead}>
+     <div class="btn-row tabs">
+       <a class={`btn ${mode === 'news' ? 'btn--dark' : 'btn--outline'}`} href={r('news', lang)} aria-current={mode === 'news' ? 'page' : undefined}>{de ? 'Neuigkeiten' : fr ? 'Actualités' : 'News'}</a>
+diff --git a/src/views/ProgrammeView.astro b/src/views/ProgrammeView.astro
+index 2c180e5..a368b21 100644
+--- a/src/views/ProgrammeView.astro
++++ b/src/views/ProgrammeView.astro
+@@ -6,7 +6,7 @@ import PageHead from '../components/PageHead.astro';
+ import ProjectCard from '../components/ProjectCard.astro';
+ import Icon from '../components/Icon.astro';
+ import SdgIcons from '../components/SdgIcons.astro';
+-import { r, ui, projectPath, type Lang } from '../i18n';
++import { archiveId, archiveLabel, r, ui, projectPath, type Lang } from '../i18n';
+ import { getProjects, slugOf, type Project } from '../lib/content';
+ import { programmes, management, trusteeships, programmePath, regions, regionPath, regionProgrammePath, type ProgrammeKey } from '../data/programmes';
+ 
+@@ -177,37 +177,78 @@ const sponsorId = de ? 'traegerschaften' : 'fiscal-sponsorship';
+     </>
+   )}
+ 
+-  {mode === 'all' && (
+-    <>
+-      {programmes.map((p, i) => {
+-        const items = projectsOf(p.key);
+-        return items.length > 0 && (
+-          <section class={`section section--tight ${i % 2 ? 'section--alt' : ''}`} aria-labelledby={`h-${p.key}`}>
++  {mode === 'all' && (() => {
++    // Current projects first (grouped by programme), then the archive of completed projects (#archiv / #archive / #archives),
++    // which the mega menus link to.
++    const isDone = (x: Project) => x.data.status === 'completed';
++    const doneCount = all.filter(isDone).length;
++    const aid = archiveId[lang];
++    return (
++      <>
++        <div class="wrap jump-row">
++          <a class="link-arrow" href={`#${aid}`}>{archiveLabel[lang]} ({doneCount})</a>
++        </div>
++        {programmes.map((p, i) => {
++          const items = projectsOf(p.key).filter((x) => !isDone(x));
++          return items.length > 0 && (
++            <section class={`section section--tight ${i % 2 ? 'section--alt' : ''}`} aria-labelledby={`h-${p.key}`}>
++              <div class="wrap">
++                <div class="section-head">
++                  <div>
++                    <div class="eyebrow">{de ? 'Programm' : fr ? 'Programme' : 'Programme'} {p.no}</div>
++                    <h2 id={`h-${p.key}`}>{p.title[lang]}</h2>
++                  </div>
++                  <a class="link-arrow" href={programmePath(lang, p.key)}>{de ? 'Zum Programm' : fr ? 'Voir le programme' : 'View programme'}</a>
++                </div>
++                <div class="grid grid--3">{items.map((x) => <ProjectCard lang={lang} project={x} />)}</div>
++              </div>
++            </section>
++          );
++        })}
++        {unassigned.filter((x) => !isDone(x)).length > 0 && (
++          <section class="section section--tight">
++            <div class="wrap">
++              <h2>{de ? 'Weitere Projekte' : fr ? 'Autres projets' : 'More projects'}</h2>
++              <div class="grid grid--3">{unassigned.filter((x) => !isDone(x)).map((x) => <ProjectCard lang={lang} project={x} />)}</div>
++            </div>
++          </section>
++        )}
++        {doneCount > 0 && (
++          <section class="section section--sand archive" id={aid} aria-labelledby="h-archive">
+             <div class="wrap">
+               <div class="section-head">
+                 <div>
+-                  <div class="eyebrow">{de ? 'Programm' : fr ? 'Programme' : 'Programme'} {p.no}</div>
+-                  <h2 id={`h-${p.key}`}>{p.title[lang]}</h2>
++                  <div class="eyebrow">{de ? 'Archiv' : fr ? 'Archives' : 'Archive'}</div>
++                  <h2 id="h-archive">{de ? 'Abgeschlossene Projekte' : fr ? 'Projets terminés' : 'Completed projects'}</h2>
++                  <p>{de ? 'Diese Projekte sind beendet. Berichte und Ergebnisse finden Sie auf den Projektseiten.' : fr ? 'Ces projets sont terminés. Vous trouverez les rapports et les résultats sur les pages des projets.' : 'These projects have ended. You will find reports and results on the project pages.'}</p>
+                 </div>
+-                <a class="link-arrow" href={programmePath(lang, p.key)}>{de ? 'Zum Programm' : fr ? 'Voir le programme' : 'View programme'}</a>
+               </div>
+-              <div class="grid grid--3">{items.map((x) => <ProjectCard lang={lang} project={x} />)}</div>
++              {programmes.map((p) => {
++                const items = projectsOf(p.key).filter(isDone);
++                return items.length > 0 && (
++                  <div class="archive__group">
++                    <h3>{de ? 'Programm' : fr ? 'Programme' : 'Programme'} {p.no}: {p.title[lang]}</h3>
++                    <div class="grid grid--3">{items.map((x) => <ProjectCard lang={lang} project={x} headingLevel={4} />)}</div>
++                  </div>
++                );
++              })}
++              {unassigned.filter(isDone).length > 0 && (
++                <div class="archive__group">
++                  <h3>{de ? 'Weitere Projekte' : fr ? 'Autres projets' : 'More projects'}</h3>
++                  <div class="grid grid--3">{unassigned.filter(isDone).map((x) => <ProjectCard lang={lang} project={x} headingLevel={4} />)}</div>
++                </div>
++              )}
+             </div>
+           </section>
+-        );
+-      })}
+-      {unassigned.length > 0 && (
+-        <section class="section section--tight">
+-          <div class="wrap">
+-            <h2>{de ? 'Weitere Projekte' : fr ? 'Autres projets' : 'More projects'}</h2>
+-            <div class="grid grid--3">{unassigned.map((x) => <ProjectCard lang={lang} project={x} />)}</div>
+-          </div>
+-        </section>
+-      )}
+-    </>
+-  )}
++        )}
++      </>
++    );
++  })()}
+ </Base>
+ <style>
++  .jump-row { display: flex; justify-content: flex-end; padding-top: 1rem; }
++  .archive__group + .archive__group { margin-top: 2.25rem; }
++  .archive__group h3 { margin: 0 0 1rem; }
+   .prog-grid { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.25rem; }
+   @media (max-width: 1000px) { .prog-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+   @media (max-width: 640px) { .prog-grid { grid-template-columns: 1fr; } }
+-- 
+2.43.0
+
