@@ -5,6 +5,10 @@ Operating manual for Claude Code. Read this first, then `docs/01_Relaunch-Plan.m
 ## What this is
 Static, bilingual (DE default, EN under `/en/`) website of **Bantu-Vereinigung für globale Bildung, Gerechtigkeit und Zusammenarbeit e.V.**, Berlin. Replaces the old WordPress/Elementor site (last edited 2023). Built with **Astro 7** (pinned in package.json), deployed by **GitHub Actions → GitHub Pages**. No server, no database, no cookies, no tracking, no external fonts/CDNs.
 
+## Repository
+- GitHub: https://github.com/Nianetworks/bantu-e.v (branch `main`) · Preview: https://nianetworks.github.io/bantu-e.v/
+- Can later be transferred to a Bantu e.V. GitHub organisation (Settings → Transfer) – keeps history; update the CNAME target afterwards.
+
 ## Commands
 ```bash
 npm ci                 # install (Node >= 22.23)
@@ -13,7 +17,7 @@ npm run build          # astro build + postbuild clean-up (dist/)
 npm run check:open     # list all "OPEN:" items (content still to confirm)
 npm run migrate:wp     # one-off export of the old WordPress pages + media into migration/
 ```
-Preview build under a sub-path: `BASE_PATH=/bantu-ev-website npm run build`.
+Preview build under a sub-path: `BASE_PATH=/bantu-e.v npm run build`.
 
 ## Structure
 ```
