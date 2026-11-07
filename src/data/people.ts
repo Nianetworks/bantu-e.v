@@ -83,6 +83,7 @@ export const partnersSouth: Org[] = [
   {
     name: 'Royal College Namugongo',
     place: 'Namugongo, Uganda',
+    url: 'https://royalschools.ac.ug',
     text: {
       de: 'Schule, an der wir mit ABI Schulgeld für Kinder aus armen Familien übernommen und Rampen für einen stufenlosen Zugang gebaut haben.',
       en: 'School where, together with ABI, we covered school fees for children from poor families and built ramps for step-free access.', fr: 'École où, avec ABI, nous avons pris en charge les frais de scolarité d’enfants de familles pauvres et construit des rampes pour un accès sans marches.',

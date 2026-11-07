@@ -17,7 +17,7 @@ photoBrief: "Ramp at the entrance of a Royal College Namugongo building (childre
 order: 14
 ---
 
-**Royal College Namugongo** is a school in Namugongo near Kampala. Many families in the area cannot afford school fees. And for children using a wheelchair or walking aids, classrooms reached by steps were hard to access.
+[**Royal College Namugongo**](https://royalschools.ac.ug) is a school in Namugongo near Kampala. Many families in the area cannot afford school fees. And for children using a wheelchair or walking aids, classrooms reached by steps were hard to access.
 
 ## What we did
 

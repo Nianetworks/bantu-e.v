@@ -21,7 +21,7 @@ sources:
   - "wrg-online.de/englisch (Uganda-Kooperation)"
 ---
 
-Das **Royal College Namugongo** ist eine Schule in Namugongo bei Kampala. Viele Familien in der Umgebung können das Schulgeld nicht aufbringen, und für Kinder, die einen Rollstuhl oder Gehhilfen nutzen, waren Klassenräume über Stufen kaum erreichbar.
+Das [**Royal College Namugongo**](https://royalschools.ac.ug) ist eine Schule in Namugongo bei Kampala. Viele Familien in der Umgebung können das Schulgeld nicht aufbringen, und für Kinder, die einen Rollstuhl oder Gehhilfen nutzen, waren Klassenräume über Stufen kaum erreichbar.
 
 ## Was wir gemacht haben
 
