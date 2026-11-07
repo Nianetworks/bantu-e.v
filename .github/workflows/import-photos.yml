@@ -1,0 +1,43 @@
+# One-off helper: unpacks an uploaded archive in import/ (photos, brand guidelines)
+# into the repository and pulls the Ruhaama photo from the old WordPress site.
+# Safe to delete after use.
+name: Import photos (one-off)
+
+on:
+  push:
+    branches: [main]
+    paths: ['import/**']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Unpack uploaded archives
+        run: |
+          shopt -s nullglob
+          for z in import/*.zip; do
+            unzip -o -q "$z" -x '.github/*' '__MACOSX/*'
+            git rm -q "$z"
+          done
+      - name: Fetch Ruhaama photo from the old website
+        run: |
+          sudo apt-get -qq update >/dev/null && sudo apt-get -qq install -y webp >/dev/null
+          mkdir -p public/images/projects
+          if curl -fsSL -o /tmp/ruhaama.jpg "https://www.bantu-ev.org/wp-content/uploads/2023/10/IMG_7232-scaled.jpeg"; then
+            cwebp -quiet -q 74 -resize 1280 0 /tmp/ruhaama.jpg -o public/images/projects/ruhaama-community-resource-centre.webp
+          else
+            echo "Old site not reachable - skipped"
+          fi
+      - name: Commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898283+github-actions[bot]@users.noreply.github.com"
+          git add -A public import
+          git diff --cached --quiet && exit 0
+          git commit -m "Import photos (Okushoma kwa Boona 2024, Ruhaama) and brand guidelines"
+          git push
