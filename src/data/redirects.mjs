@@ -19,6 +19,8 @@ export const wordpressRedirects = {
   '/contact-us': '/en/contact/',
   '/donate': '/en/donate/',
   '/programs': '/en/programmes/',
+  '/contact': '/en/contact/',
+  '/imprint-and-data-privacy': '/en/imprint/',
   // German pages (old /de/ prefix)
   '/de': '/',
   '/de/home-de': '/',

@@ -36,6 +36,13 @@ export const org = {
     iban: 'DE47 4306 0967 1035 6810 00',
     bic: 'GENODEM1GLS',
   },
+  // Online donation form (twingle), taken over from the old WordPress donate page (checked 07.11.2026).
+  // The page link opens twingle's hosted form; the widget is only loaded after a click (two-click privacy).
+  donation: {
+    provider: 'twingle',
+    pageUrl: 'https://spenden.twingle.de/genericorganisation/genericproject/tw612f63939f052/page',
+    widgetUrl: 'https://spenden.twingle.de/embed/genericorganisation/genericproject/tw612f63939f052/widget',
+  },
   // OPEN: the old site linked paypal.me/bantucomputerprojekt – confirm the account belongs to Bantu e.V. before setting it here.
   paypalUrl: '' as string,
   socials: [

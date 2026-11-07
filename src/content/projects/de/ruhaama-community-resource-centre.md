@@ -17,6 +17,8 @@ stats:
   - { value: "225", label: "Teilnehmende an IT-Kursen" }
   - { value: "175", label: "Zertifikate" }
   - { value: "350", label: "Schüler*innen durch Nachhilfe erreicht" }
+image: "/images/projects/ruhaama-community-resource-centre.webp"
+imageAlt: "Schild des Ruhaama Community Resource Centre in Uganda mit den Logos der Projektpartner"
 photoBrief: "Computerraum im Resource Centre, Kurs mit Teilnehmenden verschiedener Altersgruppen"
 successStory: true
 order: 6

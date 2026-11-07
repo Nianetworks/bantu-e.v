@@ -1,48 +1,43 @@
-# Go-live: GitHub Pages und DNS für bantu-ev.org
+# Go-live und Betrieb: www.bantu-ev.org auf dem eigenen Server
 
-Ziel: `https://www.bantu-ev.org` zeigt die neue Website, `bantu-ev.org` leitet dorthin weiter – **E-Mail (info@bantu-ev.org, boazmurinzi@bantu-ev.org) läuft unverändert weiter.**
+Stand: 07.11.2026. Die neue Website ersetzt seit dem 07.11.2026 die alte WordPress-Seite auf dem bisherigen Hosting. **DNS und E-Mail wurden nicht verändert.**
 
-## A. GitHub (einmalig)
-1. Repository → **Settings → Pages → Build and deployment → Source: GitHub Actions** (erledigt am 07.11.2026).
-2. Repository → **Actions**: Workflow „Build and deploy to GitHub Pages“ läuft nach jedem Push. Vorschau-Adresse: **https://nianetworks.github.io/bantu-e.v/** (Repository: github.com/Nianetworks/bantu-e.v).
-3. Vorschau prüfen (DE/EN, Mobil, Downloads, Spenden-Seite).
-4. Empfohlen: Domain im GitHub-Konto verifizieren – **Profilbild → Settings → Pages → Add a domain** → `bantu-ev.org`; GitHub nennt einen TXT-Eintrag `_github-pages-challenge-<name>.bantu-ev.org`, den Sie beim DNS-Anbieter anlegen.
+## So funktioniert die Veröffentlichung
+1. Änderungen werden im Repository **github.com/Nianetworks/bantu-e.v** (Branch `main`) gemacht – im GitHub-Browser-Editor oder mit Claude Code.
+2. Der Workflow `.github/workflows/deploy.yml` baut bei jedem Push (und jede Nacht um 03:17 UTC):
+   - die **Vorschau** auf GitHub Pages: https://nianetworks.github.io/bantu-e.v/
+   - die **Live-Fassung** für https://www.bantu-ev.org (inkl. `.htaccess`) und legt sie im Branch `live` ab.
+3. Der Server holt den Branch `live` **alle 10 Minuten** ab und spielt ihn in `public_html` ein.
+   - Skript: `~/bin/bantu-site-deploy.sh` (cPanel-Konto `bantuev`), Protokoll: `~/logs/bantu-site-deploy.log`
+   - Cronjob des Kontos (sichtbar in cPanel → Cron Jobs): `*/10 * * * * /bin/bash $HOME/bin/bantu-site-deploy.sh >/dev/null 2>&1`
+   - Sofort veröffentlichen: im cPanel-Terminal `bash ~/bin/bantu-site-deploy.sh --force`
 
-## B. Vor der Umstellung: E-Mail absichern (wichtig!)
-1. Beim DNS-Anbieter die **aktuellen Einträge notieren/Screenshot** (A, AAAA, CNAME, MX, TXT).
-2. **MX-Einträge prüfen:** Zeigt ein MX auf `bantu-ev.org` selbst oder auf einen Namen, der per CNAME auf `bantu-ev.org` verweist, dann **zuerst** einen eigenen A-Eintrag `mail.bantu-ev.org` mit der **bisherigen** Server-IP anlegen und den MX darauf umstellen. Sonst würde die Änderung des A-Eintrags unten die E-Mail kappen.
-3. MX-, SPF- (TXT `v=spf1 …`), DKIM- und Autodiscover-Einträge **nicht verändern**.
-4. Optional: TTL der zu ändernden Einträge 24 h vorher auf 300 s senken.
+Eine Änderung ist also nach etwa **5–15 Minuten** live (Build ca. 1 Minute + nächster Cron-Lauf).
 
-## C. DNS-Einträge für GitHub Pages
-| Name | Typ | Wert |
-|---|---|---|
-| `www` | CNAME | `nianetworks.github.io` |
-| `@` (bantu-ev.org) | A | `185.199.108.153` |
-| `@` | A | `185.199.109.153` |
-| `@` | A | `185.199.110.153` |
-| `@` | A | `185.199.111.153` |
-| `@` | AAAA | `2606:50c0:8000::153` |
-| `@` | AAAA | `2606:50c0:8001::153` |
-| `@` | AAAA | `2606:50c0:8002::153` |
-| `@` | AAAA | `2606:50c0:8003::153` |
+## Server und Domain
+| Was | Wert |
+|---|---|
+| Server | wolke.rukeira.com (WHM/cPanel, Apache), IP 94.130.164.170 |
+| cPanel-Konto | `bantuev`, Webroot `/home/bantuev/public_html` |
+| Nameserver | ns1/ns2.rukeira.com (DNS-Zone liegt auf demselben Server) |
+| Kanonische Adresse | `https://www.bantu-ev.org` – `bantu-ev.org` und `http://` leiten per 301 dorthin (`.htaccess`) |
+| SSL | cPanel AutoSSL (`.well-known/` bleibt erreichbar) |
+| E-Mail | unverändert über denselben Server (MX → bantu-ev.org) – **den A-Eintrag von bantu-ev.org nicht ändern**, sonst fällt die E-Mail aus |
+| Andere Subdomains | `fin.bantu-ev.org`, `wolke.bantu-ev.org` liegen in eigenen Ordnern und sind nicht betroffen |
 
-Bestehende A/AAAA-Einträge für `@` und `www`, die auf den alten Webserver zeigen, entfernen (nicht die Mail-Einträge).
+## Alte WordPress-Seite (Sicherung)
+- Dateien: `/home/bantuev/wordpress_backup_2026-11-07/public_html/` (verschoben, nicht gelöscht)
+- Datenbank: `bantuev_web` bleibt unverändert bestehen; zusätzlich Dump `/home/bantuev/wordpress_backup_2026-11-07/bantuev_web_2026-11-07.sql.gz`
+- **Notfall-Rückweg (ca. 2 Minuten):** Cronjob deaktivieren, Inhalt von `public_html` in einen Ordner verschieben und den Inhalt von `wordpress_backup_2026-11-07/public_html/` zurück nach `public_html` verschieben.
+- Die Sicherung frühestens nach einigen Monaten löschen (Absprache Vorstand).
 
-## D. GitHub auf die Domain umstellen
-1. Repository → **Settings → Pages → Custom domain:** `www.bantu-ev.org` → Save. Warten, bis der DNS-Check grün ist, dann **Enforce HTTPS** aktivieren.
-2. Repository → **Settings → Secrets and variables → Actions → Variables → New repository variable:** `CUSTOM_DOMAIN` = `www.bantu-ev.org`.
-3. **Actions → Build and deploy → Run workflow** (baut die Seite ohne Unterpfad neu).
+## Alte Adressen
+Alte WordPress-Links (`/about-bantu/`, `/donate/`, `/de/spenden/` …) leiten per **301** auf die neuen Seiten weiter. Liste: `src/data/redirects.mjs` (daraus wird die `.htaccess` erzeugt). `/wp-admin`, `/wp-login.php`, `/xmlrpc.php` antworten mit 410.
 
-## E. Nach dem Go-live testen
-- `https://www.bantu-ev.org/`, `https://bantu-ev.org/` (Weiterleitung), `/en/`, `/projekte/p26-224-erde-saat-erbe/`
-- Alte Links: `/about-bantu/`, `/donate/`, `/de/kontakt/` leiten weiter
-- E-Mail senden und empfangen an info@bantu-ev.org
-- `https://www.bantu-ev.org/sitemap-index.xml` in der Google Search Console einreichen (optional)
+## Prüfen nach Änderungen
+- `https://www.bantu-ev.org/`, `/en/`, `/spenden/`, `/projekte/p26-224-erde-saat-erbe/`
+- `https://bantu-ev.org/` und `http://www.bantu-ev.org/` → Weiterleitung auf `https://www.bantu-ev.org/`
+- E-Mail an info@bantu-ev.org senden und empfangen (nach Änderungen am Server)
 
-## F. Altes WordPress
-- **Vorher** `npm run migrate:wp` ausführen (sichert Seiten und alle Bilder).
-- Hosting erst kündigen, wenn Export, E-Mail-Betrieb und neue Seite geprüft sind. Klären, ob die E-Mail-Postfächer beim selben Hosting-Paket liegen – dann Hosting **nicht** kündigen oder die Postfächer vorher umziehen.
-
-## Notfall-Rückweg
-DNS-Einträge aus Schritt B.1 wiederherstellen; die alte WordPress-Seite ist dann nach Ablauf der TTL wieder erreichbar.
+## Später: Umzug auf GitHub Pages (optional)
+Nur sinnvoll, wenn das Hosting gekündigt werden soll. Dann vorher die E-Mail absichern: eigener A-Eintrag `mail.bantu-ev.org` mit der Server-IP, MX darauf umstellen, erst danach A/AAAA für `@` auf GitHub Pages (185.199.108–111.153) und CNAME `www` → `nianetworks.github.io`; Repository-Variable `CUSTOM_DOMAIN=www.bantu-ev.org` setzen.

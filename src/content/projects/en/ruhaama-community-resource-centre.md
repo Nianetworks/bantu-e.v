@@ -17,6 +17,8 @@ stats:
   - { value: "225", label: "IT course participants" }
   - { value: "175", label: "certificates" }
   - { value: "350", label: "pupils reached through tutoring" }
+image: "/images/projects/ruhaama-community-resource-centre.webp"
+imageAlt: "Sign of the Ruhaama Community Resource Centre in Uganda with the logos of the project partners"
 photoBrief: "Computer room at the resource centre, a class with participants of different ages"
 successStory: true
 order: 6

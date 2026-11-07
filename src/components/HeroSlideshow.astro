@@ -1,0 +1,160 @@
+---
+// Rotating background photos for the homepage hero.
+// Accessibility (WCAG 2.2.2 Pause, Stop, Hide): visible pause/play button, no autoplay when the visitor
+// prefers reduced motion or switched on "stop motion" in the accessibility panel, pauses in background tabs.
+// Photos are decorative for the layout (aria-hidden); each one is described in the visible caption.
+// High-contrast theme hides the photos completely.
+import Icon from './Icon.astro';
+import { href, projectPath, type Lang } from '../i18n';
+import { heroSlides } from '../data/heroSlides';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const de = lang === 'de';
+const n = heroSlides.length;
+const src = (f: string, small = false) => href(`/images/hero/${f}${small ? '-800' : ''}.webp`);
+const labels = {
+  region: de ? 'Fotos aus unseren Projekten' : 'Photos from our projects',
+  pauseShort: de ? 'Pause' : 'Pause',
+  playShort: de ? 'Abspielen' : 'Play',
+  show: de ? 'Foto {i} von {n} zeigen' : 'Show photo {i} of {n}',
+  project: de ? 'Zum Projekt' : 'View project',
+  suffix: de ? ' (Diashow)' : ' slideshow',
+};
+---
+<div class="hs__bg" aria-hidden="true">
+  {heroSlides.map((s, i) => (
+    i === 0
+      ? <img class="hs__img is-active" src={src(s.file)} srcset={`${src(s.file, true)} 800w, ${src(s.file)} 1600w`} sizes="100vw" alt="" width="1600" height="1066" decoding="async" fetchpriority="high" />
+      : <img class="hs__img" data-src={src(s.file)} data-srcset={`${src(s.file, true)} 800w, ${src(s.file)} 1600w`} sizes="100vw" alt="" width="1600" height="1066" decoding="async" />
+  ))}
+  <div class="hs__shade"></div>
+</div>
+
+<div class="hs__panel" role="group" aria-label={labels.region} data-hs data-short-pause={labels.pauseShort} data-short-play={labels.playShort}>
+  <p class="hs__caption" id="hs-caption">
+    <span class="hs__count"><span data-hs-index>1</span>/{n}</span>
+    <span data-hs-text>{heroSlides[0].caption[lang]}</span>
+    {heroSlides[0].project && <a class="hs__link" data-hs-link href={projectPath(lang, heroSlides[0].project)}>{labels.project}</a>}
+  </p>
+  <div class="hs__controls">
+    <button class="hs__toggle" type="button" data-hs-toggle>
+      <span class="hs__ic hs__ic--pause"><Icon name="pause" /></span>
+      <span class="hs__ic hs__ic--play"><Icon name="play" /></span>
+      <span class="hs__toggle-text">{labels.pauseShort}</span><span class="sr-only">{labels.suffix}</span>
+    </button>
+    <ul class="hs__dots">
+      {heroSlides.map((s, i) => (
+        <li>
+          <button type="button" class="hs__dot" data-hs-dot={i} aria-label={labels.show.replace('{i}', String(i + 1)).replace('{n}', String(n))} aria-current={i === 0 ? 'true' : undefined} data-caption={s.caption[lang]} data-href={s.project ? projectPath(lang, s.project) : ''}>
+            <span aria-hidden="true"></span>
+          </button>
+        </li>
+      ))}
+    </ul>
+  </div>
+</div>
+
+<script>
+  const INTERVAL = 7000;
+  const panel = document.querySelector<HTMLElement>('[data-hs]');
+  const imgs = Array.from(document.querySelectorAll<HTMLImageElement>('.hs__img'));
+  if (panel && imgs.length > 1) {
+    const root = document.documentElement;
+    const toggle = panel.querySelector<HTMLButtonElement>('[data-hs-toggle]')!;
+    const toggleText = panel.querySelector<HTMLElement>('.hs__toggle-text')!;
+    const dots = Array.from(panel.querySelectorAll<HTMLButtonElement>('[data-hs-dot]'));
+    const caption = panel.querySelector<HTMLElement>('#hs-caption')!;
+    const text = panel.querySelector<HTMLElement>('[data-hs-text]')!;
+    const index = panel.querySelector<HTMLElement>('[data-hs-index]')!;
+    const link = panel.querySelector<HTMLAnchorElement>('[data-hs-link]');
+    const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const motionOff = () => mq.matches || root.dataset.motion === 'reduce';
+    let current = 0;
+    let timer: number | undefined;
+    let playing = false;
+    let userPaused = false;
+
+    const load = (img: HTMLImageElement) => {
+      if (img.dataset.src) {
+        img.srcset = img.dataset.srcset || '';
+        img.src = img.dataset.src;
+        delete img.dataset.src;
+      }
+    };
+    const show = (i: number) => {
+      current = (i + imgs.length) % imgs.length;
+      load(imgs[current]);
+      load(imgs[(current + 1) % imgs.length]);
+      imgs.forEach((img, k) => img.classList.toggle('is-active', k === current));
+      dots.forEach((d, k) => (k === current ? d.setAttribute('aria-current', 'true') : d.removeAttribute('aria-current')));
+      const dot = dots[current];
+      text.textContent = dot.dataset.caption || '';
+      index.textContent = String(current + 1);
+      if (link) { link.hidden = !dot.dataset.href; if (dot.dataset.href) link.href = dot.dataset.href; }
+    };
+    const setPlaying = (on: boolean) => {
+      playing = on;
+      window.clearInterval(timer);
+      if (on) timer = window.setInterval(() => show(current + 1), INTERVAL);
+      panel.classList.toggle('is-paused', !on);
+      toggleText.textContent = on ? panel.dataset.shortPause! : panel.dataset.shortPlay!;
+      // Announce caption changes only when the visitor navigates manually.
+      caption.setAttribute('aria-live', on ? 'off' : 'polite');
+    };
+
+    toggle.addEventListener('click', () => { userPaused = playing; setPlaying(!playing); });
+    dots.forEach((d, k) => d.addEventListener('click', () => { userPaused = true; setPlaying(false); show(k); }));
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) { window.clearInterval(timer); }
+      else if (playing) setPlaying(true);
+    });
+    // React to the accessibility panel ("stop motion") and to OS settings.
+    new MutationObserver(() => { if (motionOff()) setPlaying(false); else if (!userPaused && !playing) setPlaying(true); })
+      .observe(root, { attributes: true, attributeFilter: ['data-motion'] });
+    mq.addEventListener?.('change', () => { if (motionOff()) setPlaying(false); });
+
+    // Preload the second photo after the page has loaded, then start (unless motion is off).
+    window.addEventListener('load', () => load(imgs[1]), { once: true });
+    setPlaying(!motionOff());
+  } else if (panel) {
+    panel.querySelector('.hs__controls')?.remove();
+  }
+</script>
+
+<style>
+  .hs__bg { position: absolute; inset: 0; z-index: 0; overflow: hidden; }
+  .hs__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 40%; opacity: 0; transition: opacity 1.4s ease; }
+  .hs__img.is-active { opacity: 1; }
+  .hs__shade {
+    position: absolute; inset: 0;
+    background:
+      linear-gradient(90deg, color-mix(in srgb, var(--deep) 92%, transparent) 0%, color-mix(in srgb, var(--deep) 82%, transparent) 55%, color-mix(in srgb, var(--deep) 55%, transparent) 100%),
+      linear-gradient(0deg, color-mix(in srgb, var(--deep) 60%, transparent) 0%, transparent 45%);
+  }
+  @media (max-width: 900px) {
+    .hs__shade { background: color-mix(in srgb, var(--deep) 84%, transparent); }
+  }
+
+  .hs__panel { position: relative; z-index: 1; display: grid; gap: .6rem; padding: .9rem 1rem; border-radius: 16px; background: color-mix(in srgb, var(--deep) 88%, transparent); border: 1px solid rgba(255,255,255,.22); color: var(--on-deep); max-width: 460px; justify-self: end; align-self: end; }
+  .hs__caption { margin: 0; font-size: .95rem; line-height: 1.45; color: var(--on-deep); }
+  .hs__count { display: inline-block; font-weight: 700; margin-right: .4rem; color: var(--on-deep-accent, #ffd34d); }
+  .hs__link { display: inline-block; margin-left: .35rem; color: var(--on-deep); font-weight: 600; text-underline-offset: .18em; }
+  .hs__controls { display: flex; align-items: center; gap: .5rem; flex-wrap: wrap; }
+  .hs__toggle { display: inline-flex; align-items: center; gap: .4rem; min-height: 44px; min-width: 44px; padding: 0 .9rem; border-radius: 999px; border: 2px solid currentColor; background: transparent; color: var(--on-deep); font: 600 .95rem var(--font-sans); cursor: pointer; }
+  .hs__toggle:hover { background: rgba(255,255,255,.12); }
+  .hs__toggle :global(svg) { width: 18px; height: 18px; }
+  .hs__ic--play { display: none; }
+  .is-paused .hs__ic--play { display: inline-flex; }
+  .is-paused .hs__ic--pause { display: none; }
+  .hs__dots { display: flex; gap: 0; list-style: none; margin: 0; padding: 0; }
+  .hs__dots li { margin: 0; }
+  .hs__dot { width: 44px; height: 44px; display: grid; place-items: center; background: none; border: 0; padding: 0; cursor: pointer; border-radius: 50%; }
+  .hs__dot span { width: 12px; height: 12px; border-radius: 50%; border: 2px solid var(--on-deep); background: transparent; }
+  .hs__dot[aria-current='true'] span { background: var(--on-deep); transform: scale(1.15); }
+  .hs__dot:hover span { background: rgba(255,255,255,.5); }
+
+  :global(html[data-theme='contrast']) .hs__bg { display: none; }
+  :global(html[data-theme='contrast']) .hs__panel { background: var(--deep); border-color: currentColor; }
+  @media (max-width: 900px) { .hs__panel { justify-self: stretch; max-width: none; } }
+</style>

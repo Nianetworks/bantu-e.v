@@ -17,6 +17,8 @@ stats:
   - { value: "12", label: "participants from Germany and Uganda" }
   - { value: "5", label: "project phases over 1.5 years" }
   - { value: "4", label: "German partner schools in a new network" }
+image: "/images/projects/okushoma-kwa-boona.webp"
+imageAlt: "Group photo of the exchange participants and partners in front of a building in Mbarara (Uganda), 2024"
 photoBrief: "Exchange group in Mbarara (Feb/Mar 2024), fishbowl discussion"
 successStory: true
 order: 4

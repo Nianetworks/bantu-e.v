@@ -17,6 +17,8 @@ stats:
   - { value: "12", label: "Teilnehmende aus Deutschland und Uganda" }
   - { value: "5", label: "Projektphasen in 1,5 Jahren" }
   - { value: "4", label: "deutsche Partnerschulen im neuen Netzwerk" }
+image: "/images/projects/okushoma-kwa-boona.webp"
+imageAlt: "Gruppenfoto der Teilnehmenden und Partner des Austauschs vor einem Gebäude in Mbarara (Uganda), 2024"
 photoBrief: "Austauschgruppe in Mbarara (Februar/März 2024), Fishbowl-Diskussion"
 successStory: true
 order: 4

@@ -86,9 +86,9 @@ Nicht aufgenommen (bewusst): MITTEinander aktiv 2026 (MI2026-6ABA – Inhalt noc
 |---|---|---|---|
 | 0 | Review, Inhalte aus Archiv, Struktur | 07.11.2026 | erledigt |
 | 1 | Website gebaut, Redesign mit Barrierefreiheit (99 Seiten), Repository angelegt | 07.11.2026 | erledigt |
-| 2 | Vorschau auf GitHub Pages prüfen; OPEN-Punkte klären (`npm run check:open`) | bis 11.11.2026 | offen |
-| 3 | **Go-live** mit DNS-Umstellung (docs/02) – spätestens für P 26/224 am 13.11.2026 | 12.–13.11.2026 | offen |
-| 4 | WordPress-Export (`npm run migrate:wp`), Fotos einpflegen, alte Hosting-Leistung erst danach kündigen | November 2026 | offen |
+| 2 | Vorschau auf GitHub Pages prüfen; OPEN-Punkte klären (`npm run check:open`) | bis 11.11.2026 | laufend |
+| 3 | **Go-live** auf dem bisherigen Hosting (ohne DNS-Umstellung, docs/02); Spendenformular (twingle) übernommen; Foto-Diashow auf der Startseite | 07.11.2026 | erledigt |
+| 4 | WordPress gesichert (Dateien + Datenbank auf dem Server), Fotos gesichtet und übernommen | 07.11.2026 | erledigt |
 | 5 | Fotos von Partnern (docs/04), Ubuntu-Talks-Rückblick, neue Vorstandsmitglieder | Nov./Dez. 2026 | offen |
 | 6 | Shop öffnen nach Rechts-/Steuercheck (docs/03) | Q1 2027 | offen |
 | 7 | Laufende Pflege: neue Projekte, Berichte 2026, EÜR 2025 | laufend | – |

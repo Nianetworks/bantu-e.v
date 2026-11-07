@@ -22,6 +22,29 @@ const purposes = [
 <Base lang={lang} title={title} description={lead} altHref={r('donate', de ? 'en' : 'de')}>
   <PageHead lang={lang} title={title} lead={lead} />
 
+  {org.donation?.pageUrl && (
+    <section class="section section--tight" aria-labelledby="h-online">
+      <div class="wrap">
+        <div class="panel online">
+          <div class="online__text">
+            <h2 id="h-online">{de ? 'Online spenden' : 'Donate online'}</h2>
+            <p>{de
+              ? 'Mit unserem Online-Spendenformular spenden Sie einmalig oder regelmäßig (monatlich oder jährlich) – per SEPA-Lastschrift oder Überweisung auf unser Konto bei der GLS Bank. Sie erhalten eine Zuwendungsbestätigung.'
+              : 'Use our online donation form to give once or regularly (monthly or yearly) – by SEPA direct debit or bank transfer to our account at GLS Bank. You will receive a donation receipt.'}</p>
+            <div class="btn-row">
+              <a class="btn btn--gold" href={org.donation.pageUrl} target="_blank" rel="noopener">{de ? 'Zum Spendenformular' : 'Open the donation form'}</a>
+              <button class="btn btn--outline" type="button" id="load-form" aria-controls="donation-form" aria-expanded="false" data-widget={org.donation.widgetUrl}>{de ? 'Formular hier anzeigen' : 'Show the form on this page'}</button>
+            </div>
+            <p class="small muted">{de
+              ? 'Das Formular wird von unserem Dienstleister twingle bereitgestellt. Erst wenn Sie einen der Knöpfe nutzen, werden Daten (z. B. Ihre IP-Adresse) an twingle übertragen.'
+              : 'The form is provided by our service provider twingle. Data (e.g. your IP address) is only transferred to twingle when you use one of the buttons.'} <a href={r('privacy', lang)}>{de ? 'Mehr zum Datenschutz' : 'More on privacy'}</a></p>
+          </div>
+          <div id="donation-form" class="online__form" hidden tabindex="-1" aria-label={de ? 'Online-Spendenformular' : 'Online donation form'}></div>
+        </div>
+      </div>
+    </section>
+  )}
+
   <section class="section section--tight">
     <div class="wrap donate">
       <div class="panel bank">
@@ -78,6 +101,25 @@ const purposes = [
     if (fromUrl && input.value === fromUrl) input.checked = true;
     input.addEventListener('change', () => { if (refEl && input.checked) refEl.textContent = input.value; });
   });
+  // Two-click: the twingle widget is only requested after the visitor asks for it.
+  const loadBtn = document.getElementById('load-form') as HTMLButtonElement | null;
+  const box = document.getElementById('donation-form');
+  loadBtn?.addEventListener('click', () => {
+    if (!box || box.dataset.loaded) { box?.focus(); return; }
+    const id = '_' + Math.random().toString(36).slice(2, 11);
+    const holder = document.createElement('div');
+    holder.id = 'twingle-public-embed-' + id;
+    box.appendChild(holder);
+    const s = document.createElement('script');
+    s.async = true;
+    s.src = loadBtn.dataset.widget + '/' + id;
+    document.body.appendChild(s);
+    box.dataset.loaded = '1';
+    box.hidden = false;
+    loadBtn.setAttribute('aria-expanded', 'true');
+    loadBtn.disabled = true;
+    box.focus();
+  });
   document.querySelectorAll<HTMLButtonElement>('button.copy').forEach((btn) => {
     btn.addEventListener('click', async () => {
       const el = document.getElementById(btn.dataset.copy!);
@@ -90,6 +132,12 @@ const purposes = [
   });
 </script>
 <style>
+  .online { border-top: 6px solid var(--green); display: grid; gap: 1.25rem; }
+  .online h2 { margin-top: 0; }
+  .online__text p { max-width: 68ch; }
+  .online__text .small { margin-top: 1rem; }
+  .online__form { min-height: 200px; border-radius: 12px; }
+  .online__form:focus { outline: 3px solid var(--focus); outline-offset: 4px; }
   .donate { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(1.5rem, 4vw, 3rem); align-items: start; }
   .bank { border-top: 6px solid var(--gold); }
   .bank__kv { margin-bottom: 1rem; }

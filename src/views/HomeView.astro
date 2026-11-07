@@ -4,6 +4,7 @@ import ProjectCard from '../components/ProjectCard.astro';
 import NewsCard from '../components/NewsCard.astro';
 import Placeholder from '../components/Placeholder.astro';
 import Icon from '../components/Icon.astro';
+import HeroSlideshow from '../components/HeroSlideshow.astro';
 import { r, projectPath, ui, type Lang } from '../i18n';
 import { getEvents, getNews, getProjects } from '../lib/content';
 import { impact } from '../data/impact';
@@ -20,7 +21,6 @@ const inland = projects.filter((p) => p.data.programme === 'inland');
 const { upcoming } = await getEvents(lang);
 const news = (await getNews(lang)).filter((n) => n.data.type !== 'event').slice(0, 3);
 const spotlight = [...upcoming.slice(0, 2), ...news].slice(0, 3);
-const ringColors = ['#ff343d', '#ff8409', '#3cb04b', '#0071bc', '#ff6c71', '#c180a1', '#749bca', '#b9e245'];
 const quick = [
   { icon: 'globe', label: de ? 'Projekte entdecken' : 'Explore projects', text: de ? `${projects.length} Projekte in Uganda, Burundi und Berlin` : `${projects.length} projects in Uganda, Burundi and Berlin`, href: r('projects', lang) },
   { icon: 'calendar', label: de ? 'Termine' : 'Events', text: upcoming[0] ? upcoming[0].data.title : (de ? 'Workshops und Begegnungen' : 'Workshops and encounters'), href: r('events', lang) },
@@ -29,7 +29,7 @@ const quick = [
 ] as const;
 ---
 <Base lang={lang} title={org.shortName} altHref={r('home', de ? 'en' : 'de')}>
-  <section class="hero" aria-labelledby="hero-title">
+  <section class="hero hero--photo" aria-labelledby="hero-title">
     <div class="wrap hero__grid">
       <div class="hero__text">
         <p class="hero__kicker">{de ? 'Gemeinnütziger Verein · Berlin · seit 2019' : 'Non-profit association · Berlin · since 2019'}</p>
@@ -44,17 +44,7 @@ const quick = [
           <a class="btn btn--ghost" href={r('donate', lang)}><Icon name="heart" /> {de ? 'Jetzt spenden' : 'Donate now'}</a>
         </div>
       </div>
-      <div class="hero__art deco" aria-hidden="true">
-        <svg viewBox="0 0 420 420" class="orbit">
-          <circle cx="210" cy="210" r="118" fill="none" stroke="#febf00" stroke-width="14" />
-          <circle cx="210" cy="210" r="92" fill="none" stroke="#febf00" stroke-width="6" opacity=".55" />
-          <circle cx="210" cy="210" r="60" fill="#febf00" opacity=".14" />
-          <g class="orbit__ring">
-            {ringColors.map((c, i) => { const a = (i / 8) * Math.PI * 2 - Math.PI / 2 - Math.PI / 8; return <circle cx={210 + 168 * Math.cos(a)} cy={210 + 168 * Math.sin(a)} r="24" fill="none" stroke={c} stroke-width="10" />; })}
-          </g>
-        </svg>
-        <p class="hero__art-caption">{de ? 'Acht Ringe, eine Welt: Gemeinschaften, die zusammenkommen.' : 'Eight rings, one world: communities coming together.'}</p>
-      </div>
+      <HeroSlideshow lang={lang} />
     </div>
   </section>
 
@@ -231,7 +221,9 @@ const quick = [
 </Base>
 
 <style>
-  .hero { background: radial-gradient(900px 480px at 85% 30%, rgba(254,191,0,.16), transparent 60%), var(--deep); color: var(--on-deep); padding-block: clamp(6.5rem, 11vw, 8.5rem) clamp(3rem, 6vw, 5rem); overflow: hidden; }
+  .hero { position: relative; isolation: isolate; background: radial-gradient(900px 480px at 85% 30%, rgba(254,191,0,.16), transparent 60%), var(--deep); color: var(--on-deep); padding-block: clamp(6.5rem, 11vw, 8.5rem) clamp(4.5rem, 7vw, 6rem); overflow: hidden; }
+  .hero__text { position: relative; z-index: 1; }
+  .hero--photo .hero__grid { min-height: clamp(340px, 46vh, 520px); }
   .hero__grid { display: grid; grid-template-columns: 1.2fr .8fr; gap: clamp(2rem, 5vw, 4rem); align-items: center; }
   .hero__kicker { font-weight: 700; letter-spacing: .14em; text-transform: uppercase; font-size: .85rem; color: #ffd34d; margin-bottom: 1rem; }
   .hero h1 { color: #fff; font-size: clamp(2.7rem, 6.4vw, 5rem); max-width: 13ch; margin-bottom: .4em; }
@@ -239,11 +231,6 @@ const quick = [
   .hero__lead { font-size: clamp(1.1rem, 1.6vw, 1.3rem); color: #e8e3d6; max-width: 58ch; margin-bottom: 1.8rem; }
   .btn--ghost { border-color: rgba(255,255,255,.75); color: #fff; background: transparent; }
   .btn--ghost:hover { background: rgba(255,255,255,.1); color: #fff; }
-  .hero__art { display: grid; justify-items: center; gap: .75rem; }
-  .orbit { width: min(100%, 420px); }
-  .orbit__ring { transform-origin: 210px 210px; animation: spin 120s linear infinite; }
-  @keyframes spin { to { transform: rotate(360deg); } }
-  .hero__art-caption { color: #c9c2b2; font-size: .95rem; text-align: center; max-width: 30ch; margin: 0; }
 
   .quick { position: relative; margin-top: -2.5rem; z-index: 2; }
   .quick__grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: .9rem; }
@@ -302,9 +289,6 @@ const quick = [
   @media (max-width: 1000px) { .quick__grid { grid-template-columns: 1fr 1fr; } }
   @media (max-width: 900px) {
     .hero__grid, .story { grid-template-columns: 1fr; }
-    .hero__art { order: -1; }
-    .orbit { width: 200px; }
-    .hero__art-caption { display: none; }
     .partners-strip { grid-template-columns: 1fr; }
   }
   @media (max-width: 560px) {
