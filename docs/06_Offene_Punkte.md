@@ -20,5 +20,8 @@ Aktuelle Liste jederzeit mit `npm run check:open`.
 13. MITTEinander aktiv 2026 (MI2026-6ABA) und Tag des offenen Denkmals Sandau – als Projekt/News aufnehmen?
 14. Gemeinnützige Zwecke: Website nutzt die Zwecke laut Freistellungsbescheid 2023; der Tätigkeitsbericht 2023–2025 nennt teils andere Zwecke – mit der Satzungsänderung abgleichen.
 
+## GitHub
+15. Repository liegt unter dem Konto „Nianetworks“. Für die Trennung Bantu/Nia später in eine GitHub-Organisation „bantu-ev“ übertragen (Settings → Transfer ownership); danach CNAME `www` auf `<org>.github.io` ändern.
+
 ## Shop
-15. Rechts-/Steuer-Checkliste (`docs/03`), Preise, Produktfotos, Zahlungsanbieter, AGB/Widerruf.
+16. Rechts-/Steuer-Checkliste (`docs/03`), Preise, Produktfotos, Zahlungsanbieter, AGB/Widerruf.
