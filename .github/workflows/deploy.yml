@@ -1,4 +1,4 @@
-name: Build and deploy to GitHub Pages
+name: Build and deploy (live server + GitHub Pages preview)
 
 on:
   push:
@@ -47,3 +47,35 @@ jobs:
     steps:
       - id: deployment
         uses: actions/deploy-pages@v4
+
+  live:
+    # Production build for https://www.bantu-ev.org (Bantu e.V. hosting, cPanel account "bantuev").
+    # The build (incl. .htaccess) is pushed to branch `live`; the server pulls that branch
+    # every 10 minutes via the cron job ~/bin/bantu-site-deploy.sh (see docs/02).
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Build for www.bantu-ev.org
+        env:
+          SITE_URL: https://www.bantu-ev.org
+          BASE_PATH: /
+          HTACCESS: '1'
+        run: npm run build
+      - name: Publish dist/ to branch live
+        env:
+          TOKEN: ${{ github.token }}
+        run: |
+          cd dist
+          git init -q -b live
+          git config user.name "github-actions[bot]"
+          git config user.email "41898283+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -q -m "Live build of ${GITHUB_SHA::7} ($(date -u +%Y-%m-%dT%H:%MZ))"
+          git push -q -f "https://x-access-token:${TOKEN}@github.com/${GITHUB_REPOSITORY}.git" live
