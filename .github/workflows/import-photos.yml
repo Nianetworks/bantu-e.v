@@ -25,6 +25,16 @@ jobs:
             unzip -o -q "$z" -x '.github/*' '__MACOSX/*'
             git rm -q "$z"
           done
+      - name: Download listed files (import/fetch.txt, one line per file: <target path> <url>)
+        run: |
+          if [ -f import/fetch.txt ]; then
+            while read -r target url; do
+              case "$target" in ''|'#'*) continue;; esac
+              mkdir -p "$(dirname "$target")"
+              curl -fsSL -A 'BantuEV-Website-Import/1.0 (+https://www.bantu-ev.org)' -o "$target" "$url" && echo "ok: $target" || echo "FAILED: $url"
+            done < import/fetch.txt
+            rm -f import/fetch.txt
+          fi
       - name: Fetch Ruhaama photo from the old website
         run: |
           sudo apt-get -qq update >/dev/null && sudo apt-get -qq install -y webp >/dev/null
