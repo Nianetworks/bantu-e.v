@@ -5,8 +5,8 @@ import NewsCard from '../components/NewsCard.astro';
 import Placeholder from '../components/Placeholder.astro';
 import Icon from '../components/Icon.astro';
 import HeroSlideshow from '../components/HeroSlideshow.astro';
-import { programmes, programmePath } from '../data/programmes';
-import { r, projectPath, ui, type Lang } from '../i18n';
+import { programmes, programmePath, regions, regionPath } from '../data/programmes';
+import { href, r, projectPath, ui, type Lang } from '../i18n';
 import { getEvents, getNews, getProjects } from '../lib/content';
 import { impact } from '../data/impact';
 import { org } from '../data/site';
@@ -77,6 +77,34 @@ const quick = [
       </div>
     </section>
   )}
+
+  <section class="section" aria-labelledby="h-regions">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">{de ? 'Wo wir arbeiten' : 'Where we work'}</div>
+          <h2 id="h-regions">{de ? 'Zwei Arbeitsbereiche, ein Netzwerk' : 'Two areas of work, one network'}</h2>
+        </div>
+      </div>
+      <div class="grid grid--2 regions">
+        {regions.map((rg) => {
+          const items = projects.filter((x) => x.data.programme === rg.key);
+          const progCount = programmes.filter((p) => p.projects.some((s) => items.some((x) => x.id.split('/')[1] === s))).length;
+          return (
+            <article class="region">
+              <img src={href(rg.image)} alt="" loading="lazy" width="800" height="533" />
+              <div class="region__body">
+                <p class="region__meta">{rg.places[lang]} · {progCount} {de ? 'Programme' : 'programmes'} · {items.length} {de ? 'Projekte' : 'projects'}</p>
+                <h3><a href={regionPath(lang, rg.key)}>{de && rg.key === 'international' ? 'Internationale Zusammenarbeit' : rg.title[lang]}</a></h3>
+                <p>{rg.lead[lang]}</p>
+                <span class="link-arrow" aria-hidden="true">{de ? 'Mehr erfahren' : 'Learn more'}</span>
+              </div>
+            </article>
+          );
+        })}
+      </div>
+    </div>
+  </section>
 
   <section class="section section--alt" aria-labelledby="h-prog">
     <div class="wrap">
@@ -237,6 +265,18 @@ const quick = [
   .quick__item strong { display: block; font-size: 1.05rem; }
   .quick__text { display: block; font-size: .9rem; color: var(--muted); line-height: 1.35; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 
+  .region { position: relative; display: flex; flex-direction: column; background: var(--surface); border: 1px solid var(--line); border-radius: 22px; overflow: hidden; min-width: 0; }
+  .region img { width: 100%; aspect-ratio: 16 / 8; object-fit: cover; }
+  .region__body { display: flex; flex-direction: column; gap: .5rem; padding: 1.4rem 1.5rem 1.6rem; flex: 1; }
+  .region__meta { margin: 0; font-size: .85rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+  .region h3 { margin: 0; font-size: clamp(1.5rem, 2.4vw, 1.9rem); }
+  .region h3 a { color: var(--ink); text-decoration: none; }
+  .region h3 a::after { content: ''; position: absolute; inset: 0; }
+  .region:hover h3 a { text-decoration: underline; }
+  .region:has(a:focus-visible) { outline: 3px solid var(--focus); outline-offset: 3px; }
+  .region a:focus-visible { outline: none; }
+  .region p { margin: 0; color: var(--ink-2); }
+  .region .link-arrow { margin-top: auto; padding-top: .5rem; }
   .prog-row { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 1rem; }
   @media (max-width: 1200px) { .prog-row { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
   @media (max-width: 760px) { .prog-row { grid-template-columns: 1fr; } }

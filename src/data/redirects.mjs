@@ -22,8 +22,10 @@ export const wordpressRedirects = {
   '/contact': '/en/contact/',
   '/imprint-and-data-privacy': '/en/imprint/',
   // Programme pages of the first relaunch version (two programmes, until 07.11.2026)
-  '/programme/inlandsarbeit': '/programme/',
-  '/en/programmes/work-in-germany': '/en/programmes/',
+  '/programme/inlandsarbeit': '/inlandsarbeit/',
+  '/en/programmes/work-in-germany': '/en/work-in-germany/',
+  '/programme/internationale-zusammenarbeit': '/auslandsarbeit/',
+  '/en/programmes/international-cooperation': '/en/international-cooperation/',
   // German pages (old /de/ prefix)
   '/de': '/',
   '/de/home-de': '/',

@@ -7,7 +7,7 @@ import ProjectCard from '../components/ProjectCard.astro';
 import Icon from '../components/Icon.astro';
 import { r, ui, projectPath, type Lang } from '../i18n';
 import { getProjects, slugOf, type Project } from '../lib/content';
-import { programmes, management, trusteeships, programmePath, type ProgrammeKey } from '../data/programmes';
+import { programmes, management, trusteeships, programmePath, regions, regionPath, type ProgrammeKey } from '../data/programmes';
 
 interface Props { lang: Lang; programme?: ProgrammeKey; mode?: 'overview' | 'programme' | 'all' }
 const { lang, programme, mode = 'programme' } = Astro.props;
@@ -44,9 +44,23 @@ const sponsorId = de ? 'traegerschaften' : 'fiscal-sponsorship';
 
   {mode === 'overview' && (
     <>
-      <section class="section" aria-labelledby="h-progs">
+      <section class="section section--tight" aria-labelledby="h-areas">
         <div class="wrap">
-          <h2 id="h-progs" class="sr-only">{de ? 'Unsere Programme' : 'Our programmes'}</h2>
+          <h2 id="h-areas" class="h3">{de ? 'Nach Arbeitsbereich' : 'By area of work'}</h2>
+          <div class="grid grid--2">
+            {regions.map((rg) => (
+              <a class={`area-link area-link--${rg.key}`} href={regionPath(lang, rg.key)}>
+                <span class="icon-badge"><Icon name={rg.icon} /></span>
+                <span><strong>{de && rg.key === 'international' ? 'Internationale Zusammenarbeit (Auslandsarbeit)' : rg.title[lang]}</strong><span class="small muted">{rg.places[lang]}</span></span>
+                <Icon name="arrow" />
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+      <section class="section section--tight" aria-labelledby="h-progs">
+        <div class="wrap">
+          <h2 id="h-progs" class="h3">{de ? 'Unsere Programme' : 'Our programmes'}</h2>
           <ol class="prog-grid">
             {programmes.map((p) => {
               const items = projectsOf(p.key);
@@ -60,6 +74,7 @@ const sponsorId = de ? 'traegerschaften' : 'fiscal-sponsorship';
                   <h3><a href={programmePath(lang, p.key)}>{p.title[lang]}</a></h3>
                   <p class="prog-card__short">{p.short[lang]}</p>
                   <p class="small muted">{running} {de ? 'laufend' : 'ongoing'} · {items.length} {de ? 'Projekte' : 'projects'}</p>
+                  <p class="prog-card__regions">{regions.filter((rg) => items.some((x) => x.data.programme === rg.key) || p.services?.some((sv) => sv.region === rg.key)).map((rg) => <a class="tag" href={`${regionPath(lang, rg.key)}#${p.key}`}>{rg.title[lang]}</a>)}</p>
                   <ul class="prog-card__list">
                     {items.map((x) => <li><a href={projectPath(lang, slugOf(x.id))}>{x.data.title}</a></li>)}
                     {p.services?.map((s) => <li class="muted">{s.title[lang]}</li>)}
@@ -198,6 +213,13 @@ const sponsorId = de ? 'traegerschaften' : 'fiscal-sponsorship';
   .prog-card h3 { margin: .35rem 0 0; font-size: clamp(1.3rem, 2vw, 1.55rem); }
   .prog-card h3 a { color: var(--ink); text-decoration: none; }
   .prog-card h3 a:hover { text-decoration: underline; }
+  .prog-card__regions { display: flex; flex-wrap: wrap; gap: .35rem; margin: 0; }
+  .prog-card__regions .tag { text-decoration: none; color: var(--ink); min-height: 32px; display: inline-flex; align-items: center; }
+  .prog-card__regions .tag:hover { text-decoration: underline; }
+  .area-link { display: grid; grid-template-columns: auto 1fr auto; gap: 1rem; align-items: center; padding: 1.1rem 1.25rem; background: var(--surface); border: 1px solid var(--line); border-radius: 16px; color: var(--ink); text-decoration: none; min-height: 44px; }
+  .area-link span:nth-child(2) { display: flex; flex-direction: column; }
+  .area-link strong { font-size: 1.1rem; }
+  .area-link:hover strong { text-decoration: underline; }
   .prog-card__short { margin: 0; color: var(--ink-2); font-weight: 600; }
   .prog-card__list { list-style: none; padding: 0; margin: .25rem 0 .75rem; border-top: 1px solid var(--line); }
   .prog-card__list li { margin: 0; border-bottom: 1px solid var(--line); padding: .45rem 0; font-size: .97rem; }

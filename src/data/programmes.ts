@@ -5,7 +5,8 @@ import type { Lang } from '../i18n';
 
 type L = Record<Lang, string>;
 export type ProgrammeKey = 'education' | 'health' | 'cooperation' | 'civic' | 'migration';
-export type Service = { title: L; text: L; cta?: { label: L; route: 'contact' | 'join' } };
+export type Region = 'inland' | 'international';
+export type Service = { title: L; text: L; region: Region; cta?: { label: L; route: 'contact' | 'join' } };
 export type Programme = {
   key: ProgrammeKey;
   no: number;
@@ -42,6 +43,7 @@ export const programmes: Programme[] = [
     services: [
       {
         title: { de: 'Allgemeine Bildungsarbeit', en: 'General education work' },
+        region: 'inland',
         text: {
           de: 'Laufende Workshops, Fortbildungsmodule und Seminare zur politischen Bildung für die breite Öffentlichkeit in Deutschland – zu globaler Gerechtigkeit, Rassismuskritik, Kolonialgeschichte und den Nachhaltigkeitszielen. Auf Anfrage gestalten wir Formate für Schulen, Vereine und Bildungseinrichtungen.',
           en: 'Ongoing workshops, further-education modules and political-education seminars for the wider public in Germany – on global justice, anti-racism, colonial history and the Sustainable Development Goals. On request we design formats for schools, associations and educational institutions.',
@@ -73,7 +75,7 @@ export const programmes: Programme[] = [
   {
     key: 'cooperation',
     no: 3,
-    slug: { de: 'internationale-zusammenarbeit', en: 'international-cooperation' },
+    slug: { de: 'globale-zusammenarbeit', en: 'global-cooperation' },
     icon: 'globe',
     accent: 'green',
     title: { de: 'Globale Zusammenarbeit & Lebensgrundlagen', en: 'Global Cooperation & Livelihoods' },
@@ -128,6 +130,7 @@ export const programmes: Programme[] = [
     services: [
       {
         title: { de: 'Verfahrensberatung', en: 'Procedural advice' },
+        region: 'inland',
         text: {
           de: 'Praktische Beratung für Migrant*innen und Geflüchtete zu Asyl- und Aufenthaltsverfahren und Behördenwegen: Wir helfen, Schreiben und Bescheide zu verstehen, Fristen im Blick zu behalten, Anträge vorzubereiten und die zuständigen Stellen zu finden. Für eine Rechtsvertretung vermitteln wir an Fachanwält*innen und Beratungsstellen.',
           en: 'Hands-on advice for migrants and refugees on asylum and residence procedures and administrative processes: we help people understand letters and decisions, keep track of deadlines, prepare applications and find the right authorities. For legal representation we refer to specialised lawyers and counselling services.',
@@ -192,3 +195,45 @@ export const programmePath = (lang: Lang, key: ProgrammeKey) => {
 };
 export const programmeByKey = (k: ProgrammeKey) => programmes.find((p) => p.key === k)!;
 export const programmeOfProject = (slug: string) => programmes.find((p) => p.projects.includes(slug));
+
+/** The two areas of work. Each region page lists the programmes that have projects there. */
+export const regions = [
+  {
+    key: 'inland' as Region,
+    slug: { de: 'inlandsarbeit', en: 'work-in-germany' } as L,
+    title: { de: 'Inlandsarbeit', en: 'Work in Germany' } as L,
+    navTitle: { de: 'Inlandsarbeit', en: 'Work in Germany' } as L,
+    icon: 'people',
+    image: '/images/ubuntu-talks-illustration.webp',
+    places: { de: 'Berlin · Sachsen-Anhalt · bundesweit', en: 'Berlin · Saxony-Anhalt · across Germany' } as L,
+    lead: {
+      de: 'In Berlin und bundesweit verbinden wir Globales Lernen mit Empowerment: Bildungsprojekte an Schulen, Begegnungsräume für die afrikanische Diaspora und ihre Nachbarschaften, Beratung für Geflüchtete und Migrant*innen und Trägerschaften für junge Initiativen.',
+      en: 'In Berlin and across Germany we combine global learning with empowerment: education projects in schools, spaces of encounter for the African diaspora and their neighbours, advice for refugees and migrants, and fiscal sponsorship for young initiatives.',
+    } as L,
+    principles: {
+      de: ['Globales Lernen mit Stimmen aus dem Globalen Süden – live zugeschaltet', 'Barrierearme Formate: kostenfrei, mit Kinderbetreuung und Übersetzung', 'Communities gestalten selbst – sie sind keine Hilfeempfangenden', 'Kooperation mit Schulen, Bezirken und Partnervereinen'],
+      en: ['Global learning with voices from the Global South – joining live', 'Low-barrier formats: free of charge, with childcare and interpretation', 'Communities shape the work themselves – they are not recipients of help', 'Cooperation with schools, districts and partner associations'],
+    } as Record<Lang, string[]>,
+  },
+  {
+    key: 'international' as Region,
+    slug: { de: 'auslandsarbeit', en: 'international-cooperation' } as L,
+    title: { de: 'Internationale Zusammenarbeit', en: 'International Cooperation' } as L,
+    navTitle: { de: 'Internationale Zusammenarbeit (Auslandsarbeit)', en: 'International Cooperation' } as L,
+    icon: 'globe',
+    image: '/images/hero/okb-gruppe-veranda-800.webp',
+    places: { de: 'Uganda · Burundi', en: 'Uganda · Burundi' } as L,
+    lead: {
+      de: 'Mit Partnerorganisationen in Uganda und Burundi schaffen wir Zugang zu Bildung, Gesundheit, Trinkwasser, beruflicher Qualifizierung und Einkommen. Die Partner vor Ort planen und setzen um; Bantu e.V. beantragt die Förderung in Deutschland, begleitet die Umsetzung und rechnet transparent ab.',
+      en: 'With partner organisations in Uganda and Burundi we create access to education, health care, drinking water, vocational training and income. Our local partners plan and implement; Bantu e.V. secures funding in Germany, accompanies implementation and accounts for every euro.',
+    } as L,
+    principles: {
+      de: ['Partnerschaft auf Augenhöhe: Die Gemeinden entscheiden, was gebraucht wird', 'Kritischer Blick auf „Entwicklungszusammenarbeit“ und neokoloniale Muster', 'Nachhaltigkeit von Anfang an: Betriebskonzepte, lokale Fachkräfte, Wartung', 'Inklusion als Querschnittsthema – besonders für Menschen mit Behinderung'],
+      en: ['Partnership as equals: communities decide what is needed', 'A critical view of “development” and neo-colonial patterns', 'Sustainability from day one: operating plans, local staff, maintenance', 'Inclusion as a cross-cutting theme – especially for people with disabilities'],
+    } as Record<Lang, string[]>,
+  },
+];
+export const regionPath = (lang: Lang, key: Region) => {
+  const r = regions.find((x) => x.key === key)!;
+  return `${base}${lang === 'de' ? '/' : '/en/'}${r.slug[lang]}/`;
+};

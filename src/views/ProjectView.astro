@@ -8,7 +8,7 @@ import NewsCard from '../components/NewsCard.astro';
 import { render } from 'astro:content';
 import { href, projectPath, r, ui, type Lang } from '../i18n';
 import { getNews, getProjects, slugOf, type Project } from '../lib/content';
-import { programmeOfProject, programmePath } from '../data/programmes';
+import { programmeOfProject, programmePath, regions, regionPath } from '../data/programmes';
 
 interface Props { lang: Lang; project: Project; hasAlt: boolean }
 const { lang, project, hasAlt } = Astro.props;
@@ -56,6 +56,7 @@ const donateRef = slug.includes('pearl') ? 'Pearl Kita' : slug.includes('ruziba'
         <div class="panel">
           <h2 class="side-title">{de ? 'Auf einen Blick' : 'At a glance'}</h2>
           <dl class="facts">
+            <dt>{de ? 'Arbeitsbereich' : 'Area of work'}</dt><dd><a href={regionPath(lang, d.programme)}>{regions.find((rg) => rg.key === d.programme)!.title[lang]}</a></dd>
             {prog && <><dt>{de ? 'Programm' : 'Programme'}</dt><dd><a href={programmePath(lang, prog.key)}>{prog.title[lang]}</a></dd></>}
             <dt>{t.period}</dt><dd>{d.period}</dd>
             {d.implementer && <><dt>{de ? 'Umsetzung' : 'Implemented by'}</dt><dd>{d.implementer}{d.fiscalSponsorship && <> ({de ? 'Bantu e.V. als Trägerverein' : 'Bantu e.V. as fiscal sponsor'})</>}</dd></>}
