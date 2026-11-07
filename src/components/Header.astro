@@ -1,0 +1,172 @@
+---
+// Accessible header: utility bar (easy read, accessibility settings, language, contact),
+// logo, main navigation with disclosure menus (buttons with aria-expanded; Esc closes;
+// works with keyboard, touch and screen readers – no hover-only menus).
+import Icon from './Icon.astro';
+import A11yPanel from './A11yPanel.astro';
+import { href, mainNav, r, ui, type Lang } from '../i18n';
+import { org } from '../data/site';
+interface Props { lang: Lang; altHref?: string }
+const { lang, altHref } = Astro.props;
+const t = ui[lang];
+const de = lang === 'de';
+const nav = mainNav(lang);
+const other: Lang = de ? 'en' : 'de';
+const switchHref = altHref ?? r('home', other);
+const current = Astro.url.pathname;
+const isCurrent = (h: string) => h !== r('home', lang) && current.startsWith(h.split('#')[0]);
+
+// Compact (burger) navigation: used on small screens and – because large text needs more room –
+// at wider breakpoints when the visitor has enlarged the text in the accessibility settings.
+const compactRules = ['.header-inner { min-height: 72px; }', '.logo-plate { padding: 8px 10px; margin-bottom: -66px; }', '.nav-toggle { display: inline-flex; align-items: center; gap: .55rem; min-height: var(--tap); background: var(--ink); color: var(--bg); border: 0; border-radius: 999px; padding: .55rem 1.1rem; font: 700 1rem var(--font-sans); cursor: pointer; }', '.nav-list { display: none; position: fixed; inset: var(--header-h, 112px) 0 0 0; background: var(--bg); flex-direction: column; align-items: stretch; gap: 0; padding: 5rem var(--gutter) 2.5rem; overflow-y: auto; border-top: 1px solid var(--line); }', '.is-scrolled .nav-list { padding-top: 1rem; }', '.nav-list.is-open { display: flex; }', '.nav-list > li { border-bottom: 1px solid var(--line); }', '.nav-link { width: 100%; justify-content: space-between; font-size: 1.15rem; padding: .85rem .25rem; }', '.sub { position: static; box-shadow: none; border: 0; padding: 0 0 .75rem .5rem; min-width: 0; background: transparent; }', '.nav-extra { border-bottom: 0 !important; margin: 1.5rem 0 0 !important; }', '.nav-donate { width: 100%; }'];
+const levels: [string, number][] = [['', 1120], ['html[data-text="lg"] ', 1260], ['html[data-text="xl"] ', 1400], ['html[data-text="xxl"] ', 1700]];
+const compactCss = levels.map(([pre, w]) => `@media (max-width: ${w}px) { ${compactRules.map((rule) => rule.split('{')[0].split(',').map((sel) => pre + sel.trim()).join(', ') + ' {' + rule.split('{').slice(1).join('{')).join(' ')} }`).join('\n');
+---
+<header class="site-header">
+  <div class="utility">
+    <div class="wrap utility__inner">
+      <a class="util-link" href={r('easy', lang)}><Icon name="easy" /> {t.easy}</a>
+      <div class="utility__right">
+        <button type="button" class="util-link util-btn" data-a11y-toggle aria-expanded="false" aria-controls="a11y-panel">
+          <Icon name="access" /> {t.a11y}
+        </button>
+        <a class="util-link" href={`mailto:${org.email}`}><Icon name="mail" /> <span class="hide-sm">{org.email}</span><span class="sr-only show-sm">E-Mail</span></a>
+        <a class="util-link lang-switch" href={switchHref} hreflang={other} lang={other}>
+          <span aria-hidden="true">{other.toUpperCase()}</span><span class="sr-only">{t.otherLang}</span>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="wrap header-inner">
+    <a class="logo-plate" href={r('home', lang)} aria-label={de ? 'Bantu e.V. – zur Startseite' : 'Bantu e.V. – home page'}>
+      <img class="logo-full keep-color" src={href('/brand/bantu-logo.png')} width="120" height="142" alt="" />
+      <img class="logo-emblem keep-color" src={href('/brand/bantu-emblem.png')} width="52" height="52" alt="" />
+    </a>
+    <nav id="main-nav" class="main-nav" aria-label={de ? 'Hauptmenü' : 'Main menu'}>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-list">
+        <Icon name="menu" /><span>{t.menu}</span>
+      </button>
+      <ul id="nav-list" class="nav-list">
+        {nav.map((item, i) => (
+          <li class={item.children ? 'has-sub' : ''}>
+            {item.children ? (
+              <>
+                <button type="button" class="nav-link nav-disclosure" aria-expanded="false" aria-controls={`sub-${i}`} data-current={isCurrent(item.href) ? 'true' : undefined}>
+                  {item.label}<Icon name="chevron" class="chev" />
+                </button>
+                <ul class="sub" id={`sub-${i}`}>
+                  {item.children.map((c) => <li><a href={c.href} aria-current={current === c.href ? 'page' : undefined}>{c.label}</a></li>)}
+                </ul>
+              </>
+            ) : (
+              <a href={item.href} class="nav-link" aria-current={isCurrent(item.href) ? 'page' : undefined}>{item.label}</a>
+            )}
+          </li>
+        ))}
+        <li class="nav-extra">
+          <a class="btn btn--gold nav-donate" href={r('donate', lang)}><Icon name="heart" /> {t.donate}</a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+  <A11yPanel lang={lang} />
+</header>
+
+<script>
+  const header = document.querySelector('.site-header');
+  const root = document.documentElement;
+  const measure = () => {
+    if (!header) return;
+    root.style.setProperty('--header-h', `${Math.round(header.getBoundingClientRect().bottom)}px`);
+    const util = header.querySelector('.utility');
+    if (util) root.style.setProperty('--util-h', `${Math.round(util.getBoundingClientRect().bottom)}px`);
+  };
+  const onScroll = () => { header?.classList.toggle('is-scrolled', window.scrollY > 80); measure(); };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', measure);
+  new MutationObserver(measure).observe(root, { attributes: true, attributeFilter: ['data-text', 'data-font', 'data-spacing'] });
+  onScroll();
+
+  // Mobile menu
+  const toggle = document.querySelector<HTMLButtonElement>('.nav-toggle');
+  const list = document.getElementById('nav-list');
+  const setMenu = (open: boolean) => {
+    toggle?.setAttribute('aria-expanded', String(open));
+    list?.classList.toggle('is-open', open);
+    document.body.classList.toggle('nav-open', open);
+  };
+  toggle?.addEventListener('click', () => setMenu(toggle.getAttribute('aria-expanded') !== 'true'));
+
+  // Disclosure sub-menus
+  const discs = Array.from(document.querySelectorAll<HTMLButtonElement>('.nav-disclosure'));
+  const closeAll = (except?: HTMLButtonElement) => discs.forEach((d) => { if (d !== except) d.setAttribute('aria-expanded', 'false'); });
+  discs.forEach((d) => {
+    d.addEventListener('click', () => {
+      const open = d.getAttribute('aria-expanded') === 'true';
+      closeAll(d);
+      d.setAttribute('aria-expanded', String(!open));
+    });
+  });
+  document.addEventListener('click', (e) => { if (!(e.target as HTMLElement).closest('.has-sub')) closeAll(); });
+  document.addEventListener('keydown', (e) => {
+    if (e.key !== 'Escape') return;
+    const open = discs.find((d) => d.getAttribute('aria-expanded') === 'true');
+    if (open) { closeAll(); open.focus(); return; }
+    if (toggle?.getAttribute('aria-expanded') === 'true') { setMenu(false); toggle.focus(); }
+  });
+  // Close a desktop sub-menu when focus leaves it
+  document.querySelectorAll<HTMLElement>('.has-sub').forEach((li) => {
+    li.addEventListener('focusout', (e) => {
+      if (!li.contains(e.relatedTarget as Node) && window.matchMedia('(min-width: 1121px)').matches) {
+        li.querySelector('.nav-disclosure')?.setAttribute('aria-expanded', 'false');
+      }
+    });
+  });
+</script>
+
+<style is:global>
+  .site-header { position: sticky; top: 0; z-index: 50; background: color-mix(in srgb, var(--bg) 96%, transparent); backdrop-filter: saturate(1.2) blur(10px); border-bottom: 1px solid var(--line); }
+  .utility { background: var(--deep); color: var(--on-deep); font-size: .9rem; }
+  .utility__inner { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: .25rem 1rem; min-height: 40px; }
+  .utility__right { display: flex; flex-wrap: wrap; align-items: center; gap: .25rem; }
+  .util-link { display: inline-flex; align-items: center; gap: .4rem; color: var(--on-deep); text-decoration: none; padding: .35rem .6rem; border-radius: 8px; min-height: 36px; font-weight: 600; }
+  .util-link:hover { background: rgba(255,255,255,.12); text-decoration: underline; }
+  .util-link .icon { width: 1.15em; height: 1.15em; }
+  .util-btn { background: transparent; border: 0; font: 600 .9rem var(--font-sans); cursor: pointer; }
+  .util-btn[aria-expanded='true'] { background: var(--gold); color: #000; }
+  .lang-switch { border: 1.5px solid rgba(255,255,255,.6); letter-spacing: .06em; margin-left: .25rem; }
+  .show-sm { display: none; }
+
+  .header-inner { display: flex; align-items: center; justify-content: space-between; min-height: 84px; gap: 1rem; position: relative; }
+  .logo-plate { align-self: flex-start; background: #fff; padding: 12px 14px 10px; border-radius: 0 0 18px 18px; box-shadow: 0 8px 22px rgba(0,0,0,.10); border: 1px solid var(--line); border-top: 0; margin-bottom: -58px; position: relative; z-index: 3; flex: none; }
+  .logo-plate img { width: 120px; height: auto; }
+  .logo-emblem { display: none; }
+  .is-scrolled .logo-plate { margin-bottom: 0; padding: 6px; border: 0; box-shadow: none; background: transparent; align-self: center; }
+  .is-scrolled .logo-full { display: none; }
+  .is-scrolled .logo-emblem { display: block; width: 52px; }
+
+  .main-nav { display: flex; align-items: center; }
+  .nav-list { list-style: none; margin: 0; padding: 0; display: flex; align-items: center; gap: .1rem; }
+  .nav-list > li { position: relative; margin: 0; }
+  .nav-link { display: inline-flex; align-items: center; gap: .3rem; min-height: var(--tap); padding: .5rem .75rem; text-decoration: none; color: var(--ink); font: 700 1rem var(--font-sans); border-radius: 10px; background: transparent; border: 0; cursor: pointer; }
+  .nav-link:hover, .nav-disclosure[aria-expanded='true'] { background: var(--bg-2); }
+  .nav-link[aria-current='page'], .nav-disclosure[data-current='true'] { box-shadow: inset 0 -3px 0 var(--gold); }
+  .chev { width: 1em; height: 1em; transition: transform .15s; }
+  .nav-disclosure[aria-expanded='true'] .chev { transform: rotate(180deg); }
+  .sub { list-style: none; margin: 0; padding: .5rem; position: absolute; top: calc(100% + 6px); left: 0; min-width: 270px; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; box-shadow: var(--shadow); display: none; z-index: 10; }
+  .nav-disclosure[aria-expanded='true'] + .sub { display: block; }
+  .sub li { margin: 0; }
+  .sub a { display: flex; align-items: center; min-height: var(--tap); padding: .5rem .8rem; border-radius: 10px; text-decoration: none; color: var(--ink); font-weight: 600; }
+  .sub a:hover, .sub a[aria-current='page'] { background: var(--bg-2); text-decoration: underline; }
+  .nav-extra { margin-left: .6rem !important; }
+  .nav-toggle { display: none; }
+
+  @media (max-width: 560px) {
+    .hide-sm { display: none; }
+    .show-sm { display: inline; }
+    .util-link { padding: .35rem .45rem; }
+  }
+  body.nav-open { overflow: hidden; }
+  html[data-theme='contrast'] .logo-plate { background: #fff; }
+</style>
+<style is:global set:html={compactCss}></style>

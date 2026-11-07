@@ -1,0 +1,314 @@
+---
+import Base from '../layouts/Base.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import NewsCard from '../components/NewsCard.astro';
+import Placeholder from '../components/Placeholder.astro';
+import Icon from '../components/Icon.astro';
+import { r, projectPath, ui, type Lang } from '../i18n';
+import { getEvents, getNews, getProjects } from '../lib/content';
+import { impact } from '../data/impact';
+import { org } from '../data/site';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const de = lang === 'de';
+const t = ui[lang];
+const projects = await getProjects(lang);
+const featured = projects.filter((p) => p.data.featured && p.data.status === 'active').slice(0, 4);
+const intl = projects.filter((p) => p.data.programme === 'international');
+const inland = projects.filter((p) => p.data.programme === 'inland');
+const { upcoming } = await getEvents(lang);
+const news = (await getNews(lang)).filter((n) => n.data.type !== 'event').slice(0, 3);
+const spotlight = [...upcoming.slice(0, 2), ...news].slice(0, 3);
+const ringColors = ['#ff343d', '#ff8409', '#3cb04b', '#0071bc', '#ff6c71', '#c180a1', '#749bca', '#b9e245'];
+const quick = [
+  { icon: 'globe', label: de ? 'Projekte entdecken' : 'Explore projects', text: de ? `${projects.length} Projekte in Uganda, Burundi und Berlin` : `${projects.length} projects in Uganda, Burundi and Berlin`, href: r('projects', lang) },
+  { icon: 'calendar', label: de ? 'Termine' : 'Events', text: upcoming[0] ? upcoming[0].data.title : (de ? 'Workshops und Begegnungen' : 'Workshops and encounters'), href: r('events', lang) },
+  { icon: 'heart', label: t.donate, text: de ? 'Mit Zuwendungsbestätigung' : 'With donation receipt', href: r('donate', lang) },
+  { icon: 'hand', label: de ? 'Mitmachen' : 'Get involved', text: de ? 'Mitglied, Ehrenamt, Kooperation' : 'Membership, volunteering, partnerships', href: r('join', lang) },
+] as const;
+---
+<Base lang={lang} title={org.shortName} altHref={r('home', de ? 'en' : 'de')}>
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="wrap hero__grid">
+      <div class="hero__text">
+        <p class="hero__kicker">{de ? 'Gemeinnütziger Verein · Berlin · seit 2019' : 'Non-profit association · Berlin · since 2019'}</p>
+        <h1 id="hero-title">{de ? <>Ich bin, weil <span class="hl">wir</span> sind.</> : <>I am because <span class="hl">we</span> are.</>}</h1>
+        <p class="hero__lead">
+          {de
+            ? 'Bantu e.V. verbindet Menschen in Berlin und in der Region der Großen Seen Ostafrikas. Mit Partnerorganisationen in Uganda und Burundi schaffen wir Zugang zu Bildung, Wasser und Teilhabe – und setzen uns in Deutschland für globale Gerechtigkeit und Dekolonisierung ein.'
+            : 'Bantu e.V. connects people in Berlin and the Great Lakes region of East Africa. With partner organisations in Uganda and Burundi we create access to education, water and participation – and in Germany we work for global justice and decolonisation.'}
+        </p>
+        <div class="btn-row">
+          <a class="btn btn--gold" href={r('programmes', lang)}>{de ? 'Unsere Arbeit' : 'Our work'} <Icon name="arrow" /></a>
+          <a class="btn btn--ghost" href={r('donate', lang)}><Icon name="heart" /> {de ? 'Jetzt spenden' : 'Donate now'}</a>
+        </div>
+      </div>
+      <div class="hero__art deco" aria-hidden="true">
+        <svg viewBox="0 0 420 420" class="orbit">
+          <circle cx="210" cy="210" r="118" fill="none" stroke="#febf00" stroke-width="14" />
+          <circle cx="210" cy="210" r="92" fill="none" stroke="#febf00" stroke-width="6" opacity=".55" />
+          <circle cx="210" cy="210" r="60" fill="#febf00" opacity=".14" />
+          <g class="orbit__ring">
+            {ringColors.map((c, i) => { const a = (i / 8) * Math.PI * 2 - Math.PI / 2 - Math.PI / 8; return <circle cx={210 + 168 * Math.cos(a)} cy={210 + 168 * Math.sin(a)} r="24" fill="none" stroke={c} stroke-width="10" />; })}
+          </g>
+        </svg>
+        <p class="hero__art-caption">{de ? 'Acht Ringe, eine Welt: Gemeinschaften, die zusammenkommen.' : 'Eight rings, one world: communities coming together.'}</p>
+      </div>
+    </div>
+  </section>
+
+  <nav class="quick" aria-label={de ? 'Schnellzugriff' : 'Quick links'}>
+    <div class="wrap quick__grid">
+      {quick.map((q) => (
+        <a class="quick__item" href={q.href}>
+          <span class="icon-badge"><Icon name={q.icon} /></span>
+          <span><strong>{q.label}</strong><span class="quick__text">{q.text}</span></span>
+        </a>
+      ))}
+    </div>
+  </nav>
+
+  {spotlight.length > 0 && (
+    <section class="section" aria-labelledby="h-news">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">{de ? 'Aktuell & demnächst' : 'News & upcoming'}</div>
+            <h2 id="h-news">{de ? 'Was gerade passiert' : 'What’s happening'}</h2>
+          </div>
+          <div class="btn-row">
+            <a class="link-arrow" href={r('events', lang)}>{t.allEvents}</a>
+            <a class="link-arrow" href={r('news', lang)}>{t.allNews}</a>
+          </div>
+        </div>
+        <div class="grid grid--3">
+          {spotlight.map((n) => <NewsCard lang={lang} item={n} showImage />)}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <section class="section section--alt" aria-labelledby="h-prog">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">{de ? 'Programme' : 'Programmes'}</div>
+          <h2 id="h-prog">{de ? 'Zwei Programme, ein Gedanke' : 'Two programmes, one idea'}</h2>
+          <p>{de ? 'Wir arbeiten dort, wo wir verwurzelt sind: mit Partnerorganisationen in Ostafrika und mit Communities, Schulen und Initiativen in Berlin.' : 'We work where we have roots: with partner organisations in East Africa and with communities, schools and initiatives in Berlin.'}</p>
+        </div>
+      </div>
+      <div class="grid grid--2">
+        <article class="prog prog--intl">
+          <span class="icon-badge"><Icon name="globe" /></span>
+          <p class="prog__count">{intl.length} {de ? 'Projekte' : 'projects'} · Uganda · Burundi</p>
+          <h3><a href={r('international', lang)}>{t.programme.international}</a></h3>
+          <p>{de ? 'Frühkindliche und berufliche Bildung, Trinkwasser, Inklusion und digitale Teilhabe – gemeinsam mit lokalen Partnerorganisationen, die ihre Gemeinden am besten kennen.' : 'Early childhood and vocational education, drinking water, inclusion and digital access – together with local partners who know their communities best.'}</p>
+          <ul class="prog__list">{intl.filter((p) => p.data.status === 'active').map((p) => <li><a href={projectPath(lang, p.id.split('/')[1])}>{p.data.title}</a></li>)}</ul>
+        </article>
+        <article class="prog prog--inland">
+          <span class="icon-badge icon-badge--blue"><Icon name="people" /></span>
+          <p class="prog__count">{inland.length} {de ? 'Projekte' : 'projects'} · Berlin · {de ? 'bundesweit' : 'Germany-wide'}</p>
+          <h3><a href={r('inland', lang)}>{t.programme.inland}</a></h3>
+          <p>{de ? 'Globales Lernen an Schulen, Begegnung und Empowerment in der afrikanischen Diaspora, Unterstützung für Geflüchtete und Beiträge zur Dekolonisierung.' : 'Global learning in schools, encounter and empowerment in the African diaspora, support for refugees and contributions to decolonisation.'}</p>
+          <ul class="prog__list">{inland.filter((p) => p.data.status === 'active').map((p) => <li><a href={projectPath(lang, p.id.split('/')[1])}>{p.data.title}</a></li>)}</ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--deep" aria-labelledby="h-impact">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">{de ? 'Wirkung' : 'Impact'}</div>
+          <h2 id="h-impact">{de ? 'Was wir gemeinsam erreicht haben' : 'What we have achieved together'}</h2>
+        </div>
+        <a class="link-arrow on-deep" href={r('impact', lang)}>{de ? 'Alle Erfolgsgeschichten' : 'All success stories'}</a>
+      </div>
+      <ul class="stat-grid impact-list">
+        {impact.map((s) => (
+          <li class="stat">
+            <a href={projectPath(lang, s.project)}>
+              <span class="stat__value">{s.value[lang]}</span>
+              <span class="stat__label">{s.label[lang]}</span>
+              <span class="stat__source">{s.source[lang]}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="h-proj">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">{de ? 'Laufende Projekte' : 'Current projects'}</div>
+          <h2 id="h-proj">{de ? 'Woran wir gerade arbeiten' : 'What we are working on'}</h2>
+        </div>
+        <a class="link-arrow" href={r('projects', lang)}>{t.allProjects}</a>
+      </div>
+      <div class="grid grid--4">
+        {featured.map((p) => <ProjectCard lang={lang} project={p} />)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--alt" aria-labelledby="h-story">
+    <div class="wrap story">
+      <div class="story__media">
+        <Placeholder lang={lang} label={de ? 'Absolventinnen mit Zertifikaten, Ausbildung im Salon (mit Einverständnis)' : 'Graduates with certificates, training in the salon (with consent)'} ratio="4 / 3" tone="gold" icon="star" />
+      </div>
+      <div>
+        <div class="eyebrow">{de ? 'Erfolgsgeschichte' : 'Success story'}</div>
+        <h2 id="h-story">{de ? '18 Zertifikate, 7 Arbeitsplätze, viel Mut' : '18 certificates, 7 jobs, a lot of courage'}</h2>
+        <p class="lead">{de ? 'An der Msingi School in Mbarara haben 18 junge Frauen ihre Ausbildung in Friseurhandwerk und Kosmetik abgeschlossen – sieben wurden direkt von ihren Praktikumsbetrieben eingestellt.' : 'At Msingi School in Mbarara, 18 young women completed their training in hairdressing and cosmetology – seven were hired directly by their placement businesses.'}</p>
+        <div class="btn-row">
+          <a class="btn btn--dark" href={projectPath(lang, 'p24-200-msingi-school')}>{de ? 'Geschichte lesen' : 'Read the story'}</a>
+          <a class="link-arrow" href={r('impact', lang)}>{de ? 'Weitere Erfolgsgeschichten' : 'More success stories'}</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="h-support">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">{de ? 'Unterstützen' : 'Support'}</div>
+          <h2 id="h-support">{de ? 'Werden Sie Teil davon' : 'Become part of it'}</h2>
+        </div>
+      </div>
+      <div class="grid grid--4">
+        <article class="support">
+          <span class="icon-badge"><Icon name="heart" /></span>
+          <h3><a href={r('donate', lang)}>{t.donate}</a></h3>
+          <p>{de ? 'Jeder Betrag hilft – wir stellen Zuwendungsbestätigungen aus.' : 'Every amount helps – we issue donation receipts.'}</p>
+        </article>
+        <article class="support">
+          <span class="icon-badge"><Icon name="people" /></span>
+          <h3><a href={r('join', lang, '#membership')}>{de ? 'Mitglied werden' : 'Become a member'}</a></h3>
+          <p>{de ? 'Ab 5 € im Monat (ermäßigt 2,50 €) – mit Stimme im Verein.' : 'From €5 a month (reduced €2.50) – with a vote in the association.'}</p>
+        </article>
+        <article class="support">
+          <span class="icon-badge"><Icon name="hand" /></span>
+          <h3><a href={r('join', lang, '#volunteer')}>{de ? 'Ehrenamtlich mitmachen' : 'Volunteer'}</a></h3>
+          <p>{de ? 'Bei Veranstaltungen, Übersetzungen, Social Media oder Fundraising – in Berlin oder online.' : 'At events, with translation, social media or fundraising – in Berlin or online.'}</p>
+        </article>
+        <article class="support">
+          <span class="icon-badge"><Icon name="bag" /></span>
+          <h3><a href={r('shop', lang)}>Shop</a></h3>
+          <p>{de ? 'Spendengeschenke, bald auch Abantu Coffee und Merchandise.' : 'Gift donations, soon also Abantu Coffee and merchandise.'}</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--tight" aria-labelledby="h-access">
+    <div class="wrap access-band">
+      <span class="icon-badge icon-badge--lg"><Icon name="access" /></span>
+      <div>
+        <h2 id="h-access">{de ? 'Eine Website für alle' : 'A website for everyone'}</h2>
+        <p>{de
+          ? 'Schrift vergrößern, hoher Kontrast, dunkle Ansicht, gut lesbare Schrift oder Seite vorlesen lassen: Über „Barrierefreiheit“ oben auf jeder Seite passen Sie die Darstellung an. Wichtige Informationen gibt es auch in Einfacher Sprache.'
+          : 'Bigger text, high contrast, dark mode, an easy-to-read font or having the page read aloud: use “Accessibility” at the top of every page to adjust the display. Key information is also available in easy read.'}</p>
+        <div class="btn-row">
+          <button type="button" class="btn btn--dark" data-a11y-toggle aria-expanded="false" aria-controls="a11y-panel"><Icon name="access" /> {de ? 'Darstellung anpassen' : 'Adjust display'}</button>
+          <a class="btn btn--outline" href={r('easy', lang)}><Icon name="easy" /> {t.easy}</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--sand section--tight" aria-labelledby="h-partners">
+    <div class="wrap partners-strip">
+      <h2 id="h-partners">{de ? 'Wir arbeiten zusammen mit' : 'We work together with'}</h2>
+      <p>Anchored Bridges Initiatives (Kampala) · Nyentsya Community Development Association (Mbarara) · WIV-HR (Burundi) · AfricAvenir International e.V. · Federation of Ugandans in Germany e.V.</p>
+      <a class="link-arrow" href={r('people', lang, de ? '#partner' : '#partners')}>{de ? 'Partner & Förderer' : 'Partners & funders'}</a>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hero { background: radial-gradient(900px 480px at 85% 30%, rgba(254,191,0,.16), transparent 60%), var(--deep); color: var(--on-deep); padding-block: clamp(6.5rem, 11vw, 8.5rem) clamp(3rem, 6vw, 5rem); overflow: hidden; }
+  .hero__grid { display: grid; grid-template-columns: 1.2fr .8fr; gap: clamp(2rem, 5vw, 4rem); align-items: center; }
+  .hero__kicker { font-weight: 700; letter-spacing: .14em; text-transform: uppercase; font-size: .85rem; color: #ffd34d; margin-bottom: 1rem; }
+  .hero h1 { color: #fff; font-size: clamp(2.7rem, 6.4vw, 5rem); max-width: 13ch; margin-bottom: .4em; }
+  .hl { color: #ffd34d; text-decoration: underline; text-decoration-color: rgba(254,191,0,.5); text-decoration-thickness: .08em; text-underline-offset: .12em; }
+  .hero__lead { font-size: clamp(1.1rem, 1.6vw, 1.3rem); color: #e8e3d6; max-width: 58ch; margin-bottom: 1.8rem; }
+  .btn--ghost { border-color: rgba(255,255,255,.75); color: #fff; background: transparent; }
+  .btn--ghost:hover { background: rgba(255,255,255,.1); color: #fff; }
+  .hero__art { display: grid; justify-items: center; gap: .75rem; }
+  .orbit { width: min(100%, 420px); }
+  .orbit__ring { transform-origin: 210px 210px; animation: spin 120s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .hero__art-caption { color: #c9c2b2; font-size: .95rem; text-align: center; max-width: 30ch; margin: 0; }
+
+  .quick { position: relative; margin-top: -2.5rem; z-index: 2; }
+  .quick__grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: .9rem; }
+  .quick__item { min-width: 0; display: flex; gap: .9rem; align-items: center; background: var(--surface); color: var(--ink); text-decoration: none; border: 1px solid var(--line); border-radius: 18px; padding: 1rem 1.1rem; box-shadow: var(--shadow); min-height: 84px; transition: transform .15s, border-color .15s; }
+  .quick__item:hover { transform: translateY(-2px); border-color: var(--line-strong); }
+  .quick__item:hover strong { text-decoration: underline; }
+  .quick__item strong { display: block; font-size: 1.05rem; }
+  .quick__text { display: block; font-size: .9rem; color: var(--muted); line-height: 1.35; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+
+  .prog { position: relative; display: flex; flex-direction: column; gap: .5rem; padding: clamp(1.5rem, 3vw, 2.2rem); border-radius: 22px; background: var(--surface); border: 1px solid var(--line); border-top: 8px solid var(--gold); }
+  .prog--inland { border-top-color: var(--blue); }
+  .prog h3 { font-size: clamp(1.45rem, 2.4vw, 1.95rem); margin: .2rem 0 0; }
+  .prog h3 a { color: var(--ink); text-decoration: none; }
+  .prog h3 a:hover { text-decoration: underline; }
+  .prog > p { margin: 0; color: var(--ink-2); }
+  .prog__count { font-size: .85rem !important; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--muted) !important; margin-top: .6rem !important; }
+  .prog__list { list-style: none; padding: 0; margin: .8rem 0 0; border-top: 1px solid var(--line); }
+  .prog__list li { margin: 0; border-bottom: 1px solid var(--line); }
+  .prog__list a { display: flex; align-items: center; min-height: var(--tap); font-weight: 600; text-decoration: none; color: var(--ink); }
+  .prog__list a::after { content: '→'; margin-left: auto; }
+  .prog__list a:hover { text-decoration: underline; }
+  .icon-badge--blue { background: var(--chip-done-bg); }
+
+  .impact-list { list-style: none; padding: 0; margin: 0; grid-template-columns: repeat(3, 1fr); }
+  @media (max-width: 900px) { .impact-list { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 560px) { .impact-list { grid-template-columns: 1fr; } }
+  .impact-list li { margin: 0; padding: 0; }
+  .impact-list a { display: block; padding: 1.35rem 1.4rem; text-decoration: none; color: inherit; height: 100%; border-radius: var(--radius); }
+  .impact-list a:hover .stat__label { text-decoration: underline; }
+  .impact-list .stat__value, .impact-list .stat__label, .impact-list .stat__source { display: block; }
+  .on-deep { color: #ffd34d !important; }
+
+  .story { display: grid; grid-template-columns: 1fr 1.1fr; gap: clamp(1.5rem, 4vw, 3.5rem); align-items: center; }
+  .story__media { border-radius: 22px; overflow: hidden; border: 1px solid var(--line); }
+
+  .support { position: relative; display: flex; flex-direction: column; gap: .5rem; padding: 1.5rem; border-radius: var(--radius); background: var(--surface); border: 1px solid var(--line); }
+  .support h3 { margin: .5rem 0 0; font-size: 1.3rem; }
+  .support h3 a { color: var(--ink); text-decoration: none; }
+  .support h3 a::after { content: ''; position: absolute; inset: 0; }
+  .support:hover { border-color: var(--line-strong); box-shadow: var(--shadow); }
+  .support:hover h3 a { text-decoration: underline; }
+  .support:has(a:focus-visible) { outline: 3px solid var(--focus); outline-offset: 3px; }
+  .support a:focus-visible { outline: none; }
+  .support p { margin: 0; color: var(--ink-2); }
+
+  .access-band { display: grid; grid-template-columns: auto 1fr; gap: 1.5rem; align-items: start; background: var(--surface); border: 2px solid var(--ink); border-radius: 24px; padding: clamp(1.5rem, 3vw, 2.25rem); }
+  .access-band h2 { font-size: clamp(1.4rem, 2.4vw, 1.9rem); }
+  .access-band p { max-width: 70ch; color: var(--ink-2); }
+  .icon-badge--lg { width: 72px; height: 72px; border-radius: 22px; background: var(--gold); color: #000; }
+  .icon-badge--lg :global(svg) { width: 38px; height: 38px; }
+
+  .partners-strip { display: grid; grid-template-columns: auto 1fr auto; gap: 1rem 2rem; align-items: center; }
+  .partners-strip h2 { margin: 0; font-size: 1.15rem; }
+  .partners-strip p { margin: 0; color: var(--ink-2); }
+
+  @media (max-width: 1000px) { .quick__grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 900px) {
+    .hero__grid, .story { grid-template-columns: 1fr; }
+    .hero__art { order: -1; }
+    .orbit { width: 200px; }
+    .hero__art-caption { display: none; }
+    .partners-strip { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 560px) {
+    .quick__grid { grid-template-columns: 1fr; }
+    .access-band { grid-template-columns: 1fr; }
+  }
+</style>

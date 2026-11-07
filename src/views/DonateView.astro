@@ -1,0 +1,103 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import { projectPath, r, ui, type Lang } from '../i18n';
+import { org } from '../data/site';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const de = lang === 'de';
+const t = ui[lang];
+const title = de ? 'Spenden' : 'Donate';
+const lead = de
+  ? 'Jede Spende – ob groß oder klein – macht einen Unterschied. Bantu e.V. ist als gemeinnützig anerkannt; Spenden sind steuerlich absetzbar.'
+  : 'Every donation – large or small – makes a difference. Bantu e.V. is a recognised non-profit; donations are tax-deductible in Germany.';
+const purposes = [
+  { ref: 'Pearl Kita', slug: 'p26-230-pearl-kita-kampala', de: 'Pearl Kindertagesstätte Kampala – Eigenanteil 1.390 €', en: 'Pearl Kindergarten Kampala – our share €1,390' },
+  { ref: 'Wasser Ruziba', slug: 'p26-186-wasser-fuer-ruziba', de: 'Wasser für Ruziba, Burundi', en: 'Water for Ruziba, Burundi' },
+  { ref: 'Bildung Berlin', slug: 'p26-214-bildung-fuer-alle', de: 'Bildungsarbeit in Berlin (Schulungen, Workshops, Begegnungen)', en: 'Education work in Berlin (trainings, workshops, encounters)' },
+  { ref: 'Spende', slug: '', de: 'Wo es am meisten gebraucht wird', en: 'Where it is needed most' },
+];
+---
+<Base lang={lang} title={title} description={lead} altHref={r('donate', de ? 'en' : 'de')}>
+  <PageHead lang={lang} title={title} lead={lead} />
+
+  <section class="section section--tight">
+    <div class="wrap donate">
+      <div class="panel bank">
+        <h2>{de ? 'Per Überweisung' : 'By bank transfer'}</h2>
+        <dl class="kv bank__kv">
+          <dt>{de ? 'Empfänger' : 'Account holder'}</dt><dd>{org.bank.holder}</dd>
+          <dt>IBAN</dt><dd><code id="iban">{org.bank.iban}</code> <button class="copy" type="button" data-copy="iban" data-done={t.copied}>{t.copy}</button></dd>
+          <dt>BIC</dt><dd><code>{org.bank.bic}</code></dd>
+          <dt>Bank</dt><dd>{org.bank.bank}</dd>
+          <dt>{de ? 'Verwendungszweck' : 'Reference'}</dt><dd><code id="ref">Spende</code> <button class="copy" type="button" data-copy="ref" data-done={t.copied}>{t.copy}</button></dd>
+        </dl>
+        <p class="small muted">{de ? 'Für eine Zuwendungsbestätigung geben Sie bitte Ihren Namen und Ihre Anschrift im Verwendungszweck an oder schreiben Sie uns kurz.' : 'For a donation receipt, please include your name and address in the reference or send us a short e-mail.'}</p>
+        {org.paypalUrl && <p><a class="btn btn--outline" href={org.paypalUrl} rel="noopener">PayPal</a></p>}
+      </div>
+      <div>
+        <h2>{de ? 'Wofür möchten Sie spenden?' : 'What would you like to support?'}</h2>
+        <p class="muted">{de ? 'Wählen Sie einen Zweck – der Verwendungszweck links passt sich an.' : 'Choose a purpose – the reference on the left updates.'}</p>
+        <div class="purposes" role="radiogroup" aria-label={de ? 'Spendenzweck' : 'Purpose'}>
+          {purposes.map((p, i) => (
+            <label class="purpose">
+              <input type="radio" name="purpose" value={p.ref} checked={i === purposes.length - 1} />
+              <span><strong>{p[lang]}</strong><br /><span class="small muted">{de ? 'Verwendungszweck' : 'Reference'}: „{p.ref}“</span>{p.slug && <> · <a href={projectPath(lang, p.slug)}>{de ? 'Projekt' : 'Project'}</a></>}</span>
+            </label>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--alt">
+    <div class="wrap grid grid--3">
+      <div class="panel">
+        <h3>{de ? 'Zuwendungsbestätigung' : 'Donation receipt'}</h3>
+        <p>{de ? 'Wir stellen Zuwendungsbestätigungen für das Finanzamt aus. Für Spenden bis 300 € reicht in der Regel der Kontoauszug als Nachweis (vereinfachter Zuwendungsnachweis).' : 'We issue official donation receipts (Zuwendungsbestätigung) for German tax purposes. For donations up to €300 a bank statement is usually sufficient.'}</p>
+      </div>
+      <div class="panel">
+        <h3>{de ? 'Regelmäßig helfen' : 'Give regularly'}</h3>
+        <p>{de ? 'Als Mitglied oder Fördermitglied unterstützen Sie uns verlässlich – schon ab 5 € im Monat.' : 'As a member or supporting member you give us reliable support – from €5 a month.'}</p>
+        <a class="link-arrow" href={r('join', lang, '#membership')}>{de ? 'Mitglied werden' : 'Become a member'}</a>
+      </div>
+      <div class="panel">
+        <h3>{de ? 'Transparenz' : 'Transparency'}</h3>
+        <p>{de ? 'Jedes Projekt wird getrennt abgerechnet. In unseren Transparenzberichten legen wir offen, woher unser Geld kommt und wofür wir es einsetzen.' : 'Every project is accounted for separately. Our transparency reports show where our money comes from and how we use it.'}</p>
+        <a class="link-arrow" href={r('reports', lang)}>{de ? 'Zu den Berichten' : 'View reports'}</a>
+      </div>
+    </div>
+  </section>
+</Base>
+<script>
+  const refEl = document.getElementById('ref');
+  const fromUrl = new URLSearchParams(location.search).get('ref');
+  if (fromUrl && refEl) refEl.textContent = fromUrl.slice(0, 60);
+  document.querySelectorAll<HTMLInputElement>('input[name="purpose"]').forEach((input) => {
+    if (fromUrl && input.value === fromUrl) input.checked = true;
+    input.addEventListener('change', () => { if (refEl && input.checked) refEl.textContent = input.value; });
+  });
+  document.querySelectorAll<HTMLButtonElement>('button.copy').forEach((btn) => {
+    btn.addEventListener('click', async () => {
+      const el = document.getElementById(btn.dataset.copy!);
+      if (!el) return;
+      try {
+        await navigator.clipboard.writeText(el.textContent!.replace(/\s+/g, btn.dataset.copy === 'iban' ? '' : ' ').trim());
+        const old = btn.textContent; btn.textContent = btn.dataset.done!; setTimeout(() => (btn.textContent = old), 1600);
+      } catch { /* clipboard not available */ }
+    });
+  });
+</script>
+<style>
+  .donate { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(1.5rem, 4vw, 3rem); align-items: start; }
+  .bank { border-top: 6px solid var(--gold); }
+  .bank__kv { margin-bottom: 1rem; }
+  code { font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 1rem; background: var(--bg-2); padding: .15rem .4rem; border-radius: 6px; }
+  .copy { margin-left: .4rem; font: 600 .8rem var(--font-sans); border: 1px solid var(--ink); background: var(--surface); border-radius: 999px; padding: .2rem .6rem; cursor: pointer; }
+  .purposes { display: grid; gap: .6rem; }
+  .purpose { display: flex; gap: .8rem; align-items: flex-start; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: .9rem 1rem; cursor: pointer; }
+  .purpose:has(input:checked) { border-color: var(--ink); box-shadow: inset 0 0 0 1px var(--ink); }
+  .purpose input { margin-top: .3rem; accent-color: var(--ink); }
+  @media (max-width: 860px) { .donate { grid-template-columns: 1fr; } }
+</style>

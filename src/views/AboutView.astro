@@ -1,0 +1,101 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import { r, type Lang } from '../i18n';
+import { org } from '../data/site';
+import { timeline } from '../data/impact';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const de = lang === 'de';
+const title = de ? 'Über uns' : 'About us';
+const lead = de
+  ? 'Bantu e.V. ist ein gemeinnütziger Verein für globale Bildung, Gerechtigkeit und Zusammenarbeit, 2019 in Berlin gegründet. Wir setzen uns dafür ein, dass marginalisierte Menschen in und außerhalb Deutschlands – besonders in der Region der Großen Seen Ostafrikas – Zugang zu Ressourcen erhalten, und tragen zur Dekolonisierung in Deutschland bei.'
+  : 'Bantu e.V. is a non-profit association for global education, justice and cooperation, founded in Berlin in 2019. We work to give marginalised people in and outside Germany – especially in the Great Lakes region of East Africa – access to resources, and we contribute to decolonisation in Germany.';
+---
+<Base lang={lang} title={title} description={lead} altHref={r('about', de ? 'en' : 'de')}>
+  <PageHead lang={lang} title={title} lead={lead} />
+
+  <section class="section">
+    <div class="wrap two-col">
+      <div id="name">
+        <div class="eyebrow">{de ? 'Unser Name' : 'Our name'}</div>
+        <h2>{de ? 'Abantu – Menschen' : 'Abantu – people'}</h2>
+        <p>{de
+          ? '„Bantu“ kommt von Abantu, dem Wort für „Menschen“ in vielen Sprachen Afrikas südlich der Sahara. Wir haben den Namen gewählt, weil wir überzeugt sind: Menschen unterschiedlicher Herkunft und Kulturen erreichen gemeinsam viel mehr – und unsere Unterschiede machen unsere Arbeit stärker.'
+          : '“Bantu” comes from Abantu, the word for “people” in many languages of sub-Saharan Africa. We chose the name because we believe that people from different backgrounds and cultures achieve much more together – and that our differences make our work stronger.'}</p>
+        <p>{de
+          ? 'Unsere Arbeit gründet auf Ubuntu – einem Begriff aus dem isiZulu und isiXhosa, der auch in anderen afrikanischen Sprachen, etwa im Westen Ugandas, gelebt wird. Er steht für Großzügigkeit, Rücksicht und Menschlichkeit gegenüber anderen: Niemand ist Mensch für sich allein. Mit unseren Partner*innen bündeln wir deshalb Ressourcen, Wissen und Fürsorge.'
+          : 'Our work is grounded in Ubuntu – a term from isiZulu and isiXhosa that is also lived in other African languages, for example in western Uganda. It stands for generosity, consideration and humanity towards others: nobody is human on their own. That is why we pool resources, knowledge and care with our partners.'}</p>
+        <blockquote>{org.claim[lang]}</blockquote>
+      </div>
+      <div id={de ? 'geschichte' : 'story'}>
+        <div class="eyebrow">{de ? 'Unsere Geschichte' : 'Our story'}</div>
+        <h2>{de ? 'Gegründet aus Überzeugung' : 'Founded out of conviction'}</h2>
+        <p>{de
+          ? 'Bantu e.V. wurde 2019 in Berlin von einer kleinen Gruppe von Menschen aus Uganda und Deutschland gegründet, die zu einer Welt beitragen wollten, in der alle ein gerechtes und würdevolles Leben führen können. In der Gründungsphase haben wir uns viel Zeit genommen, das Konzept der „Entwicklungs“-Zusammenarbeit zu hinterfragen und unsere eigene Position zu reflektieren. Daraus sind unsere Mission, unsere Ziele und Werte entstanden.'
+          : 'Bantu e.V. was founded in Berlin in 2019 by a small group of people from Uganda and Germany who wanted to help build a world where everyone can live a just and dignified life. During our founding phase we took a lot of time to question the concept of “development” cooperation and to reflect on our own position. Our mission, goals and values grew out of that process.'}</p>
+        <p>{de
+          ? 'Seitdem sind viele Menschen dazugekommen. Unser Büro liegt in der Kameruner Straße in Berlin-Wedding, mitten im Afrikanischen Viertel.'
+          : 'Many people have joined us since. Our office is on Kameruner Straße in Berlin-Wedding, in the heart of the African Quarter.'}</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--alt" id="mission">
+    <div class="wrap">
+      <div class="eyebrow">{de ? 'Vision, Mission, Werte' : 'Vision, mission, values'}</div>
+      <div class="grid grid--3">
+        <div class="panel"><h3>Vision</h3><p>{de ? 'Eine Welt, in der alle Menschen ein gerechtes und würdevolles Leben führen können.' : 'A world in which all people can live a just and dignified life.'}</p></div>
+        <div class="panel"><h3>Mission</h3><p>{de ? 'Wir fordern und fördern nachhaltige Entwicklung – mit einem kritischen Blick auf die politische Entwicklungszusammenarbeit und im Bewusstsein für neokoloniale Dynamiken in diesem Feld.' : 'We demand and promote sustainable development – with a critical view of political development cooperation and aware of the neo-colonial dynamics in this field.'}</p></div>
+        <div class="panel"><h3>{de ? 'Werte' : 'Values'}</h3><p><strong>Abantu</strong> – {de ? 'Menschen im Mittelpunkt.' : 'people at the centre.'}<br /><strong>Ubuntu</strong> – {de ? 'Ich bin, weil wir sind: Wir bündeln Ressourcen, Wissen und Fürsorge, um Gemeinschaften in der Diaspora, auf dem afrikanischen Kontinent und im Globalen Süden zu stärken.' : 'I am because we are: we pool resources, knowledge and care to strengthen communities in the diaspora, on the African continent and across the Global South.'}</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap two-col">
+      <div>
+        <div class="eyebrow">{de ? 'Wie wir arbeiten' : 'How we work'}</div>
+        <h2>{de ? 'Gemeinsam entscheiden' : 'Deciding together'}</h2>
+        <p>{de
+          ? 'Wir organisieren uns soziokratisch: „Wer sich zusammenschließt, soll auch gemeinsam entscheiden.“ Die Arbeit verteilt sich auf selbstorganisierte Kreise, Entscheidungen treffen wir im Konsent statt per Mehrheitsbeschluss. Die rechtliche Vertretung liegt beim Vorstand nach § 26 BGB.'
+          : 'We organise ourselves sociocratically: “those who associate together should govern together.” Work is shared among self-organising circles, and we make decisions by consent rather than majority vote. Legal representation lies with the board under § 26 of the German Civil Code (BGB).'}</p>
+        <p>{de
+          ? 'In der internationalen Zusammenarbeit beantragen wir Fördermittel in Deutschland und setzen die Projekte gemeinsam mit Partnerorganisationen vor Ort um, die ihre Gemeinden am besten kennen.'
+          : 'In international cooperation we apply for funding in Germany and implement projects together with local partner organisations that know their communities best.'}</p>
+        <a class="link-arrow" href={r('people', lang)}>{de ? 'Die Menschen hinter Bantu e.V.' : 'The people behind Bantu e.V.'}</a>
+      </div>
+      <div class="panel">
+        <h3>{de ? 'Gemeinnützige Zwecke' : 'Charitable purposes'}</h3>
+        <p class="small muted">{de ? `Freistellungsbescheid des ${org.tax.office} vom ${org.tax.exemptionNotice}` : `Exemption notice of the Berlin tax office for corporations (${org.tax.exemptionNotice})`}</p>
+        <ul>{org.tax.purposes[lang].map((p) => <li>{p}</li>)}</ul>
+        <dl class="kv small">
+          <dt>{de ? 'Vereinsregister' : 'Register'}</dt><dd>{org.register.court}, {org.register.number}</dd>
+          <dt>{de ? 'Steuernummer' : 'Tax number'}</dt><dd>{org.tax.number}</dd>
+          <dt>{de ? 'Gegründet' : 'Founded'}</dt><dd>{org.founded}</dd>
+        </dl>
+        <a class="link-arrow" href={r('reports', lang, de ? '#transparenz' : '#transparency')}>{de ? 'Transparenz & Berichte' : 'Transparency & reports'}</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--alt">
+    <div class="wrap">
+      <div class="eyebrow">{de ? 'Meilensteine' : 'Milestones'}</div>
+      <h2>{de ? 'Sieben Jahre Bantu e.V.' : 'Seven years of Bantu e.V.'}</h2>
+      <ol class="timeline">
+        {timeline.map((m) => <li><span class="timeline__year">{m.year}</span><p>{m.text[lang]}</p></li>)}
+      </ol>
+    </div>
+  </section>
+</Base>
+<style>
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2rem, 5vw, 4rem); align-items: start; }
+  .timeline { list-style: none; padding: 0; margin: 1.5rem 0 0; border-left: 3px solid var(--gold); }
+  .timeline li { position: relative; padding: 0 0 1.4rem 1.6rem; margin: 0; }
+  .timeline li::before { content: ''; position: absolute; left: -9px; top: .35rem; width: 15px; height: 15px; border-radius: 50%; background: var(--surface); border: 3px solid var(--green); }
+  .timeline__year { font-family: var(--font-serif); font-weight: 700; font-size: 1.3rem; }
+  .timeline p { margin: .2rem 0 0; max-width: 70ch; color: var(--ink-2); }
+  @media (max-width: 860px) { .two-col { grid-template-columns: 1fr; } }
+</style>

@@ -1,0 +1,83 @@
+---
+// Annual/transparency reports + the 10 items of the Initiative Transparente Zivilgesellschaft (ITZ).
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import { href, r, type Lang } from '../i18n';
+import { org } from '../data/site';
+import { downloads } from '../data/downloads';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const de = lang === 'de';
+const reports = downloads.filter((d) => d.group === 'reports');
+const years = [...new Set(reports.map((d) => d.year!))].sort((a, b) => b - a);
+const title = de ? 'Jahres- & Transparenzberichte' : 'Annual & transparency reports';
+const lead = de
+  ? 'Wir legen offen, wer wir sind, was wir tun, woher unser Geld kommt und wofür wir es ausgeben.'
+  : 'We disclose who we are, what we do, where our money comes from and how we spend it.';
+const boardText = org.board.map((b) => `${b.name} – ${b.role[lang]}`).join('; ');
+const itz = [
+  { n: 1, t: de ? 'Name, Sitz, Anschrift, Gründungsjahr' : 'Name, seat, address, year founded', v: `${org.legalName}, ${org.address.street}, ${org.address.zip} ${org.address.city} · ${de ? 'gegründet' : 'founded'} ${org.founded}` },
+  { n: 2, t: de ? 'Satzung und Ziele' : 'Statutes and objectives', v: de ? 'Ziele: siehe „Über uns“. Die Satzung senden wir auf Anfrage zu; die geänderte Fassung veröffentlichen wir nach Eintragung im Vereinsregister.' : 'Objectives: see “About us”. We send the statutes on request; the amended version will be published once registered.', link: r('about', lang, '#mission') },
+  { n: 3, t: de ? 'Steuerbegünstigung' : 'Tax-exempt status', v: de ? `Gemeinnützig anerkannt durch das ${org.tax.office}, Freistellungsbescheid vom ${org.tax.exemptionNotice}, Steuernummer ${org.tax.number}.` : `Recognised as non-profit by the Berlin tax office for corporations, exemption notice of ${org.tax.exemptionNotice}, tax number ${org.tax.number}.` },
+  { n: 4, t: de ? 'Entscheidungsträger*innen' : 'Key decision-makers', v: boardText, link: r('people', lang) },
+  { n: 5, t: de ? 'Tätigkeitsbericht' : 'Activity report', v: de ? 'Jährliche Transparenzberichte seit 2020 (unten).' : 'Annual transparency reports since 2020 (below).' },
+  { n: 6, t: de ? 'Personalstruktur' : 'Staff structure', v: de ? 'Ein hauptamtlicher Vorstand; projektbezogene Beschäftigte und Honorarkräfte; Ehrenamtliche (Stand Tätigkeitsbericht 2023–2025).' : 'One salaried board member; project-based staff and freelancers; volunteers (as of the 2023–2025 activity report).' },
+  { n: 7, t: de ? 'Mittelherkunft' : 'Sources of funds', v: de ? 'Öffentliche Zuwendungen und Stiftungsmittel, Mitgliedsbeiträge, Spenden – Details in den Transparenzberichten.' : 'Public grants and foundation funding, membership fees, donations – details in the transparency reports.' },
+  { n: 8, t: de ? 'Mittelverwendung' : 'Use of funds', v: de ? 'Jedes Förderprojekt wird separat abgerechnet und mit Verwendungsnachweis belegt – Details in den Transparenzberichten.' : 'Each funded project is accounted for separately with a proof of use – details in the transparency reports.' },
+  { n: 9, t: de ? 'Gesellschaftsrechtliche Verbundenheit' : 'Affiliations with third parties', v: de ? 'Bis Januar 2024 war Bantu e.V. Trägerverein von Tubman.Network; seitdem ist Tubman.Network e.V. eigenständig.' : 'Until January 2024 Bantu e.V. was the fiscal host of Tubman.Network; Tubman.Network e.V. has been independent since then.' },
+  { n: 10, t: de ? 'Zuwendungen über 10 % des Jahresbudgets' : 'Funders above 10% of the annual budget', v: de ? 'Siehe jeweiliger Transparenzbericht.' : 'See the respective transparency report.' },
+];
+---
+<Base lang={lang} title={title} description={lead} altHref={r('reports', de ? 'en' : 'de')}>
+  <PageHead lang={lang} title={title} lead={lead} crumbs={[{ label: de ? 'Wirkung' : 'Impact', href: r('impact', lang) }]} />
+
+  <section class="section section--tight">
+    <div class="wrap">
+      <h2>{de ? 'Berichte zum Herunterladen' : 'Reports to download'}</h2>
+      <div class="years">
+        {years.map((y) => (
+          <div class="year panel">
+            <div class="year__num">{y}</div>
+            <div class="year__links">
+              {reports.filter((d) => d.year === y).map((d) => (
+                <a href={href(d.file)} download>{d.lang === 'DE' ? (de ? 'Transparenzbericht (Deutsch)' : 'German edition') : (de ? 'Transparency Report (Englisch)' : 'English edition')} <span class="muted small">PDF · {d.size}</span></a>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+      <p class="small muted" style="margin-top:1rem">{de ? 'Die Einnahmen-Überschuss-Rechnung 2025 veröffentlichen wir nach Abgabe der Steuererklärung.' : 'We will publish the 2025 income and expenditure statement after the tax return has been filed.'}</p>
+    </div>
+  </section>
+
+  <section class="section section--alt" id={de ? 'transparenz' : 'transparency'}>
+    <div class="wrap">
+      <div class="eyebrow">{de ? 'Transparenz' : 'Transparency'}</div>
+      <h2>{de ? 'Zehn Angaben, die jede gemeinnützige Organisation machen sollte' : 'Ten disclosures every non-profit should make'}</h2>
+      <p class="lead">{de ? 'Wir orientieren uns an den zehn Punkten der Initiative Transparente Zivilgesellschaft.' : 'We follow the ten points of the Transparent Civil Society Initiative (Initiative Transparente Zivilgesellschaft).'}</p>
+      <ol class="itz">
+        {itz.map((i) => (
+          <li>
+            <span class="itz__n">{i.n}</span>
+            <div><h3>{i.t}</h3><p>{i.v}{i.link && <> <a href={i.link}>{de ? 'Mehr' : 'More'}</a></>}</p></div>
+          </li>
+        ))}
+      </ol>
+      <!-- OPEN: Punkte 6, 9, 10 mit dem Vorstand bestätigen; Freistellungsbescheid und Satzung als PDF verlinken, sobald freigegeben; ITZ-Logo erst nach bestätigter Teilnahme ergänzen. -->
+    </div>
+  </section>
+</Base>
+<style>
+  .years { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr)); gap: 1rem; }
+  .year { display: flex; gap: 1.2rem; align-items: center; padding: 1.1rem 1.3rem; }
+  .year__num { font-family: var(--font-serif); font-weight: 700; font-size: 2rem; color: var(--ink); min-width: 4ch; }
+  .year__links { display: grid; gap: .3rem; min-width: 0; }
+  .year__links a { font-weight: 600; text-decoration: none; }
+  .year__links a:hover { text-decoration: underline; }
+  .itz { list-style: none; padding: 0; margin: 1.5rem 0 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 480px), 1fr)); gap: .9rem; }
+  .itz li { display: flex; gap: 1rem; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 1rem 1.2rem; margin: 0; }
+  .itz__n { flex: none; width: 34px; height: 34px; border-radius: 50%; background: var(--gold); display: grid; place-items: center; font-weight: 700; }
+  .itz h3 { font-family: var(--font-sans); font-size: 1rem; margin: .2rem 0 .3rem; }
+  .itz p { margin: 0; color: var(--ink-2); font-size: .95rem; }
+</style>

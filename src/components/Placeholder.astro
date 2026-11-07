@@ -1,0 +1,36 @@
+---
+// Branded stand-in for photos that do not exist yet. Purely decorative for screen readers
+// (aria-hidden) – the visible caption tells editors which photo is needed (docs/04_Foto-Briefing.md).
+import Icon from './Icon.astro';
+import { ui, type Lang } from '../i18n';
+interface Props { lang: Lang; label?: string; ratio?: string; tone?: 'gold' | 'green' | 'blue' | 'sand'; compact?: boolean; icon?: 'globe' | 'school' | 'water' | 'people' | 'heart' | 'leaf' | 'coffee' | 'gift' | 'shirt' | 'bag' | 'star' }
+const { lang, label, ratio = '16 / 10', tone = 'sand', compact = false, icon } = Astro.props;
+const colors = ['#ff343d', '#ff8409', '#3cb04b', '#0071bc', '#ff6c71', '#c180a1', '#749bca', '#b9e245'];
+const bg = { gold: 'linear-gradient(135deg,#fff3c4,#ffe28a)', green: 'linear-gradient(135deg,#e3f3e5,#c7e9cc)', blue: 'linear-gradient(135deg,#e6eef8,#cbdcf0)', sand: 'linear-gradient(135deg,#f3eddf,#e6dcc4)' }[tone];
+---
+<div class="ph deco" style={`aspect-ratio:${ratio};background:${bg}`} aria-hidden="true">
+  <svg class="ph__rings" viewBox="0 0 200 200">
+    <circle cx="100" cy="100" r="58" fill="none" stroke="#febf00" stroke-width="5" />
+    <circle cx="100" cy="100" r="46" fill="none" stroke="#febf00" stroke-width="2.5" opacity=".7" />
+    {colors.map((c, i) => {
+      const a = (i / 8) * Math.PI * 2 - Math.PI / 2 - Math.PI / 8;
+      return <circle cx={100 + 80 * Math.cos(a)} cy={100 + 80 * Math.sin(a)} r="11" fill="none" stroke={c} stroke-width="5" />;
+    })}
+  </svg>
+  {icon && <span class="ph__icon"><Icon name={icon} /></span>}
+  {!compact && (
+    <div class="ph__text">
+      <span class="ph__badge">{ui[lang].photoComing}</span>
+      {label && <span class="ph__label">{label}</span>}
+    </div>
+  )}
+</div>
+<style>
+  .ph { position: relative; width: 100%; display: grid; place-items: center; overflow: hidden; }
+  .ph__rings { width: min(46%, 190px); opacity: .95; }
+  .ph__icon { position: absolute; display: grid; place-items: center; width: 64px; height: 64px; border-radius: 50%; background: #fff; color: #15130f; box-shadow: 0 6px 18px rgba(0,0,0,.12); }
+  .ph__icon :global(svg) { width: 32px; height: 32px; }
+  .ph__text { position: absolute; left: 12px; right: 12px; bottom: 12px; display: flex; flex-direction: column; align-items: flex-start; gap: .3rem; }
+  .ph__badge { background: rgba(20,20,20,.85); color: #fff; font-size: .75rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; padding: .22rem .6rem; border-radius: 999px; }
+  .ph__label { background: rgba(255,255,255,.92); color: #3b3730; font-size: .82rem; line-height: 1.35; padding: .3rem .55rem; border-radius: 6px; max-width: 100%; }
+</style>

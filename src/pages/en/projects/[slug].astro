@@ -1,0 +1,14 @@
+---
+import { getCollection } from 'astro:content';
+import ProjectView from '../../../views/ProjectView.astro';
+import { slugOf } from '../../../lib/content';
+export async function getStaticPaths() {
+  const all = await getCollection('projects', (e) => !e.data.draft);
+  return all.filter((e) => e.id.startsWith('en/')).map((project) => ({
+    params: { slug: slugOf(project.id) },
+    props: { project, hasAlt: all.some((e) => e.id === 'de/' + slugOf(project.id)) },
+  }));
+}
+const { project, hasAlt } = Astro.props;
+---
+<ProjectView lang="en" project={project} hasAlt={hasAlt} />

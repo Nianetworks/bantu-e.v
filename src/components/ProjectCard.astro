@@ -1,0 +1,42 @@
+---
+import Placeholder from './Placeholder.astro';
+import Icon from './Icon.astro';
+import { href, projectPath, ui, type Lang } from '../i18n';
+import { slugOf, type Project } from '../lib/content';
+import { projectIcon } from '../lib/icons';
+interface Props { lang: Lang; project: Project; headingLevel?: 2 | 3 }
+const { lang, project, headingLevel = 3 } = Astro.props;
+const d = project.data;
+const t = ui[lang];
+const slug = slugOf(project.id);
+const tone = d.programme === 'international' ? 'gold' : 'blue';
+const H = `h${headingLevel}`;
+---
+<article class={`card card--link pcard pcard--${d.programme}`}>
+  <div class="pcard__media">
+    {d.image
+      ? <img src={href(d.image)} alt="" loading="lazy" width="640" height="400" />
+      : <Placeholder lang={lang} tone={tone} compact icon={projectIcon(slug)} />}
+  </div>
+  <div class="card__body">
+    <div class="card__meta">
+      <span class={`tag tag--${d.status}`}><span class="dot" aria-hidden="true"></span>{t.projectStatus[d.status]}</span>
+      <span class="tag"><Icon name="pin" class="tag-ic" /> {d.country}</span>
+    </div>
+    <H><a class="stretched" href={projectPath(lang, slug)}>{d.title}</a></H>
+    <p>{d.summary}</p>
+    <div class="card__foot pcard__foot">
+      <span><Icon name="calendar" class="tag-ic" /> {d.period}</span>
+      {d.code && <span class="code">{d.code}</span>}
+    </div>
+  </div>
+</article>
+<style>
+  .pcard { border-top: 6px solid var(--gold); }
+  .pcard--inland { border-top-color: var(--blue); }
+  .pcard__media img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; }
+  .pcard__foot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .4rem 1rem; font-size: .9rem; color: var(--muted); }
+  .pcard__foot span { display: inline-flex; align-items: center; gap: .35rem; }
+  .code { font-weight: 700; color: var(--ink-2); }
+  .tag-ic { width: 1em; height: 1em; }
+</style>

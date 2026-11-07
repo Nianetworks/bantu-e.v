@@ -1,0 +1,80 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import Placeholder from '../components/Placeholder.astro';
+import { projectPath, r, type Lang } from '../i18n';
+import { getProjects, slugOf } from '../lib/content';
+import { impact } from '../data/impact';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const de = lang === 'de';
+const stories = (await getProjects(lang)).filter((p) => p.data.successStory);
+const title = de ? 'Wirkung & Erfolgsgeschichten' : 'Impact & success stories';
+const lead = de
+  ? 'Was unsere Projekte bewirkt haben – mit Zahlen aus unseren Abschlussberichten und den Geschichten dahinter.'
+  : 'What our projects have achieved – with figures from our final reports and the stories behind them.';
+---
+<Base lang={lang} title={title} description={lead} altHref={r('impact', de ? 'en' : 'de')}>
+  <PageHead lang={lang} title={title} lead={lead} />
+
+  <section class="section section--deep">
+    <div class="wrap">
+      <h2>{de ? 'Wirkung in Zahlen' : 'Impact in numbers'}</h2>
+      <div class="stat-grid">
+        {impact.map((s) => (
+          <a class="stat stat--link" href={projectPath(lang, s.project)}>
+            <div class="stat__value">{s.value[lang]}</div>
+            <div class="stat__label">{s.label[lang]}</div>
+            <div class="stat__source">{s.source[lang]}</div>
+          </a>
+        ))}
+      </div>
+      <p class="small" style="margin-top:1.25rem;color:#bdb7aa">{de ? 'Alle Zahlen stammen aus Sach- und Tätigkeitsberichten, die wir den Förderern vorgelegt haben.' : 'All figures come from narrative and activity reports submitted to our funders.'}</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <h2>{de ? 'Erfolgsgeschichten' : 'Success stories'}</h2>
+      <div class="stories">
+        {stories.map((p, i) => (
+          <article class={`story ${i % 2 ? 'story--flip' : ''}`}>
+            <div class="story__media"><Placeholder lang={lang} label={p.data.photoBrief} ratio="4 / 3" tone={p.data.programme === 'international' ? 'gold' : 'blue'} /></div>
+            <div class="story__text">
+              <div class="card__meta"><span class="tag">{p.data.country}</span><span class="tag">{p.data.period}</span></div>
+              <h3>{p.data.title}</h3>
+              <p>{p.data.summary}</p>
+              {p.data.stats.length > 0 && <ul class="story__stats">{p.data.stats.map((s) => <li><strong>{s.value}</strong> {s.label}</li>)}</ul>}
+              <a class="link-arrow" href={projectPath(lang, slugOf(p.id))}>{de ? 'Ganze Geschichte lesen' : 'Read the full story'}</a>
+            </div>
+          </article>
+        ))}
+      </div>
+      <div class="notice notice--info" style="margin-top:2rem">
+        {de ? 'Stimmen von Teilnehmenden und Partner*innen ergänzen wir hier, sobald uns ihre Einwilligung zur Veröffentlichung vorliegt.' : 'We will add voices of participants and partners here as soon as we have their consent to publish.'}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--alt section--tight">
+    <div class="wrap cta-line">
+      <p>{de ? 'Ausführliche Berichte und Finanzen finden Sie in unseren Jahres- und Transparenzberichten.' : 'Detailed reports and finances are in our annual and transparency reports.'}</p>
+      <a class="btn btn--dark" href={r('reports', lang)}>{de ? 'Zu den Berichten' : 'View reports'}</a>
+    </div>
+  </section>
+</Base>
+<style>
+  .stat--link { text-decoration: none; display: block; }
+  .stat--link:hover { border-color: var(--gold); }
+  .stories { display: grid; gap: clamp(2rem, 5vw, 3.5rem); }
+  .story { display: grid; grid-template-columns: 1fr 1.2fr; gap: clamp(1.25rem, 4vw, 3rem); align-items: center; }
+  .story--flip .story__media { order: 2; }
+  .story__media { border-radius: 18px; overflow: hidden; border: 1px solid var(--line); }
+  .story__text h3 { font-size: clamp(1.35rem, 2.4vw, 1.8rem); margin-top: .6rem; }
+  .story__stats { list-style: none; padding: 0; margin: 0 0 1rem; }
+  .story__stats li { padding: .3rem 0; border-bottom: 1px dashed var(--line); }
+  .cta-line { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem; }
+  .cta-line p { margin: 0; font-size: 1.1rem; }
+  @media (max-width: 820px) { .story { grid-template-columns: 1fr; } .story--flip .story__media { order: 0; } }
+</style>

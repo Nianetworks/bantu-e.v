@@ -1,0 +1,100 @@
+---
+// Impressum (§ 5 DDG, § 18 Abs. 2 MStV) and Datenschutzerklärung (Art. 13 DSGVO).
+// German text is legally binding; the English page is a courtesy translation.
+// Review before go-live: docs/03_Rechtliches_und_Shop-Checkliste.md
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import { r, type Lang } from '../i18n';
+import { org } from '../data/site';
+
+interface Props { lang: Lang; page: 'imprint' | 'privacy' }
+const { lang, page } = Astro.props;
+const de = lang === 'de';
+const chair = org.board[0].name;
+const title = page === 'imprint' ? (de ? 'Impressum' : 'Imprint') : (de ? 'Datenschutzerklärung' : 'Privacy policy');
+const updated = '07.11.2026';
+---
+<Base lang={lang} title={title} altHref={r(page, de ? 'en' : 'de')}>
+  <PageHead lang={lang} title={title} />
+  <section class="section section--tight">
+    <div class="narrow prose legal">
+      {!de && <p class="notice notice--info">This is a courtesy translation. The German version is legally binding.</p>}
+
+      {page === 'imprint' && (
+        <>
+          <h2>{de ? 'Angaben gemäß § 5 DDG' : 'Information pursuant to § 5 DDG (German Digital Services Act)'}</h2>
+          <p>{org.legalName}<br />{org.address.street}<br />{org.address.zip} {org.address.city}<br />{de ? 'Deutschland' : 'Germany'}</p>
+          <p>{de ? 'Postanschrift' : 'Postal address'}: {org.postbox.line}, {org.postbox.zip} {org.postbox.city}</p>
+          <h3>{de ? 'Vertreten durch den Vorstand' : 'Represented by the board'}</h3>
+          <p>{chair} ({de ? 'Vorsitzender' : 'Chair'})<br /><span class="small muted">{de ? 'Jedes Vorstandsmitglied vertritt den Verein einzeln (§ 26 BGB).' : 'Each board member represents the association individually (§ 26 BGB).'}</span></p>
+          <h3>{de ? 'Kontakt' : 'Contact'}</h3>
+          <p>{de ? 'Telefon' : 'Phone'}: {org.phone}<br />E-Mail: <a href={`mailto:${org.email}`}>{org.email}</a></p>
+          <h3>{de ? 'Registereintrag' : 'Register entry'}</h3>
+          <p>{de ? 'Eingetragen im Vereinsregister' : 'Registered in the register of associations'}<br />{de ? 'Registergericht' : 'Court of registration'}: {org.register.court}<br />{de ? 'Registernummer' : 'Register number'}: {org.register.number}</p>
+          <h3>{de ? 'Gemeinnützigkeit' : 'Non-profit status'}</h3>
+          <p>{de ? `Als gemeinnützig anerkannt durch das ${org.tax.office}, Steuernummer ${org.tax.number}.` : `Recognised as a non-profit by the Finanzamt für Körperschaften I, Berlin, tax number ${org.tax.number}.`}</p>
+          <h3>{de ? 'Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV' : 'Responsible for content pursuant to § 18 (2) MStV'}</h3>
+          <p>{chair}, {org.address.street}, {org.address.zip} {org.address.city}</p>
+          <h3>{de ? 'Verbraucherstreitbeilegung' : 'Consumer dispute resolution'}</h3>
+          <p>{de ? 'Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.' : 'We are neither willing nor obliged to take part in dispute resolution proceedings before a consumer arbitration board.'}</p>
+          <h3>{de ? 'Haftung für Inhalte und Links' : 'Liability for content and links'}</h3>
+          <p>{de ? 'Wir erstellen die Inhalte dieser Website mit Sorgfalt, übernehmen aber keine Gewähr für Vollständigkeit und Aktualität. Für Inhalte externer Links sind ausschließlich deren Betreiber verantwortlich; zum Zeitpunkt der Verlinkung waren keine Rechtsverstöße erkennbar. Bei Bekanntwerden von Rechtsverletzungen entfernen wir entsprechende Links umgehend.' : 'We create the content of this website with care but cannot guarantee that it is complete and up to date. The operators of linked external sites are solely responsible for their content; no legal violations were apparent at the time of linking. We will remove such links promptly if we become aware of any infringement.'}</p>
+          <h3>{de ? 'Bildnachweise und Urheberrecht' : 'Image credits and copyright'}</h3>
+          <p>{de ? 'Texte, Logos und Bilder dieser Website sind urheberrechtlich geschützt. Fotos werden nur mit Einwilligung der abgebildeten Personen veröffentlicht. Bildnachweise stehen am jeweiligen Bild.' : 'Texts, logos and images on this website are protected by copyright. Photos are only published with the consent of the people shown. Credits are given with each image.'}</p>
+        </>
+      )}
+
+      {page === 'privacy' && (
+        <>
+          <p class="small muted">{de ? 'Stand' : 'Last updated'}: {updated}</p>
+          <h2>1. {de ? 'Verantwortlicher' : 'Controller'}</h2>
+          <p>{org.legalName}, {org.address.street}, {org.address.zip} {org.address.city}, E-Mail: <a href={`mailto:${org.email}`}>{org.email}</a>, {de ? 'Telefon' : 'phone'}: {org.phone}. {de ? 'Vertreten durch den Vorstand' : 'Represented by the board'} ({chair}).</p>
+
+          <h2>2. {de ? 'Das Wichtigste in Kürze' : 'In brief'}</h2>
+          <ul>
+            <li>{de ? 'Diese Website setzt keine Cookies und verwendet keine Analyse- oder Tracking-Werkzeuge.' : 'This website sets no cookies and uses no analytics or tracking tools.'}</li>
+            <li>{de ? 'Schriften und alle Dateien werden vom Server dieser Website geladen – nicht von Google oder anderen Drittanbietern.' : 'Fonts and all files are loaded from this website’s server – not from Google or other third parties.'}</li>
+            <li>{de ? 'Karten, Videos oder Social-Media-Inhalte sind nicht eingebettet, sondern nur verlinkt.' : 'Maps, videos and social media content are not embedded, only linked.'}</li>
+          </ul>
+
+          <h2>3. {de ? 'Hosting und Server-Logfiles' : 'Hosting and server log files'}</h2>
+          <p>{de
+            ? 'Diese Website wird über GitHub Pages bereitgestellt, einen Dienst der GitHub, Inc., 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, USA. Beim Aufruf der Seiten verarbeitet GitHub technisch notwendige Daten, insbesondere Ihre IP-Adresse, Datum und Uhrzeit des Zugriffs, die aufgerufene Seite sowie Browser- und Systeminformationen, um die Website auszuliefern und die Sicherheit des Dienstes zu gewährleisten. Rechtsgrundlage ist unser berechtigtes Interesse an einer sicheren und zuverlässigen Bereitstellung der Website (Art. 6 Abs. 1 lit. f DSGVO). Eine Übermittlung in die USA ist möglich; GitHub ist nach dem EU-US Data Privacy Framework zertifiziert (Art. 45 DSGVO). Weitere Informationen: GitHub Privacy Statement.'
+            : 'This website is served via GitHub Pages, a service of GitHub, Inc., 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, USA. When you visit the pages, GitHub processes technically necessary data – in particular your IP address, date and time of access, the page requested and browser/system information – to deliver the website and keep the service secure. The legal basis is our legitimate interest in a secure and reliable website (Art. 6(1)(f) GDPR). Data may be transferred to the USA; GitHub is certified under the EU-US Data Privacy Framework (Art. 45 GDPR). More information: GitHub Privacy Statement.'}</p>
+
+          <h2>4. {de ? 'Kontakt per E-Mail, Telefon und Kontaktformular' : 'Contact by e-mail, phone and contact form'}</h2>
+          <p>{de
+            ? 'Wenn Sie uns kontaktieren, verarbeiten wir Ihre Angaben (z. B. Name, E-Mail-Adresse, Nachricht), um Ihre Anfrage zu beantworten (Art. 6 Abs. 1 lit. b bzw. f DSGVO). Das Kontaktformular übermittelt keine Daten an einen Server, sondern öffnet Ihr eigenes E-Mail-Programm. Wir löschen die Daten, wenn sie nicht mehr erforderlich sind und keine gesetzlichen Aufbewahrungspflichten bestehen.'
+            : 'When you contact us, we process your details (e.g. name, e-mail address, message) to answer your enquiry (Art. 6(1)(b) or (f) GDPR). The contact form does not send data to a server; it opens your own e-mail app. We delete the data when it is no longer needed and no statutory retention obligations apply.'}</p>
+
+          <h2>5. {de ? 'Anmeldung zu Veranstaltungen' : 'Event registration'}</h2>
+          <p>{de
+            ? 'Für Veranstaltungen verarbeiten wir Ihre Anmeldedaten, um die Veranstaltung zu organisieren und – soweit Fördermittelgeber dies verlangen – die Teilnahme nachzuweisen (Art. 6 Abs. 1 lit. b, c und f DSGVO). Fotos, auf denen Sie erkennbar sind, veröffentlichen wir nur mit Ihrer Einwilligung (Art. 6 Abs. 1 lit. a DSGVO), die Sie jederzeit widerrufen können. Bei Kindern ist die Einwilligung der Erziehungsberechtigten erforderlich. Für einzelne Veranstaltungen nutzen wir Online-Anmeldeformulare externer Anbieter; darauf weisen wir in der jeweiligen Einladung hin.'
+            : 'For events we process your registration data to organise the event and – where funders require it – to document attendance (Art. 6(1)(b), (c) and (f) GDPR). We only publish photos in which you are recognisable with your consent (Art. 6(1)(a) GDPR), which you can withdraw at any time. For children, the consent of a parent or guardian is required. For some events we use online registration forms by external providers; we point this out in the respective invitation.'}</p>
+
+          <h2>6. {de ? 'Spenden und Mitgliedschaft' : 'Donations and membership'}</h2>
+          <p>{de
+            ? 'Bei Spenden und Mitgliedschaften verarbeiten wir die Daten, die für die Abwicklung, die Ausstellung von Zuwendungsbestätigungen und die Mitgliederverwaltung erforderlich sind (Art. 6 Abs. 1 lit. b und c DSGVO). Steuerrechtlich relevante Unterlagen bewahren wir entsprechend den gesetzlichen Fristen auf.'
+            : 'For donations and memberships we process the data needed for processing, issuing donation receipts and membership administration (Art. 6(1)(b) and (c) GDPR). We keep documents relevant for tax purposes for the statutory periods.'}</p>
+
+          <h2>7. {de ? 'Externe Links' : 'External links'}</h2>
+          <p>{de
+            ? 'Unsere Seiten verlinken auf externe Angebote, z. B. Instagram, Facebook, X, OpenStreetMap oder später Zahlungsdienstleister im Shop. Erst wenn Sie einen Link anklicken, werden Daten an den jeweiligen Anbieter übertragen; dort gelten dessen Datenschutzbestimmungen.'
+            : 'Our pages link to external services such as Instagram, Facebook, X, OpenStreetMap or, later, payment providers in the shop. Data is only transferred to the respective provider when you click a link; their privacy policies apply there.'}</p>
+
+          <h2>8. {de ? 'Ihre Rechte' : 'Your rights'}</h2>
+          <p>{de
+            ? 'Sie haben das Recht auf Auskunft (Art. 15 DSGVO), Berichtigung (Art. 16), Löschung (Art. 17), Einschränkung der Verarbeitung (Art. 18), Datenübertragbarkeit (Art. 20) und Widerspruch (Art. 21) sowie das Recht, erteilte Einwilligungen jederzeit mit Wirkung für die Zukunft zu widerrufen (Art. 7 Abs. 3). Wenden Sie sich dazu an '
+            : 'You have the right of access (Art. 15 GDPR), rectification (Art. 16), erasure (Art. 17), restriction of processing (Art. 18), data portability (Art. 20) and objection (Art. 21), and you may withdraw consent at any time with effect for the future (Art. 7(3)). Please contact '}<a href={`mailto:${org.email}`}>{org.email}</a>.</p>
+          <p>{de
+            ? 'Sie können sich außerdem bei einer Datenschutz-Aufsichtsbehörde beschweren, z. B. bei der Berliner Beauftragten für Datenschutz und Informationsfreiheit, Alt-Moabit 59–61, 10555 Berlin.'
+            : 'You may also lodge a complaint with a data protection supervisory authority, e.g. the Berlin Commissioner for Data Protection and Freedom of Information, Alt-Moabit 59–61, 10555 Berlin.'}</p>
+        </>
+      )}
+    </div>
+  </section>
+</Base>
+<style>
+  .legal h2 { font-size: 1.3rem; }
+  .legal h3 { font-size: 1.05rem; font-family: var(--font-sans); margin-top: 1.4rem; }
+</style>

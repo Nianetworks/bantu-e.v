@@ -1,0 +1,47 @@
+---
+import Icon from './Icon.astro';
+import { formatDate, formatLongDate, href, newsPath, ui, type Lang } from '../i18n';
+import { slugOf, type NewsItem } from '../lib/content';
+interface Props { lang: Lang; item: NewsItem; showImage?: boolean; headingLevel?: 2 | 3 }
+const { lang, item, showImage = false, headingLevel = 3 } = Astro.props;
+const d = item.data;
+const t = ui[lang];
+const H = `h${headingLevel}`;
+const isEvent = d.type === 'event' && d.eventStart;
+const multiDay = isEvent && d.eventEnd && formatDate(d.eventStart!, lang) !== formatDate(d.eventEnd, lang);
+const when = !isEvent ? '' : multiDay ? `${formatDate(d.eventStart!, lang, { day: 'numeric', month: 'short' })} – ${formatDate(d.eventEnd!, lang, { day: 'numeric', month: 'short', year: 'numeric' })}` : formatLongDate(d.eventStart!, lang);
+const day = isEvent ? formatDate(d.eventStart!, lang, { day: 'numeric' }) : '';
+const mon = isEvent ? formatDate(d.eventStart!, lang, { month: 'short' }) : '';
+---
+<article class={`card card--link ncard ${isEvent ? 'ncard--event' : ''}`}>
+  {showImage && d.image && <img src={href(d.image)} alt="" loading="lazy" class="ncard__img" />}
+  <div class="card__body">
+    <div class="ncard__top">
+      {isEvent && <div class="datebox" aria-hidden="true"><span class="datebox__d">{day}</span><span class="datebox__m">{mon}</span></div>}
+      <div class="card__meta">
+        <span class={`tag ${isEvent ? 'tag--event' : ''}`}>{t.type[d.type]}</span>
+        {isEvent
+          ? <span><strong>{when}</strong></span>
+          : <time datetime={d.date.toISOString()}>{formatDate(d.date, lang)}</time>}
+      </div>
+    </div>
+    <H><a class="stretched" href={newsPath(lang, slugOf(item.id))}>{d.title}</a></H>
+    <p>{d.summary}</p>
+    {isEvent && (
+      <ul class="ncard__facts">
+        {d.eventTime && <li><Icon name="clock" class="ic" /> <span class="sr-only">{t.when}: </span>{d.eventTime}</li>}
+        {d.location && <li><Icon name="pin" class="ic" /> <span class="sr-only">{t.where}: </span>{d.location}</li>}
+      </ul>
+    )}
+  </div>
+</article>
+<style>
+  .ncard__img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; object-position: top; background: var(--bg-2); }
+  .ncard__top { display: flex; gap: .9rem; align-items: center; }
+  .datebox { flex: none; width: 58px; text-align: center; border-radius: 12px; background: var(--gold); color: #000; padding: .35rem 0; line-height: 1.05; }
+  .datebox__d { display: block; font-family: var(--font-serif); font-weight: 700; font-size: 1.5rem; }
+  .datebox__m { display: block; font-size: .75rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; }
+  .ncard__facts { list-style: none; padding: 0; margin: .3rem 0 0; display: grid; gap: .3rem; font-size: .95rem; color: var(--ink-2); }
+  .ncard__facts li { display: flex; gap: .45rem; align-items: flex-start; margin: 0; }
+  .ic { width: 1.1em; height: 1.1em; margin-top: .2em; flex: none; }
+</style>

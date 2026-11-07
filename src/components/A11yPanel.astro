@@ -1,0 +1,166 @@
+---
+// Accessibility settings: text size, colour theme (dark / high contrast), readable font,
+// spacing, link highlighting, stop animations, read aloud (browser speech, on-device).
+// Settings are stored only in this browser (localStorage) and applied before first paint
+// by the inline script in Base.astro.
+import Icon from './Icon.astro';
+import { r, type Lang } from '../i18n';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const de = lang === 'de';
+const t = de
+  ? { title: 'Darstellung anpassen', text: 'Textgröße', theme: 'Farben', std: 'Standard', dark: 'Dunkel', contrast: 'Hoher Kontrast', font: 'Gut lesbare Schrift', spacing: 'Mehr Abstand', links: 'Links hervorheben', motion: 'Bewegung stoppen', read: 'Seite vorlesen', stop: 'Vorlesen stoppen', reset: 'Alles zurücksetzen', close: 'Schließen', more: 'Erklärung zur Barrierefreiheit', easy: 'Einfache Sprache', note: 'Ihre Einstellungen bleiben nur in diesem Browser gespeichert.', on: 'an', off: 'aus' }
+  : { title: 'Adjust the display', text: 'Text size', theme: 'Colours', std: 'Default', dark: 'Dark', contrast: 'High contrast', font: 'Easy-to-read font', spacing: 'More spacing', links: 'Highlight links', motion: 'Stop motion', read: 'Read page aloud', stop: 'Stop reading', reset: 'Reset all', close: 'Close', more: 'Accessibility statement', easy: 'Easy read', note: 'Your settings are only stored in this browser.', on: 'on', off: 'off' };
+const sizes = [['md', 'A', '100 %'], ['lg', 'A+', '112 %'], ['xl', 'A++', '125 %'], ['xxl', 'A+++', '150 %']];
+---
+<div id="a11y-panel" class="a11y-panel" role="region" aria-labelledby="a11y-title" hidden data-lang={lang}>
+  <div class="a11y-panel__head">
+    <h2 id="a11y-title"><Icon name="access" /> {t.title}</h2>
+    <button type="button" class="a11y-close" data-a11y-close aria-label={t.close}><Icon name="close" /></button>
+  </div>
+
+  <fieldset>
+    <legend>{t.text}</legend>
+    <div class="seg">
+      {sizes.map(([v, label, pct]) => (
+        <button type="button" data-a11y="text" data-value={v} aria-pressed="false" aria-label={`${t.text} ${pct}`}><span aria-hidden="true" style={`font-size:${v === 'md' ? 1 : v === 'lg' ? 1.12 : v === 'xl' ? 1.25 : 1.4}rem`}>{label}</span></button>
+      ))}
+    </div>
+  </fieldset>
+
+  <fieldset>
+    <legend>{t.theme}</legend>
+    <div class="seg">
+      <button type="button" data-a11y="theme" data-value="light" aria-pressed="false"><Icon name="sun" /> {t.std}</button>
+      <button type="button" data-a11y="theme" data-value="dark" aria-pressed="false"><Icon name="moon" /> {t.dark}</button>
+      <button type="button" data-a11y="theme" data-value="contrast" aria-pressed="false"><Icon name="contrast" /> {t.contrast}</button>
+    </div>
+  </fieldset>
+
+  <div class="toggles">
+    <button type="button" data-a11y="font" data-value="readable" aria-pressed="false"><Icon name="text" /> {t.font}</button>
+    <button type="button" data-a11y="spacing" data-value="wide" aria-pressed="false"><Icon name="spacing" /> {t.spacing}</button>
+    <button type="button" data-a11y="links" data-value="underline" aria-pressed="false"><Icon name="link" /> {t.links}</button>
+    <button type="button" data-a11y="motion" data-value="reduce" aria-pressed="false"><Icon name="pause" /> {t.motion}</button>
+  </div>
+
+  <div class="a11y-read" data-tts hidden>
+    <button type="button" class="btn btn--gold" data-tts-start><Icon name="speaker" /> {t.read}</button>
+    <button type="button" class="btn btn--outline" data-tts-stop hidden><Icon name="stop" /> {t.stop}</button>
+  </div>
+
+  <div class="a11y-foot">
+    <button type="button" class="btn btn--outline" data-a11y-reset><Icon name="reset" /> {t.reset}</button>
+    <p class="small"><a href={r('accessibility', lang)}>{t.more}</a> · <a href={r('easy', lang)}>{t.easy}</a></p>
+    <p class="small muted">{t.note}</p>
+  </div>
+  <p class="sr-only" aria-live="polite" data-a11y-status></p>
+</div>
+
+<script>
+  type Prefs = Record<string, string>;
+  const KEY = 'bantu-a11y';
+  const html = document.documentElement;
+  const panel = document.getElementById('a11y-panel') as HTMLElement;
+  const status = panel.querySelector('[data-a11y-status]') as HTMLElement;
+  const triggers = () => Array.from(document.querySelectorAll<HTMLButtonElement>('[data-a11y-toggle]'));
+  const load = (): Prefs => { try { return JSON.parse(localStorage.getItem(KEY) || '{}'); } catch { return {}; } };
+  const save = (p: Prefs) => { try { localStorage.setItem(KEY, JSON.stringify(p)); } catch { /* storage blocked */ } };
+  let prefs = load();
+
+  const apply = () => {
+    ['text', 'theme', 'font', 'spacing', 'links', 'motion'].forEach((k) => {
+      const v = prefs[k];
+      if (v && !(k === 'text' && v === 'md') && !(k === 'theme' && v === 'light')) html.setAttribute(`data-${k}`, v);
+      else html.removeAttribute(`data-${k}`);
+    });
+    panel.querySelectorAll<HTMLButtonElement>('[data-a11y]').forEach((b) => {
+      const k = b.dataset.a11y!; const v = b.dataset.value!;
+      const current = prefs[k] ?? (k === 'text' ? 'md' : k === 'theme' ? 'light' : '');
+      b.setAttribute('aria-pressed', String(current === v));
+    });
+  };
+
+  const setOpen = (open: boolean, focusTrigger = false) => {
+    panel.hidden = !open;
+    triggers().forEach((t) => t.setAttribute('aria-expanded', String(open)));
+    if (open) (panel.querySelector('button') as HTMLButtonElement)?.focus();
+    else if (focusTrigger) triggers()[0]?.focus();
+  };
+
+  document.addEventListener('click', (e) => {
+    const target = e.target as HTMLElement;
+    if (target.closest('[data-a11y-toggle]')) { setOpen(panel.hidden); return; }
+    if (!panel.hidden && !panel.contains(target)) setOpen(false);
+  });
+  panel.querySelector('[data-a11y-close]')?.addEventListener('click', () => setOpen(false, true));
+  panel.addEventListener('keydown', (e) => { if (e.key === 'Escape') setOpen(false, true); });
+
+  panel.querySelectorAll<HTMLButtonElement>('[data-a11y]').forEach((b) => {
+    b.addEventListener('click', () => {
+      const k = b.dataset.a11y!; const v = b.dataset.value!;
+      const isToggle = ['font', 'spacing', 'links', 'motion'].includes(k);
+      prefs[k] = isToggle && prefs[k] === v ? '' : v;
+      save(prefs); apply();
+      const label = b.textContent?.trim() || b.getAttribute('aria-label') || '';
+      const de = panel.dataset.lang === 'de';
+      status.textContent = isToggle ? `${label}: ${prefs[k] ? (de ? 'an' : 'on') : (de ? 'aus' : 'off')}` : label;
+    });
+  });
+  panel.querySelector('[data-a11y-reset]')?.addEventListener('click', () => {
+    prefs = {}; save(prefs); apply();
+    status.textContent = panel.dataset.lang === 'de' ? 'Einstellungen zurückgesetzt' : 'Settings reset';
+  });
+  apply();
+
+  // Read aloud – uses the browser's built-in speech synthesis (nothing is sent to us).
+  const tts = panel.querySelector('[data-tts]') as HTMLElement;
+  if ('speechSynthesis' in window) {
+    tts.hidden = false;
+    const startBtn = tts.querySelector('[data-tts-start]') as HTMLButtonElement;
+    const stopBtn = tts.querySelector('[data-tts-stop]') as HTMLButtonElement;
+    const reset = () => { startBtn.hidden = false; stopBtn.hidden = true; };
+    startBtn.addEventListener('click', () => {
+      const main = document.querySelector('main');
+      if (!main) return;
+      const clone = main.cloneNode(true) as HTMLElement;
+      clone.querySelectorAll('[aria-hidden="true"], .deco, script, style, .sr-only').forEach((n) => n.remove());
+      const text = (clone.innerText || clone.textContent || '').replace(/\s+\n/g, '\n').trim();
+      const chunks = text.split(/(?<=[.!?:])\s+|\n+/).map((s) => s.trim()).filter(Boolean);
+      const langCode = html.lang === 'de' ? 'de-DE' : 'en-GB';
+      const voice = speechSynthesis.getVoices().find((v) => v.lang.startsWith(html.lang));
+      speechSynthesis.cancel();
+      chunks.forEach((c, i) => {
+        const u = new SpeechSynthesisUtterance(c);
+        u.lang = langCode; if (voice) u.voice = voice; u.rate = 0.95;
+        if (i === chunks.length - 1) u.onend = reset;
+        speechSynthesis.speak(u);
+      });
+      startBtn.hidden = true; stopBtn.hidden = false; stopBtn.focus();
+    });
+    stopBtn.addEventListener('click', () => { speechSynthesis.cancel(); reset(); startBtn.focus(); });
+    window.addEventListener('pagehide', () => speechSynthesis.cancel());
+  }
+</script>
+
+<style>
+  .a11y-panel { position: fixed; z-index: 120; top: calc(var(--util-h, 40px) + 6px); right: max(12px, calc((100vw - var(--wrap)) / 2)); width: min(420px, calc(100vw - 24px)); max-height: calc(100vh - var(--util-h, 40px) - 16px); overflow-y: auto; background: var(--surface); color: var(--ink); border: 2px solid var(--ink); border-radius: 20px; box-shadow: 0 20px 60px rgba(0,0,0,.25); padding: 1.1rem 1.2rem 1.2rem; }
+  .a11y-panel__head { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: .5rem; }
+  .a11y-panel h2 { font-family: var(--font-sans); font-size: 1.15rem; margin: 0; display: flex; gap: .5rem; align-items: center; }
+  .a11y-close { width: var(--tap); height: var(--tap); border-radius: 50%; border: 2px solid var(--line); background: transparent; color: var(--ink); cursor: pointer; display: grid; place-items: center; }
+  fieldset { border: 0; padding: 0; margin: .9rem 0 0; }
+  legend { font-weight: 700; font-size: .95rem; margin-bottom: .45rem; padding: 0; }
+  .seg { display: flex; flex-wrap: wrap; gap: .4rem; }
+  .seg button, .toggles button { min-height: var(--tap); padding: .45rem .8rem; border-radius: 12px; border: 2px solid var(--line-strong); background: var(--bg); color: var(--ink); font: 700 .95rem var(--font-sans); cursor: pointer; display: inline-flex; align-items: center; gap: .45rem; }
+  .seg button { flex: 1 1 auto; justify-content: center; }
+  .seg button[aria-pressed='true'], .toggles button[aria-pressed='true'] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+  .toggles { display: grid; grid-template-columns: 1fr 1fr; gap: .45rem; margin-top: 1rem; }
+  .toggles button { justify-content: flex-start; text-align: left; }
+  .toggles button[aria-pressed='true']::after { content: '✓'; margin-left: auto; }
+  .a11y-read { display: flex; gap: .5rem; margin-top: 1rem; }
+  .a11y-read .btn { flex: 1; }
+  .a11y-foot { margin-top: 1rem; border-top: 1px solid var(--line); padding-top: .9rem; }
+  .a11y-foot p { margin: .6rem 0 0; }
+  .icon { width: 1.2em; height: 1.2em; }
+  @media (max-width: 420px) { .toggles { grid-template-columns: 1fr; } }
+</style>

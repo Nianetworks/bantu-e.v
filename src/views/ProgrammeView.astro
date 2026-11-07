@@ -1,0 +1,115 @@
+---
+// Renders: programme overview (programme = undefined), one programme, or the full project list.
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import { r, ui, type Lang } from '../i18n';
+import { getProjects } from '../lib/content';
+
+interface Props { lang: Lang; programme?: 'international' | 'inland'; mode?: 'overview' | 'programme' | 'all' }
+const { lang, programme, mode = 'programme' } = Astro.props;
+const de = lang === 'de';
+const t = ui[lang];
+const all = await getProjects(lang);
+const list = programme ? all.filter((p) => p.data.programme === programme) : all;
+const active = list.filter((p) => p.data.status !== 'completed');
+const done = list.filter((p) => p.data.status === 'completed');
+
+const copy = {
+  international: {
+    title: t.programme.international,
+    lead: de
+      ? 'Mit Partnerorganisationen in Uganda und Burundi schaffen wir Zugang zu frühkindlicher und beruflicher Bildung, Trinkwasser, Gesundheit und digitaler Teilhabe. Die Projekte werden von den Partnern vor Ort geplant und umgesetzt; Bantu e.V. beantragt die Förderung in Deutschland, begleitet die Umsetzung und rechnet transparent ab.'
+      : 'With partner organisations in Uganda and Burundi we create access to early childhood and vocational education, drinking water, health and digital participation. Projects are planned and run by our local partners; Bantu e.V. secures funding in Germany, accompanies implementation and accounts for every euro.',
+    principles: de
+      ? ['Partnerschaft auf Augenhöhe: Die Gemeinden entscheiden, was gebraucht wird.', 'Kritischer Blick auf „Entwicklungszusammenarbeit“ und neokoloniale Muster.', 'Nachhaltigkeit von Anfang an: Betriebskonzepte, lokale Fachkräfte, Wartung.', 'Inklusion als Querschnittsthema – besonders für Menschen mit Behinderung.']
+      : ['Partnership as equals: communities decide what is needed.', 'A critical view of “development” and neo-colonial patterns.', 'Sustainability from day one: operating plans, local staff, maintenance.', 'Inclusion as a cross-cutting theme – especially for people with disabilities.'],
+    alt: { key: 'international' as const },
+  },
+  inland: {
+    title: t.programme.inland,
+    lead: de
+      ? 'In Berlin und bundesweit verbinden wir globales Lernen mit Empowerment: Bildungsprojekte an Schulen, Begegnungsformate für die afrikanische Diaspora und ihre Nachbarschaften, Unterstützung für Geflüchtete und Beiträge zur Dekolonisierung von Bildung und Erinnerung.'
+      : 'In Berlin and across Germany we combine global learning with empowerment: education projects in schools, encounter formats for the African diaspora and their neighbourhoods, support for refugees and contributions to decolonising education and memory.',
+    principles: de
+      ? ['Globales Lernen mit Stimmen aus dem Globalen Süden – live zugeschaltet.', 'Barrierearme Formate: kostenfrei, mit Kinderbetreuung und Übersetzung.', 'Communities gestalten selbst – sie sind keine Hilfeempfangenden.', 'Kooperation mit Schulen, Bezirk und Partnervereinen.']
+      : ['Global learning with voices from the Global South – joining live.', 'Low-barrier formats: free, with childcare and interpretation.', 'Communities shape the work themselves – they are not recipients of help.', 'Cooperation with schools, the district and partner associations.'],
+    alt: { key: 'inland' as const },
+  },
+};
+const c = programme ? copy[programme] : null;
+const title = mode === 'all' ? t.allProjects : mode === 'overview' ? (de ? 'Programme & Projekte' : 'Programmes & projects') : c!.title;
+const altHref = mode === 'all' ? r('projects', de ? 'en' : 'de') : mode === 'overview' ? r('programmes', de ? 'en' : 'de') : r(programme!, de ? 'en' : 'de');
+const crumbs = mode === 'overview' ? [] : [{ label: de ? 'Programme' : 'Programmes', href: r('programmes', lang) }];
+const lead = mode === 'all'
+  ? (de ? 'Alle laufenden und abgeschlossenen Projekte von Bantu e.V. seit 2021 – in Uganda, Burundi und Deutschland.' : 'All ongoing and completed projects of Bantu e.V. since 2021 – in Uganda, Burundi and Germany.')
+  : mode === 'overview'
+    ? (de ? 'Unsere Arbeit gliedert sich in zwei Programme. Beide folgen dem Ubuntu-Gedanken: Wir sind Menschen durch andere Menschen.' : 'Our work is organised in two programmes. Both follow the idea of Ubuntu: we are people through other people.')
+    : c!.lead;
+---
+<Base lang={lang} title={title} description={lead} altHref={altHref}>
+  <PageHead lang={lang} title={title} lead={lead} crumbs={crumbs} eyebrow={mode === 'programme' ? (de ? 'Programm' : 'Programme') : undefined} />
+
+  {mode === 'overview' && (
+    <section class="section">
+      <div class="wrap grid grid--2">
+        {(['international', 'inland'] as const).map((k) => {
+          const items = all.filter((p) => p.data.programme === k);
+          return (
+            <article class="panel prog-panel">
+              <div class="eyebrow">{items.filter((p) => p.data.status === 'active').length} {de ? 'laufende' : 'ongoing'} · {items.length} {de ? 'Projekte gesamt' : 'projects in total'}</div>
+              <h2>{copy[k].title}</h2>
+              <p>{copy[k].lead}</p>
+              <ul class="mini-list">
+                {items.slice(0, 6).map((p) => <li><span class={`tag tag--${p.data.status}`}>{t.projectStatus[p.data.status]}</span> {p.data.title}</li>)}
+              </ul>
+              <a class="btn btn--dark" href={r(k, lang)}>{de ? 'Zum Programm' : 'View programme'}</a>
+            </article>
+          );
+        })}
+      </div>
+    </section>
+  )}
+
+  {mode === 'programme' && c && (
+    <section class="section section--tight">
+      <div class="wrap">
+        <div class="panel principles">
+          <h2 class="h3">{de ? 'So arbeiten wir' : 'How we work'}</h2>
+          <ul>{c.principles.map((p) => <li>{p}</li>)}</ul>
+        </div>
+      </div>
+    </section>
+  )}
+
+  {mode !== 'overview' && (
+    <>
+      {active.length > 0 && (
+        <section class="section section--tight">
+          <div class="wrap">
+            <h2>{de ? 'Laufende Projekte' : 'Current projects'}</h2>
+            <div class="grid grid--3">{active.map((p) => <ProjectCard lang={lang} project={p} />)}</div>
+          </div>
+        </section>
+      )}
+      {done.length > 0 && (
+        <section class="section section--alt">
+          <div class="wrap">
+            <h2>{de ? 'Abgeschlossene Projekte' : 'Completed projects'}</h2>
+            <div class="grid grid--3">{done.map((p) => <ProjectCard lang={lang} project={p} />)}</div>
+          </div>
+        </section>
+      )}
+    </>
+  )}
+</Base>
+<style>
+  .prog-panel { display: flex; flex-direction: column; gap: .4rem; }
+  .prog-panel h2 { margin: 0; }
+  .prog-panel .btn { align-self: flex-start; margin-top: auto; }
+  .mini-list { list-style: none; padding: 0; margin: .5rem 0 1.25rem; }
+  .mini-list li { padding: .45rem 0; border-bottom: 1px solid var(--line); display: flex; gap: .6rem; align-items: center; font-size: .97rem; }
+  .principles ul { columns: 2 320px; column-gap: 2.5rem; margin: 0; }
+  .principles li { break-inside: avoid; margin-bottom: .6rem; }
+  .h3 { font-size: 1.4rem; }
+</style>

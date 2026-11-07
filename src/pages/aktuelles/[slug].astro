@@ -1,0 +1,14 @@
+---
+import { getCollection } from 'astro:content';
+import NewsItemView from '../../views/NewsItemView.astro';
+import { slugOf } from '../../lib/content';
+export async function getStaticPaths() {
+  const all = await getCollection('news', (e) => !e.data.draft);
+  return all.filter((e) => e.id.startsWith('de/')).map((item) => ({
+    params: { slug: slugOf(item.id) },
+    props: { item, hasAlt: all.some((e) => e.id === 'en/' + slugOf(item.id)) },
+  }));
+}
+const { item, hasAlt } = Astro.props;
+---
+<NewsItemView lang="de" item={item} hasAlt={hasAlt} />

@@ -1,0 +1,83 @@
+---
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import AnnouncementBar from '../components/AnnouncementBar.astro';
+import { href, ui, type Lang } from '../i18n';
+import { org } from '../data/site';
+
+interface Props {
+  lang: Lang;
+  title: string;
+  description?: string;
+  /** URL of the same page in the other language (already base-prefixed) */
+  altHref?: string;
+  image?: string;
+  noindex?: boolean;
+}
+const { lang, title, description, altHref, image, noindex } = Astro.props;
+const t = ui[lang];
+const fullTitle = title === org.shortName ? `${org.shortName} – ${org.tagline[lang]}` : `${title} | ${org.shortName}`;
+const desc = description ?? t.footerAbout;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const ogImage = new URL(href(image ?? '/brand/og-default.jpg'), Astro.site);
+const otherLang: Lang = lang === 'de' ? 'en' : 'de';
+const alt = altHref ? new URL(altHref, Astro.site) : null;
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'NGO',
+  name: org.legalName,
+  alternateName: org.shortName,
+  url: org.web,
+  logo: new URL(href('/brand/bantu-logo.png'), Astro.site).toString(),
+  email: org.email,
+  telephone: org.phone,
+  foundingDate: String(org.founded),
+  address: { '@type': 'PostalAddress', streetAddress: org.address.street, postalCode: org.address.zip, addressLocality: org.address.city, addressCountry: 'DE' },
+  sameAs: org.socials.map((s) => s.url),
+};
+// Applied before first paint so saved accessibility settings never "flash".
+const prefsScript = `try{var p=JSON.parse(localStorage.getItem('bantu-a11y')||'{}'),h=document.documentElement;['text','theme','font','spacing','links','motion'].forEach(function(k){var v=p[k];if(v&&!(k==='text'&&v==='md')&&!(k==='theme'&&v==='light'))h.setAttribute('data-'+k,v)})}catch(e){}`;
+// External links: open in new tab and tell screen-reader users.
+const extScript = `document.querySelectorAll('main a[href^="http"]').forEach(function(a){if(a.host!==location.host){a.target='_blank';a.rel='noopener';if(!a.querySelector('.sr-only')){var s=document.createElement('span');s.className='sr-only';s.textContent=' ${t.newWindow}';a.appendChild(s)}}})`;
+---
+<!doctype html>
+<html lang={lang === 'de' ? 'de' : 'en'}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script is:inline set:html={prefsScript} />
+    <title>{fullTitle}</title>
+    <meta name="description" content={desc} />
+    <link rel="canonical" href={canonical} />
+    {alt && <link rel="alternate" hreflang={lang} href={canonical} />}
+    {alt && <link rel="alternate" hreflang={otherLang} href={alt} />}
+    {noindex && <meta name="robots" content="noindex" />}
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={org.shortName} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={desc} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:locale" content={lang === 'de' ? 'de_DE' : 'en_GB'} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="theme-color" content="#14231c" />
+    <link rel="icon" type="image/png" sizes="32x32" href={href('/favicon-32.png')} />
+    <link rel="apple-touch-icon" href={href('/apple-touch-icon.png')} />
+    <link rel="alternate" type="application/rss+xml" title={`${org.shortName} – RSS`} href={href(lang === 'de' ? '/aktuelles/rss.xml' : '/en/news/rss.xml')} />
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  </head>
+  <body>
+    <nav class="skip-links" aria-label={lang === 'de' ? 'Sprunglinks' : 'Skip links'}>
+      <a href="#main">{t.skip}</a>
+      <a href="#main-nav">{t.skipNav}</a>
+      <a href="#footer">{t.skipFooter}</a>
+    </nav>
+    <AnnouncementBar lang={lang} />
+    <Header lang={lang} altHref={altHref} />
+    <main id="main" tabindex="-1">
+      <slot />
+    </main>
+    <Footer lang={lang} />
+    <script is:inline set:html={extScript} />
+  </body>
+</html>

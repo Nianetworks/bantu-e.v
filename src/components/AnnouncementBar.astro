@@ -1,0 +1,29 @@
+---
+// Shows the newest pinned news/event (front matter `pinUntil`) above the header.
+// Expired items are also hidden in the browser, so a stale build never shows old news.
+import { getPinned, slugOf } from '../lib/content';
+import { newsPath, type Lang } from '../i18n';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const pinned = (await getPinned(lang))[0];
+---
+{pinned && (
+  <aside class="announce" data-until={pinned.data.pinUntil!.toISOString()} aria-label={lang === 'de' ? 'Ankündigung' : 'Announcement'}>
+    <div class="wrap announce__inner">
+      <span class="announce__label">{pinned.data.type === 'event' ? (lang === 'de' ? 'Termin' : 'Event') : (lang === 'de' ? 'Aktuell' : 'News')}</span>
+      <a href={newsPath(lang, slugOf(pinned.id))}>{pinned.data.title}{pinned.data.eventTime ? ` · ${pinned.data.eventTime}` : ''}</a>
+    </div>
+  </aside>
+)}
+<script>
+  document.querySelectorAll<HTMLElement>('.announce[data-until]').forEach((el) => {
+    const until = new Date(el.dataset.until!).getTime() + 24 * 3600 * 1000;
+    if (Date.now() > until) el.remove();
+  });
+</script>
+<style>
+  .announce { background: var(--gold); color: #000; font-size: .95rem; }
+  .announce__inner { display: flex; gap: .75rem; align-items: center; justify-content: center; padding-block: .5rem; text-align: center; flex-wrap: wrap; }
+  .announce__label { background: #000; color: var(--gold); font-weight: 700; font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; padding: .15rem .55rem; border-radius: 999px; }
+  .announce a { color: #000; font-weight: 700; }
+</style>

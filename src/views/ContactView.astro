@@ -1,0 +1,65 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import { r, type Lang } from '../i18n';
+import { features, org } from '../data/site';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const de = lang === 'de';
+const title = de ? 'Kontakt' : 'Contact';
+const lead = de ? 'Wir freuen uns auf Ihre Nachricht.' : 'We look forward to hearing from you.';
+const osm = 'https://www.openstreetmap.org/search?query=Kameruner%20Str.%201%2C%2013351%20Berlin';
+---
+<Base lang={lang} title={title} description={lead} altHref={r('contact', de ? 'en' : 'de')}>
+  <PageHead lang={lang} title={title} lead={lead} />
+  <section class="section section--tight">
+    <div class="wrap contact">
+      <div class="panel">
+        <h2 class="h3">{org.shortName}</h2>
+        <dl class="kv">
+          <dt>{de ? 'Büro' : 'Office'}</dt><dd>{org.address.street}<br />{org.address.zip} {org.address.city}<br /><a href={osm} rel="noopener" target="_blank">{de ? 'Auf der Karte (OpenStreetMap)' : 'Map (OpenStreetMap)'}</a></dd>
+          <dt>{de ? 'Post' : 'Post'}</dt><dd>{org.postbox.line}<br />{org.postbox.zip} {org.postbox.city}</dd>
+          <dt>E-Mail</dt><dd><a href={`mailto:${org.email}`}>{org.email}</a></dd>
+          <dt>{de ? 'Telefon' : 'Phone'}</dt><dd><a href={`tel:${org.phoneHref}`}>{org.phone}</a></dd>
+          <dt>Social Media</dt><dd>{org.socials.map((s, i) => <>{i > 0 && ' · '}<a href={s.url} rel="noopener" target="_blank">{s.name}</a></>)}</dd>
+        </dl>
+      </div>
+      <form class="panel form" id="contact-form" method="post" action={features.formEndpoint || undefined} data-mailto={org.email}>
+        <h2 class="h3">{de ? 'Nachricht schreiben' : 'Send a message'}</h2>
+        <label>{de ? 'Name' : 'Name'}<input name="name" autocomplete="name" required /></label>
+        <label>E-Mail<input name="email" type="email" autocomplete="email" required /></label>
+        <label>{de ? 'Thema' : 'Topic'}
+          <select name="topic">
+            {(de ? ['Allgemeine Anfrage', 'Spende', 'Mitgliedschaft', 'Ehrenamt', 'Kooperation', 'Presse', 'Shop'] : ['General enquiry', 'Donation', 'Membership', 'Volunteering', 'Partnership', 'Press', 'Shop']).map((o) => <option>{o}</option>)}
+          </select>
+        </label>
+        <label>{de ? 'Nachricht' : 'Message'}<textarea name="message" rows="6" required></textarea></label>
+        <p class="small muted">{de ? 'Ihre Angaben verwenden wir nur, um Ihre Anfrage zu beantworten. Mehr in der ' : 'We only use your details to answer your enquiry. More in our '}<a href={r('privacy', lang)}>{de ? 'Datenschutzerklärung' : 'privacy policy'}</a>.</p>
+        <button class="btn btn--gold" type="submit">{de ? 'Senden' : 'Send'}</button>
+        {!features.formEndpoint && <p class="small muted">{de ? 'Beim Senden öffnet sich Ihr E-Mail-Programm mit der vorbereiteten Nachricht.' : 'Sending opens your e-mail app with the message prepared.'}</p>}
+      </form>
+    </div>
+  </section>
+</Base>
+<script>
+  const form = document.getElementById('contact-form') as HTMLFormElement | null;
+  if (form && !form.getAttribute('action')) {
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const f = new FormData(form);
+      const subject = `${f.get('topic')} – ${f.get('name')}`;
+      const body = `${f.get('message')}\n\n${f.get('name')}\n${f.get('email')}`;
+      location.href = `mailto:${form.dataset.mailto}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    });
+  }
+</script>
+<style>
+  .contact { display: grid; grid-template-columns: .9fr 1.1fr; gap: clamp(1.5rem, 4vw, 3rem); align-items: start; }
+  .h3 { font-size: 1.35rem; }
+  .form { display: grid; gap: .9rem; }
+  .form label { display: grid; gap: .3rem; font-weight: 600; font-size: .92rem; }
+  .form input, .form select, .form textarea { font: 400 1rem var(--font-sans); padding: .7rem .8rem; border: 1px solid #cfc7b4; border-radius: 10px; background: var(--surface); color: var(--ink); }
+  .form button { justify-self: start; }
+  @media (max-width: 860px) { .contact { grid-template-columns: 1fr; } }
+</style>

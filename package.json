@@ -1,0 +1,25 @@
+{
+  "name": "bantu-ev-website",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Website of Bantu e.V. (Berlin) – static Astro site deployed with GitHub Pages",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build && node scripts/postbuild-base-path.mjs",
+    "preview": "astro preview",
+    "check:open": "node scripts/list-open-items.mjs",
+    "migrate:wp": "node scripts/migrate-wordpress.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@astrojs/rss": "^4.0.19",
+    "@astrojs/sitemap": "^3.7.4",
+    "@fontsource/archivo": "^5.3.0",
+    "@fontsource/atkinson-hyperlegible": "^5.3.0",
+    "@fontsource/noto-serif": "^5.3.0",
+    "astro": "^7.4.2"
+  }
+}

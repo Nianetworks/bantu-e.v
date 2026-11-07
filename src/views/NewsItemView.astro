@@ -1,0 +1,53 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import { render } from 'astro:content';
+import { formatDate, formatLongDate, href, newsPath, projectPath, r, ui, type Lang } from '../i18n';
+import { slugOf, type NewsItem } from '../lib/content';
+
+interface Props { lang: Lang; item: NewsItem; hasAlt: boolean }
+const { lang, item, hasAlt } = Astro.props;
+const de = lang === 'de';
+const t = ui[lang];
+const d = item.data;
+const { Content } = await render(item);
+const isEvent = d.type === 'event' && d.eventStart;
+const sameDay = isEvent && (!d.eventEnd || formatDate(d.eventStart!, lang) === formatDate(d.eventEnd, lang));
+---
+<Base lang={lang} title={d.title} description={d.summary} altHref={hasAlt ? newsPath(de ? 'en' : 'de', slugOf(item.id)) : undefined} image={d.image}>
+  <PageHead lang={lang} title={d.title} lead={d.summary} eyebrow={t.type[d.type]}
+    crumbs={[{ label: isEvent ? (de ? 'Veranstaltungen' : 'Events') : (de ? 'Aktuelles' : 'News'), href: isEvent ? r('events', lang) : r('news', lang) }]}>
+    {!isEvent && <p class="small muted"><time datetime={d.date.toISOString()}>{formatDate(d.date, lang, { day: 'numeric', month: 'long', year: 'numeric' })}</time></p>}
+  </PageHead>
+  <section class="section section--tight">
+    <div class="wrap article">
+      <div>
+        {d.image && <img class="article__img" src={href(d.image)} alt={d.imageAlt ?? ''} />}
+        <div class="prose"><Content /></div>
+        {d.project && <p><a class="link-arrow" href={projectPath(lang, d.project)}>{de ? 'Zur Projektseite' : 'Go to the project page'}</a></p>}
+      </div>
+      {isEvent && (
+        <aside class="panel event-box">
+          <h2 class="side-title">{de ? 'Termin' : 'Event details'}</h2>
+          <dl class="kv">
+            <dt>{t.when}</dt>
+            <dd>{sameDay ? formatLongDate(d.eventStart!, lang) : `${formatDate(d.eventStart!, lang)} – ${formatDate(d.eventEnd!, lang)}`}{d.eventTime && <><br />{d.eventTime}</>}</dd>
+            {d.location && <><dt>{t.where}</dt><dd>{d.location}</dd></>}
+            {d.cost && <><dt>{t.cost}</dt><dd>{d.cost}</dd></>}
+          </dl>
+          <div class="btn-row" style="margin-top:1.2rem">
+            {d.registration && <a class="btn btn--gold" href={d.registration}>{d.registrationLabel ?? t.register}</a>}
+            {d.attachment && <a class="btn btn--outline" href={href(d.attachment.href)}>{d.attachment.label}</a>}
+          </div>
+        </aside>
+      )}
+    </div>
+  </section>
+</Base>
+<style>
+  .article { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: clamp(1.5rem, 4vw, 3rem); align-items: start; }
+  .article__img { border-radius: 18px; margin-bottom: 1.5rem; width: 100%; max-height: 520px; object-fit: cover; object-position: top; border: 1px solid var(--line); }
+  .event-box { position: sticky; top: 100px; }
+  .side-title { font-family: var(--font-sans); font-size: .8rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+  @media (max-width: 900px) { .article { grid-template-columns: 1fr; } .event-box { position: static; order: -1; } }
+</style>

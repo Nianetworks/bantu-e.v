@@ -1,0 +1,108 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import Placeholder from '../components/Placeholder.astro';
+import { href, r, type Lang } from '../i18n';
+import { funders, partnersNorth, partnersSouth, people } from '../data/people';
+import { org } from '../data/site';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const de = lang === 'de';
+const visible = people.filter((p) => p.consent);
+const board = visible.filter((p) => p.group === 'board');
+const team = visible.filter((p) => p.group !== 'board');
+const title = de ? 'Menschen' : 'People';
+const lead = de
+  ? 'Bantu e.V. lebt von Menschen: Vorstand, Mitglieder, Honorarkräfte, Ehrenamtliche und Partnerorganisationen in Uganda, Burundi und Berlin.'
+  : 'Bantu e.V. is its people: board, members, freelancers, volunteers and partner organisations in Uganda, Burundi and Berlin.';
+---
+<Base lang={lang} title={title} description={lead} altHref={r('people', de ? 'en' : 'de')}>
+  <PageHead lang={lang} title={title} lead={lead} crumbs={[{ label: de ? 'Über uns' : 'About us', href: r('about', lang) }]} />
+
+  <section class="section section--tight">
+    <div class="wrap">
+      <h2>{de ? 'Vorstand' : 'Board'}</h2>
+      <div class="grid grid--3">
+        {board.map((p) => (
+          <article class="card person">
+            {p.photo ? <img src={href(p.photo)} alt={p.name} width="600" height="600" /> : <Placeholder lang={lang} ratio="1 / 1" tone="gold" label={de ? 'Porträt' : 'Portrait'} />}
+            <div class="card__body">
+              <h3>{p.name}</h3>
+              <p class="role">{p.role[lang]}</p>
+              {p.bio && <p>{p.bio[lang]}</p>}
+            </div>
+          </article>
+        ))}
+        <div class="panel note">
+          <p>{de
+            ? `Die Vorstandsmitglieder vertreten den Verein nach § 26 BGB. Maßgeblich ist die Eintragung im Vereinsregister (${org.register.court}, ${org.register.number}).`
+            : `Board members represent the association under § 26 BGB. The entry in the register of associations (${org.register.court}, ${org.register.number}) is authoritative.`}</p>
+          <p class="small muted">{de ? 'Der Vorstand wird alle zwei Jahre im soziokratischen Wahlverfahren gewählt.' : 'The board is elected every two years using the sociocratic election process.'}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--alt">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <h2>{de ? 'Team, Honorarkräfte und Ehrenamtliche' : 'Team, freelancers and volunteers'}</h2>
+          <p>{de
+            ? 'Unsere Projekte tragen Projektkoordinator*innen, Trainer*innen und Referent*innen, Kinderbetreuer*innen, Übersetzer*innen und viele Ehrenamtliche – in Berlin und online aus aller Welt. Wir stellen hier nur Menschen mit Namen und Foto vor, die dem ausdrücklich zugestimmt haben.'
+            : 'Our projects are carried by project coordinators, trainers and speakers, childcare workers, interpreters and many volunteers – in Berlin and online from around the world. We only show people by name and photo here if they have explicitly agreed.'}</p>
+        </div>
+      </div>
+      {team.length > 0
+        ? <div class="grid grid--4">{team.map((p) => (
+            <article class="card person">
+              {p.photo ? <img src={href(p.photo)} alt={p.name} /> : <Placeholder lang={lang} ratio="1 / 1" compact />}
+              <div class="card__body"><h3>{p.name}</h3><p class="role">{p.role[lang]}</p></div>
+            </article>))}
+          </div>
+        : <div class="grid grid--4 roles">
+            {(de
+              ? [['Projektkoordination', 'plant und begleitet unsere Projekte in Berlin'], ['Trainer*innen & Referent*innen', 'gestalten Workshops und Schulungstage'], ['Ehrenamtliche', 'helfen bei Veranstaltungen, Übersetzung und Öffentlichkeitsarbeit'], ['Freiwillige', 'z. B. über das Europäische Solidaritätskorps']]
+              : [['Project coordination', 'plans and supports our projects in Berlin'], ['Trainers & speakers', 'design workshops and training days'], ['Volunteers', 'help with events, translation and communications'], ['International volunteers', 'e.g. through the European Solidarity Corps']]
+            ).map(([h, p]) => <div class="panel"><h3>{h}</h3><p>{p}</p></div>)}
+          </div>}
+      <p style="margin-top:1.5rem"><a class="btn btn--dark" href={r('join', lang, '#volunteer')}>{de ? 'Mitmachen' : 'Join the team'}</a></p>
+    </div>
+  </section>
+
+  <section class="section" id={de ? 'partner' : 'partners'}>
+    <div class="wrap">
+      <h2>{de ? 'Partnerorganisationen' : 'Partner organisations'}</h2>
+      <p class="lead">{de ? 'Wir arbeiten nicht für, sondern mit Gemeinschaften – ohne Hierarchie, mit Vertrauen.' : 'We work with communities, not for them – without hierarchy, with trust.'}</p>
+      <h3 class="subhead">{de ? 'In Uganda und Burundi' : 'In Uganda and Burundi'}</h3>
+      <div class="grid grid--3">
+        {partnersSouth.map((o) => <div class="panel org"><h4>{o.name}</h4><p class="small muted">{o.place}{o.since ? ` · ${de ? 'Partner seit' : 'partner since'} ${o.since}` : ''}</p><p>{o.text[lang]}</p></div>)}
+      </div>
+      <h3 class="subhead">{de ? 'In Deutschland' : 'In Germany'}</h3>
+      <div class="grid grid--4">
+        {partnersNorth.map((o) => <div class="panel org"><h4>{o.name}</h4><p class="small muted">{o.place}</p><p>{o.text[lang]}</p></div>)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--sand section--tight">
+    <div class="wrap">
+      <h2>{de ? 'Förderer unserer Projekte' : 'Funders of our projects'}</h2>
+      <ul class="funders">{funders.map((f) => <li>{f[lang]}</li>)}</ul>
+      <p class="small muted">{de ? 'Vielen Dank auch an alle Mitglieder und Spender*innen.' : 'Thank you also to all members and donors.'}</p>
+    </div>
+  </section>
+</Base>
+<style>
+  .person img { width: 100%; aspect-ratio: 1; object-fit: cover; }
+  .role { font-weight: 600; color: var(--ink) !important; }
+  .note { display: flex; flex-direction: column; justify-content: center; }
+  .roles .panel h3 { font-size: 1.1rem; }
+  .roles .panel p { margin: 0; color: var(--ink-2); }
+  .subhead { margin-top: 2rem; font-size: 1.15rem; font-family: var(--font-sans); letter-spacing: .02em; }
+  .org h4 { margin-bottom: .2rem; }
+  .org p:last-child { margin: 0; }
+  .funders { columns: 2 340px; column-gap: 2.5rem; }
+  .funders li { break-inside: avoid; }
+</style>

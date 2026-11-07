@@ -1,0 +1,31 @@
+---
+import { r, ui, type Lang } from '../i18n';
+interface Props { lang: Lang; title: string; eyebrow?: string; lead?: string; crumbs?: { label: string; href: string }[] }
+const { lang, title, eyebrow, lead, crumbs = [] } = Astro.props;
+const colors = ['#ff343d', '#ff8409', '#3cb04b', '#0071bc', '#ff6c71', '#c180a1', '#749bca', '#b9e245'];
+---
+<section class="page-head">
+  <svg class="page-head__deco deco" viewBox="0 0 400 400" aria-hidden="true">
+    <circle cx="200" cy="200" r="120" fill="none" stroke="#febf00" stroke-width="10" />
+    <circle cx="200" cy="200" r="96" fill="none" stroke="#febf00" stroke-width="5" opacity=".6" />
+    {colors.map((c, i) => { const a = (i / 8) * Math.PI * 2 - Math.PI / 2 - Math.PI / 8; return <circle cx={200 + 165 * Math.cos(a)} cy={200 + 165 * Math.sin(a)} r="22" fill="none" stroke={c} stroke-width="9" />; })}
+  </svg>
+  <div class="wrap">
+    <nav class="breadcrumbs" aria-label={lang === 'de' ? 'Brotkrümelnavigation' : 'Breadcrumb'}>
+      <ol>
+        <li><a href={r('home', lang)}>{ui[lang].breadcrumbHome}</a></li>
+        {crumbs.map((c) => <li><a href={c.href}>{c.label}</a></li>)}
+        <li aria-current="page">{title}</li>
+      </ol>
+    </nav>
+    {eyebrow && <div class="eyebrow">{eyebrow}</div>}
+    <h1>{title}</h1>
+    {lead && <p class="lead">{lead}</p>}
+    <slot />
+  </div>
+</section>
+<style>
+  .page-head__deco { position: absolute; right: -90px; top: 40px; width: 380px; max-width: 60vw; opacity: .22; pointer-events: none; }
+  @media (max-width: 760px) { .page-head__deco { width: 240px; right: -90px; top: 60px; } }
+  .wrap { position: relative; }
+</style>

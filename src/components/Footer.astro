@@ -1,0 +1,99 @@
+---
+import Icon from './Icon.astro';
+import { href, r, ui, type Lang } from '../i18n';
+import { org } from '../data/site';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = ui[lang];
+const de = lang === 'de';
+const year = new Date().getFullYear();
+const cols = [
+  {
+    title: 'Organisation',
+    links: [
+      [de ? 'Über uns' : 'About us', r('about', lang)],
+      [de ? 'Menschen' : 'People', r('people', lang)],
+      [de ? 'Transparenz' : 'Transparency', r('reports', lang, de ? '#transparenz' : '#transparency')],
+      ['Downloads', r('downloads', lang)],
+    ],
+  },
+  {
+    title: de ? 'Unsere Arbeit' : 'Our work',
+    links: [
+      [de ? 'Internationale Zusammenarbeit' : 'International cooperation', r('international', lang)],
+      [de ? 'Inlandsarbeit' : 'Work in Germany', r('inland', lang)],
+      [de ? 'Wirkung' : 'Impact', r('impact', lang)],
+      [de ? 'Veranstaltungen' : 'Events', r('events', lang)],
+    ],
+  },
+  {
+    title: de ? 'Unterstützen' : 'Support',
+    links: [
+      [t.donate, r('donate', lang)],
+      [de ? 'Mitglied werden' : 'Become a member', r('join', lang, '#membership')],
+      ['Shop', r('shop', lang)],
+      [t.contact, r('contact', lang)],
+    ],
+  },
+];
+---
+<footer class="site-footer" id="footer" tabindex="-1">
+  <div class="footer-rings deco" aria-hidden="true">
+    {['#ff343d', '#ff8409', '#3cb04b', '#0071bc', '#ff6c71', '#c180a1', '#749bca', '#b9e245'].map((c) => <span style={`border-color:${c}`}></span>)}
+  </div>
+  <div class="wrap footer-grid">
+    <div class="footer-brand">
+      <img class="keep-color" src={href('/brand/bantu-logo-on-dark.png')} width="120" height="142" alt="Bantu e.V." />
+      <p>{t.footerAbout}</p>
+      <address>
+        <span class="addr-line"><Icon name="pin" /> {org.address.street}, {org.address.zip} {org.address.city}</span>
+        <a class="addr-line" href={`mailto:${org.email}`}><Icon name="mail" /> {org.email}</a>
+        <a class="addr-line" href={`tel:${org.phoneHref}`}><Icon name="phone" /> {org.phone}</a>
+      </address>
+    </div>
+    {cols.map((c) => (
+      <nav aria-label={c.title}>
+        <h2 class="footer-title">{c.title}</h2>
+        <ul>{c.links.map(([label, url]) => <li><a href={url}>{label}</a></li>)}</ul>
+      </nav>
+    ))}
+  </div>
+  <div class="wrap footer-a11y">
+    <a href={r('accessibility', lang)}><Icon name="access" /> {t.a11y}</a>
+    <a href={r('easy', lang)}><Icon name="easy" /> {t.easy}</a>
+    <span class="muted-dark">{de ? 'Keine Cookies · kein Tracking' : 'No cookies · no tracking'}</span>
+  </div>
+  <div class="wrap footer-bottom">
+    <p>© {year} {org.legalName} · {org.register.court}, {org.register.number}</p>
+    <p class="footer-legal">
+      <a href={r('imprint', lang)}>{de ? 'Impressum' : 'Imprint'}</a>
+      <a href={r('privacy', lang)}>{de ? 'Datenschutz' : 'Privacy'}</a>
+      {org.socials.map((s) => <a href={s.url} rel="noopener" target="_blank">{s.name}<span class="sr-only"> {t.newWindow}</span></a>)}
+    </p>
+  </div>
+</footer>
+<style>
+  .site-footer { background: var(--deep); color: var(--on-deep); font-size: 1rem; position: relative; }
+  .footer-rings { display: flex; justify-content: center; gap: 12px; padding-top: 2.5rem; }
+  .footer-rings span { width: 16px; height: 16px; border-radius: 50%; border: 4px solid; }
+  .footer-grid { display: grid; grid-template-columns: 1.6fr repeat(3, 1fr); gap: 2rem; padding-block: 2.5rem 2rem; }
+  .footer-brand img { width: 120px; margin-bottom: 1rem; }
+  .footer-brand p { max-width: 40ch; color: var(--on-deep-muted); }
+  address { font-style: normal; display: grid; gap: .35rem; }
+  .addr-line { display: inline-flex; gap: .5rem; align-items: center; }
+  .addr-line .icon { width: 1.1em; height: 1.1em; color: #ffd34d; }
+  .site-footer a { color: var(--on-deep); text-decoration: none; }
+  .site-footer a:hover { color: #ffd34d; text-decoration: underline; }
+  .footer-title { font-family: var(--font-sans); font-size: .85rem; letter-spacing: .14em; text-transform: uppercase; color: #ffd34d; margin-bottom: .9rem; }
+  ul { list-style: none; padding: 0; margin: 0; }
+  li { margin: 0; }
+  li a { display: inline-flex; align-items: center; min-height: 40px; }
+  .footer-a11y { display: flex; flex-wrap: wrap; gap: .5rem 1.5rem; align-items: center; padding-block: 1rem; border-top: 1px solid rgba(255,255,255,.14); }
+  .footer-a11y a { display: inline-flex; gap: .45rem; align-items: center; font-weight: 700; min-height: 40px; }
+  .muted-dark { color: var(--on-deep-muted); font-size: .9rem; }
+  .footer-bottom { border-top: 1px solid rgba(255,255,255,.14); padding-block: 1.25rem 2.25rem; display: flex; flex-wrap: wrap; justify-content: space-between; gap: .5rem 2rem; font-size: .9rem; color: var(--on-deep-muted); }
+  .footer-bottom p { margin: 0; }
+  .footer-legal { display: flex; flex-wrap: wrap; gap: 1.1rem; }
+  @media (max-width: 900px) { .footer-grid { grid-template-columns: 1fr 1fr; } .footer-brand { grid-column: 1 / -1; } }
+  @media (max-width: 520px) { .footer-grid { grid-template-columns: 1fr; } }
+</style>

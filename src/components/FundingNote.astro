@@ -1,0 +1,23 @@
+---
+import { href, ui, type Lang } from '../i18n';
+interface Props { lang: Lang; note?: string; logos?: { src: string; alt: string; width: number }[]; disclaimer?: string; funders?: string[] }
+const { lang, note, logos = [], disclaimer, funders = [] } = Astro.props;
+---
+{(note || funders.length > 0) && (
+  <aside class="funding" aria-label={ui[lang].funders}>
+    {logos.length > 0 && (
+      <div class="funding__logos">
+        {logos.map((l) => <img class="keep-color" src={href(l.src)} alt={l.alt} width={l.width} loading="lazy" />)}
+      </div>
+    )}
+    {note ? <p class="funding__note">{note}</p> : <p class="funding__note">{ui[lang].funders}: {funders.join(' · ')}</p>}
+    {disclaimer && <p class="funding__disclaimer">{disclaimer}</p>}
+  </aside>
+)}
+<style>
+  .funding { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 1.25rem 1.4rem; margin-top: 2.5rem; }
+  .funding__logos { display: inline-flex; flex-wrap: wrap; gap: 1.5rem; align-items: center; margin-bottom: .9rem; background: #fff; padding: .75rem 1rem; border-radius: 12px; }
+  .funding__logos img { height: 56px; width: auto; }
+  .funding__note { margin: 0; font-weight: 600; }
+  .funding__disclaimer { margin: .6rem 0 0; font-size: .9rem; color: var(--muted); }
+</style>
