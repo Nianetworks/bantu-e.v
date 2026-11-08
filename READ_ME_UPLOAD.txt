@@ -1,6 +1,6 @@
-OKUSHOMA KWA BOONA — FRENCH SPOKEN PHOTO DESCRIPTIONS
+OKUSHOMA KWA BOONA — FRENCH STANDARD FILM
 
-Film: okushoma-kwa-boona-audio-described-fr.mp4
+Film: okushoma-kwa-boona-fr.mp4
 Length: 5 minutes 50 seconds, unchanged.
 Format: MP4 / H.264 / AAC, 1280 x 720, 24 fps.
 This is a smaller website delivery copy of the approved revision 5 film.
