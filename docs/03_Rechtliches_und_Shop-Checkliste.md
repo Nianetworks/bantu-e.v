@@ -34,9 +34,10 @@ Hinweis: Dies ist eine Arbeitsliste, keine Rechts- oder Steuerberatung. Punkte m
 
 **Pflichten für den Online-Verkauf**
 - [ ] AGB, Widerrufsbelehrung + Muster-Widerrufsformular, Versand- und Zahlungsbedingungen als eigene Seiten
-- [ ] Preisangaben nach PAngV (Endpreis, Versandkosten), Bestellbutton „zahlungspflichtig bestellen“ (beim Zahlungsanbieter)
+- [ ] Preisangaben nach PAngV (Endpreis, Versandkosten): `price` je Produkt und `shipping.flat` in `src/data/shop.ts`. Der Bestellbutton für Waren heißt bereits „Zahlungspflichtig bestellen“ (Bestellformular).
+- [ ] AGB, Widerrufsbelehrung und Versandbedingungen im Bestellformular verlinken (OPEN-Hinweis in `src/components/OrderForm.astro`).
 - [ ] **Verpackungsgesetz:** Registrierung im Verpackungsregister LUCID und Lizenzierung bei einem dualen System, bevor die erste Sendung rausgeht (gilt auch für Versandkartons)
-- [ ] Datenschutzerklärung um den Zahlungsanbieter ergänzen
+- [x] Datenschutzerklärung: Abschnitt 7 „Bestellformular im Shop“ (08.11.2026) – ⚖️ zusammen mit der übrigen Erklärung prüfen lassen. Kein Zahlungsanbieter beteiligt (Überweisung).
 
 **Abantu Coffee** ⚖️
 - [ ] Lebensmittelkennzeichnung (LMIV): Bezeichnung, Nettofüllmenge, Mindesthaltbarkeitsdatum, Los-Nummer, Name/Anschrift des Verantwortlichen
@@ -48,6 +49,10 @@ Hinweis: Dies ist eine Arbeitsliste, keine Rechts- oder Steuerberatung. Punkte m
 - [ ] Einfuhr/Zoll und Einfuhrumsatzsteuer, faire Einkaufspreise schriftlich vereinbaren, Produktsicherheit (GPSR) prüfen
 
 **Technik**
-- [ ] Zahlungsanbieter wählen (z. B. Stripe Payment Links oder PayPal-Buttons) – Bezahlseite liegt beim Anbieter, keine Kartendaten auf unserer Seite
-- [ ] Je Produkt `price`, `image`, `checkoutUrl`, `status: 'available'` in `src/data/shop.ts`
+- [x] **Bezahlweg (Entscheidung des Vorsitzenden, 08.11.2026): Überweisung direkt auf das GLS-Konto** mit eigenem Verwendungszweck je Bestellung (z. B. „Geschenk Pearl Kita 2611-K7Q4M2“, Waren „Bantu Shop 2611-…“) und GiroCode-QR für Banking-Apps. Kein Zahlungsanbieter, keine Gebühren, keine Kartendaten.
+- [x] **Bestellformular auf dem eigenen Server** (`public/shop/bestellung.php`): prüft gegen die Preisliste `/shop/katalog.json` (beim Build erzeugt), E-Mail an info@bantu-ev.org (Antwort geht an die Käufer*in) und Bestätigung an die Käufer*in, Sicherungskopie außerhalb des Webroots in `~/bantu-orders/orders.jsonl` (nur für das Konto lesbar), Spam- und Mengenbegrenzung. `.htaccess` lässt nur POST über HTTPS auf genau diese Datei zu. Lokal mit Apache + PHP getestet.
+- [ ] ⚖️ **Kontoinhaber-Name prüfen:** Banken gleichen seit Oktober 2025 den Empfängernamen mit dem Kontoinhaber ab (Empfängerüberprüfung). Formular, E-Mail und QR-Code nutzen `bank.holder` aus `src/data/site.ts` (zurzeit „Bantu e.V.“). Steht bei der GLS ein anderer Name, dort eintragen, sonst sehen Zahlende einen Warnhinweis.
+- [ ] Zahlungseingänge regelmäßig mit den Bestell-E-Mails abgleichen (Verwendungszweck); Spendengeschenke mit Wunsch „Zuwendungsbestätigung“ an die Schatzmeisterin.
+- [ ] Je Ware `price`, `image`, `status: 'available'` in `src/data/shop.ts`, dazu `shipping.flat`; dann `features.shopCheckoutOpen = true` – erst wenn alle Punkte oben erledigt sind. Vor dem Freischalten eine Testbestellung über die Seite machen (Warenformular mit Menge und Lieferanschrift).
+- [ ] Optional später: Karte/PayPal über einen Anbieter (`checkoutUrl`) – Auszahlungen kommen dann gesammelt, der Verwendungszweck je Kauf steht nur beim Anbieter.
 - [ ] Barrierefreiheitsstärkungsgesetz: Kleinstunternehmen sind für Dienstleistungen ausgenommen ⚖️ – trotzdem barrierearm bleiben

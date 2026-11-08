@@ -1,6 +1,9 @@
 // Shop catalogue. Prices are deliberately empty until set by the board.
-// Checkout only appears when features.shopCheckoutOpen === true AND checkoutUrl is set
-// (e.g. a Stripe Payment Link or PayPal button URL). See docs/03_Rechtliches_und_Shop-Checkliste.md.
+// Ordering (decision of the chair, 08.11.2026): an order form on our own server (public/shop/bestellung.php) and payment by
+// bank transfer straight to the GLS account, with a unique Verwendungszweck per order and a GiroCode QR (components/OrderForm.astro).
+// Symbolic gifts (donations) can be ordered now. Goods only when features.shopCheckoutOpen === true, the product has a price,
+// status 'available' and shipping.flat is set – see docs/03_Rechtliches_und_Shop-Checkliste.md before switching on.
+import { features } from './site';
 
 type L = { de: string; en: string };
 export type Category = 'gifts' | 'coffee' | 'merch' | 'crafts';
@@ -21,6 +24,21 @@ export type Product = {
   donationReference?: string;
   project?: string;
 };
+
+/** Shipping for goods, EUR per order (Germany). OPEN: set by the board together with the prices (PAngV: show before ordering). */
+export const shipping: { flat?: number; note: L } = {
+  flat: undefined,
+  note: { de: 'Versand innerhalb Deutschlands', en: 'Shipping within Germany', fr: 'Livraison en Allemagne' },
+};
+
+/** Limits for symbolic gifts (EUR); the order script applies the same limits. */
+export const giftLimits = { min: 5, max: 10000, suggestions: [25, 50, 100] };
+
+/** Can this product be ordered with the order form right now? */
+export const canOrder = (p: Product): boolean =>
+  p.category === 'gifts'
+    ? p.status === 'available' && !!p.donationReference
+    : features.shopCheckoutOpen && p.status === 'available' && !!p.price && shipping.flat !== undefined;
 
 export const categories: { id: Category; name: L; intro: L }[] = [
   {

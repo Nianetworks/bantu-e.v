@@ -41,8 +41,9 @@ const isCurrent = (h: string) => h !== r('home', lang) && current.startsWith(h.s
 
 // Compact (burger) navigation: used on small screens and – because large text needs more room –
 // at wider breakpoints when the visitor has enlarged the text in the accessibility settings.
-const compactRules = ['.header-inner { min-height: 72px; }', '.logo-plate { padding: 8px 10px; margin-bottom: -66px; }', '.nav-toggle { display: inline-flex; align-items: center; gap: .55rem; min-height: var(--tap); background: var(--ink); color: var(--bg); border: 0; border-radius: 999px; padding: .55rem 1.1rem; font: 700 1rem var(--font-sans); cursor: pointer; }', '.nav-list { display: none; position: fixed; inset: var(--header-h, 112px) 0 0 0; background: var(--bg); flex-direction: column; align-items: stretch; gap: 0; padding: 5rem var(--gutter) 2.5rem; overflow-y: auto; border-top: 1px solid var(--line); }', '.is-scrolled .nav-list { padding-top: 1rem; }', '.nav-list.is-open { display: flex; }', '.nav-list > li { border-bottom: 1px solid var(--line); }', '.nav-link { width: 100%; justify-content: space-between; font-size: 1.15rem; padding: .85rem .25rem; }', '.sub { position: static; box-shadow: none; border: 0; padding: 0 0 .75rem .5rem; min-width: 0; background: transparent; }', '.nav-extra { border-bottom: 0 !important; margin: 1.5rem 0 0 !important; }', '.nav-disclosure[aria-expanded="true"] + .mega { display: block; }', '.mega__intro { border-right: 0; padding: 0 0 .75rem; }', '.mega__lead, .mega__places { display: none; }', '.mega__cols { grid-template-columns: 1fr; gap: .75rem; }', '.nav-donate { width: 100%; }'];
-const levels: [string, number][] = [['', 1279], ['html[data-text="lg"] ', 1420], ['html[data-text="xl"] ', 1580], ['html[data-text="xxl"] ', 1900]];
+const compactRules = ['.header-inner { min-height: 72px; }', '.logo-plate { padding: 8px 10px; margin-bottom: -66px; }', '.nav-toggle { display: inline-flex; align-items: center; gap: .55rem; min-height: var(--tap); background: var(--ink); color: var(--bg); border: 0; border-radius: 999px; padding: .55rem 1.1rem; font: 700 1rem var(--font-sans); cursor: pointer; }', '.nav-list { display: none; position: fixed; inset: var(--header-h, 112px) 0 0 0; background: var(--bg); flex-direction: column; align-items: stretch; gap: 0; padding: 5rem var(--gutter) 2.5rem; overflow-y: auto; border-top: 1px solid var(--line); }', '.is-scrolled .nav-list { padding-top: 1rem; }', '.nav-list.is-open { display: flex; }', '.nav-list > li { border-bottom: 1px solid var(--line); }', '.nav-link { width: 100%; justify-content: space-between; font-size: 1.15rem; padding: .85rem .25rem; white-space: normal; }', '.sub { position: static; box-shadow: none; border: 0; padding: 0 0 .75rem .5rem; min-width: 0; background: transparent; }', '.nav-extra { border-bottom: 0 !important; margin: 1.5rem 0 0 !important; }', '.nav-disclosure[aria-expanded="true"] + .mega { display: block; }', '.mega__intro { border-right: 0; padding: 0 0 .75rem; }', '.mega__lead, .mega__places { display: none; }', '.mega__cols { grid-template-columns: 1fr; gap: .75rem; }', '.nav-donate { width: 100%; white-space: normal; }'];
+// With enlarged text the eight top-level items (incl. Shop) never fit the 1200 px header, so those levels always use the compact menu.
+const levels: [string, number][] = [['', 1279], ['html[data-text="lg"] ', 99999], ['html[data-text="xl"] ', 99999], ['html[data-text="xxl"] ', 99999]];
 const compactCss = levels.map(([pre, w]) => `@media (max-width: ${w}px) { ${compactRules.map((rule) => rule.split('{')[0].split(',').map((sel) => pre + sel.trim()).join(', ') + ' {' + rule.split('{').slice(1).join('{')).join(' ')} }`).join('\n');
 ---
 <header class="site-header">
@@ -215,7 +216,7 @@ const compactCss = levels.map(([pre, w]) => `@media (max-width: ${w}px) { ${comp
   .main-nav { display: flex; align-items: center; }
   .nav-list { list-style: none; margin: 0; padding: 0; display: flex; align-items: center; gap: .1rem; }
   .nav-list > li { position: relative; margin: 0; }
-  .nav-link { display: inline-flex; align-items: center; gap: .25rem; min-height: var(--tap); padding: .5rem .6rem; text-decoration: none; color: var(--ink); font: 700 1rem var(--font-sans); border-radius: 10px; background: transparent; border: 0; cursor: pointer; }
+  .nav-link { display: inline-flex; align-items: center; gap: .25rem; min-height: var(--tap); padding: .5rem .45rem; white-space: nowrap; text-decoration: none; color: var(--ink); font: 700 1rem var(--font-sans); border-radius: 10px; background: transparent; border: 0; cursor: pointer; }
   .nav-link:hover, .nav-disclosure[aria-expanded='true'] { background: var(--bg-2); }
   .nav-link[aria-current='page'], .nav-disclosure[data-current='true'] { box-shadow: inset 0 -3px 0 var(--gold); }
   .chev { width: 1em; height: 1em; transition: transform .15s; }
@@ -225,7 +226,8 @@ const compactCss = levels.map(([pre, w]) => `@media (max-width: ${w}px) { ${comp
   .sub li { margin: 0; }
   .sub a { display: flex; align-items: center; min-height: var(--tap); padding: .5rem .8rem; border-radius: 10px; text-decoration: none; color: var(--ink); font-weight: 600; }
   .sub a:hover, .sub a[aria-current='page'] { background: var(--bg-2); text-decoration: underline; }
-  .nav-extra { margin-left: .6rem !important; }
+  .nav-extra { margin-left: .35rem !important; }
+  .nav-donate { white-space: nowrap; }
   .has-mega { position: static !important; }
   .mega { left: 0; right: 0; min-width: 0; padding: 1.25rem; grid-template-columns: minmax(220px, 1fr) 3fr; gap: 1.5rem; }
   .nav-disclosure[aria-expanded='true'] + .mega { display: grid; }

@@ -25,7 +25,7 @@ const tones = { gifts: 'gold', coffee: 'sand', merch: 'blue', crafts: 'green' } 
   </PageHead>
 
   {!features.shopCheckoutOpen && (
-    <div class="wrap" style="margin-top:1.5rem"><p class="notice">{t.shopClosedNote} {de ? 'Spendengeschenke sind bereits jetzt möglich.' : fr ? 'Les dons-cadeaux sont déjà possibles.' : 'Gift donations are already possible.'}</p></div>
+    <div class="wrap" style="margin-top:1.5rem"><p class="notice">{t.shopClosedNote} {de ? 'Spendengeschenke können Sie schon jetzt bestellen: per Überweisung mit persönlichem Verwendungszweck und QR-Code für Ihre Banking-App.' : fr ? 'Vous pouvez déjà commander des dons-cadeaux : par virement, avec un motif personnel et un code QR pour votre application bancaire.' : 'You can already order gift donations: by bank transfer, with a personal payment reference and a QR code for your banking app.'}</p></div>
   )}
 
   {categories.map((c, i) => {

@@ -44,6 +44,9 @@
   --deep-2: #1d3328;
   --on-deep: #f5f1e6;
   --on-deep-muted: #c9c2b2;
+  /* Payment QR codes must stay dark-on-light in every theme so banking apps can read them. */
+  --qr-fg: #000;
+  --qr-bg: #fff;
   --chip-active-bg: #e3f3e5; --chip-active-ink: #1d5c27;
   --chip-done-bg: #e8eef7;   --chip-done-ink: #274b78;
   --chip-plan-bg: #fff2c7;   --chip-plan-ink: #5c4300;

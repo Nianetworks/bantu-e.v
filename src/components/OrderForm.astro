@@ -1,0 +1,265 @@
+---
+// Order form for the charity shop (decision of the chair, 08.11.2026).
+// Sends the order to our own server (public/shop/bestellung.php), which checks it against the build-time price list,
+// assigns a unique Verwendungszweck and e-mails info@bantu-ev.org and the buyer. The buyer then pays by bank transfer
+// straight to the GLS account; the confirmation shows IBAN, amount, Verwendungszweck (with copy buttons) and a GiroCode QR.
+// Without JavaScript the form still posts and the script answers with a plain page containing the payment details.
+import { href, r, type Lang } from '../i18n';
+import { giftLimits, shipping, type Product } from '../data/shop';
+
+interface Props { lang: Lang; product: Product }
+const { lang, product: p } = Astro.props;
+const de = lang === 'de';
+const fr = lang === 'fr';
+const isGift = p.category === 'gifts';
+const name = (p.name as Record<string, string>)[lang] ?? p.name.en;
+const num = (v: number) => v.toLocaleString(de ? 'de-DE' : fr ? 'fr-FR' : 'en-GB', { minimumFractionDigits: v % 1 ? 2 : 0, maximumFractionDigits: 2 });
+const eur = (v: number) => (de || fr ? `${num(v)} €` : `€${num(v)}`);
+const t = {
+  title: isGift ? (de ? 'Spendengeschenk per Überweisung' : fr ? 'Don-cadeau par virement' : 'Gift donation by bank transfer') : (de ? 'Bestellen' : fr ? 'Commander' : 'Order'),
+  lead: isGift
+    ? (de ? 'Sie erhalten sofort Ihren persönlichen Verwendungszweck und einen QR-Code für Ihre Banking-App. Die Spende geht direkt auf unser Konto bei der GLS Bank.'
+      : fr ? 'Vous recevez aussitôt votre motif de virement personnel et un code QR pour votre application bancaire. Le don arrive directement sur notre compte à la GLS Bank.'
+      : 'You immediately get your personal payment reference and a QR code for your banking app. The donation goes straight to our account at GLS Bank.')
+    : (de ? 'Nach dem Absenden erhalten Sie Ihren persönlichen Verwendungszweck und einen QR-Code für Ihre Banking-App. Bezahlt wird per Überweisung direkt auf unser Konto bei der GLS Bank.'
+      : fr ? 'Après l’envoi, vous recevez votre motif de virement personnel et un code QR pour votre application bancaire. Le paiement se fait par virement directement sur notre compte à la GLS Bank.'
+      : 'After sending, you get your personal payment reference and a QR code for your banking app. You pay by bank transfer straight to our account at GLS Bank.'),
+  amount: de ? 'Ihr Betrag in Euro' : fr ? 'Votre montant en euros' : 'Your amount in euros',
+  amountHint: de ? `Zwischen ${eur(giftLimits.min)} und ${eur(giftLimits.max)}` : fr ? `Entre ${eur(giftLimits.min)} et ${eur(giftLimits.max)}` : `Between ${eur(giftLimits.min)} and ${eur(giftLimits.max)}`,
+  quick: de ? 'Betrag wählen' : fr ? 'Choisir un montant' : 'Choose an amount',
+  qty: de ? 'Menge' : fr ? 'Quantité' : 'Quantity',
+  name: de ? 'Ihr Name' : fr ? 'Votre nom' : 'Your name',
+  email: de ? 'Ihre E-Mail-Adresse' : fr ? 'Votre adresse e-mail' : 'Your e-mail address',
+  emailHint: de ? 'Dorthin schicken wir die Zahlungsangaben.' : fr ? 'Nous y envoyons les informations de paiement.' : 'We send the payment details there.',
+  receipt: de ? 'Ich möchte eine Zuwendungsbestätigung (dafür brauchen wir Ihre Anschrift).' : fr ? 'Je souhaite un reçu fiscal (nous avons besoin de votre adresse).' : 'I would like a donation receipt (we need your postal address for it).',
+  address: isGift ? (de ? 'Ihre Anschrift für die Zuwendungsbestätigung' : fr ? 'Votre adresse pour le reçu fiscal' : 'Your postal address for the donation receipt') : (de ? 'Lieferanschrift' : fr ? 'Adresse de livraison' : 'Delivery address'),
+  addressHint: de ? 'Straße und Hausnummer, Postleitzahl und Ort' : fr ? 'Rue et numéro, code postal et ville' : 'Street and number, postcode and town',
+  note: de ? 'Nachricht an uns (freiwillig)' : fr ? 'Message pour nous (facultatif)' : 'Message to us (optional)',
+  noteHint: isGift ? (de ? 'Zum Beispiel, für wen das Geschenk ist.' : fr ? 'Par exemple, à qui est destiné le cadeau.' : 'For example, who the gift is for.') : '',
+  shippingL: shipping.note[lang as 'de'] ?? shipping.note.de,
+  total: de ? 'Gesamtbetrag' : fr ? 'Montant total' : 'Total',
+  submit: isGift ? (de ? 'Weiter zur Überweisung' : fr ? 'Continuer vers le virement' : 'Continue to bank transfer') : (de ? 'Zahlungspflichtig bestellen' : fr ? 'Commander avec obligation de paiement' : 'Place order with obligation to pay'),
+  sending: de ? 'Wird gesendet …' : fr ? 'Envoi en cours…' : 'Sending…',
+  privacy: de ? 'Wir verwenden Ihre Angaben nur für diese Bestellung.' : fr ? 'Nous utilisons vos données uniquement pour cette commande.' : 'We use your details only for this order.',
+  privacyLink: de ? 'Mehr dazu in der Datenschutzerklärung' : fr ? 'En savoir plus dans la politique de confidentialité' : 'More in our privacy policy',
+  netError: de ? `Die Verbindung hat nicht geklappt. Bitte versuchen Sie es noch einmal oder schreiben Sie uns an info@bantu-ev.org.` : fr ? `La connexion a échoué. Veuillez réessayer ou nous écrire à info@bantu-ev.org.` : `The connection failed. Please try again or write to us at info@bantu-ev.org.`,
+  doneTitle: de ? 'Vielen Dank! Bitte überweisen Sie jetzt' : fr ? 'Merci ! Veuillez effectuer votre virement maintenant' : 'Thank you! Please make your bank transfer now',
+  holder: de ? 'Empfänger' : fr ? 'Bénéficiaire' : 'Recipient',
+  amountL: de ? 'Betrag' : fr ? 'Montant' : 'Amount',
+  ref: de ? 'Verwendungszweck' : fr ? 'Motif du virement' : 'Payment reference',
+  copy: de ? 'Kopieren' : fr ? 'Copier' : 'Copy',
+  copied: de ? 'Kopiert' : fr ? 'Copié' : 'Copied',
+  copyIban: de ? 'IBAN kopieren' : fr ? 'Copier l’IBAN' : 'Copy IBAN',
+  copyRef: de ? 'Verwendungszweck kopieren' : fr ? 'Copier le motif' : 'Copy payment reference',
+  qr: de ? 'Mit der Banking-App scannen (GiroCode): Empfänger, Betrag und Verwendungszweck sind dann schon ausgefüllt.' : fr ? 'Scannez avec votre application bancaire (GiroCode) : bénéficiaire, montant et motif sont déjà remplis.' : 'Scan with your banking app (GiroCode): recipient, amount and reference are filled in for you.',
+  qrAlt: de ? 'QR-Code für die Überweisung' : fr ? 'Code QR pour le virement' : 'QR code for the bank transfer',
+  refNote: de ? 'Bitte übernehmen Sie den Verwendungszweck genau so, damit wir Ihre Zahlung zuordnen können.' : fr ? 'Veuillez reprendre ce motif exactement, afin que nous puissions attribuer votre paiement.' : 'Please use exactly this payment reference so that we can match your payment.',
+};
+const privacyHref = r('privacy', lang, '#bestellformular');
+---
+<section class="order panel" aria-labelledby="order-h" data-order data-net-error={t.netError} data-copied={t.copied} data-sending={t.sending} data-lang={lang}
+  data-price={!isGift && p.price ? String(p.price) : undefined} data-shipping={!isGift && shipping.flat !== undefined ? String(shipping.flat) : undefined}>
+  <form method="post" action={href('/shop/bestellung.php')} data-order-form>
+    <h2 id="order-h">{t.title}</h2>
+    <p>{t.lead}</p>
+    <input type="hidden" name="product" value={p.slug} />
+    <input type="hidden" name="lang" value={lang} />
+    <input type="hidden" name="dwell" value="" />
+    <div class="order__hp" aria-hidden="true"><label>Website <input type="text" name="website" tabindex="-1" autocomplete="off" /></label></div>
+
+    {isGift ? (
+      <fieldset class="order__field">
+        <legend>{t.amount}</legend>
+        <div class="order__chips" role="group" aria-label={t.quick}>
+          {giftLimits.suggestions.map((v) => <button type="button" class="order__chip" data-amount={v} aria-pressed="false">{eur(v)}</button>)}
+        </div>
+        <label class="sr-only" for="order-amount">{t.amount}</label>
+        <input id="order-amount" name="amount" type="number" inputmode="decimal" min={giftLimits.min} max={giftLimits.max} step="0.01" required aria-describedby="order-amount-hint" />
+        <p class="order__hint" id="order-amount-hint">{t.amountHint}</p>
+      </fieldset>
+    ) : (
+      <div class="order__field order__row">
+        <div>
+          <label for="order-qty">{t.qty}</label>
+          <select id="order-qty" name="qty" required>{Array.from({ length: 10 }, (_, i) => <option value={i + 1}>{i + 1}</option>)}</select>
+        </div>
+        <p class="order__total" aria-live="polite">{t.total}: <strong data-order-total>{p.price !== undefined && shipping.flat !== undefined ? eur(p.price + shipping.flat) : ''}</strong>
+          <span class="order__hint">({de ? 'inkl.' : fr ? 'dont' : 'incl.'} {t.shippingL} {shipping.flat !== undefined ? eur(shipping.flat) : ''})</span></p>
+      </div>
+    )}
+
+    <div class="order__field">
+      <label for="order-name">{t.name}</label>
+      <input id="order-name" name="name" type="text" autocomplete="name" required minlength="2" maxlength="100" />
+    </div>
+    <div class="order__field">
+      <label for="order-email">{t.email}</label>
+      <input id="order-email" name="email" type="email" autocomplete="email" required maxlength="200" aria-describedby="order-email-hint" />
+      <p class="order__hint" id="order-email-hint">{t.emailHint}</p>
+    </div>
+    {isGift && (
+      <div class="order__field order__check">
+        <input id="order-receipt" name="receipt" type="checkbox" value="1" data-order-receipt />
+        <label for="order-receipt">{t.receipt}</label>
+      </div>
+    )}
+    <div class="order__field" data-order-address>
+      <label for="order-address">{t.address}{isGift && <span class="order__hint"> ({de ? 'nur mit Zuwendungsbestätigung' : fr ? 'seulement avec reçu fiscal' : 'only with a donation receipt'})</span>}</label>
+      <textarea id="order-address" name="address" rows="3" maxlength="500" autocomplete="street-address" required={!isGift} aria-describedby="order-address-hint"></textarea>
+      <p class="order__hint" id="order-address-hint">{t.addressHint}</p>
+    </div>
+    <div class="order__field">
+      <label for="order-note">{t.note}</label>
+      <textarea id="order-note" name="note" rows="2" maxlength="1000" aria-describedby={t.noteHint ? 'order-note-hint' : undefined}></textarea>
+      {t.noteHint && <p class="order__hint" id="order-note-hint">{t.noteHint}</p>}
+    </div>
+    {/* OPEN (goods): link AGB, Widerrufsbelehrung and Versandbedingungen here once those pages exist (docs/03 §5). */}
+    <p class="order__error" role="alert" data-order-error hidden></p>
+    <button type="submit" class="btn btn--gold" data-order-submit>{t.submit}</button>
+    <p class="order__hint order__privacy">{t.privacy} <a href={privacyHref}>{t.privacyLink}</a>.</p>
+  </form>
+
+  <div class="order__done" data-order-done hidden>
+    <h2 tabindex="-1" data-order-done-h>{t.doneTitle}</h2>
+    <div class="pay">
+      <dl class="pay__list">
+        <div><dt>{t.holder}</dt><dd data-f="holder"></dd></div>
+        <div><dt>IBAN</dt><dd><span class="pay__mono" data-f="iban"></span> <button type="button" class="pay__copy" data-copy="iban" aria-label={t.copyIban}>{t.copy}</button></dd></div>
+        <div><dt>BIC</dt><dd><span class="pay__mono" data-f="bic"></span> <span class="order__hint" data-f="bank"></span></dd></div>
+        <div><dt>{t.amountL}</dt><dd data-f="amount"></dd></div>
+        <div class="pay__ref"><dt>{t.ref}</dt><dd><strong data-f="reference"></strong> <button type="button" class="pay__copy" data-copy="reference" aria-label={t.copyRef}>{t.copy}</button></dd></div>
+      </dl>
+      <figure class="pay__qr">
+        <div class="pay__qr-box" data-qr role="img" aria-label={t.qrAlt}></div>
+        <figcaption>{t.qr}</figcaption>
+      </figure>
+    </div>
+    <p>{t.refNote}</p>
+    <ul class="pay__next" data-f="next"></ul>
+    <p class="sr-only" aria-live="polite" data-copy-status></p>
+  </div>
+</section>
+<script>
+  import { encode } from 'uqr';
+
+  const qrSvg = (text: string) => {
+    const { data } = encode(text, { ecc: 'M', border: 2 });
+    const n = data.length;
+    let d = '';
+    data.forEach((row, y) => row.forEach((on, x) => { if (on) d += `M${x} ${y}h1v1h-1z`; }));
+    return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${n} ${n}" shape-rendering="crispEdges" aria-hidden="true" focusable="false"><path d="${d}" fill="currentColor"/></svg>`;
+  };
+  const spaced = (iban: string) => iban.replace(/(.{4})/g, '$1 ').trim();
+
+  document.querySelectorAll<HTMLElement>('[data-order]').forEach((box) => {
+    const form = box.querySelector<HTMLFormElement>('[data-order-form]')!;
+    const done = box.querySelector<HTMLElement>('[data-order-done]')!;
+    const err = box.querySelector<HTMLElement>('[data-order-error]')!;
+    const submit = box.querySelector<HTMLButtonElement>('[data-order-submit]')!;
+    const amount = form.querySelector<HTMLInputElement>('[name="amount"]');
+    const receipt = form.querySelector<HTMLInputElement>('[data-order-receipt]');
+    const addressWrap = form.querySelector<HTMLElement>('[data-order-address]');
+    const address = form.querySelector<HTMLTextAreaElement>('[name="address"]');
+    const loaded = Date.now();
+
+    // Quick amounts for gifts
+    const chips = [...form.querySelectorAll<HTMLButtonElement>('[data-amount]')];
+    const syncChips = () => chips.forEach((c) => c.setAttribute('aria-pressed', String(amount?.value === c.dataset.amount)));
+    chips.forEach((c) => c.addEventListener('click', () => { if (amount) { amount.value = c.dataset.amount ?? ''; syncChips(); } }));
+    amount?.addEventListener('input', syncChips);
+
+    // Gifts: the address is only needed (and shown) for a donation receipt
+    if (receipt && addressWrap && address) {
+      const sync = () => { addressWrap.hidden = !receipt.checked; address.required = receipt.checked; };
+      receipt.addEventListener('change', sync);
+      sync();
+    }
+
+    // Goods: live total
+    const price = Number(box.dataset.price);
+    const ship = Number(box.dataset.shipping);
+    const qty = form.querySelector<HTMLSelectElement>('[name="qty"]');
+    const total = box.querySelector<HTMLElement>('[data-order-total]');
+    if (qty && total && price && !Number.isNaN(ship)) {
+      const lang = box.dataset.lang;
+      const fmt = (v: number) => v.toLocaleString(lang === 'de' ? 'de-DE' : lang === 'fr' ? 'fr-FR' : 'en-GB', { style: 'currency', currency: 'EUR' });
+      qty.addEventListener('change', () => { total.textContent = fmt(price * Number(qty.value) + ship); });
+    }
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      err.hidden = true;
+      (form.elements.namedItem('dwell') as HTMLInputElement).value = String(Date.now() - loaded);
+      const label = submit.textContent;
+      submit.disabled = true;
+      submit.textContent = box.dataset.sending ?? label;
+      try {
+        const res = await fetch(form.action, { method: 'POST', body: new FormData(form), headers: { Accept: 'application/json' } });
+        const data = await res.json().catch(() => null);
+        if (!data || !data.ok) throw new Error(data?.message || box.dataset.netError);
+        for (const el of done.querySelectorAll<HTMLElement>('[data-f]')) {
+          const key = el.dataset.f!;
+          if (key === 'next') { el.replaceChildren(...(data.next as string[]).map((n) => Object.assign(document.createElement('li'), { textContent: n }))); continue; }
+          el.textContent = key === 'iban' ? spaced(data.iban) : String(data[key] ?? '');
+        }
+        done.querySelector<HTMLElement>('[data-qr]')!.innerHTML = qrSvg(data.epc);
+        done.querySelectorAll<HTMLButtonElement>('[data-copy]').forEach((b) => b.addEventListener('click', async () => {
+          const value = b.dataset.copy === 'iban' ? data.iban : data.reference;
+          try { await navigator.clipboard.writeText(value); } catch { return; }
+          const status = done.querySelector<HTMLElement>('[data-copy-status]')!;
+          const old = b.textContent;
+          b.textContent = box.dataset.copied ?? old;
+          status.textContent = `${b.getAttribute('aria-label')}: ${box.dataset.copied}`;
+          setTimeout(() => { b.textContent = old; }, 2500);
+        }));
+        form.hidden = true;
+        done.hidden = false;
+        done.querySelector<HTMLElement>('[data-order-done-h]')!.focus();
+      } catch (ex) {
+        err.textContent = ex instanceof Error && ex.message ? ex.message : (box.dataset.netError ?? '');
+        err.hidden = false;
+      } finally {
+        submit.disabled = false;
+        submit.textContent = label;
+      }
+    });
+  });
+</script>
+<style>
+  .order { margin-top: 2rem; }
+  .order h2 { font-size: clamp(1.3rem, 2.6vw, 1.6rem); margin: 0 0 .5rem; }
+  .order__field { margin: 1.1rem 0 0; border: 0; padding: 0; min-width: 0; }
+  .order__field > label, .order__field legend { display: block; font-weight: 700; margin-bottom: .35rem; padding: 0; }
+  .order input[type='text'], .order input[type='email'], .order input[type='number'], .order select, .order textarea {
+    width: 100%; max-width: 32rem; min-height: var(--tap); padding: .55rem .75rem; font: inherit; color: var(--ink); background: var(--surface);
+    border: 2px solid var(--line-strong); border-radius: var(--radius-sm);
+  }
+  .order select { width: auto; min-width: 6rem; }
+  .order__hint { margin: .3rem 0 0; font-size: .92rem; color: var(--muted); font-weight: 400; }
+  .order__chips { display: flex; flex-wrap: wrap; gap: .5rem; margin-bottom: .6rem; }
+  .order__chip { min-height: var(--tap); min-width: 4.5rem; padding: .45rem 1rem; font: 700 1rem var(--font-sans); color: var(--ink); background: var(--surface); border: 2px solid var(--line-strong); border-radius: 999px; cursor: pointer; }
+  .order__chip[aria-pressed='true'] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+  .order__check { display: flex; gap: .6rem; align-items: flex-start; }
+  .order__check input { width: 1.4rem; height: 1.4rem; margin-top: .15rem; flex: none; accent-color: var(--green-text); }
+  .order__row { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 1rem 2rem; }
+  .order__total { margin: 0; }
+  .order__hp { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
+  .order__error { margin: 1rem 0 0; padding: .75rem 1rem; border-left: 4px solid currentColor; background: var(--bg-2); font-weight: 600; }
+  .order [data-order-submit] { margin-top: 1.25rem; }
+  .order__privacy { margin-top: .75rem; }
+  .order__done h2:focus { outline: none; }
+  .pay { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 1.5rem; align-items: start; margin: 1rem 0; }
+  .pay__list { margin: 0; display: grid; gap: .65rem; }
+  .pay__list > div { display: grid; gap: .1rem; }
+  .pay__list dt { font-size: .9rem; color: var(--muted); font-weight: 600; }
+  .pay__list dd { margin: 0; display: flex; flex-wrap: wrap; align-items: center; gap: .25rem .75rem; overflow-wrap: anywhere; }
+  .pay__mono { font-variant-numeric: tabular-nums; letter-spacing: .02em; }
+  .pay__ref dd strong { font-size: 1.2rem; }
+  .pay__copy { min-height: var(--tap); padding: .3rem .9rem; font: 600 .95rem var(--font-sans); color: var(--ink); background: transparent; border: 2px solid var(--line-strong); border-radius: 999px; cursor: pointer; }
+  .pay__qr { margin: 0; width: 12rem; text-align: center; }
+  .pay__qr-box { padding: .5rem; background: var(--qr-bg); color: var(--qr-fg); border-radius: var(--radius-sm); line-height: 0; }
+  .pay__qr-box :global(svg) { width: 100%; height: auto; display: block; }
+  .pay__qr figcaption { margin-top: .5rem; font-size: .88rem; color: var(--muted); text-align: left; }
+  .pay__next { padding-left: 1.2rem; }
+  @media (max-width: 40rem) { .pay { grid-template-columns: 1fr; } .pay__qr { width: min(100%, 14rem); } }
+</style>

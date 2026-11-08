@@ -257,9 +257,10 @@ export function mainNav(lang: Lang): NavItem[] {
         { label: de ? 'Ehrenamt' : fr ? 'Bénévolat' : 'Volunteer', href: r('join', lang, '#volunteer') },
         { label: de ? 'Bildungsangebote anfragen' : fr ? 'Demander un atelier ou une formation' : 'Book a workshop or training', href: r('offers', lang) },
         { label: de ? 'Kooperationen' : fr ? 'Coopérer avec nous' : 'Partner with us', href: r('join', lang, '#cooperation') },
-        { label: 'Shop', href: r('shop', lang) },
         { label: de ? 'Kontakt' : fr ? 'Contact' : 'Contact', href: r('contact', lang) },
       ],
     },
+    // Charity shop as its own top-level item, right before the donate button (chair's decision 08.11.2026).
+    { label: fr ? 'Boutique' : 'Shop', href: r('shop', lang) },
   ];
 }

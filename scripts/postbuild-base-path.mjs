@@ -53,12 +53,18 @@ AddType text/vtt .vtt
 RewriteEngine On
 # Certificate validation (AutoSSL / Let's Encrypt) and security.txt must stay reachable
 RewriteRule ^\\.well-known/ - [L]
-# Self-defence: this is a static site, so only reading is allowed (no uploads, no form posts to this server)
+# The one exception (shop order form, decision of the chair 08.11.2026): POST over HTTPS to exactly shop/bestellung.php.
+# Any other method on that file falls through to the 405/404 rules below; no other script can run.
+RewriteCond %{REQUEST_METHOD} =POST
+RewriteCond %{HTTPS} =on [OR]
+RewriteCond %{HTTP:X-Forwarded-Proto} =https
+RewriteRule ^shop/bestellung\\.php$ - [END]
+# Self-defence: otherwise this is a static site, so only reading is allowed (no uploads, no form posts to this server)
 RewriteCond %{REQUEST_METHOD} !^(GET|HEAD|OPTIONS)$
 RewriteRule ^ - [R=405,L]
 # Never serve hidden files, backups, sources or config files
 RewriteRule (^|/)\\.(?!well-known/) - [R=404,L]
-RewriteRule \\.(bak|old|orig|save|swp|sql|sqlite|db|env|ini|log|sh|py|php[0-9]?|phtml|cgi|pl|asp|aspx|jsp|ya?ml|toml|lock|git)$ - [R=404,L,NC]
+RewriteRule \\.(bak|old|orig|save|swp|sql|sqlite|db|env|ini|log|sh|py|php[0-9]?|phtml|cgi|pl|asp|aspx|jsp|ya?ml|toml|lock|git)(/|$) - [R=404,L,NC]
 # Typical attack probes (admin panels, shells, path traversal)
 RewriteRule (^|/)(phpmyadmin|pma|myadmin|adminer|cgi-bin|vendor|node_modules|\\.git|\\.svn|\\.env|server-status|server-info)(/|$) - [R=404,L,NC]
 RewriteCond %{QUERY_STRING} (\\.\\./|%2e%2e|<script|%3Cscript|union.*select|base64_encode|GLOBALS=|_REQUEST=|/etc/passwd) [NC]
