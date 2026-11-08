@@ -57,9 +57,9 @@ const mail = `mailto:${org.email}?subject=${encodeURIComponent((de ? 'Vormerken:
         </div>
         {isPlanned
           ? <p class="notice" style="margin-top:1.25rem">{de
-            ? 'Diese Edition ist in Vorbereitung und noch nicht bestellbar. Röstung, Preis und Verfügbarkeit stehen noch nicht fest. Vormerken können Sie schon jetzt Roots & Routes und Kanungu Forest.'
-            : fr ? 'Cette édition est en préparation et pas encore disponible. Torréfaction, prix et disponibilité ne sont pas encore fixés. Vous pouvez déjà réserver Roots & Routes et Kanungu Forest.'
-            : 'This edition is in preparation and not yet available to order. Roast, price and availability are not yet fixed. You can already reserve Roots & Routes and Kanungu Forest.'}</p>
+            ? 'Diese Edition ist in Vorbereitung und noch nicht bestellbar. Preis und Verfügbarkeit stehen noch nicht fest. Vormerken können Sie schon jetzt Roots & Routes und Sebei Elgon.'
+            : fr ? 'Cette édition est en préparation et pas encore disponible. Prix et disponibilité ne sont pas encore fixés. Vous pouvez déjà réserver Roots & Routes et Sebei Elgon.'
+            : 'This edition is in preparation and not yet available to order. Price and availability are not yet fixed. You can already reserve Roots & Routes and Sebei Elgon.'}</p>
           : !isGift && !orderable && !canBuy && <p class="notice" style="margin-top:1.25rem">{t.shopClosedNote}</p>}
       </div>
     </div>

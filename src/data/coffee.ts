@@ -1,7 +1,7 @@
 // ABANTU COFFEE – Uganda Collection (12 editions, "Woven Origins v2" bag designs).
 // Brand (chair, 08.11.2026): ABANTU COFFEE by Bantu e.V., main coffee partner Balambuli Kwigate Coffee (BKC).
-// Roots & Routes (01) and Kanungu Forest (03) are products "coming soon". The other ten editions are shown as a
-// collection preview (status 'planned': no price, no reservation, not in the order catalogue) – chair's decision 08.11.2026.
+// Roots & Routes (01) and Sebei Elgon (04) are products "coming soon" (chair, 09.11.2026; Sebei Elgon replaced Kanungu Forest).
+// The other ten editions, Kanungu Forest included, are shown as a collection preview (status 'planned': no price, no reservation, not in the order catalogue) – chair's decision 08.11.2026.
 // Stories: chair's decision 08.11.2026 to use the 2025 brochure "Abantu Coffee – Complete 12-Line Collection with Uganda
 // Regional Partners" (05_Programme_&_Projekte/…/Abantu Coffee — Marke und Produktentwicklung/03_Implementierung/03_Daten_Fotos_&_Medien).
 // Taglines follow the current Woven Origins v2 labels. Cooperatives, processing, altitude and impact are written as plans/aims,
@@ -39,6 +39,7 @@ const lbl = {
   type: { de: 'Kaffeesorte', en: 'Coffee type', fr: 'Type de café' },
   weight: { de: 'Nettofüllmenge', en: 'Net weight', fr: 'Poids net' },
   plannedWeight: { de: 'Geplante Füllmenge', en: 'Planned net weight', fr: 'Poids net prévu' },
+  plannedRoast: { de: 'Geplante Röstung', en: 'Planned roast', fr: 'Torréfaction prévue' },
   partner: { de: 'Kaffeepartner', en: 'Coffee partner', fr: 'Partenaire café' },
   coop: { de: 'Geplante Partnerkooperative', en: 'Planned partner cooperative', fr: 'Coopérative partenaire prévue' },
   project: { de: 'Ein Projekt von', en: 'A project of', fr: 'Un projet de' },
@@ -74,6 +75,7 @@ const productName = (name: string): L => ({ de: `Abantu Coffee „${name}“`, e
 /** One of the ten planned editions (collection preview). */
 function planned(e: {
   no: number; slug: string; name: string; tagline: string; place: L; origin: L; from: L; pattern: L; coop: L; story: CoffeeStory;
+  extra?: { label: L; value: L }[];
 }): Product {
   const nn = String(e.no).padStart(2, '0');
   return {
@@ -88,6 +90,7 @@ function planned(e: {
     details: [
       row(lbl.origin, e.origin),
       row(lbl.edition, editionNo(e.no)),
+      ...(e.extra ?? []),
       row(lbl.plannedWeight, same('250 g')),
       row(lbl.coop, e.coop),
       row(lbl.partner, same(BKC)),
@@ -178,25 +181,15 @@ export const coffeeProducts: Product[] = [
       ],
     },
   }),
-  // 03 – product "coming soon".
-  {
-    slug: 'abantu-coffee-kanungu-forest', category: 'coffee', status: 'coming-soon', edition: 3, editionName: 'Kanungu Forest', tagline: 'Bwindi Canopy Coffee',
-    name: productName('Kanungu Forest'),
-    short: { de: 'Bwindi Canopy Coffee · Bwindi Forest Edge · dunkle Röstung · 250 g', en: 'Bwindi Canopy Coffee · Bwindi Forest Edge · dark roast · 250 g', fr: 'Bwindi Canopy Coffee · lisière de la forêt de Bwindi · torréfaction foncée · 250 g' },
-    description: {
-      de: 'Arabica vom Rand des Bwindi-Waldes in Uganda, mit dunkler Röstung, aus unserer Linie „Bwindi Canopy“. In der 250-g-Packung. Abantu Coffee ist ein Projekt von Bantu e.V. mit Balambuli Kwigate Coffee (BKC) als Hauptpartner für Kaffee. Die Erlöse unterstützen die Projekte von Bantu e.V.',
-      en: 'A dark-roast Arabica from the edge of the Bwindi forest in Uganda, from our Bwindi Canopy line. In a 250 g pack. Abantu Coffee is a project of Bantu e.V., with Balambuli Kwigate Coffee (BKC) as its main coffee partner. Proceeds support the projects of Bantu e.V.',
-      fr: 'Un arabica de la lisière de la forêt de Bwindi en Ouganda, à torréfaction foncée, de notre gamme Bwindi Canopy. En sachet de 250 g. Abantu Coffee est un projet de Bantu e.V., avec Balambuli Kwigate Coffee (BKC) comme principal partenaire café. Les recettes soutiennent les projets de Bantu e.V.',
-    },
-    details: [
-      row(lbl.origin, { de: 'Bwindi Forest Edge, Uganda', en: 'Bwindi Forest Edge, Uganda', fr: 'Lisière de la forêt de Bwindi, Ouganda' }),
-      row(lbl.edition, editionNo(3)),
-      row(lbl.roast, { de: 'dunkel', en: 'dark', fr: 'foncée' }),
-      row(lbl.type, same('Arabica')),
-      row(lbl.weight, same('250 g')),
-      row(lbl.partner, same(BKC)),
-      row(lbl.project, same('Bantu e.V.')),
-    ],
+  // 03 – collection preview since 09.11.2026 (was "coming soon"); roast and coffee type from the label design brief (Dec 2024, v4).
+  planned({
+    no: 3, slug: 'kanungu-forest', name: 'Kanungu Forest', tagline: 'Bwindi Canopy Coffee',
+    place: { de: 'Bwindi Forest Edge', en: 'Bwindi Forest Edge', fr: 'lisière de la forêt de Bwindi' },
+    origin: { de: 'Bwindi Forest Edge, Uganda', en: 'Bwindi Forest Edge, Uganda', fr: 'Lisière de la forêt de Bwindi, Ouganda' },
+    from: { de: 'der Region am Rand des Bwindi-Waldes, Uganda', en: 'the edge of the Bwindi forest, Uganda', fr: 'lisière de la forêt de Bwindi, Ouganda' },
+    pattern: { de: 'dunkelgrün-goldenem', en: 'deep green and gold', fr: 'vert foncé et or' },
+    coop: same('Kanungu Coffee Farmers Cooperative Society'),
+    extra: [row(lbl.plannedRoast, { de: 'dunkel', en: 'dark', fr: 'foncée' }), row(lbl.type, same('Arabica'))],
     story: {
       paragraphs: [
         {
@@ -218,15 +211,25 @@ export const coffeeProducts: Product[] = [
         { de: 'Schulungen für nachhaltigen Anbau am Waldrand', en: 'Training in sustainable farming at the forest edge', fr: 'Formations à une agriculture durable en lisière de forêt' },
       ],
     },
-    ...coffeeMedia('kanungu-forest', 'Kanungu Forest', { de: 'dunkelgrün-goldenem', en: 'deep green and gold', fr: 'vert foncé et or' }),
-  },
-  planned({
-    no: 4, slug: 'sebei-elgon', name: 'Sebei Elgon', tagline: 'Mountain Heritage Coffee',
-    place: { de: 'Osthänge des Mount Elgon', en: 'Eastern Elgon Slopes', fr: 'versant est du mont Elgon' },
-    origin: { de: 'Osthänge des Mount Elgon, Uganda', en: 'Eastern slopes of Mount Elgon, Uganda', fr: 'Versant est du mont Elgon, Ouganda' },
-    from: { de: 'den Osthängen des Mount Elgon, Uganda', en: 'the eastern slopes of Mount Elgon, Uganda', fr: 'versant est du mont Elgon, Ouganda' },
-    pattern: { de: 'marineblau-goldenem', en: 'navy blue and gold', fr: 'bleu marine et or' },
-    coop: same('Sebei Elgon Co-operative Union'),
+  }),
+  // 04 – product "coming soon" since 09.11.2026 (chair). Roast and coffee type not confirmed yet, so not shown.
+  {
+    slug: 'abantu-coffee-sebei-elgon', category: 'coffee', status: 'coming-soon', edition: 4, editionName: 'Sebei Elgon', tagline: 'Mountain Heritage Coffee',
+    name: productName('Sebei Elgon'),
+    short: { de: 'Mountain Heritage Coffee · Osthänge des Mount Elgon · 250 g', en: 'Mountain Heritage Coffee · Eastern slopes of Mount Elgon · 250 g', fr: 'Mountain Heritage Coffee · versant est du mont Elgon · 250 g' },
+    description: {
+      de: 'Kaffee von den Osthängen des Mount Elgon in Uganda, aus unserer Linie „Mountain Heritage“. In der 250-g-Packung. Abantu Coffee ist ein Projekt von Bantu e.V. mit Balambuli Kwigate Coffee (BKC) als Hauptpartner für Kaffee. Die Erlöse unterstützen die Projekte von Bantu e.V.',
+      en: 'Coffee from the eastern slopes of Mount Elgon in Uganda, from our Mountain Heritage line. In a 250 g pack. Abantu Coffee is a project of Bantu e.V., with Balambuli Kwigate Coffee (BKC) as its main coffee partner. Proceeds support the projects of Bantu e.V.',
+      fr: 'Un café du versant est du mont Elgon en Ouganda, de notre gamme Mountain Heritage. En sachet de 250 g. Abantu Coffee est un projet de Bantu e.V., avec Balambuli Kwigate Coffee (BKC) comme principal partenaire café. Les recettes soutiennent les projets de Bantu e.V.',
+    },
+    details: [
+      row(lbl.origin, { de: 'Osthänge des Mount Elgon, Uganda', en: 'Eastern slopes of Mount Elgon, Uganda', fr: 'Versant est du mont Elgon, Ouganda' }),
+      row(lbl.edition, editionNo(4)),
+      row(lbl.weight, same('250 g')),
+      row(lbl.coop, same('Sebei Elgon Co-operative Union')),
+      row(lbl.partner, same(BKC)),
+      row(lbl.project, same('Bantu e.V.')),
+    ],
     story: {
       paragraphs: [
         {
@@ -248,7 +251,8 @@ export const coffeeProducts: Product[] = [
         { de: 'Unterstützung für traditionelle Sportarten und Kulturfeste', en: 'Support for traditional sports and cultural festivals', fr: 'Soutien aux sports traditionnels et aux fêtes culturelles' },
       ],
     },
-  }),
+    ...coffeeMedia('sebei-elgon', 'Sebei Elgon', { de: 'marineblau-goldenem', en: 'navy blue and gold', fr: 'bleu marine et or' }),
+  },
   planned({
     no: 5, slug: 'bukonzo', name: 'Bukonzo', tagline: 'Mountains of the Moon',
     place: { de: 'Rwenzori-Gebirge', en: 'Rwenzori Mountains', fr: 'monts Rwenzori' },
