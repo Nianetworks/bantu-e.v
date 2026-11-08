@@ -4,8 +4,9 @@
 // Symbolic gifts (donations) can be ordered now. Goods only when features.shopCheckoutOpen === true, the product has a price,
 // status 'available' and shipping.flat is set – see docs/03_Rechtliches_und_Shop-Checkliste.md before switching on.
 import { features } from './site';
+import { coffeeProducts, type CoffeeStory } from './coffee';
 
-type L = { de: string; en: string; fr: string };
+export type L = { de: string; en: string; fr: string };
 export type Category = 'gifts' | 'coffee' | 'merch' | 'crafts';
 export type Product = {
   slug: string;
@@ -24,7 +25,13 @@ export type Product = {
   imageVariants?: { width: number; src: string }[];
   labelImages?: { name: L; src: string }[];
   photoBrief?: L;
-  status: 'available' | 'coming-soon';
+  /** 'planned' = ABANTU COFFEE collection preview: no price, no reservation, never orderable, not in /shop/katalog.json */
+  status: 'available' | 'coming-soon' | 'planned';
+  /** ABANTU COFFEE Uganda Collection: edition number (1–12), plain edition name, tagline from the label, story */
+  edition?: number;
+  editionName?: string;
+  tagline?: string;
+  story?: CoffeeStory;
   checkoutUrl?: string;
   /** Symbolic gifts are donations: link to donate page with this reference */
   donationReference?: string;
@@ -46,22 +53,6 @@ export const canOrder = (p: Product): boolean =>
     ? p.status === 'available' && !!p.donationReference
     : features.shopCheckoutOpen && p.status === 'available' && !!p.price && shipping.flat !== undefined;
 
-function coffeeMedia(slug: string, imageAlt: L) {
-  const stem = `/images/shop/abantu-coffee/abantu-coffee-${slug}-250g-woven-origins-v2`;
-  return {
-    image: `${stem}-1254.jpg`,
-    imageAlt,
-    imageCaption: { de: 'Verpackungsvorschau', en: 'Packaging preview', fr: 'Aperçu de l’emballage' },
-    imageWidth: 1254,
-    imageHeight: 1254,
-    imageVariants: [480, 768, 1254].map((width) => ({ width, src: `${stem}-${width}.webp` })),
-    labelImages: [
-      { name: { de: 'Vorderes Etikett ansehen', en: 'View front label', fr: 'Voir l’étiquette avant' }, src: `${stem}-front-label.jpg` },
-      { name: { de: 'Hinteres Etikett ansehen', en: 'View back label', fr: 'Voir l’étiquette arrière' }, src: `${stem}-back-label.jpg` },
-    ],
-  };
-}
-
 export const categories: { id: Category; name: L; intro: L }[] = [
   {
     id: 'gifts',
@@ -75,7 +66,7 @@ export const categories: { id: Category; name: L; intro: L }[] = [
     id: 'coffee',
     name: { de: 'Abantu Coffee', en: 'Abantu Coffee', fr: 'Abantu Coffee' },
     // Brand (chair, 08.11.2026): ABANTU COFFEE by Bantu e.V., main coffee partner Balambuli Kwigate Coffee (BKC).
-    // The ten further "Woven Origins" editions are concepts only and stay out of this catalogue.
+    // Uganda Collection with 12 editions in src/data/coffee.ts: 01 and 03 coming soon, the other ten as a preview (status 'planned').
     intro: {
       de: 'ABANTU COFFEE ist unsere eigene Kaffeemarke: ein Projekt von Bantu e.V. mit Balambuli Kwigate Coffee (BKC) als Hauptpartner für Kaffee. Kaffee aus Uganda mit Geschichte; die Erlöse fließen in die Projekte von Bantu e.V.',
       en: 'ABANTU COFFEE is our own coffee brand: a project of Bantu e.V., with Balambuli Kwigate Coffee (BKC) as its main coffee partner. Coffee from Uganda with a story; proceeds support the projects of Bantu e.V.',
@@ -123,53 +114,8 @@ export const products: Product[] = [
     description: { de: 'Ihre Spende hilft, Schulungen, Workshops und Begegnungen in Berlin kostenfrei anzubieten, mit Kinderbetreuung, damit alle teilnehmen können.', en: 'Your donation helps us offer trainings, workshops and encounters in Berlin free of charge, with childcare so that everyone can take part.', fr: 'Votre don nous aide à proposer gratuitement des formations, des ateliers et des rencontres à Berlin, avec garde d’enfants pour que tout le monde puisse participer.' },
     priceNote: { de: 'Betrag frei wählbar', en: 'Choose your amount', fr: 'Choisissez votre montant' },
   },
-  // Abantu Coffee – product facts from the label design brief (Dec 2024, v4).
-  {
-    slug: 'abantu-coffee-roots-and-routes', category: 'coffee', status: 'coming-soon',
-    name: { de: 'Abantu Coffee „Roots & Routes“', en: 'Abantu Coffee “Roots & Routes”', fr: 'Abantu Coffee « Roots & Routes »' },
-    short: { de: 'Sankofa Heritage Coffee · Mount Elgon · mittlere Röstung · 250 g', en: 'Sankofa Heritage Coffee · Mount Elgon · medium roast · 250 g', fr: 'Sankofa Heritage Coffee · mont Elgon · torréfaction moyenne · 250 g' },
-    description: {
-      de: 'Arabica vom Mount Elgon in Uganda, mit mittlerer Röstung, aus unserer Linie „Sankofa Heritage“. In der 250-g-Packung. Abantu Coffee ist ein Projekt von Bantu e.V. mit Balambuli Kwigate Coffee (BKC) als Hauptpartner für Kaffee. Die Erlöse unterstützen die Projekte von Bantu e.V.',
-      en: 'A medium-roast Arabica from Mount Elgon in Uganda, from our Sankofa Heritage line. In a 250 g pack. Abantu Coffee is a project of Bantu e.V., with Balambuli Kwigate Coffee (BKC) as its main coffee partner. Proceeds support the projects of Bantu e.V.',
-      fr: 'Un arabica du mont Elgon en Ouganda, à torréfaction moyenne, de notre gamme Sankofa Heritage. En sachet de 250 g. Abantu Coffee est un projet de Bantu e.V., avec Balambuli Kwigate Coffee (BKC) comme principal partenaire café. Les recettes soutiennent les projets de Bantu e.V.',
-    },
-    details: [
-      { label: { de: 'Herkunft', en: 'Origin', fr: 'Origine' }, value: { de: 'Mount Elgon, Uganda', en: 'Mount Elgon, Uganda', fr: 'Mont Elgon, Ouganda' } },
-      { label: { de: 'Röstung', en: 'Roast', fr: 'Torréfaction' }, value: { de: 'mittel', en: 'medium', fr: 'moyenne' } },
-      { label: { de: 'Kaffeesorte', en: 'Coffee type', fr: 'Type de café' }, value: { de: 'Arabica', en: 'Arabica', fr: 'Arabica' } },
-      { label: { de: 'Nettofüllmenge', en: 'Net weight', fr: 'Poids net' }, value: { de: '250 g', en: '250 g', fr: '250 g' } },
-      { label: { de: 'Kaffeepartner', en: 'Coffee partner', fr: 'Partenaire café' }, value: { de: 'Balambuli Kwigate Coffee (BKC)', en: 'Balambuli Kwigate Coffee (BKC)', fr: 'Balambuli Kwigate Coffee (BKC)' } },
-      { label: { de: 'Ein Projekt von', en: 'A project of', fr: 'Un projet de' }, value: { de: 'Bantu e.V.', en: 'Bantu e.V.', fr: 'Bantu e.V.' } },
-    ],
-    ...coffeeMedia('roots-and-routes', {
-      de: 'Digitale Verpackungsvorschau: Abantu Coffee Roots & Routes, 250 g, in einem mattschwarzen Beutel mit braun-goldenem Webmuster sowie den Logos von Bantu e.V. und BKC.',
-      en: 'Digital packaging preview: Abantu Coffee Roots & Routes, 250 g, in a matte charcoal bag with a brown and gold woven pattern and the Bantu e.V. and BKC logos.',
-      fr: 'Aperçu numérique : Abantu Coffee Roots & Routes, 250 g, en sachet noir mat avec un motif tissé brun et or et les logos de Bantu e.V. et de BKC.',
-    }),
-  },
-  {
-    slug: 'abantu-coffee-kanungu-forest', category: 'coffee', status: 'coming-soon',
-    name: { de: 'Abantu Coffee „Kanungu Forest“', en: 'Abantu Coffee “Kanungu Forest”', fr: 'Abantu Coffee « Kanungu Forest »' },
-    short: { de: 'Bwindi Canopy Coffee · Bwindi Forest Edge · dunkle Röstung · 250 g', en: 'Bwindi Canopy Coffee · Bwindi Forest Edge · dark roast · 250 g', fr: 'Bwindi Canopy Coffee · lisière de la forêt de Bwindi · torréfaction foncée · 250 g' },
-    description: {
-      de: 'Arabica vom Rand des Bwindi-Waldes in Uganda, mit dunkler Röstung, aus unserer Linie „Bwindi Canopy“. In der 250-g-Packung. Abantu Coffee ist ein Projekt von Bantu e.V. mit Balambuli Kwigate Coffee (BKC) als Hauptpartner für Kaffee. Die Erlöse unterstützen die Projekte von Bantu e.V.',
-      en: 'A dark-roast Arabica from the edge of the Bwindi forest in Uganda, from our Bwindi Canopy line. In a 250 g pack. Abantu Coffee is a project of Bantu e.V., with Balambuli Kwigate Coffee (BKC) as its main coffee partner. Proceeds support the projects of Bantu e.V.',
-      fr: 'Un arabica de la lisière de la forêt de Bwindi en Ouganda, à torréfaction foncée, de notre gamme Bwindi Canopy. En sachet de 250 g. Abantu Coffee est un projet de Bantu e.V., avec Balambuli Kwigate Coffee (BKC) comme principal partenaire café. Les recettes soutiennent les projets de Bantu e.V.',
-    },
-    details: [
-      { label: { de: 'Herkunft', en: 'Origin', fr: 'Origine' }, value: { de: 'Bwindi Forest Edge, Uganda', en: 'Bwindi Forest Edge, Uganda', fr: 'Lisière de la forêt de Bwindi, Ouganda' } },
-      { label: { de: 'Röstung', en: 'Roast', fr: 'Torréfaction' }, value: { de: 'dunkel', en: 'dark', fr: 'foncée' } },
-      { label: { de: 'Kaffeesorte', en: 'Coffee type', fr: 'Type de café' }, value: { de: 'Arabica', en: 'Arabica', fr: 'Arabica' } },
-      { label: { de: 'Nettofüllmenge', en: 'Net weight', fr: 'Poids net' }, value: { de: '250 g', en: '250 g', fr: '250 g' } },
-      { label: { de: 'Kaffeepartner', en: 'Coffee partner', fr: 'Partenaire café' }, value: { de: 'Balambuli Kwigate Coffee (BKC)', en: 'Balambuli Kwigate Coffee (BKC)', fr: 'Balambuli Kwigate Coffee (BKC)' } },
-      { label: { de: 'Ein Projekt von', en: 'A project of', fr: 'Un projet de' }, value: { de: 'Bantu e.V.', en: 'Bantu e.V.', fr: 'Bantu e.V.' } },
-    ],
-    ...coffeeMedia('kanungu-forest', {
-      de: 'Digitale Verpackungsvorschau: Abantu Coffee Kanungu Forest, 250 g, in einem mattschwarzen Beutel mit dunkelgrün-goldenem Webmuster sowie den Logos von Bantu e.V. und BKC.',
-      en: 'Digital packaging preview: Abantu Coffee Kanungu Forest, 250 g, in a matte charcoal bag with a deep green and gold woven pattern and the Bantu e.V. and BKC logos.',
-      fr: 'Aperçu numérique : Abantu Coffee Kanungu Forest, 250 g, en sachet noir mat avec un motif tissé vert foncé et or et les logos de Bantu e.V. et de BKC.',
-    }),
-  },
+  // Abantu Coffee – Uganda Collection, see src/data/coffee.ts.
+  ...coffeeProducts,
   // Merchandise – designs to be produced (print-on-demand or small batch).
   {
     slug: 'bantu-stofftasche', category: 'merch', status: 'coming-soon',

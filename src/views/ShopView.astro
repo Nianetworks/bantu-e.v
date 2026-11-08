@@ -32,7 +32,9 @@ const shopCategories = categories.filter((c) => c.id !== 'gifts');
   )}
 
   {shopCategories.map((c, i) => {
-    const items = products.filter((p) => p.category === c.id);
+    const items = products.filter((p) => p.category === c.id && p.status !== 'planned');
+    // ABANTU COFFEE: the ten further editions of the Uganda Collection as a preview (chair, 08.11.2026)
+    const planned = products.filter((p) => p.category === c.id && p.status === 'planned').sort((a, b) => (a.edition ?? 0) - (b.edition ?? 0));
     return (
       <section class={`section section--tight ${i % 2 ? 'section--alt' : ''}`} id={c.id}>
         <div class="wrap">
@@ -59,6 +61,28 @@ const shopCategories = categories.filter((c) => c.id !== 'gifts');
               <a class="btn btn--outline" href={`mailto:${org.email}?subject=${encodeURIComponent(de ? 'Shop: Handwerk vormerken' : fr ? 'Boutique : me prévenir pour l’artisanat' : 'Shop: notify me about crafts')}`}>{t.notify}</a>
             </div>
           )}
+          {planned.length > 0 && (
+            <div class="collection" id="uganda-collection">
+              <h3 class="collection__title">{de ? 'Die Uganda Collection: zehn weitere Editionen in Vorbereitung' : fr ? 'La Uganda Collection : dix autres éditions en préparation' : 'The Uganda Collection: ten more editions in preparation'}</h3>
+              <p class="collection__intro">{de
+                ? 'Zwölf Editionen, zwölf Geschichten aus Uganda: von den Hängen des Mount Elgon über die Mondberge des Rwenzori bis an den Viktoriasee. Roots & Routes und Kanungu Forest kommen zuerst. Die zehn weiteren Editionen sind in Vorbereitung; Röstung, Preis und Verfügbarkeit stehen noch nicht fest. Lernen Sie ihre Geschichten schon jetzt kennen.'
+                : fr ? 'Douze éditions, douze histoires d’Ouganda : des pentes du mont Elgon aux montagnes de la Lune du Rwenzori, jusqu’au lac Victoria. Roots & Routes et Kanungu Forest arrivent en premier. Les dix autres éditions sont en préparation ; torréfaction, prix et disponibilité ne sont pas encore fixés. Découvrez dès maintenant leurs histoires.'
+                : 'Twelve editions, twelve stories from Uganda: from the slopes of Mount Elgon to the Rwenzori, the Mountains of the Moon, and on to Lake Victoria. Roots & Routes and Kanungu Forest come first. The other ten editions are in preparation; roast, price and availability are not yet fixed. Get to know their stories now.'}</p>
+              <ul class="collection__list" role="list">
+                {planned.map((p) => (
+                  <li class="card card--link">
+                    <ProductImage product={p} lang={lang} />
+                    <div class="card__body">
+                      <div class="card__meta"><span class="tag tag--planned">{de ? 'Geplant · Nr.' : fr ? 'Prévue · n°' : 'Planned · No.'} {String(p.edition).padStart(2, '0')}</span></div>
+                      <h4><a class="stretched" href={productPath(lang, p.slug)}>{p.editionName}</a></h4>
+                      <p class="collection__tagline">{p.tagline}</p>
+                      <p class="small muted">{((place) => place.charAt(0).toUpperCase() + place.slice(1))(p.short[lang].split(' · ').slice(1).join(' · '))}</p>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
         </div>
       </section>
     );
@@ -78,4 +102,15 @@ const shopCategories = categories.filter((c) => c.id !== 'gifts');
   .price { font-weight: 700; color: var(--ink); }
   .empty { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem; }
   .empty p { margin: 0; max-width: 60ch; }
+  .collection { margin-top: clamp(2.5rem, 6vw, 4rem); padding-top: clamp(1.5rem, 4vw, 2.5rem); border-top: 1px solid var(--line); }
+  .collection__title { font-size: clamp(1.3rem, 2.4vw, 1.6rem); margin-bottom: .5rem; }
+  .collection__intro { max-width: 70ch; margin-bottom: 1.5rem; }
+  .collection__list { list-style: none; padding: 0; margin: 0; display: grid; gap: 1rem; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  @media (min-width: 720px) { .collection__list { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.25rem; } }
+  @media (min-width: 1000px) { .collection__list { grid-template-columns: repeat(5, minmax(0, 1fr)); } }
+  .collection__list :global(.product-image__caption) { display: none; }
+  .collection__list .card__body { padding: .9rem 1rem 1.1rem; }
+  .collection__list h4 { font-size: 1.1rem; margin: .35rem 0 .15rem; }
+  .collection__tagline { font-weight: 600; margin: 0 0 .25rem; }
+  .collection__list .small { margin: 0; }
 </style>
