@@ -8,6 +8,7 @@
 // because none of them is confirmed yet. Left out on purpose: "certified organic" for Bukonzo (EU organic rules: only for
 // certified products) and the Sebei circumcision/ceremony-funding lines of the brochure.
 // OPEN: have the local-language sayings checked by native speakers (Runyankore, Rukiga, Lukonzo, Luganda, Kinyarwanda).
+// Edition 12 is called KUKUNDA (corrected by the chair on 08.11.2026; label artwork retouched to match).
 // OPEN: ask the named cooperatives whether they agree to be named as planned partners.
 import type { L, Product } from './shop';
 
@@ -452,7 +453,7 @@ export const coffeeProducts: Product[] = [
     },
   }),
   planned({
-    no: 12, slug: 'kuconda', name: 'Kuconda', tagline: 'Love & Compassion',
+    no: 12, slug: 'kukunda', name: 'Kukunda', tagline: 'Love & Compassion',
     place: same('Uganda'),
     origin: { de: 'Uganda', en: 'Uganda', fr: 'Ouganda' },
     from: { de: 'Uganda', en: 'Uganda', fr: 'Ouganda' },
@@ -461,9 +462,9 @@ export const coffeeProducts: Product[] = [
     story: {
       paragraphs: [
         {
-          de: 'Kuconda steht für Liebe und Mitgefühl. Die letzte Edition der Uganda Collection ist den Menschen gewidmet, die in schweren Zeiten Unterstützung brauchen: Kindern, älteren Menschen und Familien in Not.',
-          en: 'Kuconda stands for love and compassion. The last edition of the Uganda Collection is dedicated to people who need support in hard times: children, older people and families in need.',
-          fr: 'Kuconda représente l’amour et la compassion. La dernière édition de la Uganda Collection est dédiée aux personnes qui ont besoin de soutien dans les moments difficiles : enfants, personnes âgées et familles en détresse.',
+          de: 'Kukunda steht für Liebe und Mitgefühl. Die letzte Edition der Uganda Collection ist den Menschen gewidmet, die in schweren Zeiten Unterstützung brauchen: Kindern, älteren Menschen und Familien in Not.',
+          en: 'Kukunda stands for love and compassion. The last edition of the Uganda Collection is dedicated to people who need support in hard times: children, older people and families in need.',
+          fr: 'Kukunda représente l’amour et la compassion. La dernière édition de la Uganda Collection est dédiée aux personnes qui ont besoin de soutien dans les moments difficiles : enfants, personnes âgées et familles en détresse.',
         },
         {
           de: 'Geplant ist ein Kaffee mit Honey-Aufbereitung: Ein Teil des süßen Fruchtfleischs bleibt beim Trocknen an der Bohne und gibt ihr eine natürliche Süße. Die besondere Sorgfalt in jedem Arbeitsschritt steht für die Fürsorge, um die es in dieser Edition geht. Der Kaffee soll aus allen Partnerkooperativen kommen.',
