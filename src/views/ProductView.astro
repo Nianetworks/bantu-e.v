@@ -5,7 +5,7 @@ import Placeholder from '../components/Placeholder.astro';
 import OrderForm from '../components/OrderForm.astro';
 import ProductImage from '../components/ProductImage.astro';
 import ProductGallery from '../components/ProductGallery.astro';
-import { productPath, projectPath, r, ui, type Lang } from '../i18n';
+import { giftPath, productPath, projectPath, r, ui, type Lang } from '../i18n';
 import { canOrder, categories, type Product } from '../data/shop';
 import { features, org } from '../data/site';
 
@@ -21,8 +21,10 @@ const canBuy = !orderable && features.shopCheckoutOpen && p.status === 'availabl
 const isGift = p.category === 'gifts';
 const mail = `mailto:${org.email}?subject=${encodeURIComponent((de ? 'Vormerken: ' : fr ? 'Réserver : ' : 'Reserve: ') + p.name[lang])}`;
 ---
-<Base lang={lang} title={p.name[lang]} description={p.short[lang]} altHref={productPath(de ? 'en' : 'de', p.slug)}>
-  <PageHead lang={lang} title={p.name[lang]} lead={p.short[lang]} crumbs={[{ label: 'Shop', href: r('shop', lang) }, { label: cat.name[lang], href: r('shop', lang, `#${cat.id}`) }]} />
+<Base lang={lang} title={p.name[lang]} description={p.short[lang]} altHref={(isGift ? giftPath : productPath)(de ? 'en' : 'de', p.slug)}>
+  <PageHead lang={lang} title={p.name[lang]} lead={p.short[lang]} crumbs={isGift
+    ? [{ label: de ? 'Spenden' : fr ? 'Faire un don' : 'Donate', href: r('donate', lang) }, { label: cat.name[lang], href: r('donate', lang, '#geschenke') }]
+    : [{ label: 'Shop', href: r('shop', lang) }, { label: cat.name[lang], href: r('shop', lang, `#${cat.id}`) }]} />
   <section class="section section--tight">
     <div class="wrap product">
       <div class="product__media">

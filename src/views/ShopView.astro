@@ -17,19 +17,21 @@ const lead = de
   ? 'Kaufen und schenken mit Sinn: Die Erlöse unseres kleinen Shops kommen den Projekten von Bantu e.V. zugute.'
   : fr ? 'Acheter et offrir avec du sens : les recettes de notre petite boutique soutiennent les projets de Bantu e.V.' : 'Shop and give with purpose: proceeds from our small shop support the projects of Bantu e.V.';
 const tones = { gifts: 'gold', coffee: 'sand', merch: 'blue', crafts: 'green' } as const;
+// Symbolic gifts (donations) are not shown in the shop; they live on the donate page (chair, 08.11.2026).
+const shopCategories = categories.filter((c) => c.id !== 'gifts');
 ---
 <Base lang={lang} title={title} description={lead} altHref={r('shop', de ? 'en' : 'de')}>
   <PageHead lang={lang} title={title} lead={lead}>
     <nav class="cat-nav" aria-label={de ? 'Kategorien' : fr ? 'Catégories' : 'Categories'}>
-      {categories.map((c) => <a class="tag" href={`#${c.id}`}>{c.name[lang]}</a>)}
+      {shopCategories.map((c) => <a class="tag" href={`#${c.id}`}>{c.name[lang]}</a>)}
     </nav>
   </PageHead>
 
   {!features.shopCheckoutOpen && (
-    <div class="wrap" style="margin-top:1.5rem"><p class="notice">{t.shopClosedNote} {de ? 'Spendengeschenke können Sie schon jetzt bestellen: per Überweisung mit persönlichem Verwendungszweck und QR-Code für Ihre Banking-App.' : fr ? 'Vous pouvez déjà commander des dons-cadeaux : par virement, avec un motif personnel et un code QR pour votre application bancaire.' : 'You can already order gift donations: by bank transfer, with a personal payment reference and a QR code for your banking app.'}</p></div>
+    <div class="wrap" style="margin-top:1.5rem"><p class="notice">{t.shopClosedNote}</p></div>
   )}
 
-  {categories.map((c, i) => {
+  {shopCategories.map((c, i) => {
     const items = products.filter((p) => p.category === c.id);
     return (
       <section class={`section section--tight ${i % 2 ? 'section--alt' : ''}`} id={c.id}>
@@ -65,8 +67,8 @@ const tones = { gifts: 'gold', coffee: 'sand', merch: 'blue', crafts: 'green' } 
   <section class="section section--tight">
     <div class="wrap small muted shop-legal">
       <p>{de
-        ? 'Spendengeschenke sind Spenden an Bantu e.V. und keine Käufe; auf Wunsch erhalten Sie eine Zuwendungsbestätigung. Für Waren gelten nach Eröffnung des Shops unsere AGB, die Widerrufsbelehrung und die Versandbedingungen.'
-        : fr ? 'Les dons-cadeaux sont des dons à Bantu e.V., pas des achats ; nous délivrons un reçu fiscal sur demande. À l’ouverture de la boutique, nos conditions générales, notre politique de rétractation et nos conditions de livraison s’appliqueront aux marchandises.' : 'Gift donations are donations to Bantu e.V., not purchases; we issue a donation receipt on request. Once the shop opens, our terms and conditions, cancellation policy and shipping terms apply to goods.'}</p>
+        ? 'Für Waren gelten nach Eröffnung des Shops unsere AGB, die Widerrufsbelehrung und die Versandbedingungen.'
+        : fr ? 'À l’ouverture de la boutique, nos conditions générales, notre politique de rétractation et nos conditions de livraison s’appliqueront aux marchandises.' : 'Once the shop opens, our terms and conditions, cancellation policy and shipping terms apply to goods.'}</p>
     </div>
   </section>
 </Base>

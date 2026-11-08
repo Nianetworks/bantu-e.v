@@ -31,6 +31,7 @@ header('X-Content-Type-Options: nosniff');
 header('Cache-Control: no-store');
 header('X-Robots-Tag: noindex, nofollow');
 
+$product = null;   // set once the order's item is known (used for the "back" link)
 $wantsJson = stripos((string) ($_SERVER['HTTP_ACCEPT'] ?? ''), 'application/json') !== false;
 $lang = in_array($_POST['lang'] ?? '', ['de', 'en', 'fr'], true) ? (string) $_POST['lang'] : 'de';
 
@@ -58,7 +59,7 @@ $T = [
     'receiptNext' => 'Ihre Zuwendungsbestätigung schicken wir Ihnen nach Eingang der Spende an die angegebene Anschrift.',
     'goodsNext' => 'Wir versenden Ihre Bestellung, sobald Ihre Überweisung bei uns eingegangen ist.',
     'mailNote' => 'Alle Angaben haben wir Ihnen auch per E-Mail geschickt.',
-    'back' => 'Zurück zum Shop',
+    'back' => 'Zurück zum Shop', 'backGift' => 'Zurück zur Spendenseite',
     'subject' => 'Ihre Bestellung bei Bantu e.V.: %s',
     'hello' => 'Guten Tag %s,',
     'thanksGift' => 'vielen Dank für Ihr Spendengeschenk „%s“!',
@@ -89,7 +90,7 @@ $T = [
     'receiptNext' => 'Once your donation has arrived, we will send your donation receipt to the address you gave.',
     'goodsNext' => 'We will ship your order as soon as your transfer has arrived.',
     'mailNote' => 'We have also sent you all details by e-mail.',
-    'back' => 'Back to the shop',
+    'back' => 'Back to the shop', 'backGift' => 'Back to the donation page',
     'subject' => 'Your order with Bantu e.V.: %s',
     'hello' => 'Dear %s,',
     'thanksGift' => 'thank you for your gift donation “%s”!',
@@ -120,7 +121,7 @@ $T = [
     'receiptNext' => 'Dès réception de votre don, nous vous enverrons votre reçu fiscal à l’adresse indiquée.',
     'goodsNext' => 'Nous expédierons votre commande dès réception de votre virement.',
     'mailNote' => 'Nous vous avons aussi envoyé toutes les informations par e-mail.',
-    'back' => 'Retour à la boutique',
+    'back' => 'Retour à la boutique', 'backGift' => 'Retour à la page des dons',
     'subject' => 'Votre commande chez Bantu e.V. : %s',
     'hello' => 'Bonjour %s,',
     'thanksGift' => 'merci pour votre don-cadeau « %s » !',
@@ -219,7 +220,7 @@ function send_mail(string $to, string $subject, string $body, string $from, stri
 }
 
 function respond(int $status, array $data): void {
-  global $wantsJson, $L, $lang;
+  global $wantsJson, $L, $lang, $product;
   http_response_code($status);
   if ($wantsJson) {
     header('Content-Type: application/json; charset=utf-8');
@@ -228,7 +229,10 @@ function respond(int $status, array $data): void {
   }
   // Without JavaScript: a plain page in the visitor's language.
   header('Content-Type: text/html; charset=utf-8');
-  $shop = $lang === 'en' ? '/en/shop/' : ($lang === 'fr' ? '/fr/boutique/' : '/shop/');
+  $isGiftPage = is_array($product) && ($product['kind'] ?? '') === 'gift';
+  $shop = $isGiftPage
+    ? ($lang === 'en' ? '/en/donate/' : ($lang === 'fr' ? '/fr/faire-un-don/' : '/spenden/'))
+    : ($lang === 'en' ? '/en/shop/' : ($lang === 'fr' ? '/fr/boutique/' : '/shop/'));
   echo '<!doctype html><html lang="' . h($lang) . '"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex"><title>Bantu e.V.</title>'
     . '<style>body{font:1.05rem/1.6 system-ui,sans-serif;max-width:40rem;margin:2rem auto;padding:0 1rem;color:#15130f;background:#fbf9f4}dt{font-weight:700;margin-top:.6rem}dd{margin:0}.ref{font-size:1.2rem;font-weight:700}a{color:#1d5c2c}</style></head><body>';
   if (!empty($data['ok'])) {
@@ -243,7 +247,7 @@ function respond(int $status, array $data): void {
   } else {
     echo '<h1>Bantu e.V.</h1><p>' . h((string) ($data['message'] ?? '')) . '</p>';
   }
-  echo '<p><a href="' . h($shop) . '">' . h($L['back']) . '</a></p></body></html>';
+  echo '<p><a href="' . h($shop) . '">' . h($isGiftPage ? $L['backGift'] : $L['back']) . '</a></p></body></html>';
   exit;
 }
 

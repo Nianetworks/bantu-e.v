@@ -1,8 +1,10 @@
 ---
 import Base from '../layouts/Base.astro';
 import PageHead from '../components/PageHead.astro';
-import { projectPath, r, ui, type Lang } from '../i18n';
+import Placeholder from '../components/Placeholder.astro';
+import { giftPath, href, projectPath, r, ui, type Lang } from '../i18n';
 import { org } from '../data/site';
+import { categories, products } from '../data/shop';
 
 interface Props { lang: Lang }
 const { lang } = Astro.props;
@@ -13,6 +15,9 @@ const title = de ? 'Spenden' : fr ? 'Faire un don' : 'Donate';
 const lead = de
   ? 'Jede Spende, ob groß oder klein, macht einen Unterschied. Bantu e.V. ist als gemeinnützig anerkannt; Spenden sind steuerlich absetzbar.'
   : fr ? 'Chaque don, petit ou grand, compte. Bantu e.V. est une association reconnue d’intérêt général ; les dons sont déductibles des impôts en Allemagne.' : 'Every donation, large or small, makes a difference. Bantu e.V. is a recognised non-profit; donations are tax-deductible in Germany.';
+// Symbolic gifts live here, not in the shop (chair, 08.11.2026). Each opens its page with the bank-transfer order form.
+const giftCat = categories.find((c) => c.id === 'gifts')!;
+const gifts = products.filter((p) => p.category === 'gifts');
 const purposes = [
   { ref: 'Pearl Kita', slug: 'p26-230-pearl-kita-kampala', de: 'Pearl Kindertagesstätte Kampala: Eigenanteil 1.390 €', en: 'Pearl Kindergarten Kampala: our share €1,390' },
   { ref: 'Wasser Ruziba', slug: 'p26-186-wasser-fuer-ruziba', de: 'Wasser für Ruziba, Burundi', en: 'Water for Ruziba, Burundi' },
@@ -75,7 +80,28 @@ const purposes = [
     </div>
   </section>
 
-  <section class="section section--alt">
+  {gifts.length > 0 && (
+    <section class="section section--tight section--alt" id="geschenke" aria-labelledby="h-gifts">
+      <div class="wrap">
+        <div class="section-head"><div><h2 id="h-gifts">{giftCat.name[lang]}</h2><p>{giftCat.intro[lang]}</p></div></div>
+        <div class="grid grid--3">
+          {gifts.map((p) => (
+            <article class="card card--link">
+              {p.image ? <img src={href(p.image)} alt="" class="gift-img" /> : <Placeholder lang={lang} ratio="4 / 3" tone="gold" label={p.photoBrief?.[lang]} compact />}
+              <div class="card__body">
+                <div class="card__meta"><span class={`tag ${p.status === 'available' ? 'tag--active' : 'tag--planned'}`}>{p.status === 'available' ? (de ? 'Jetzt möglich' : fr ? 'Disponible dès maintenant' : 'Available now') : t.comingSoon}</span></div>
+                <h3><a class="stretched" href={giftPath(lang, p.slug)}>{(p.name as Record<string, string>)[lang] ?? p.name.en}</a></h3>
+                <p>{(p.short as Record<string, string>)[lang] ?? p.short.en}</p>
+                <div class="card__foot gift-price">{p.priceNote?.[lang]}</div>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <section class="section">
     <div class="wrap grid grid--3">
       <div class="panel">
         <h3>{de ? 'Zuwendungsbestätigung' : fr ? 'Reçu fiscal' : 'Donation receipt'}</h3>
@@ -149,4 +175,6 @@ const purposes = [
   .purpose:has(input:checked) { border-color: var(--ink); box-shadow: inset 0 0 0 1px var(--ink); }
   .purpose input { margin-top: .3rem; accent-color: var(--ink); }
   @media (max-width: 860px) { .donate { grid-template-columns: 1fr; } }
+  .gift-img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+  .gift-price { font-weight: 700; color: var(--ink); }
 </style>

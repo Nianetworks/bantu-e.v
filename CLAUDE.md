@@ -30,6 +30,8 @@ src/components/OrderForm.astro + public/shop/bestellung.php   shop orders (chair
                         server-side script; .htaccess allows POST over HTTPS to exactly this file) -> mail to info@ + buyer, backup
                         ~/bantu-orders/orders.jsonl; payment by bank transfer to GLS with a unique Verwendungszweck + GiroCode QR (uqr).
                         Prices come only from /shop/katalog.json (src/pages/shop/katalog.json.ts). Gifts live; goods behind shopCheckoutOpen.
+                        Gifts (donations) are NOT in the shop: section #geschenke on the donate page, pages at /spenden/<slug>/
+                        (giftPath), old /shop/geschenk-* URLs redirect (redirects.mjs). Chair's decision 08.11.2026.
 src/data/downloads.ts   files offered on /downloads and /berichte (live in public/downloads/)
 src/data/impact.ts      verified impact figures + timeline
 src/data/redirects.mjs  old WordPress URLs -> new pages

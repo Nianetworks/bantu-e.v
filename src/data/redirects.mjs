@@ -42,6 +42,16 @@ export const wordpressRedirects = {
   '/aktuelles/ubuntu-talks-15-11-2026': '/aktuelles/ubuntu-talks-22-11-2026/',
   '/en/news/ubuntu-talks-15-11-2026': '/en/news/ubuntu-talks-22-11-2026/',
   '/fr/actualites/ubuntu-talks-15-11-2026': '/fr/actualites/ubuntu-talks-22-11-2026/',
+  // Gift donations moved from the shop to the donate page (chair, 08.11.2026)
+  '/shop/geschenk-pearl-kita': '/spenden/geschenk-pearl-kita/',
+  '/shop/geschenk-wasser-ruziba': '/spenden/geschenk-wasser-ruziba/',
+  '/shop/geschenk-bildung': '/spenden/geschenk-bildung/',
+  '/en/shop/geschenk-pearl-kita': '/en/donate/geschenk-pearl-kita/',
+  '/en/shop/geschenk-wasser-ruziba': '/en/donate/geschenk-wasser-ruziba/',
+  '/en/shop/geschenk-bildung': '/en/donate/geschenk-bildung/',
+  '/fr/boutique/geschenk-pearl-kita': '/fr/faire-un-don/geschenk-pearl-kita/',
+  '/fr/boutique/geschenk-wasser-ruziba': '/fr/faire-un-don/geschenk-wasser-ruziba/',
+  '/fr/boutique/geschenk-bildung': '/fr/faire-un-don/geschenk-bildung/',
 };
 
 // Files that no longer exist -> page with the current information. Only for the Apache server (.htaccess),

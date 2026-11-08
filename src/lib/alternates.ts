@@ -1,6 +1,6 @@
 // Maps every page URL to the same page in the other languages (for the language switch and hreflang).
 import { getCollection } from 'astro:content';
-import { href, languages, newsPath, productPath, projectPath, routes, type Lang } from '../i18n';
+import { giftPath, href, languages, newsPath, productPath, projectPath, routes, type Lang } from '../i18n';
 import { programmes, regions, programmePath, regionProgrammePath } from '../data/programmes';
 import { products } from '../data/shop';
 
@@ -16,7 +16,7 @@ async function build() {
     groups.push(all((l) => programmePath(l, p.key)));
     for (const rg of regions) groups.push(all((l) => regionProgrammePath(l, rg.key, p.key)));
   }
-  for (const p of products) groups.push(all((l) => productPath(l, p.slug)));
+  for (const p of products) groups.push(all((l) => (p.category === 'gifts' ? giftPath(l, p.slug) : productPath(l, p.slug))));
   for (const [coll, path] of [['projects', projectPath], ['news', newsPath]] as const) {
     const entries = await getCollection(coll);
     const bySlug = new Map<string, Lang[]>();

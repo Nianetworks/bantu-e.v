@@ -2,7 +2,8 @@
 import ProductView from '../../views/ProductView.astro';
 import { products } from '../../data/shop';
 export function getStaticPaths() {
-  return products.map((product) => ({ params: { slug: product.slug }, props: { product } }));
+  // Gifts (donations) are listed under the donate page instead (chair, 08.11.2026).
+  return products.filter((product) => product.category !== 'gifts').map((product) => ({ params: { slug: product.slug }, props: { product } }));
 }
 const { product } = Astro.props;
 ---

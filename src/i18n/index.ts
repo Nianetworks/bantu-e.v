@@ -44,6 +44,8 @@ export const newsPath = (lang: Lang, slug: string) => href(`${routes.news[lang]}
 export const archiveId: Record<Lang, string> = { de: 'archiv', en: 'archive', fr: 'archives' };
 export const archiveLabel: Record<Lang, string> = { de: 'Archiv: abgeschlossene Projekte', en: 'Archive: completed projects', fr: 'Archives : projets terminés' };
 export const productPath = (lang: Lang, slug: string) => href(`${routes.shop[lang]}${slug}/`);
+/** Symbolic gifts (donations) live under the donate page, not in the shop (chair, 08.11.2026). */
+export const giftPath = (lang: Lang, slug: string) => href(`${routes.donate[lang]}${slug}/`);
 
 const tz = 'Europe/Berlin';
 export function formatDate(d: Date, lang: Lang, opts: Intl.DateTimeFormatOptions = { day: '2-digit', month: '2-digit', year: 'numeric' }) {
