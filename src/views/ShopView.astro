@@ -2,6 +2,7 @@
 import Base from '../layouts/Base.astro';
 import PageHead from '../components/PageHead.astro';
 import Placeholder from '../components/Placeholder.astro';
+import ProductImage from '../components/ProductImage.astro';
 import { href, productPath, r, ui, type Lang } from '../i18n';
 import { categories, products } from '../data/shop';
 import { features, org } from '../data/site';
@@ -35,10 +36,10 @@ const tones = { gifts: 'gold', coffee: 'sand', merch: 'blue', crafts: 'green' } 
         <div class="wrap">
           <div class="section-head"><div><h2>{c.name[lang]}</h2><p>{c.intro[lang]}</p></div></div>
           {items.length > 0 ? (
-            <div class="grid grid--3">
+            <div class={`grid ${c.id === 'coffee' ? 'grid--2' : 'grid--3'}`}>
               {items.map((p) => (
                 <article class="card card--link">
-                  {p.image ? <img src={href(p.image)} alt={p.name[lang]} class="prod-img" /> : <Placeholder lang={lang} ratio="4 / 3" tone={tones[c.id]} label={p.photoBrief?.[lang]} compact={c.id === 'gifts'} />}
+                  {p.image ? <ProductImage product={p} lang={lang} /> : <Placeholder lang={lang} ratio="4 / 3" tone={tones[c.id]} label={p.photoBrief?.[lang]} compact={c.id === 'gifts'} />}
                   <div class="card__body">
                     <div class="card__meta">
                       <span class={`tag ${p.status === 'available' ? 'tag--active' : 'tag--planned'}`}>{p.status === 'available' ? (c.id === 'gifts' ? (de ? 'Jetzt möglich' : fr ? 'Disponible dès maintenant' : 'Available now') : (de ? 'Verfügbar' : fr ? 'Disponible' : 'Available')) : t.comingSoon}</span>
@@ -72,7 +73,6 @@ const tones = { gifts: 'gold', coffee: 'sand', merch: 'blue', crafts: 'green' } 
 <style>
   .cat-nav { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 1.25rem; }
   .cat-nav .tag { text-decoration: none; font-size: .9rem; padding: .35rem .8rem; background: var(--surface); }
-  .prod-img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
   .price { font-weight: 700; color: var(--ink); }
   .empty { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem; }
   .empty p { margin: 0; max-width: 60ch; }

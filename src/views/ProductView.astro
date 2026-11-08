@@ -3,6 +3,7 @@ import Base from '../layouts/Base.astro';
 import PageHead from '../components/PageHead.astro';
 import Placeholder from '../components/Placeholder.astro';
 import OrderForm from '../components/OrderForm.astro';
+import ProductImage from '../components/ProductImage.astro';
 import { href, productPath, projectPath, r, ui, type Lang } from '../i18n';
 import { canOrder, categories, type Product } from '../data/shop';
 import { features, org } from '../data/site';
@@ -24,13 +25,18 @@ const mail = `mailto:${org.email}?subject=${encodeURIComponent((de ? 'Vormerken:
   <section class="section section--tight">
     <div class="wrap product">
       <div class="product__media">
-        {p.image ? <img src={href(p.image)} alt={p.name[lang]} /> : <Placeholder lang={lang} ratio="1 / 1" label={p.photoBrief?.[lang]} tone={isGift ? 'gold' : 'sand'} />}
+        {p.image ? <ProductImage product={p} lang={lang} variant="detail" /> : <Placeholder lang={lang} ratio="1 / 1" label={p.photoBrief?.[lang]} tone={isGift ? 'gold' : 'sand'} />}
       </div>
       <div>
         <p class="price">{p.price ? `${p.price.toFixed(2).replace('.', de ? ',' : '.')} €` : (p.priceNote?.[lang] ?? t.priceTbd)}</p>
         <p>{p.description[lang]}</p>
         {p.details && (
           <dl class="kv">{p.details.map((d) => <><dt>{d.label[lang]}</dt><dd>{d.value[lang]}</dd></>)}</dl>
+        )}
+        {p.labelImages && (
+          <ul class="label-links" aria-label={de ? 'Etiketten ansehen' : fr ? 'Voir les étiquettes' : 'View the labels'}>
+            {p.labelImages.map((image) => <li><a class="btn btn--outline" href={href(image.src)}>{image.name[lang]}</a></li>)}
+          </ul>
         )}
         <div class="btn-row" style="margin-top:1.5rem">
           {orderable && <a class="btn btn--gold" href="#order-h">{isGift ? (de ? 'Spendengeschenk bestellen' : fr ? 'Commander le don-cadeau' : 'Order this gift') : t.buy}</a>}
@@ -53,6 +59,8 @@ const mail = `mailto:${org.email}?subject=${encodeURIComponent((de ? 'Vormerken:
   .product { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(1.5rem, 4vw, 3rem); align-items: start; }
   .product__media { border-radius: 18px; overflow: hidden; border: 1px solid var(--line); }
   .price { font-family: var(--font-serif); font-size: 1.6rem; font-weight: 700; margin-bottom: .75rem; }
+  .label-links { display: flex; flex-wrap: wrap; gap: .65rem; list-style: none; padding: 0; margin: 1.25rem 0; }
+  .label-links li { margin: 0; }
   @media (max-width: 820px) { .product { grid-template-columns: 1fr; } }
   .order-wrap { max-width: 52rem; }
   .order-wrap :global(.order) { margin-top: 0; }

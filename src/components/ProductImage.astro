@@ -1,0 +1,40 @@
+---
+import { href, type Lang } from '../i18n';
+import type { Product } from '../data/shop';
+
+interface Props {
+  product: Product;
+  lang: Lang;
+  variant?: 'card' | 'detail';
+}
+const { product: p, lang, variant = 'card' } = Astro.props;
+const sizes = variant === 'detail'
+  ? '(max-width: 820px) calc(100vw - 2rem), 600px'
+  : '(max-width: 900px) calc(100vw - 2rem), 600px';
+const srcset = p.imageVariants?.map((image) => `${href(image.src)} ${image.width}w`).join(', ');
+---
+<figure class:list={['product-image', `product-image--${variant}`, { 'product-image--coffee': p.category === 'coffee' }]}>
+  <picture>
+    {srcset && <source type="image/webp" srcset={srcset} sizes={sizes} />}
+    <img
+      class="product-image__img"
+      src={href(p.image!)}
+      alt={p.imageAlt?.[lang] ?? p.name[lang]}
+      width={p.imageWidth}
+      height={p.imageHeight}
+      loading={variant === 'detail' ? 'eager' : 'lazy'}
+      fetchpriority={variant === 'detail' ? 'high' : undefined}
+      decoding="async"
+    />
+  </picture>
+  {p.imageCaption && <figcaption class="product-image__caption">{p.imageCaption[lang]}</figcaption>}
+</figure>
+<style>
+  .product-image { margin: 0; }
+  .product-image picture { display: block; }
+  .product-image__img { display: block; width: 100%; height: auto; }
+  .product-image--card .product-image__img { aspect-ratio: 4 / 3; object-fit: cover; }
+  .product-image--coffee .product-image__img,
+  .product-image--detail .product-image__img { aspect-ratio: 1; object-fit: contain; }
+  .product-image__caption { padding: .65rem 1rem; border-top: 1px solid var(--line); background: var(--surface); color: var(--muted); font-size: .8rem; line-height: 1.45; }
+</style>

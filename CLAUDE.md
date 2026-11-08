@@ -42,6 +42,10 @@ src/lib/alternates.ts   maps every page to its DE/EN/FR versions (language switc
 src/data/sdgs.ts        SDG names; icons in public/sdg/ (SdgIcons component)
 src/lib/schema.ts       JSON-LD @graph (NGO + WebSite on every page; Event nodes from news files with type: event)
 public/partners/        partner logos (OrgCard); public/funders/ funder logos
+public/images/shop/abantu-coffee/  ABANTU COFFEE "Woven Origins v2" bag previews (480/768/1254 WebP + JPEG) and front/back label
+                        previews, shown by components/ProductImage.astro (whole bag, square, no cropping). Digital packaging previews,
+                        not final retail labels. Main coffee partner: Balambuli Kwigate Coffee (BKC). The ten further collection
+                        designs are concepts and must stay out of the public catalogue. No prices/tasting notes/process/format invented.
 public/videos/          self-hosted films + VTT captions; shown by src/components/ProjectMedia.astro via front matter `video` (film at
                         the top; `video.transcript` = VTT whose cues appear right below it as "photo descriptions as text"; optional
                         `video.narrated` = film with spoken photo descriptions) and `gallery`. No autoplay, preload none.
