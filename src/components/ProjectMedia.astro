@@ -6,7 +6,8 @@
 // part="gallery":  photo gallery further down.
 // Accessibility: native <video> controls (keyboard operable, global focus outline), no autoplay, preload="none",
 // an accessible name per player, caption tracks matching each film, visible link to the narration transcript.
-import { readFileSync, statSync } from 'node:fs';
+// No download (chair's decision 08.11.2026): no download link, no Download item in the player menu, no right-click save on the film.
+import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import Icon from './Icon.astro';
 import { href, type Lang } from '../i18n';
@@ -23,12 +24,8 @@ const fr = lang === 'fr';
 // Media URLs get a version query so browsers do not keep an earlier film/poster/caption file that had the same name.
 const MEDIA_VERSION = 'r5';
 const media = (p: string) => `${href(p)}${p.includes('?') ? '&' : '?'}v=${MEDIA_VERSION}`;
-const size = (p: string) => {
-  try { return (statSync(join(process.cwd(), 'public', p)).size / 1048576).toLocaleString(de ? 'de-DE' : fr ? 'fr-FR' : 'en-GB', { maximumFractionDigits: 0 }); } catch { return ''; }
-};
-const mb = fr ? 'Mo' : 'MB';
 const t = {
-  download: de ? 'Film herunterladen' : fr ? 'Télécharger le film' : 'Download the film',
+  unsupported: de ? 'Ihr Browser kann diesen Film leider nicht abspielen.' : fr ? 'Votre navigateur ne peut malheureusement pas lire ce film.' : 'Sorry, your browser cannot play this film.',
   minutes: de ? 'Min.' : 'min',
   photos: (n: number) => (de ? `${n} Fotos aus dem Austausch` : fr ? `${n} photos de l’échange` : `${n} photos from the exchange`),
   larger: de ? '(Foto groß öffnen)' : fr ? '(ouvrir la photo en grand)' : '(open larger photo)',
@@ -54,11 +51,11 @@ const textLabel = de ? 'Bildbeschreibungen zum Film als Text' : fr ? 'Descriptio
 ---
 {part === 'player' && video && (
   <>
-    <video controls preload="none" playsinline width={video.width} height={video.height}
+    <video controls controlslist="nodownload" data-nosave preload="none" playsinline width={video.width} height={video.height}
       poster={video.poster ? media(video.poster) : undefined} aria-label={video.label} aria-describedby={`${id}-film-cap`}>
       <source src={media(video.src)} type="video/mp4" />
       {video.tracks.map((tr) => <track kind="captions" src={media(tr.src)} srclang={tr.srclang} label={tr.label} default={tr.default} />)}
-      <a href={media(video.src)}>{t.download}</a>
+      {t.unsupported}
     </video>
     <figcaption id={`${id}-film-cap`} class="media__cap">
       <span class="media__title">{video.title} · {video.duration} {t.minutes}</span>
@@ -66,7 +63,6 @@ const textLabel = de ? 'Bildbeschreibungen zum Film als Text' : fr ? 'Descriptio
       <span class="media__actions">
         {video.narrated && <a class="media__a11y" href={`#${narratedId}`}><Icon name="access" size={20} /> <span>{video.narrated.link}</span></a>}
         {!video.narrated && video.transcript && <a class="media__a11y" href={`#${textId}`}><Icon name="text" size={20} /> <span>{textLabel}</span></a>}
-        <a href={media(video.src)} download><Icon name="download" size={18} /> {t.download} <span class="small">(MP4, {size(video.src)} {mb})</span></a>
       </span>
     </figcaption>
   </>
@@ -75,15 +71,14 @@ const textLabel = de ? 'Bildbeschreibungen zum Film als Text' : fr ? 'Descriptio
   <section class="narrated" id={narratedId} aria-labelledby={`${narratedId}-h`}>
     <h2 id={`${narratedId}-h`}><Icon name="speaker" size={26} /> <span>{video.narrated.heading}</span></h2>
     <p>{video.narrated.text}</p>
-    <video controls preload="none" playsinline width={video.width} height={video.height}
+    <video controls controlslist="nodownload" data-nosave preload="none" playsinline width={video.width} height={video.height}
       poster={video.narrated.poster ? media(video.narrated.poster) : video.poster ? media(video.poster) : undefined} aria-label={video.narrated.label}>
       <source src={media(video.narrated.src)} type="video/mp4" />
       {video.narrated.tracks.map((tr) => <track kind="captions" src={media(tr.src)} srclang={tr.srclang} label={tr.label} default={tr.default} />)}
-      <a href={media(video.narrated.src)}>{t.download}</a>
+      {t.unsupported}
     </video>
     <ul class="narrated__links">
       {video.narrated.transcript && <li><a href={href(video.narrated.transcript)}><Icon name="text" size={18} /> {video.narrated.transcriptLabel}</a></li>}
-      <li><a href={media(video.narrated.src)} download><Icon name="download" size={18} /> {t.download} <span class="small">(MP4, {size(video.narrated.src)} {mb})</span></a></li>
     </ul>
   </section>
 )}
@@ -114,6 +109,8 @@ const textLabel = de ? 'Bildbeschreibungen zum Film als Text' : fr ? 'Descriptio
   </section>
 )}
 <script>
+  // Films are not offered for download: no right-click "Save video as" on the player.
+  document.querySelectorAll<HTMLVideoElement>('video[data-nosave]').forEach((v) => v.addEventListener('contextmenu', (e) => e.preventDefault()));
   // "Photo descriptions as text" link under the film: open the collapsed list before jumping to it.
   document.querySelectorAll<HTMLAnchorElement>('.media__cap a[href^="#"]').forEach((a) => {
     a.addEventListener('click', () => {

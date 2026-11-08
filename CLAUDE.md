@@ -41,7 +41,9 @@ public/partners/        partner logos (OrgCard); public/funders/ funder logos
 public/videos/          self-hosted films + VTT captions; shown by src/components/ProjectMedia.astro via front matter `video` (film at
                         the top; `video.transcript` = VTT whose cues appear right below it as "photo descriptions as text"; optional
                         `video.narrated` = film with spoken photo descriptions) and `gallery`. No autoplay, preload none.
-                        Okushoma kwa Boona: standard films only (chair's decision 08.11.2026, no narrated versions online). Media URLs carry ?v=<MEDIA_VERSION> (ProjectMedia.astro): raise it when a
+                        Okushoma kwa Boona: standard films only (chair's decision 08.11.2026, no narrated versions online).
+                        Films are NOT offered for download (chair, 08.11.2026): no download link, controlslist="nodownload",
+                        no right-click save on the player. Media URLs carry ?v=<MEDIA_VERSION> (ProjectMedia.astro): raise it when a
                         film/caption/poster is replaced under the same name. Keep each MP4 under ~23 MB (25 MB GitHub browser-upload limit;
                         one film per zip). Blur names/faces without consent before publishing. Okushoma kwa Boona = revision 5 (08.11.2026).
 public/                 brand assets, images, funder logos, downloads
