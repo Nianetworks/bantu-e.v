@@ -46,6 +46,8 @@ ErrorDocument 404 /404.html
 AddDefaultCharset UTF-8
 AddType image/webp .webp
 AddType application/manifest+json .webmanifest
+AddType video/mp4 .mp4
+AddType text/vtt .vtt
 
 <IfModule mod_rewrite.c>
 RewriteEngine On
@@ -88,7 +90,7 @@ Header always unset X-Powered-By
 <FilesMatch "\\.(html|xml)$">
 Header set Cache-Control "no-cache"
 </FilesMatch>
-<FilesMatch "\\.(css|js|woff2?|webp|png|jpe?g|svg|ico|pdf)$">
+<FilesMatch "\\.(css|js|woff2?|webp|png|jpe?g|svg|ico|pdf|mp4)$">
 Header set Cache-Control "public, max-age=2592000"
 </FilesMatch>
 </IfModule>

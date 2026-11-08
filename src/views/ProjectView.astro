@@ -6,6 +6,7 @@ import FundingNote from '../components/FundingNote.astro';
 import SdgIcons from '../components/SdgIcons.astro';
 import ProjectCard from '../components/ProjectCard.astro';
 import NewsCard from '../components/NewsCard.astro';
+import ProjectMedia from '../components/ProjectMedia.astro';
 import { render } from 'astro:content';
 import { href, projectPath, r, ui, type Lang } from '../i18n';
 import { getNews, getProjects, slugOf, type Project } from '../lib/content';
@@ -52,6 +53,7 @@ const donateRef = slug.includes('pearl') ? 'Pearl Kita' : slug.includes('ruziba'
           </div>
         )}
         <div class="prose"><Content /></div>
+        <ProjectMedia lang={lang} gallery={d.gallery} video={d.video} id={slug} />
         <FundingNote lang={lang} note={d.fundingNote} logos={d.fundingLogos} disclaimer={d.disclaimer} funders={d.funders} />
       </div>
       <aside class="project__side">

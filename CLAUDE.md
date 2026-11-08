@@ -38,6 +38,9 @@ src/lib/alternates.ts   maps every page to its DE/EN/FR versions (language switc
 src/data/sdgs.ts        SDG names; icons in public/sdg/ (SdgIcons component)
 src/lib/schema.ts       JSON-LD @graph (NGO + WebSite on every page; Event nodes from news files with type: event)
 public/partners/        partner logos (OrgCard); public/funders/ funder logos
+public/videos/          self-hosted films + VTT captions; shown by src/components/ProjectMedia.astro via front matter `video` / `gallery`
+                        (no autoplay, preload none, caption text also on the page). Keep each MP4 under ~23 MB: one zip must stay
+                        below GitHub's 25 MB browser-upload limit. Blur names/faces without consent before publishing.
 public/                 brand assets, images, funder logos, downloads
 docs/                   plan, go-live/DNS, legal & shop, photo brief, editing guide, open questions
 ```

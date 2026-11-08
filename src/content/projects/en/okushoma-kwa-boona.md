@@ -20,6 +20,25 @@ stats:
 image: "/images/projects/okushoma-kwa-boona.webp"
 imageAlt: "Group photo of the exchange participants and partners in front of a building in Mbarara (Uganda), 2024"
 photoBrief: "Exchange group in Mbarara (Feb/Mar 2024), fishbowl discussion"
+gallery:
+  - { src: "/images/projects/okushoma-kwa-boona/01-first-aid-learning-1600.webp", thumb: "/images/projects/okushoma-kwa-boona/01-first-aid-learning-800.webp", width: 1600, height: 1069, alt: "Participants practise bandaging during a first-aid workshop.", caption: "Learning by doing" }
+  - { src: "/images/projects/okushoma-kwa-boona/02-braille-learning-resources-1600.webp", thumb: "/images/projects/okushoma-kwa-boona/02-braille-learning-resources-800.webp", width: 1600, height: 1069, alt: "Hands explore a sheet of Braille learning material.", caption: "Learning resources for everyone" }
+  - { src: "/images/projects/okushoma-kwa-boona/03-peer-led-discussion-1600.webp", thumb: "/images/projects/okushoma-kwa-boona/03-peer-led-discussion-800.webp", width: 1600, height: 1069, alt: "A participant shares her perspective using a microphone during a group discussion.", caption: "Making space for every voice" }
+  - { src: "/images/projects/okushoma-kwa-boona/05-working-together-1600.webp", thumb: "/images/projects/okushoma-kwa-boona/05-working-together-800.webp", width: 1600, height: 1069, alt: "A small group works with papers and cards around a table.", caption: "Working together" }
+  - { src: "/images/projects/okushoma-kwa-boona/07-learning-circle-1600.webp", thumb: "/images/projects/okushoma-kwa-boona/07-learning-circle-800.webp", width: 1600, height: 1067, alt: "Young people sit in a circle; photo cards lie on the floor in the middle.", caption: "Learning in a circle" }
+  - { src: "/images/projects/okushoma-kwa-boona/04-participants-and-partners-1600.webp", thumb: "/images/projects/okushoma-kwa-boona/04-participants-and-partners-800.webp", width: 1600, height: 1069, alt: "Participants and partners pose together on a veranda.", caption: "Connected through exchange" }
+video:
+  src: "/videos/okushoma-kwa-boona.mp4"
+  poster: "/videos/okushoma-kwa-boona-poster.webp"
+  title: "Okushoma kwa Boona: photo film"
+  duration: "2:54"
+  intro: "A photo film made from 28 pictures of the exchange, with quiet instrumental music and no speech. Each photo is described in English text in the picture; captions in German, English and French can be switched on in the player."
+  described: { src: "/videos/okushoma-kwa-boona-audio-described-en.mp4", label: "Version with English audio description (computer voice)" }
+  tracks:
+    - { src: "/videos/okushoma-kwa-boona-en.vtt", srclang: "en", label: "English", default: false }
+    - { src: "/videos/okushoma-kwa-boona-de.vtt", srclang: "de", label: "Deutsch", default: false }
+    - { src: "/videos/okushoma-kwa-boona-fr.vtt", srclang: "fr", label: "Français", default: false }
+  transcript: "/videos/okushoma-kwa-boona-en.vtt"
 successStory: true
 order: 4
 ---

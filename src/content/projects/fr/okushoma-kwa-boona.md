@@ -20,6 +20,25 @@ stats:
 image: "/images/projects/okushoma-kwa-boona.webp"
 imageAlt: "Photo de groupe des participants et partenaires de l’échange devant un bâtiment à Mbarara (Ouganda), 2024"
 photoBrief: "Groupe d’échange à Mbarara (février/mars 2024), discussion en fishbowl"
+gallery:
+  - { src: "/images/projects/okushoma-kwa-boona/01-first-aid-learning-1600.webp", thumb: "/images/projects/okushoma-kwa-boona/01-first-aid-learning-800.webp", width: 1600, height: 1069, alt: "Des personnes participantes apprennent à poser un bandage lors d’un atelier de premiers secours.", caption: "Apprendre par la pratique" }
+  - { src: "/images/projects/okushoma-kwa-boona/02-braille-learning-resources-1600.webp", thumb: "/images/projects/okushoma-kwa-boona/02-braille-learning-resources-800.webp", width: 1600, height: 1069, alt: "Des mains explorent une feuille de matériel pédagogique en braille.", caption: "Des ressources pour tous" }
+  - { src: "/images/projects/okushoma-kwa-boona/03-peer-led-discussion-1600.webp", thumb: "/images/projects/okushoma-kwa-boona/03-peer-led-discussion-800.webp", width: 1600, height: 1069, alt: "Une participante partage son point de vue au microphone pendant une discussion de groupe.", caption: "Donner une place à chaque voix" }
+  - { src: "/images/projects/okushoma-kwa-boona/05-working-together-1600.webp", thumb: "/images/projects/okushoma-kwa-boona/05-working-together-800.webp", width: 1600, height: 1069, alt: "Un petit groupe travaille avec des feuilles et des cartes autour d’une table.", caption: "Travailler ensemble" }
+  - { src: "/images/projects/okushoma-kwa-boona/07-learning-circle-1600.webp", thumb: "/images/projects/okushoma-kwa-boona/07-learning-circle-800.webp", width: 1600, height: 1067, alt: "Des jeunes sont assis en cercle ; au centre, des cartes-photos sont posées au sol.", caption: "Apprendre en cercle" }
+  - { src: "/images/projects/okushoma-kwa-boona/04-participants-and-partners-1600.webp", thumb: "/images/projects/okushoma-kwa-boona/04-participants-and-partners-800.webp", width: 1600, height: 1069, alt: "Des personnes participantes et partenaires posent ensemble sur une véranda.", caption: "Unis par l’échange" }
+video:
+  src: "/videos/okushoma-kwa-boona.mp4"
+  poster: "/videos/okushoma-kwa-boona-poster.webp"
+  title: "Okushoma kwa Boona : film photo"
+  duration: "2:54"
+  intro: "Un film photo composé de 28 images de l’échange, avec une musique instrumentale discrète et sans paroles. Chaque photo est décrite en anglais dans l’image ; les sous-titres français sont activés par défaut, l’allemand et l’anglais peuvent être choisis dans le lecteur."
+  described: { src: "/videos/okushoma-kwa-boona-audio-described-en.mp4", label: "Version avec audiodescription en anglais (voix de synthèse)" }
+  tracks:
+    - { src: "/videos/okushoma-kwa-boona-fr.vtt", srclang: "fr", label: "Français", default: true }
+    - { src: "/videos/okushoma-kwa-boona-de.vtt", srclang: "de", label: "Deutsch", default: false }
+    - { src: "/videos/okushoma-kwa-boona-en.vtt", srclang: "en", label: "English", default: false }
+  transcript: "/videos/okushoma-kwa-boona-fr.vtt"
 successStory: true
 order: 4
 ---

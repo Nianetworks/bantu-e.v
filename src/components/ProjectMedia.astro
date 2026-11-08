@@ -1,0 +1,106 @@
+---
+// Film and photo gallery on a project page (front matter `video` and `gallery`, see src/content.config.ts).
+// Accessibility: native <video> controls, no autoplay, preload="none", caption tracks, the caption text is also
+// rendered on the page (from the VTT file in public/), and every photo has its own alt text.
+import { readFileSync, statSync } from 'node:fs';
+import { join } from 'node:path';
+import { href, type Lang } from '../i18n';
+
+type Photo = { src: string; thumb: string; width: number; height: number; alt: string; caption?: string };
+type Video = {
+  src: string; poster?: string; width: number; height: number; title: string; duration: string; intro?: string;
+  described?: { src: string; label: string };
+  tracks: { src: string; srclang: string; label: string; default: boolean }[];
+  transcript?: string;
+};
+interface Props { lang: Lang; gallery: Photo[]; video?: Video; id: string }
+const { lang, gallery, video, id } = Astro.props;
+const de = lang === 'de';
+const fr = lang === 'fr';
+
+const pub = (p: string) => join(process.cwd(), 'public', p);
+const mb = (p: string) => {
+  try { return (statSync(pub(p)).size / 1048576).toLocaleString(de ? 'de-DE' : fr ? 'fr-FR' : 'en-GB', { maximumFractionDigits: 0 }); } catch { return ''; }
+};
+// VTT -> [{ time: 'm:ss', seconds, text }]; cue settings and "[music]"-style notes are dropped.
+const cues = (() => {
+  if (!video?.transcript) return [];
+  try {
+    return readFileSync(pub(video.transcript), 'utf8').replace(/\r/g, '').split(/\n\n+/).flatMap((block) => {
+      const lines = block.split('\n');
+      const i = lines.findIndex((l) => l.includes('-->'));
+      if (i < 0) return [];
+      const [h, m, s] = lines[i].split('-->')[0].trim().split(':').map(Number);
+      const seconds = Math.floor(h * 3600 + m * 60 + s);
+      const text = lines.slice(i + 1).join(' ').replace(/\[[^\]]*\]\s*/g, '').trim();
+      return text ? [{ time: `${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, '0')}`, seconds, text }] : [];
+    });
+  } catch { return []; }
+})();
+const videoSize = video ? mb(video.src) : '';
+const describedSize = video?.described ? mb(video.described.src) : '';
+---
+{video && (
+  <section class="media" aria-labelledby={`${id}-film-h`}>
+    <h2 id={`${id}-film-h`}>{de ? 'Der Film' : fr ? 'Le film' : 'The film'}</h2>
+    {video.intro && <p>{video.intro}</p>}
+    <figure class="media__video">
+      <video controls preload="none" playsinline width={video.width} height={video.height}
+        poster={video.poster ? href(video.poster) : undefined} aria-describedby={`${id}-film-cap`}>
+        <source src={href(video.src)} type="video/mp4" />
+        {video.tracks.map((t) => <track kind="captions" src={href(t.src)} srclang={t.srclang} label={t.label} default={t.default} />)}
+        <a href={href(video.src)}>{de ? 'Film herunterladen' : fr ? 'Télécharger le film' : 'Download the film'}</a>
+      </video>
+      <figcaption id={`${id}-film-cap`}>{video.title} · {video.duration} {de ? 'Min.' : 'min'}</figcaption>
+    </figure>
+    <ul class="media__links">
+      {video.described && <li><a href={href(video.described.src)}>{video.described.label}</a> <span class="small muted">(MP4{describedSize && `, ${describedSize} MB`})</span></li>}
+      <li><a href={href(video.src)} download>{de ? 'Film herunterladen' : fr ? 'Télécharger le film' : 'Download the film'}</a> <span class="small muted">(MP4{videoSize && `, ${videoSize} MB`})</span></li>
+    </ul>
+    {cues.length > 0 && (
+      <details class="media__text">
+        <summary>{de ? 'Bildbeschreibungen zum Film als Text lesen' : fr ? 'Lire les descriptions des photos du film' : 'Read the film’s photo descriptions as text'}</summary>
+        <ol>
+          {cues.map((c) => <li><time datetime={`PT${c.seconds}S`}>{c.time}</time> {c.text}</li>)}
+        </ol>
+      </details>
+    )}
+  </section>
+)}
+{gallery.length > 0 && (
+  <section class="media" aria-labelledby={`${id}-photos-h`}>
+    <h2 id={`${id}-photos-h`}>{de ? 'Fotos aus dem Projekt' : fr ? 'Photos du projet' : 'Photos from the project'}</h2>
+    <ul class="media__grid">
+      {gallery.map((p) => (
+        <li>
+          <figure>
+            <a href={href(p.src)}>
+              <img src={href(p.thumb)} alt={p.alt} width="800" height={Math.round((800 * p.height) / p.width)} loading="lazy" decoding="async" />
+              <span class="sr-only"> {de ? '(Foto groß öffnen)' : fr ? '(ouvrir la photo en grand)' : '(open larger photo)'}</span>
+            </a>
+            {p.caption && <figcaption>{p.caption}</figcaption>}
+          </figure>
+        </li>
+      ))}
+    </ul>
+  </section>
+)}
+<style>
+  .media { margin: 2.5rem 0 0; }
+  .media__video { margin: 0 0 .9rem; }
+  .media__video video { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; background: #000; border-radius: var(--radius-sm); }
+  .media__video figcaption { margin-top: .5rem; color: var(--muted); font-size: .95rem; }
+  .media__links { list-style: none; padding: 0; margin: 0 0 1rem; display: grid; gap: .35rem; }
+  .media__links a { display: inline-block; min-height: var(--tap); padding: .55rem 0; }
+  .media__text { border: 1px solid var(--line); border-radius: var(--radius-sm); padding: .25rem 1rem; }
+  .media__text summary { cursor: pointer; min-height: var(--tap); display: flex; align-items: center; font-weight: 600; }
+  .media__text ol { margin: .5rem 0 1rem; padding-left: 1.4rem; }
+  .media__text li { margin: .35rem 0; }
+  .media__text time { font-variant-numeric: tabular-nums; font-weight: 600; margin-right: .35rem; }
+  .media__grid { list-style: none; padding: 0; margin: 0; display: grid; gap: 1rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 13.5rem), 1fr)); }
+  .media__grid li { margin: 0; }
+  .media__grid figure { margin: 0; }
+  .media__grid a { display: block; border-radius: var(--radius-sm); overflow: hidden; border: 1px solid var(--line); }
+  .media__grid img { display: block; width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: cover; }
+  .media__grid figcaption { margin-top: .4rem; font-size: .95rem; color: var(--muted); }
+</style>
