@@ -54,4 +54,4 @@ Jeweils **10:00–15:00 Uhr**, vor Ort in einem barrierefreien Raum in Berlin (A
 
 Per E-Mail an [info@bantu-ev.org](mailto:info@bantu-ev.org?subject=Anmeldung%20Bildung%20f%C3%BCr%20alle). Bitte Name, Kontakt, Termin(e), Teilnahme vor Ort oder online und ggf. Kinderbetreuung angeben. Anmeldeschluss ist jeweils der Dienstag vor dem Termin (für den 21.11. also Di, 17.11.2026). Die Plätze vor Ort sind begrenzt; mindestens fünf Plätze je Termin sind für Menschen ohne institutionelle Anbindung reserviert.
 
-Fragen: Boaz Murinzi Murema · [boazmurinzi@bantu-ev.org](mailto:boazmurinzi@bantu-ev.org) · +49 176 3421 3765
+Fragen: [info@bantu-ev.org](mailto:info@bantu-ev.org) · +49 176 3421 3765

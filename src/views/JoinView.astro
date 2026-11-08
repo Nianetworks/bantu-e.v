@@ -76,7 +76,7 @@ const mail = (s: string) => `mailto:${org.email}?subject=${encodeURIComponent(s)
       </div>
       <div class="panel">
         <h3>{de ? 'Kontakt' : fr ? 'Contact' : 'Contact'}</h3>
-        <p>Boaz Murinzi Murema<br /><a href={`mailto:${org.email}`}>{org.email}</a><br /><Phones lang={lang} variant="plain" /></p>
+        <p><a href={`mailto:${org.email}`}>{org.email}</a><br /><Phones lang={lang} variant="plain" /></p>
         <a class="btn btn--gold" href={r('contact', lang)}>{de ? 'Zum Kontaktformular' : fr ? 'Formulaire de contact' : 'Contact form'}</a>
       </div>
     </div>

@@ -54,4 +54,4 @@ Klassenstufen 9 bis 11, eingebunden in den Fachunterricht Geografie, Geschichte 
 
 ## Kontakt
 
-Wer mehr über das Projekt oder die entwickelten Bildungsmaterialien erfahren möchte: Boaz Murinzi Murema, Bantu e.V., [info@bantu-ev.org](mailto:info@bantu-ev.org), +49 176 3421 3765.
+Wer mehr über das Projekt oder die entwickelten Bildungsmaterialien erfahren möchte: Bantu e.V., [info@bantu-ev.org](mailto:info@bantu-ev.org), +49 176 3421 3765.

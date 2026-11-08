@@ -52,4 +52,4 @@ Each day **10:00–15:00**, on site in an accessible venue in Berlin (address se
 
 By e-mail to [info@bantu-ev.org](mailto:info@bantu-ev.org?subject=Registration%20Education%20for%20all). Please include your name, contact details, date(s), on site or online, and childcare needs. Registration closes on the Tuesday before each date (for 21 Nov: Tue, 17 Nov 2026). On-site places are limited; at least five places per date are reserved for people without an institutional affiliation.
 
-Questions: Boaz Murinzi Murema · [boazmurinzi@bantu-ev.org](mailto:boazmurinzi@bantu-ev.org) · +49 176 3421 3765
+Questions: [info@bantu-ev.org](mailto:info@bantu-ev.org) · +49 176 3421 3765

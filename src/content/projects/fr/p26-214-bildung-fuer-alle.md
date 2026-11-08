@@ -52,4 +52,4 @@ Chaque journée de **10 h à 15 h**, sur place dans un lieu accessible à Berlin
 
 Par e-mail à [info@bantu-ev.org](mailto:info@bantu-ev.org?subject=Inscription%20L%E2%80%99%C3%A9ducation%20pour%20tous). Merci d’indiquer votre nom, vos coordonnées, la ou les dates, sur place ou en ligne, et vos besoins de garde d’enfants. Les inscriptions ferment le mardi précédant chaque date (pour le 21.11 : mardi 17.11.2026). Les places sur place sont limitées ; au moins cinq places par date sont réservées à des personnes sans rattachement institutionnel.
 
-Questions : Boaz Murinzi Murema · [boazmurinzi@bantu-ev.org](mailto:boazmurinzi@bantu-ev.org) · +49 176 34213765
+Questions : [info@bantu-ev.org](mailto:info@bantu-ev.org) · +49 176 34213765

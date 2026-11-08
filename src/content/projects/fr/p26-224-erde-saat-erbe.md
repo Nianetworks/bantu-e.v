@@ -50,4 +50,4 @@ De la 9e à la 11e année, en lien avec les cours de géographie, d’histoire e
 
 ## Contact
 
-Pour en savoir plus sur le projet ou sur le matériel pédagogique : Boaz Murinzi Murema, Bantu e.V., [info@bantu-ev.org](mailto:info@bantu-ev.org), +49 176 34213765.
+Pour en savoir plus sur le projet ou sur le matériel pédagogique : Bantu e.V., [info@bantu-ev.org](mailto:info@bantu-ev.org), +49 176 34213765.

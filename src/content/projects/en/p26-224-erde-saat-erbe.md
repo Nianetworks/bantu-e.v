@@ -50,4 +50,4 @@ Grades 9 to 11, embedded in geography, history and biology lessons. We will name
 
 ## Contact
 
-To learn more about the project or the teaching materials: Boaz Murinzi Murema, Bantu e.V., [info@bantu-ev.org](mailto:info@bantu-ev.org), +49 176 3421 3765.
+To learn more about the project or the teaching materials: Bantu e.V., [info@bantu-ev.org](mailto:info@bantu-ev.org), +49 176 3421 3765.
