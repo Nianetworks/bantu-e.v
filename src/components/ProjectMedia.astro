@@ -1,82 +1,110 @@
 ---
-// Film and photo gallery on a project page (front matter `video` and `gallery`, see src/content.config.ts).
-// Accessibility: native <video> controls, no autoplay, preload="none", caption tracks, the caption text is also
-// rendered on the page (from the VTT file in public/), and every photo has its own alt text.
+// Films and photo gallery on a project page (front matter `video` and `gallery`, see src/content.config.ts).
+// part="player":   standard film in the large media box at the top of the page (replaces the photo there).
+// part="narrated": film with spoken photo descriptions (accessibility version), directly below the standard film;
+//                   without a narrated film: the film's photo descriptions as text (from `video.transcript`, a VTT file).
+// part="gallery":  photo gallery further down.
+// Accessibility: native <video> controls (keyboard operable, global focus outline), no autoplay, preload="none",
+// an accessible name per player, caption tracks matching each film, visible link to the narration transcript.
 import { readFileSync, statSync } from 'node:fs';
 import { join } from 'node:path';
+import Icon from './Icon.astro';
 import { href, type Lang } from '../i18n';
 
-type Photo = { src: string; thumb: string; width: number; height: number; alt: string; caption?: string };
-type Video = {
-  src: string; poster?: string; width: number; height: number; title: string; duration: string; intro?: string;
-  described?: { src: string; label: string };
-  tracks: { src: string; srclang: string; label: string; default: boolean }[];
-  transcript?: string;
-};
-interface Props { lang: Lang; gallery: Photo[]; video?: Video; id: string }
-const { lang, gallery, video, id } = Astro.props;
+type Track = { src: string; srclang: string; label: string; default: boolean };
+type Photo = { src: string; thumb: string; width: number; height: number; thumbWidth?: number; thumbHeight?: number; alt: string; caption?: string };
+type Narrated = { src: string; poster?: string; heading: string; label: string; text: string; link: string; tracks: Track[]; transcript?: string; transcriptLabel?: string };
+type Video = { src: string; poster?: string; width: number; height: number; title: string; label: string; duration: string; intro?: string; tracks: Track[]; narrated?: Narrated; transcript?: string };
+interface Props { lang: Lang; gallery: Photo[]; video?: Video; id: string; part: 'player' | 'narrated' | 'gallery' }
+const { lang, gallery, video, id, part } = Astro.props;
 const de = lang === 'de';
 const fr = lang === 'fr';
 
-const pub = (p: string) => join(process.cwd(), 'public', p);
-const mb = (p: string) => {
-  try { return (statSync(pub(p)).size / 1048576).toLocaleString(de ? 'de-DE' : fr ? 'fr-FR' : 'en-GB', { maximumFractionDigits: 0 }); } catch { return ''; }
+// Media URLs get a version query so browsers do not keep an earlier film/poster/caption file that had the same name.
+const MEDIA_VERSION = 'r5';
+const media = (p: string) => `${href(p)}${p.includes('?') ? '&' : '?'}v=${MEDIA_VERSION}`;
+const size = (p: string) => {
+  try { return (statSync(join(process.cwd(), 'public', p)).size / 1048576).toLocaleString(de ? 'de-DE' : fr ? 'fr-FR' : 'en-GB', { maximumFractionDigits: 0 }); } catch { return ''; }
 };
+const mb = fr ? 'Mo' : 'MB';
+const t = {
+  download: de ? 'Film herunterladen' : fr ? 'Télécharger le film' : 'Download the film',
+  minutes: de ? 'Min.' : 'min',
+  photos: (n: number) => (de ? `${n} Fotos aus dem Austausch` : fr ? `${n} photos de l’échange` : `${n} photos from the exchange`),
+  larger: de ? '(Foto groß öffnen)' : fr ? '(ouvrir la photo en grand)' : '(open larger photo)',
+};
+const narratedId = `${id}-narrated`;
+const textId = `${id}-film-text`;
 // VTT -> [{ time: 'm:ss', seconds, text }]; cue settings and "[music]"-style notes are dropped.
 const cues = (() => {
-  if (!video?.transcript) return [];
+  if (part !== 'narrated' || !video?.transcript || video.narrated) return [];
   try {
-    return readFileSync(pub(video.transcript), 'utf8').replace(/\r/g, '').split(/\n\n+/).flatMap((block) => {
+    return readFileSync(join(process.cwd(), 'public', video.transcript), 'utf8').replace(/\r/g, '').split(/\n\n+/).flatMap((block) => {
       const lines = block.split('\n');
       const i = lines.findIndex((l) => l.includes('-->'));
       if (i < 0) return [];
-      const [h, m, s] = lines[i].split('-->')[0].trim().split(':').map(Number);
-      const seconds = Math.floor(h * 3600 + m * 60 + s);
+      const [h, m, sec] = lines[i].split('-->')[0].trim().split(':').map(Number);
+      const seconds = Math.floor(h * 3600 + m * 60 + sec);
       const text = lines.slice(i + 1).join(' ').replace(/\[[^\]]*\]\s*/g, '').trim();
       return text ? [{ time: `${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, '0')}`, seconds, text }] : [];
     });
   } catch { return []; }
 })();
-const videoSize = video ? mb(video.src) : '';
-const describedSize = video?.described ? mb(video.described.src) : '';
+const textLabel = de ? 'Bildbeschreibungen zum Film als Text' : fr ? 'Descriptions des photos du film en texte' : 'The film’s photo descriptions as text';
 ---
-{video && (
-  <section class="media" aria-labelledby={`${id}-film-h`}>
-    <h2 id={`${id}-film-h`}>{de ? 'Der Film' : fr ? 'Le film' : 'The film'}</h2>
-    {video.intro && <p>{video.intro}</p>}
-    <figure class="media__video">
-      <video controls preload="none" playsinline width={video.width} height={video.height}
-        poster={video.poster ? href(video.poster) : undefined} aria-describedby={`${id}-film-cap`}>
-        <source src={href(video.src)} type="video/mp4" />
-        {video.tracks.map((t) => <track kind="captions" src={href(t.src)} srclang={t.srclang} label={t.label} default={t.default} />)}
-        <a href={href(video.src)}>{de ? 'Film herunterladen' : fr ? 'Télécharger le film' : 'Download the film'}</a>
-      </video>
-      <figcaption id={`${id}-film-cap`}>{video.title} · {video.duration} {de ? 'Min.' : 'min'}</figcaption>
-    </figure>
-    <ul class="media__links">
-      {video.described && <li><a href={href(video.described.src)}>{video.described.label}</a> <span class="small muted">(MP4{describedSize && `, ${describedSize} MB`})</span></li>}
-      <li><a href={href(video.src)} download>{de ? 'Film herunterladen' : fr ? 'Télécharger le film' : 'Download the film'}</a> <span class="small muted">(MP4{videoSize && `, ${videoSize} MB`})</span></li>
+{part === 'player' && video && (
+  <>
+    <video controls preload="none" playsinline width={video.width} height={video.height}
+      poster={video.poster ? media(video.poster) : undefined} aria-label={video.label} aria-describedby={`${id}-film-cap`}>
+      <source src={media(video.src)} type="video/mp4" />
+      {video.tracks.map((tr) => <track kind="captions" src={media(tr.src)} srclang={tr.srclang} label={tr.label} default={tr.default} />)}
+      <a href={media(video.src)}>{t.download}</a>
+    </video>
+    <figcaption id={`${id}-film-cap`} class="media__cap">
+      <span class="media__title">{video.title} · {video.duration} {t.minutes}</span>
+      {video.intro && <span class="media__intro">{video.intro}</span>}
+      <span class="media__actions">
+        {video.narrated && <a class="media__a11y" href={`#${narratedId}`}><Icon name="access" size={20} /> <span>{video.narrated.link}</span></a>}
+        {!video.narrated && video.transcript && <a class="media__a11y" href={`#${textId}`}><Icon name="text" size={20} /> <span>{textLabel}</span></a>}
+        <a href={media(video.src)} download><Icon name="download" size={18} /> {t.download} <span class="small">(MP4, {size(video.src)} {mb})</span></a>
+      </span>
+    </figcaption>
+  </>
+)}
+{part === 'narrated' && video?.narrated && (
+  <section class="narrated" id={narratedId} aria-labelledby={`${narratedId}-h`}>
+    <h2 id={`${narratedId}-h`}><Icon name="speaker" size={26} /> <span>{video.narrated.heading}</span></h2>
+    <p>{video.narrated.text}</p>
+    <video controls preload="none" playsinline width={video.width} height={video.height}
+      poster={video.narrated.poster ? media(video.narrated.poster) : video.poster ? media(video.poster) : undefined} aria-label={video.narrated.label}>
+      <source src={media(video.narrated.src)} type="video/mp4" />
+      {video.narrated.tracks.map((tr) => <track kind="captions" src={media(tr.src)} srclang={tr.srclang} label={tr.label} default={tr.default} />)}
+      <a href={media(video.narrated.src)}>{t.download}</a>
+    </video>
+    <ul class="narrated__links">
+      {video.narrated.transcript && <li><a href={href(video.narrated.transcript)}><Icon name="text" size={18} /> {video.narrated.transcriptLabel}</a></li>}
+      <li><a href={media(video.narrated.src)} download><Icon name="download" size={18} /> {t.download} <span class="small">(MP4, {size(video.narrated.src)} {mb})</span></a></li>
     </ul>
-    {cues.length > 0 && (
-      <details class="media__text">
-        <summary>{de ? 'Bildbeschreibungen zum Film als Text lesen' : fr ? 'Lire les descriptions des photos du film' : 'Read the film’s photo descriptions as text'}</summary>
-        <ol>
-          {cues.map((c) => <li><time datetime={`PT${c.seconds}S`}>{c.time}</time> {c.text}</li>)}
-        </ol>
-      </details>
-    )}
   </section>
 )}
-{gallery.length > 0 && (
+{part === 'narrated' && cues.length > 0 && (
+  <details class="media__text" id={textId}>
+    <summary>{textLabel} <span class="small muted">({cues.length})</span></summary>
+    <ol>
+      {cues.map((c) => <li><time datetime={`PT${c.seconds}S`}>{c.time}</time> {c.text}</li>)}
+    </ol>
+  </details>
+)}
+{part === 'gallery' && gallery.length > 0 && (
   <section class="media" aria-labelledby={`${id}-photos-h`}>
-    <h2 id={`${id}-photos-h`}>{de ? 'Fotos aus dem Projekt' : fr ? 'Photos du projet' : 'Photos from the project'}</h2>
+    <h2 id={`${id}-photos-h`}>{t.photos(gallery.length)}</h2>
     <ul class="media__grid">
       {gallery.map((p) => (
         <li>
           <figure>
             <a href={href(p.src)}>
-              <img src={href(p.thumb)} alt={p.alt} width="800" height={Math.round((800 * p.height) / p.width)} loading="lazy" decoding="async" />
-              <span class="sr-only"> {de ? '(Foto groß öffnen)' : fr ? '(ouvrir la photo en grand)' : '(open larger photo)'}</span>
+              <img src={href(p.thumb)} alt={p.alt} width={p.thumbWidth ?? 480} height={p.thumbHeight ?? Math.round((480 * p.height) / p.width)} loading="lazy" decoding="async" />
+              <span class="sr-only"> {t.larger}</span>
             </a>
             {p.caption && <figcaption>{p.caption}</figcaption>}
           </figure>
@@ -85,22 +113,43 @@ const describedSize = video?.described ? mb(video.described.src) : '';
     </ul>
   </section>
 )}
+<script>
+  // "Photo descriptions as text" link under the film: open the collapsed list before jumping to it.
+  document.querySelectorAll<HTMLAnchorElement>('.media__cap a[href^="#"]').forEach((a) => {
+    a.addEventListener('click', () => {
+      const d = document.getElementById(a.hash.slice(1));
+      if (d instanceof HTMLDetailsElement) d.open = true;
+    });
+  });
+</script>
 <style>
-  .media { margin: 2.5rem 0 0; }
-  .media__video { margin: 0 0 .9rem; }
-  .media__video video { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; background: #000; border-radius: var(--radius-sm); }
-  .media__video figcaption { margin-top: .5rem; color: var(--muted); font-size: .95rem; }
-  .media__links { list-style: none; padding: 0; margin: 0 0 1rem; display: grid; gap: .35rem; }
-  .media__links a { display: inline-block; min-height: var(--tap); padding: .55rem 0; }
-  .media__text { border: 1px solid var(--line); border-radius: var(--radius-sm); padding: .25rem 1rem; }
-  .media__text summary { cursor: pointer; min-height: var(--tap); display: flex; align-items: center; font-weight: 600; }
-  .media__text ol { margin: .5rem 0 1rem; padding-left: 1.4rem; }
+  video { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; background: #000; }
+  .media__cap { display: grid; gap: .35rem; padding: .7rem 1rem .5rem; border-top: 1px solid var(--line); background: var(--surface); color: var(--muted); font-size: .95rem; }
+  .media__title { color: var(--ink); font-weight: 600; }
+  .media__actions { display: flex; flex-wrap: wrap; align-items: center; gap: .25rem 1.25rem; }
+  .media__actions a { display: inline-flex; align-items: center; gap: .4rem; min-height: var(--tap); }
+  .media__actions a.media__a11y { display: inline-block; padding: .55rem 1rem; border: 2px solid currentColor; border-radius: 1.5rem; font-weight: 700; }
+  .media__a11y :global(svg) { display: inline-block; vertical-align: -.25em; margin-right: .3rem; }
+  /* Long German compounds ("Bildbeschreibungen") must wrap at large text sizes instead of widening the page. */
+  .narrated, .media__cap { overflow-wrap: break-word; hyphens: auto; }
+  .narrated { margin: 0 0 2rem; padding: 1.25rem 1.25rem 1rem; border: 2px solid var(--line-strong); border-radius: var(--radius); background: var(--gold-soft); scroll-margin-top: 6rem; }
+  .narrated h2 { margin: 0 0 .5rem; font-size: clamp(1.25rem, 2.6vw, 1.6rem); }
+  .narrated h2 :global(svg) { display: inline-block; vertical-align: -.2em; margin-right: .35rem; }
+  .narrated p { margin: 0 0 1rem; }
+  .narrated video { border-radius: var(--radius-sm); }
+  .narrated__links { list-style: none; padding: 0; margin: .75rem 0 0; display: flex; flex-wrap: wrap; gap: .25rem 1.5rem; }
+  .narrated__links a { display: inline-flex; align-items: center; gap: .4rem; min-height: var(--tap); font-weight: 600; }
+  .media__text { margin: 0 0 2rem; border: 1px solid var(--line); border-radius: var(--radius-sm); padding: .25rem 1rem; scroll-margin-top: 6rem; overflow-wrap: break-word; hyphens: auto; }
+  .media__text summary { cursor: pointer; min-height: var(--tap); display: flex; flex-wrap: wrap; align-items: center; gap: .4rem; font-weight: 600; }
+  .media__text ol { margin: .5rem 0 1rem; padding-left: 1.6rem; }
   .media__text li { margin: .35rem 0; }
   .media__text time { font-variant-numeric: tabular-nums; font-weight: 600; margin-right: .35rem; }
-  .media__grid { list-style: none; padding: 0; margin: 0; display: grid; gap: 1rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 13.5rem), 1fr)); }
+  .media { margin: 2.5rem 0 0; }
+  .media__grid { list-style: none; padding: 0; margin: 0; display: grid; gap: 1rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 13.5rem), 1fr)); align-items: start; }
   .media__grid li { margin: 0; }
   .media__grid figure { margin: 0; }
-  .media__grid a { display: block; border-radius: var(--radius-sm); overflow: hidden; border: 1px solid var(--line); }
-  .media__grid img { display: block; width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: cover; }
+  .media__grid a { display: block; border-radius: var(--radius-sm); overflow: hidden; border: 1px solid var(--line); background: var(--surface); }
+  /* Whole photo, original proportions: nothing is cropped away. */
+  .media__grid img { display: block; width: 100%; height: auto; }
   .media__grid figcaption { margin-top: .4rem; font-size: .95rem; color: var(--muted); }
 </style>

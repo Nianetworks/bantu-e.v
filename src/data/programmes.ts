@@ -244,7 +244,7 @@ export const regions = [
     title: { de: 'Internationale Zusammenarbeit', en: 'International Cooperation', fr: 'Coopération internationale' } as L,
     navTitle: { de: 'Internationale Zusammenarbeit (Auslandsarbeit)', en: 'International Cooperation', fr: 'Coopération internationale' } as L,
     icon: 'globe',
-    image: '/images/hero/okb-gruppe-veranda-800.webp',
+    image: '/images/hero/okb-gruppe-veranda-r5-800.webp',
     places: { de: 'Uganda · Burundi', en: 'Uganda · Burundi', fr: 'Ouganda · Burundi' } as L,
     navLead: { de: 'Mit Partnern in Uganda und Burundi: Bildung, Gesundheit, Wasser und Einkommen.', en: 'With partners in Uganda and Burundi: education, health, water and income.', fr: 'Avec nos partenaires en Ouganda et au Burundi : éducation, santé, eau et revenus.' } as L,
     lead: {

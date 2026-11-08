@@ -34,20 +34,33 @@ const projects = defineCollection({
     imageAlt: z.string().optional(),
     /** Shown on the placeholder until a real photo exists (see docs/04_Foto-Briefing.md) */
     photoBrief: z.string().optional(),
-    /** Photo gallery under the project text: thumb (about 800 px) links to the large version (about 1600 px). */
-    gallery: z.array(z.object({ src: z.string(), thumb: z.string(), width: z.number(), height: z.number(), alt: z.string(), caption: z.string().optional() })).default([]),
-    /** Self-hosted film (no embeds): native player, no autoplay, caption tracks; `transcript` = VTT file shown as text on the page. */
+    /** Photo gallery under the project text: thumb links to the large version; both keep the photo's proportions. */
+    gallery: z.array(z.object({ src: z.string(), thumb: z.string(), width: z.number(), height: z.number(), thumbWidth: z.number().optional(), thumbHeight: z.number().optional(), alt: z.string(), caption: z.string().optional() })).default([]),
+    /** Self-hosted films (no embeds): native players, no autoplay, preload none. `video` = standard film in the large media box
+     *  at the top; `video.narrated` = version with spoken photo descriptions (accessibility version) right below it. */
     video: z.object({
       src: z.string(),
       poster: z.string().optional(),
       width: z.number().default(1920),
       height: z.number().default(1080),
       title: z.string(),
+      label: z.string(),
       duration: z.string(),
       intro: z.string().optional(),
-      described: z.object({ src: z.string(), label: z.string() }).optional(),
       tracks: z.array(z.object({ src: z.string(), srclang: z.string(), label: z.string(), default: z.boolean().default(false) })).default([]),
+      /** VTT file whose cues are shown on the page as the film's photo descriptions (when there is no narrated version). */
       transcript: z.string().optional(),
+      narrated: z.object({
+        src: z.string(),
+        poster: z.string().optional(),
+        heading: z.string(),
+        label: z.string(),
+        text: z.string(),
+        link: z.string(),
+        tracks: z.array(z.object({ src: z.string(), srclang: z.string(), label: z.string(), default: z.boolean().default(false) })).default([]),
+        transcript: z.string().optional(),
+        transcriptLabel: z.string().optional(),
+      }).optional(),
     }).optional(),
     featured: z.boolean().default(false),
     successStory: z.boolean().default(false),

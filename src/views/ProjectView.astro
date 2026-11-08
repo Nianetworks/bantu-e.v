@@ -41,11 +41,13 @@ const donateRef = slug.includes('pearl') ? 'Pearl Kita' : slug.includes('ruziba'
   <section class="section section--tight">
     <div class="wrap project">
       <div class="project__main">
-        <figure class="project__figure">
-          {d.image
-            ? <img src={href(d.image)} alt={d.imageAlt ?? ''} width="1200" height="750" />
-            : <Placeholder lang={lang} label={d.photoBrief} tone={d.programme === 'international' ? 'gold' : 'blue'} />}
-        </figure>
+        {d.video
+          ? <><figure class="project__figure project__figure--video"><ProjectMedia part="player" lang={lang} gallery={d.gallery} video={d.video} id={slug} /></figure><ProjectMedia part="narrated" lang={lang} gallery={d.gallery} video={d.video} id={slug} /></>
+          : <figure class="project__figure">
+              {d.image
+                ? <img src={href(d.image)} alt={d.imageAlt ?? ''} width="1200" height="750" />
+                : <Placeholder lang={lang} label={d.photoBrief} tone={d.programme === 'international' ? 'gold' : 'blue'} />}
+            </figure>}
         <p class="lead">{d.summary}</p>
         {d.stats.length > 0 && (
           <div class="stat-grid project__stats">
@@ -53,7 +55,7 @@ const donateRef = slug.includes('pearl') ? 'Pearl Kita' : slug.includes('ruziba'
           </div>
         )}
         <div class="prose"><Content /></div>
-        <ProjectMedia lang={lang} gallery={d.gallery} video={d.video} id={slug} />
+        <ProjectMedia part="gallery" lang={lang} gallery={d.gallery} video={d.video} id={slug} />
         <FundingNote lang={lang} note={d.fundingNote} logos={d.fundingLogos} disclaimer={d.disclaimer} funders={d.funders} />
       </div>
       <aside class="project__side">
