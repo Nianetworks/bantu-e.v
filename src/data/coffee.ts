@@ -1,7 +1,8 @@
 // ABANTU COFFEE – Uganda Collection (12 editions, "Woven Origins v2" bag designs).
 // Brand (chair, 08.11.2026): ABANTU COFFEE by Bantu e.V., main coffee partner Balambuli Kwigate Coffee (BKC).
 // Roots & Routes (01) and Sebei Elgon (04) are products "coming soon" (chair, 09.11.2026; Sebei Elgon replaced Kanungu Forest).
-// The other ten editions, Kanungu Forest included, are shown as a collection preview (status 'planned': no price, no reservation, not in the order catalogue) – chair's decision 08.11.2026.
+// Since 09.11.2026 the planned editions are hidden from the public website (shop.ts → showPlannedEditions = false); before that
+// the other ten editions, Kanungu Forest included, were shown as a collection preview (status 'planned': no price, no reservation, not in the order catalogue) – chair's decision 08.11.2026.
 // Stories: chair's decision 08.11.2026 to use the 2025 brochure "Abantu Coffee – Complete 12-Line Collection with Uganda
 // Regional Partners" (05_Programme_&_Projekte/…/Abantu Coffee — Marke und Produktentwicklung/03_Implementierung/03_Daten_Fotos_&_Medien).
 // Taglines follow the current Woven Origins v2 labels. Cooperatives, processing, altitude and impact are written as plans/aims,

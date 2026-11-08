@@ -45,6 +45,11 @@ export const shipping: { flat?: number; note: L } = {
 };
 
 /** Limits for symbolic gifts (EUR); the order script applies the same limits. */
+/** Planned ABANTU COFFEE editions (status 'planned') stay off the public website until they are ready (chair, 09.11.2026):
+ *  no shop section, no pages, no images. Their data and stories stay in src/data/coffee.ts. Set to true (and restore the
+ *  images in public/images/shop/abantu-coffee/) to show the collection preview again. */
+export const showPlannedEditions = false;
+
 export const giftLimits = { min: 5, max: 10000, suggestions: [25, 50, 100] };
 
 /** Can this product be ordered with the order form right now? */
@@ -114,8 +119,8 @@ export const products: Product[] = [
     description: { de: 'Ihre Spende hilft, Schulungen, Workshops und Begegnungen in Berlin kostenfrei anzubieten, mit Kinderbetreuung, damit alle teilnehmen können.', en: 'Your donation helps us offer trainings, workshops and encounters in Berlin free of charge, with childcare so that everyone can take part.', fr: 'Votre don nous aide à proposer gratuitement des formations, des ateliers et des rencontres à Berlin, avec garde d’enfants pour que tout le monde puisse participer.' },
     priceNote: { de: 'Betrag frei wählbar', en: 'Choose your amount', fr: 'Choisissez votre montant' },
   },
-  // Abantu Coffee – Uganda Collection, see src/data/coffee.ts.
-  ...coffeeProducts,
+  // Abantu Coffee – Uganda Collection, see src/data/coffee.ts. Only the editions that are public (see showPlannedEditions).
+  ...coffeeProducts.filter((p) => showPlannedEditions || p.status !== 'planned'),
   // Merchandise – designs to be produced (print-on-demand or small batch).
   {
     slug: 'bantu-stofftasche', category: 'merch', status: 'coming-soon',

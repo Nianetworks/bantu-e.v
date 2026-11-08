@@ -47,8 +47,9 @@ public/partners/        partner logos (OrgCard); public/funders/ funder logos
 public/images/shop/abantu-coffee/  ABANTU COFFEE "Woven Origins v2" bag previews (480/768/1254 WebP + JPEG) and front/back label
                         previews, shown by components/ProductImage.astro (whole bag, square, no cropping). Digital packaging previews,
                         not final retail labels. Main coffee partner: Balambuli Kwigate Coffee (BKC). Uganda Collection = 12 editions in
-                        src/data/coffee.ts: 01 Roots & Routes and 04 Sebei Elgon "coming soon" (chair, 09.11.2026); the other ten shown as a collection
-                        preview (status 'planned': no price, no reservation, not in katalog.json) – chair's decision 08.11.2026. Each
+                        src/data/coffee.ts: 01 Roots & Routes and 04 Sebei Elgon "coming soon" (chair, 09.11.2026). The other ten (status 'planned')
+                        are HIDDEN from the public website since 09.11.2026 (shop.ts showPlannedEditions = false: no section, no pages,
+                        images removed; copies in the chair's Website/Abantu_Coffee_Shop_Upload_2026-11-08 folders). Each
                         edition has a story (DE/EN/FR) from the 2025 "Complete 12-Line Collection" brochure (chair's choice); unconfirmed
                         cooperatives/processing/impact are written as plans/aims. No "certified organic" claims; no prices invented.
 public/videos/          self-hosted films + VTT captions; shown by src/components/ProjectMedia.astro via front matter `video` (film at
