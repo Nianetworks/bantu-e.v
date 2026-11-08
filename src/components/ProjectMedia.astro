@@ -3,7 +3,8 @@
 // part="player":   standard film in the large media box at the top of the page (replaces the photo there).
 // part="narrated": film with spoken photo descriptions (accessibility version), directly below the standard film;
 //                   without a narrated film: the film's photo descriptions as text (from `video.transcript`, a VTT file).
-// part="gallery":  photo gallery further down.
+// part="gallery":  photo gallery further down: even 3:2 tiles in themed groups (`section`), a click opens the whole photo in a
+//                   modal viewer (prev/next, arrow keys, swipe, Esc; focus returns to the tile). Without JS the tile links to the photo.
 // Accessibility: native <video> controls (keyboard operable, global focus outline), no autoplay, preload="none",
 // an accessible name per player, caption tracks matching each film, visible link to the narration transcript.
 // No download (chair's decision 08.11.2026): no download link, no Download item in the player menu, no right-click save on the film.
@@ -13,7 +14,7 @@ import Icon from './Icon.astro';
 import { href, type Lang } from '../i18n';
 
 type Track = { src: string; srclang: string; label: string; default: boolean };
-type Photo = { src: string; thumb: string; width: number; height: number; thumbWidth?: number; thumbHeight?: number; alt: string; caption?: string };
+type Photo = { src: string; thumb: string; width: number; height: number; thumbWidth?: number; thumbHeight?: number; alt: string; caption?: string; section?: string; focus?: string };
 type Narrated = { src: string; poster?: string; heading: string; label: string; text: string; link: string; tracks: Track[]; transcript?: string; transcriptLabel?: string };
 type Video = { src: string; poster?: string; width: number; height: number; title: string; label: string; duration: string; intro?: string; tracks: Track[]; narrated?: Narrated; transcript?: string };
 interface Props { lang: Lang; gallery: Photo[]; video?: Video; id: string; part: 'player' | 'narrated' | 'gallery' }
@@ -29,6 +30,11 @@ const t = {
   minutes: de ? 'Min.' : 'min',
   photos: (n: number) => (de ? `${n} Fotos aus dem Austausch` : fr ? `${n} photos de l’échange` : `${n} photos from the exchange`),
   larger: de ? '(Foto groß öffnen)' : fr ? '(ouvrir la photo en grand)' : '(open larger photo)',
+  viewer: de ? 'Fotoansicht' : fr ? 'Visionneuse de photos' : 'Photo viewer',
+  close: de ? 'Fotoansicht schließen' : fr ? 'Fermer la visionneuse' : 'Close photo viewer',
+  prev: de ? 'Vorheriges Foto' : fr ? 'Photo précédente' : 'Previous photo',
+  next: de ? 'Nächstes Foto' : fr ? 'Photo suivante' : 'Next photo',
+  count: de ? 'Foto {n} von {total}' : fr ? 'Photo {n} sur {total}' : 'Photo {n} of {total}',
 };
 const narratedId = `${id}-narrated`;
 const textId = `${id}-film-text`;
@@ -47,6 +53,15 @@ const cues = (() => {
     });
   } catch { return []; }
 })();
+// Gallery: consecutive photos with the same `section` form one group with its own heading.
+const groups = gallery.reduce<{ title: string; items: { p: Photo; i: number }[] }[]>((acc, p, i) => {
+  const last = acc[acc.length - 1];
+  if (last && last.title === (p.section ?? '')) last.items.push({ p, i });
+  else acc.push({ title: p.section ?? '', items: [{ p, i }] });
+  return acc;
+}, []);
+// Tiles are 3:2. Photos close to that are cropped slightly (or at `focus`); portraits and very wide group photos are shown whole.
+const whole = (p: Photo) => !p.focus && Math.abs(p.width / p.height - 1.5) > 0.12;
 const textLabel = de ? 'Bildbeschreibungen zum Film als Text' : fr ? 'Descriptions des photos du film en texte' : 'The film’s photo descriptions as text';
 ---
 {part === 'player' && video && (
@@ -91,24 +106,92 @@ const textLabel = de ? 'Bildbeschreibungen zum Film als Text' : fr ? 'Descriptio
   </details>
 )}
 {part === 'gallery' && gallery.length > 0 && (
-  <section class="media" aria-labelledby={`${id}-photos-h`}>
+  <section class="media" aria-labelledby={`${id}-photos-h`} data-gallery>
     <h2 id={`${id}-photos-h`}>{t.photos(gallery.length)}</h2>
-    <ul class="media__grid">
-      {gallery.map((p) => (
-        <li>
-          <figure>
-            <a href={href(p.src)}>
-              <img src={href(p.thumb)} alt={p.alt} width={p.thumbWidth ?? 480} height={p.thumbHeight ?? Math.round((480 * p.height) / p.width)} loading="lazy" decoding="async" />
-              <span class="sr-only"> {t.larger}</span>
-            </a>
-            {p.caption && <figcaption>{p.caption}</figcaption>}
-          </figure>
-        </li>
-      ))}
-    </ul>
+    {groups.map((g, gi) => (
+      <div class="media__group">
+        {g.title && <h3 class="media__group-h" id={`${id}-photos-g${gi + 1}`}>{g.title}</h3>}
+        <ul class="media__grid" aria-labelledby={g.title ? `${id}-photos-g${gi + 1}` : undefined}>
+          {g.items.map(({ p, i }) => (
+            <li>
+              <figure>
+                <a href={href(p.src)} class:list={['media__tile', { 'is-whole': whole(p) }]} data-index={i} data-w={p.width} data-h={p.height}>
+                  {whole(p) && <img class="media__tile-bg" src={href(p.thumb)} alt="" aria-hidden="true" loading="lazy" decoding="async" />}
+                  <img class="media__tile-img" src={href(p.thumb)} srcset={`${href(p.thumb)} ${p.thumbWidth ?? 480}w, ${href(p.src)} ${p.width}w`}
+                    sizes="(min-width: 64rem) 17rem, (min-width: 30rem) 33vw, 50vw" alt={p.alt}
+                    width={p.thumbWidth ?? 480} height={p.thumbHeight ?? Math.round((480 * p.height) / p.width)} loading="lazy" decoding="async"
+                    style={p.focus ? `object-position: ${p.focus}` : undefined} />
+                  <span class="sr-only"> {t.larger}</span>
+                </a>
+                {p.caption && <figcaption>{p.caption}</figcaption>}
+              </figure>
+            </li>
+          ))}
+        </ul>
+      </div>
+    ))}
+    <dialog class="viewer" data-viewer aria-label={t.viewer} data-count={t.count}>
+      <div class="viewer__bar">
+        <p class="viewer__count" data-viewer-count></p>
+        <button type="button" class="viewer__btn" data-viewer-close aria-label={t.close}><Icon name="close" size={22} /></button>
+      </div>
+      <figure class="viewer__fig">
+        <img data-viewer-img alt="" />
+        <figcaption class="viewer__cap" data-viewer-cap aria-live="polite"></figcaption>
+      </figure>
+      <div class="viewer__nav">
+        <button type="button" class="viewer__btn" data-viewer-prev aria-label={t.prev}><Icon name="chevron" size={24} class="viewer__prev-ic" /></button>
+        <button type="button" class="viewer__btn" data-viewer-next aria-label={t.next}><Icon name="chevron" size={24} class="viewer__next-ic" /></button>
+      </div>
+    </dialog>
   </section>
 )}
 <script>
+  // Photo viewer: a native modal <dialog> (focus stays inside, Esc closes); the tile that opened it gets focus back.
+  document.querySelectorAll<HTMLElement>('[data-gallery]').forEach((gal) => {
+    const dlg = gal.querySelector<HTMLDialogElement>('[data-viewer]');
+    if (!dlg || typeof dlg.showModal !== 'function') return;
+    const tiles = [...gal.querySelectorAll<HTMLAnchorElement>('a[data-index]')];
+    const img = dlg.querySelector<HTMLImageElement>('[data-viewer-img]')!;
+    const cap = dlg.querySelector<HTMLElement>('[data-viewer-cap]')!;
+    const count = dlg.querySelector<HTMLElement>('[data-viewer-count]')!;
+    let current = 0;
+    let opener: HTMLElement | null = null;
+    const show = (i: number) => {
+      current = (i + tiles.length) % tiles.length;
+      const a = tiles[current];
+      const thumb = a.querySelector<HTMLImageElement>('.media__tile-img');
+      img.src = a.href;
+      img.alt = thumb?.alt ?? '';
+      img.width = Number(a.dataset.w);
+      img.height = Number(a.dataset.h);
+      const group = a.closest('.media__group')?.querySelector('.media__group-h')?.textContent?.trim();
+      const caption = a.closest('figure')?.querySelector('figcaption')?.textContent?.trim() ?? '';
+      cap.textContent = [caption, group].filter(Boolean).join(' · ');
+      count.textContent = (dlg.dataset.count ?? '{n} / {total}').replace('{n}', String(current + 1)).replace('{total}', String(tiles.length));
+      new Image().src = tiles[(current + 1) % tiles.length].href; // next photo ready
+    };
+    tiles.forEach((a, i) => a.addEventListener('click', (e) => {
+      if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      e.preventDefault();
+      opener = a;
+      show(i);
+      dlg.showModal();
+      dlg.querySelector<HTMLButtonElement>('[data-viewer-next]')?.focus();
+    }));
+    dlg.querySelector('[data-viewer-prev]')?.addEventListener('click', () => show(current - 1));
+    dlg.querySelector('[data-viewer-next]')?.addEventListener('click', () => show(current + 1));
+    dlg.querySelector('[data-viewer-close]')?.addEventListener('click', () => dlg.close());
+    dlg.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') { e.preventDefault(); show(current - 1); }
+      if (e.key === 'ArrowRight') { e.preventDefault(); show(current + 1); }
+    });
+    dlg.addEventListener('click', (e) => { if (e.target === dlg) dlg.close(); });
+    dlg.addEventListener('close', () => { opener?.focus(); });
+    let startX = 0;
+    img.addEventListener('pointerdown', (e) => { startX = e.clientX; });
+    img.addEventListener('pointerup', (e) => { const dx = e.clientX - startX; if (Math.abs(dx) > 50) show(current + (dx < 0 ? 1 : -1)); });
+  });
   // Films are not offered for download: no right-click "Save video as" on the player.
   document.querySelectorAll<HTMLVideoElement>('video[data-nosave]').forEach((v) => v.addEventListener('contextmenu', (e) => e.preventDefault()));
   // "Photo descriptions as text" link under the film: open the collapsed list before jumping to it.
@@ -142,11 +225,30 @@ const textLabel = de ? 'Bildbeschreibungen zum Film als Text' : fr ? 'Descriptio
   .media__text li { margin: .35rem 0; }
   .media__text time { font-variant-numeric: tabular-nums; font-weight: 600; margin-right: .35rem; }
   .media { margin: 2.5rem 0 0; }
-  .media__grid { list-style: none; padding: 0; margin: 0; display: grid; gap: 1rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 13.5rem), 1fr)); align-items: start; }
+  .media__group + .media__group { margin-top: 2rem; }
+  .media__group-h { margin: 0 0 .75rem; font-size: 1.15rem; }
+  .media__grid { list-style: none; padding: 0; margin: 0; display: grid; gap: 1.25rem 1rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 12.5rem), 1fr)); }
+  @media (max-width: 30rem) { .media__grid { gap: 1rem .75rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 8.5rem), 1fr)); } }
   .media__grid li { margin: 0; }
   .media__grid figure { margin: 0; }
-  .media__grid a { display: block; border-radius: var(--radius-sm); overflow: hidden; border: 1px solid var(--line); background: var(--surface); }
-  /* Whole photo, original proportions: nothing is cropped away. */
-  .media__grid img { display: block; width: 100%; height: auto; }
-  .media__grid figcaption { margin-top: .4rem; font-size: .95rem; color: var(--muted); }
+  /* Even tiles: every photo gets the same 3:2 frame. */
+  .media__tile { position: relative; display: block; aspect-ratio: 3 / 2; overflow: hidden; border-radius: var(--radius-sm); border: 1px solid var(--line); background: var(--surface); }
+  .media__tile img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  /* Portraits and very wide group photos: the whole photo, on a soft blurred copy of itself. */
+  .media__tile.is-whole .media__tile-img { object-fit: contain; }
+  .media__tile-bg { filter: blur(14px) brightness(.7); transform: scale(1.15); }
+  .media__tile:hover .media__tile-img { opacity: .9; }
+  .media__grid figcaption { margin-top: .45rem; font-size: .95rem; line-height: 1.35; color: var(--muted); }
+  .viewer { width: 100vw; height: 100dvh; max-width: none; max-height: none; margin: 0; padding: 0; border: 0; background: var(--deep); color: var(--on-deep); }
+  .viewer[open] { display: flex; flex-direction: column; }
+  .viewer::backdrop { background: rgb(0 0 0 / .6); }
+  .viewer__bar, .viewer__nav { flex: none; display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: .6rem 1rem; }
+  .viewer__nav { justify-content: center; gap: 1.5rem; padding-bottom: 1rem; }
+  .viewer__count { margin: 0; font-weight: 600; }
+  .viewer__fig { flex: 1 1 auto; min-height: 0; margin: 0; padding: 0 1rem; display: flex; flex-direction: column; align-items: center; gap: .6rem; }
+  .viewer__fig img { flex: 1 1 0; min-height: 0; width: 100%; height: auto; object-fit: contain; touch-action: pan-y; }
+  .viewer__cap { flex: none; max-width: 60rem; text-align: center; overflow-wrap: break-word; }
+  .viewer__btn { width: 48px; height: 48px; display: grid; place-items: center; border-radius: 50%; border: 2px solid currentColor; background: transparent; color: inherit; cursor: pointer; }
+  .viewer__btn :global(.viewer__prev-ic) { transform: rotate(90deg); }
+  .viewer__btn :global(.viewer__next-ic) { transform: rotate(-90deg); }
 </style>

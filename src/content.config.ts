@@ -34,8 +34,10 @@ const projects = defineCollection({
     imageAlt: z.string().optional(),
     /** Shown on the placeholder until a real photo exists (see docs/04_Foto-Briefing.md) */
     photoBrief: z.string().optional(),
-    /** Photo gallery under the project text: thumb links to the large version; both keep the photo's proportions. */
-    gallery: z.array(z.object({ src: z.string(), thumb: z.string(), width: z.number(), height: z.number(), thumbWidth: z.number().optional(), thumbHeight: z.number().optional(), alt: z.string(), caption: z.string().optional() })).default([]),
+    /** Photo gallery under the project text, shown as even tiles; a click opens the whole photo in the viewer.
+     *  `section`: heading of a themed group (consecutive photos with the same value form one group).
+     *  `focus`: CSS object-position for cropping the tile (e.g. "50% 35%"); without it, photos far from 3:2 are shown whole. */
+    gallery: z.array(z.object({ src: z.string(), thumb: z.string(), width: z.number(), height: z.number(), thumbWidth: z.number().optional(), thumbHeight: z.number().optional(), alt: z.string(), caption: z.string().optional(), section: z.string().optional(), focus: z.string().optional() })).default([]),
     /** Self-hosted films (no embeds): native players, no autoplay, preload none. `video` = standard film in the large media box
      *  at the top; `video.narrated` = version with spoken photo descriptions (accessibility version) right below it. */
     video: z.object({

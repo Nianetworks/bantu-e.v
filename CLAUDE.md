@@ -45,7 +45,9 @@ public/videos/          self-hosted films + VTT captions; shown by src/component
                         Films are NOT offered for download (chair, 08.11.2026): no download link, controlslist="nodownload",
                         no right-click save on the player. Media URLs carry ?v=<MEDIA_VERSION> (ProjectMedia.astro): raise it when a
                         film/caption/poster is replaced under the same name. Keep each MP4 under ~23 MB (25 MB GitHub browser-upload limit;
-                        one film per zip). Blur names/faces without consent before publishing. Okushoma kwa Boona = revision 5 (08.11.2026).
+                        one film per zip). Blur names/faces without consent before publishing.
+                        Gallery = even 3:2 tiles grouped by front-matter `section` (h3 per group), click opens a modal viewer; photos far
+                        from 3:2 are shown whole on a blurred backdrop unless `focus` (object-position) is set. Okushoma kwa Boona = revision 5 (08.11.2026).
 public/                 brand assets, images, funder logos, downloads
 docs/                   plan, go-live/DNS, legal & shop, photo brief, editing guide, open questions
 ```
