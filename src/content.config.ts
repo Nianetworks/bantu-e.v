@@ -95,6 +95,8 @@ const news = defineCollection({
     imageAlt: z.string().optional(),
     /** Extra photos below the text. src = path without extension: <src>.jpg (width px) plus <src>-800.webp and <src>-<width>.webp. No EXIF/GPS. */
     photos: z.array(z.object({ src: z.string(), width: z.number(), height: z.number(), alt: z.string(), caption: z.string().optional() })).default([]),
+    /** Event flyer/poster shown in the side column with a link to the full image (same file scheme as photos). */
+    poster: z.object({ src: z.string(), width: z.number(), height: z.number(), alt: z.string() }).optional(),
     attachment: z.object({ href: z.string(), label: z.string() }).optional(),
     draft: z.boolean().default(false),
     sources: z.array(z.string()).default([]),

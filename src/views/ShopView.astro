@@ -74,7 +74,10 @@ const cuppingPhotos = cupping ? [
               <div class="cupping__text">
                 <h3>{cupping.data.title}</h3>
                 <p>{cupping.data.summary}</p>
-                <a class="link-arrow" href={newsPath(lang, cuppingSlug)}>{de ? 'Zum Bericht' : fr ? 'Lire le compte rendu' : 'Read the report'}</a>
+                <div class="cupping__links">
+                  <a class="link-arrow" href={newsPath(lang, cuppingSlug)}>{de ? 'Zum Bericht' : fr ? 'Lire le compte rendu' : 'Read the report'}</a>
+                  {cupping.data.poster && <a class="link-arrow" href={href(`${cupping.data.poster.src}.jpg`)}>{de ? 'Plakat ansehen' : fr ? 'Voir l’affiche' : 'View the poster'}</a>}
+                </div>
               </div>
               <div class="cupping__photos">
                 {cuppingPhotos.map((ph) => (
@@ -133,6 +136,7 @@ const cuppingPhotos = cupping ? [
   .cupping { margin-top: clamp(2rem, 5vw, 3rem); display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: clamp(1.25rem, 3vw, 2rem); align-items: center; padding: clamp(1.25rem, 3vw, 2rem); border: 1px solid var(--line); border-radius: 18px; background: var(--surface); }
   .cupping__text h3 { font-size: clamp(1.2rem, 2.2vw, 1.45rem); margin: 0 0 .6rem; }
   .cupping__text p { margin: 0 0 1rem; }
+  .cupping__links { display: flex; flex-wrap: wrap; gap: .25rem 1.5rem; }
   /* 16:9 next to 3:4 at the same height, nothing cropped */
   .cupping__photos { display: grid; grid-template-columns: minmax(0, 2.37fr) minmax(0, 1fr); gap: .75rem; align-items: start; }
   .cupping__photo { margin: 0; border-radius: 12px; overflow: hidden; border: 1px solid var(--line); background: var(--bg); }
