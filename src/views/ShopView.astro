@@ -3,7 +3,8 @@ import Base from '../layouts/Base.astro';
 import PageHead from '../components/PageHead.astro';
 import Placeholder from '../components/Placeholder.astro';
 import ProductImage from '../components/ProductImage.astro';
-import { href, productPath, r, ui, type Lang } from '../i18n';
+import { href, newsPath, productPath, r, ui, type Lang } from '../i18n';
+import { getEntry } from 'astro:content';
 import { categories, products } from '../data/shop';
 import { features, org } from '../data/site';
 
@@ -19,6 +20,13 @@ const lead = de
 const tones = { gifts: 'gold', coffee: 'sand', merch: 'blue', crafts: 'green' } as const;
 // Symbolic gifts (donations) are not shown in the shop; they live on the donate page (chair, 08.11.2026).
 const shopCategories = categories.filter((c) => c.id !== 'gifts');
+// Coffee cupping with our partner Symple Coffee Roasters (28.09.2026): photos and link to the report in the coffee section (chair, 09.11.2026)
+const cuppingSlug = 'kaffee-cupping-symple-coffee-roasters';
+const cupping = await getEntry('news', `${lang}/${cuppingSlug}`);
+const cuppingPhotos = cupping ? [
+  { src: cupping.data.image!.replace(/\.jpg$/, ''), width: 1600, height: 900, alt: cupping.data.imageAlt ?? '', caption: undefined as string | undefined },
+  ...cupping.data.photos.filter((ph) => ph.src.endsWith('vor-dem-cafe')),
+] : [];
 ---
 <Base lang={lang} title={title} description={lead} altHref={r('shop', de ? 'en' : 'de')}>
   <PageHead lang={lang} title={title} lead={lead}>
@@ -59,6 +67,26 @@ const shopCategories = categories.filter((c) => c.id !== 'gifts');
             <div class="panel empty">
               <p>{de ? 'Handgemachte Produkte unserer Partner*innen folgen. Sie möchten informiert werden, sobald es losgeht?' : fr ? 'Les produits artisanaux de nos partenaires suivront. Souhaitez-vous être prévenu de leur disponibilité ?' : 'Handmade products by our partners will follow. Would you like to be notified when they are available?'}</p>
               <a class="btn btn--outline" href={`mailto:${org.email}?subject=${encodeURIComponent(de ? 'Shop: Handwerk vormerken' : fr ? 'Boutique : me prévenir pour l’artisanat' : 'Shop: notify me about crafts')}`}>{t.notify}</a>
+            </div>
+          )}
+          {c.id === 'coffee' && cupping && !cupping.data.draft && (
+            <div class="cupping">
+              <div class="cupping__text">
+                <h3>{cupping.data.title}</h3>
+                <p>{cupping.data.summary}</p>
+                <a class="link-arrow" href={newsPath(lang, cuppingSlug)}>{de ? 'Zum Bericht' : fr ? 'Lire le compte rendu' : 'Read the report'}</a>
+              </div>
+              <div class="cupping__photos">
+                {cuppingPhotos.map((ph) => (
+                  <figure class:list={['cupping__photo', { 'cupping__photo--wide': ph.width > ph.height }]}>
+                    <picture>
+                      <source type="image/webp" srcset={`${href(`${ph.src}-800.webp`)} 800w, ${href(`${ph.src}-${ph.width}.webp`)} ${ph.width}w`} sizes={ph.width > ph.height ? '(max-width: 900px) calc(100vw - 2rem), 640px' : '(max-width: 900px) 45vw, 300px'} />
+                      <img src={href(`${ph.src}.jpg`)} alt={ph.alt} width={ph.width} height={ph.height} loading="lazy" decoding="async" />
+                    </picture>
+                    {ph.caption && <figcaption>{ph.caption}</figcaption>}
+                  </figure>
+                ))}
+              </div>
             </div>
           )}
           {planned.length > 0 && (
@@ -102,6 +130,16 @@ const shopCategories = categories.filter((c) => c.id !== 'gifts');
   .price { font-weight: 700; color: var(--ink); }
   .empty { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem; }
   .empty p { margin: 0; max-width: 60ch; }
+  .cupping { margin-top: clamp(2rem, 5vw, 3rem); display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: clamp(1.25rem, 3vw, 2rem); align-items: center; padding: clamp(1.25rem, 3vw, 2rem); border: 1px solid var(--line); border-radius: 18px; background: var(--surface); }
+  .cupping__text h3 { font-size: clamp(1.2rem, 2.2vw, 1.45rem); margin: 0 0 .6rem; }
+  .cupping__text p { margin: 0 0 1rem; }
+  /* 16:9 next to 3:4 at the same height, nothing cropped */
+  .cupping__photos { display: grid; grid-template-columns: minmax(0, 2.37fr) minmax(0, 1fr); gap: .75rem; align-items: start; }
+  .cupping__photo { margin: 0; border-radius: 12px; overflow: hidden; border: 1px solid var(--line); background: var(--bg); }
+  .cupping__photo picture, .cupping__photo img { display: block; width: 100%; height: auto; }
+  .cupping__photo figcaption { padding: .5rem .75rem; font-size: .85rem; line-height: 1.4; color: var(--muted); }
+  @media (max-width: 900px) { .cupping { grid-template-columns: 1fr; } }
+  @media (max-width: 480px) { .cupping__photos { grid-template-columns: 1fr; } .cupping__photo:not(.cupping__photo--wide) { max-width: 22rem; } }
   .collection { margin-top: clamp(2.5rem, 6vw, 4rem); padding-top: clamp(1.5rem, 4vw, 2.5rem); border-top: 1px solid var(--line); }
   .collection__title { font-size: clamp(1.3rem, 2.4vw, 1.6rem); margin-bottom: .5rem; }
   .collection__intro { max-width: 70ch; margin-bottom: 1.5rem; }

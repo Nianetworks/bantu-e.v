@@ -36,7 +36,9 @@ src/data/downloads.ts   files offered on /downloads and /berichte (live in publi
 src/data/impact.ts      verified impact figures + timeline
 src/data/redirects.mjs  old WordPress URLs -> new pages
 src/content/projects/{de,en,fr}/<slug>.md   one file per project and language (same file name!)
-src/content/news/{de,en,fr}/<slug>.md       news, events (type: event), announcements (pinUntil)
+src/content/news/{de,en,fr}/<slug>.md       news, events (type: event), announcements (pinUntil); optional `photos` (src stem + width/height:
+                        <src>.jpg, <src>-800.webp, <src>-<width>.webp in public/images/news/, EXIF/GPS stripped) shown below the text.
+                        Coffee cupping report 28.09.2026 (kaffee-cupping-symple-coffee-roasters) is also teased in the shop coffee section.
 src/views/*.astro       page templates (take `lang`)
 src/pages/**            thin DE routes + /en/ routes that render the views
 src/i18n/index.ts       routes per language (de/en/fr), UI strings, main nav (mega menus for the two work areas)
