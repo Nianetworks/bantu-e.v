@@ -1,0 +1,31 @@
+{
+  "source_zip": "ABI_Uganda_Project_Reports.zip",
+  "source_zip_sha256": "c8e19c5cee2f1ab0d5aeb06328b3c49ce4b78830b7b6a4080d03f3b2fa1eff48",
+  "prepared_on": "2026-11-09",
+  "source_is_user_confirmed": true,
+  "preserved_report_pairs": [
+    "01-livelihoods-2017",
+    "02-school-partnership",
+    "03-mobility-aids-2018",
+    "04-women-and-crafts",
+    "05-rwengoma-school-meals"
+  ],
+  "repaired_report": "06-royal-junior-school-fees",
+  "selected_distinct_photos": 31,
+  "photo_appearances": 32,
+  "publication_status": "prepared locally; not uploaded",
+  "validation": {
+    "status": "passed",
+    "pdf_reports": 6,
+    "word_reports": 6,
+    "pdf_pages": 16,
+    "selected_distinct_photos": 31,
+    "photo_appearances": 32,
+    "verified_local_or_proposed_public_links": 186,
+    "five_report_pairs_match_source_bytes": true,
+    "school_fees_prose_matches_source": true,
+    "unused_unblurred_portraits_absent_from_word": true,
+    "removed_photos_absent_from_articles_and_photo_folders": true,
+    "photos_have_no_EXIF_metadata": true
+  }
+}

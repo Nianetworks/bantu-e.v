@@ -1,0 +1,107 @@
+ABI UGANDA REPORTS EDITORIAL HANDOVER
+
+Sources
+The user's project account and clarifications are the sources for programme
+years, participant totals, reported poverty outcomes, school progression,
+the two-container total, locations, and the intended use of the funds.
+The 163 supplied photographs document activities, objects, people and
+visible cheque wording. They do not independently establish impact totals.
+
+School context was also checked against the school’s English department:
+https://wrg-online.de/englisch
+The school describes the Uganda project as part of intercultural learning
+in selected English classes. Its official name is Wilhelm-Remy-Gymnasium
+Bendorf. No unrelated material from search results was used.
+
+Names
+Use Anchored Bridges Initiatives (ABI), formerly Ability Beyond the Iris,
+as specifically requested. The historic wording on the photographed
+cheques is preserved without retouching it.
+Royal College Namugongo is the secondary and parent school of Royal Junior
+Namugongo. The user identified the older students in white school shirts
+as Royal College students. The six pupils whose fees were supported
+attended Royal Junior Namugongo. The exact fee-payment period was not
+specified, so that report does not invent start/end dates.
+
+Dates
+The livelihoods programme is dated to 2017 from the user's account.
+Some related images have 2018 WhatsApp filenames. A file-sharing date is
+not automatically a capture date or evidence of a new project phase.
+The English classroom display has an EXIF date of 24 June 2017.
+The Royal College cheque visibly bears the date 18 September 2018.
+The Rwengoma cheque visibly bears the date 11 October 2018, despite a
+November 2018 filename. Its printed date is used in the report caption.
+The craft photos have July 2017 capture dates. They are explicitly labelled
+as earlier archival context for the support the user says continued from
+2018; they are not relabelled as 2018 photographs.
+
+Funding
+Approximately EUR 7,000 was one pupil-led fundraising pool. The school
+partnership, the Rwengoma allocation and the six pupils' fee support are
+reported separately, without multiplying the donation three times.
+The German cheque appears to show a figure a little above EUR 7,000, so
+the reports use the rounded description supplied by the user.
+The Rwengoma cheque records UGX 1,000,000. A Royal College cheque also
+records UGX 1,000,000. The reports do not treat either as a full budget,
+invent a currency conversion, or assign a cost to each ramp or pupil.
+
+Reported results
+The livelihoods account says 50 families received direct support and more
+than 26 moved out of poverty. No poverty threshold, survey method or
+time interval was supplied, so no independent evaluation is claimed.
+Domestic-violence prevention is framed as an aim of the livelihoods work,
+not a measured reduction or a claim that poverty is its sole cause.
+The mobility account says two 40-foot containers and more than 600
+beneficiaries across Ntungamo, Jinja and Kasubi. Return to school and work
+is described as a reported outcome without inventing numerical rates.
+The six Royal Junior pupils' primary completion and secondary progression
+are reported from the user's account, without fabricating individual
+graduation dates or publicising the names printed on old pupil portraits.
+Rwengoma garden harvests, meal totals and dropout changes are not invented.
+The craft shop is described as forthcoming, as stated by the user.
+
+Photo selection
+All 163 files were reviewed. The current package contains 31 distinct
+selected images. The six individual pupil portraits in the user-confirmed
+report are included as edited crops with light face blur and the printed
+personal details removed. The prior pupil group photo and the removed
+craft handshake photo are excluded. Near-identical alternatives and
+unclear school/meeting images remain outside the selected publication set.
+The school gathering used with the Rwengoma account is associated by
+setting and archive grouping; its caption does not assert an exact school
+or date. The archive does not include a confirmed vegetable-garden image.
+The unselected files remain catalogued in all-163-photo-index.csv.
+
+Images use direct photographic adjustments rather than generative edits.
+The exposure of some 2018 distribution images was already clipped in the
+source. Restrained correction improves presentation without inventing
+missing detail. There is no artificial enlargement of small originals.
+Children's faces and possible minors' faces were given the requested
+lighter blur and reviewed in context. Light blur is not full anonymity.
+GPS and camera metadata are omitted from delivered photos.
+
+Website destination
+The user assigned the livelihoods report to:
+https://www.bantu-ev.org/en/projects/nutztiere-und-landwirtschaft/
+The existing page was read on 9 November 2026. It covers a broader ongoing
+East Africa programme and contains a photo placeholder. The prepared
+update adds the Uganda account as a historical case study and recommends
+replacing that placeholder with the women-with-goats photograph.
+No live website, repository, account or publication setting was modified.
+
+Final checks
+All six Word reports were rendered and the 16 resulting pages were
+visually reviewed. The six PDFs match those reviewed renders. All
+embedded report photos match the edited publication copies. Relative
+website links and the planned livestock-page asset names were checked.
+The 163 original photographs remain unchanged. The delivered images
+use a maximum long edge of 1,600 pixels without enlarging small sources.
+
+Revision using the user-confirmed ZIP
+The user identified ABI_Uganda_Project_Reports.zip as the correct source.
+Five Word reports and PDFs are preserved byte for byte from that ZIP. The
+Royal Junior report retains its prose and six individual pupil portraits,
+with a corrected caption, privacy edits and repaired two-page layout. All
+website versions, selected-photo lists and caption files match this revised
+selection. No removed photo is retained as an unused publication asset.
+The original source ZIP is retained outside the ready-to-upload folder.

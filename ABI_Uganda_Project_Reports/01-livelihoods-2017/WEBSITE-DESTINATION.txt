@@ -1,0 +1,41 @@
+LIVESTOCK AND AGRICULTURE PUBLICATION DESTINATION
+
+Existing English project page
+https://www.bantu-ev.org/en/projects/nutztiere-und-landwirtschaft/
+
+Existing page title
+Livestock & Agriculture: Earning a Living
+
+The existing page describes a broader ongoing East Africa programme and
+currently has a photo placeholder. Add the Uganda account as a clearly
+dated historical case study within that page. Keep the broader programme
+status separate from the results of the 2017 Uganda activity.
+
+Suggested section heading
+Uganda livelihoods programme launched in 2017
+
+Text and images
+- website-page-update.html is the section prepared for the existing page.
+- index.html is the standalone illustrated report preview.
+- article-fragment.html contains the full report article for a website editor.
+- website-text.txt contains copyable plain text.
+- photos/ contains six edited images in JPEG and WebP formats.
+- photo-captions-and-alt-text.csv contains the captions and accessibility text.
+
+Suggested lead image
+abi-039-women-with-goats.webp
+Use it to replace the page's current photo placeholder. Add the pigs,
+goat-husbandry and beekeeping images as a gallery below the historical account.
+
+Downloadable report
+abi-livelihoods-2017-report-en.pdf
+Suggested public destination:
+/downloads/berichte/abi-livelihoods-2017-report-en.pdf
+
+Photo destination suggestion
+/images/projects/nutztiere-und-landwirtschaft/abi-2017/
+
+The paths in website-page-update.html use those proposed public locations.
+Copy the images and PDF to the matching locations, or update its paths to
+the paths used by the website. The six project reports and this upload
+plan have been prepared locally. The live website has not been modified.

@@ -1,0 +1,68 @@
+CLAUDE UPLOAD GUIDE
+ABI Uganda reports — corrected complete package — 9 November 2026
+
+AUTHORITATIVE PACKAGE
+Use this completed package and the reports inside it. It incorporates the
+user's chosen report versions from ABI_Uganda_Project_Reports.zip. Do not
+restore the superseded report selection or photographs from an older ZIP.
+
+WHAT TO PUBLISH
+There are six separate English project reports and matching website
+articles. Each numbered folder has:
+- index.html: responsive standalone preview.
+- article-fragment.html: full illustrated article for integration.
+- website-text.txt: the same prose as plain text.
+- A PDF report for visitors to download.
+- An editable Word master for future changes.
+- photos/: edited JPEG and WebP files.
+- photo-captions-and-alt-text.csv: ready captions and accessibility text.
+
+Use the website's existing page components, styling and content system.
+Keep the text, photo selections and captions aligned with the supplied
+reports. Use WebP with JPEG alternatives where the site supports them.
+The relative image links in article-fragment.html must be updated if the
+files are placed in a different directory. The standalone previews work
+with the package folder structure intact.
+
+ASSIGNED PROJECT PAGE
+https://www.bantu-ev.org/en/projects/nutztiere-und-landwirtschaft/
+For this page, use 01-livelihoods-2017/website-page-update.html as a dated
+2017 Uganda case study within the existing broader East Africa programme.
+The same folder's WEBSITE-DESTINATION.txt identifies the proposed public
+asset paths and lead photo. Replace the photo placeholder with the supplied
+women-with-goats photo. Publish the full downloadable livelihoods PDF.
+
+The other five reports have no user-assigned page URLs. Inspect the site's
+existing project structure and match them to suitable existing pages, or
+prepare appropriate archive/report pages without inventing approved URLs.
+website-upload-plan.json records this distinction. Suggested public asset
+paths in UPLOAD-MANIFEST.json are proposals, not existing repository paths.
+
+REPORT AND PHOTO CHOICES TO RETAIN
+- ABI means Anchored Bridges Initiatives, formerly Ability Beyond the Iris.
+- Royal College Namugongo is the secondary and parent school; Royal Junior
+  Namugongo is the school attended by the six pupils whose fees were paid.
+- Keep the six individual pupil portraits in the fee-support report and
+  article. Publish only the supplied edited crops with light facial blur.
+- The craft report contains sewing and product-display photos. The removed
+  handshake photo and the previous pupil group photo are excluded.
+- Approximately EUR 7,000 is one shared fundraising pool across the school
+  partnership, Rwengoma contribution and six pupils' fee support.
+- Keep the 2017, 2018 and ongoing programme periods distinct. Reported impact
+  totals come from the project team's account; do not add unverified rates,
+  budgets, graduation dates, garden harvests or meal totals.
+
+INTEGRATION AND REVIEW
+Preserve the six reports as separate stories. Copy the PDFs and edited
+photos into the repository's actual public asset locations. Apply the
+supplied captions and alt text. Reuse the fundraising photo where helpful.
+Check image loading, PDF links, mobile layout, the livestock destination
+and the site's normal build before preparing the upload for publication.
+
+Keep these handover files, source catalogues, editable masters and manifests
+out of the site's public navigation. Their presence in the ZIP is for the
+uploader and future editing. The public prose is in the six articles and
+the dedicated livestock-page update, not in this guide.
+
+This package has been prepared locally. It does not record a live upload,
+repository commit or publication. The user will give Claude the upload task.

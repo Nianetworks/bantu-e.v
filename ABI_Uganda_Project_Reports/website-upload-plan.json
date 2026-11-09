@@ -1,0 +1,295 @@
+{
+  "prepared_on": "2026-11-09",
+  "publication_status": "prepared locally; not published",
+  "projects": [
+    {
+      "report_folder": "01-livelihoods-2017",
+      "title": "Livestock and agriculture for family livelihoods",
+      "destination_url": "https://www.bantu-ev.org/en/projects/nutztiere-und-landwirtschaft/",
+      "pdf": "01-livelihoods-2017/abi-livelihoods-2017-report-en.pdf",
+      "word": "01-livelihoods-2017/abi-livelihoods-2017-report-en.docx",
+      "article": "01-livelihoods-2017/article-fragment.html",
+      "page_specific_update": "01-livelihoods-2017/website-page-update.html",
+      "photo_metadata": "01-livelihoods-2017/photo-captions-and-alt-text.csv",
+      "standalone_preview": "01-livelihoods-2017/index.html",
+      "plain_text": "01-livelihoods-2017/website-text.txt",
+      "edited_photos": [
+        {
+          "jpeg": "01-livelihoods-2017/photos/abi-039-women-with-goats.jpg",
+          "webp": "01-livelihoods-2017/photos/abi-039-women-with-goats.webp",
+          "caption": "Women with goats during the 2017 livelihoods programme.",
+          "alt": "Women stand with tethered goats outdoors."
+        },
+        {
+          "jpeg": "01-livelihoods-2017/photos/abi-028-women-pig-rearing.jpg",
+          "webp": "01-livelihoods-2017/photos/abi-028-women-pig-rearing.webp",
+          "caption": "Women beside a pig-rearing shelter in the 2017 project archive.",
+          "alt": "Two women stand beside a wooden pig shelter."
+        },
+        {
+          "jpeg": "01-livelihoods-2017/photos/abi-043-goat-husbandry.jpg",
+          "webp": "01-livelihoods-2017/photos/abi-043-goat-husbandry.webp",
+          "caption": "Goat housing and husbandry shown in the livelihoods photo archive.",
+          "alt": "Goats stand inside a timber enclosure with a project participant nearby."
+        },
+        {
+          "jpeg": "01-livelihoods-2017/photos/abi-096-pigs-in-their-pen.jpg",
+          "webp": "01-livelihoods-2017/photos/abi-096-pigs-in-their-pen.webp",
+          "caption": "Pig rearing was one of the livelihood activities supported through the programme.",
+          "alt": "Pigs feed inside a wooden pen."
+        },
+        {
+          "jpeg": "01-livelihoods-2017/photos/abi-109-traditional-beehives.jpg",
+          "webp": "01-livelihoods-2017/photos/abi-109-traditional-beehives.webp",
+          "caption": "Traditional beehives form part of the beekeeping activities in the project archive.",
+          "alt": "Traditional cylindrical beehives hang among trees."
+        },
+        {
+          "jpeg": "01-livelihoods-2017/photos/abi-111-beekeeping-project-visit.jpg",
+          "webp": "01-livelihoods-2017/photos/abi-111-beekeeping-project-visit.webp",
+          "caption": "An ABI project visit to a beekeeping site.",
+          "alt": "Two adults stand beside beehives in a wooded area."
+        }
+      ],
+      "suggested_public_photo_directory": "/images/projects/nutztiere-und-landwirtschaft/abi-2017/",
+      "suggested_public_pdf_path": "/downloads/berichte/abi-livelihoods-2017-report-en.pdf"
+    },
+    {
+      "report_folder": "02-school-partnership",
+      "title": "School solidarity between Bendorf and Uganda",
+      "destination_url": null,
+      "pdf": "02-school-partnership/abi-school-partnership-report-en.pdf",
+      "word": "02-school-partnership/abi-school-partnership-report-en.docx",
+      "article": "02-school-partnership/article-fragment.html",
+      "page_specific_update": null,
+      "photo_metadata": "02-school-partnership/photo-captions-and-alt-text.csv",
+      "standalone_preview": "02-school-partnership/index.html",
+      "plain_text": "02-school-partnership/website-text.txt",
+      "edited_photos": [
+        {
+          "jpeg": "02-school-partnership/photos/abi-021-german-school-donation.jpg",
+          "webp": "02-school-partnership/photos/abi-021-german-school-donation.webp",
+          "caption": "Pupils and staff of Wilhelm-Remy-Gymnasium Bendorf present their fundraising cheque.",
+          "alt": "Pupils and staff present a large donation cheque at a German school; pupils’ faces are lightly blurred."
+        },
+        {
+          "jpeg": "02-school-partnership/photos/abi-024-bendorf-english-class-project.jpg",
+          "webp": "02-school-partnership/photos/abi-024-bendorf-english-class-project.webp",
+          "caption": "Pupils in Bendorf share classroom work about Uganda and ABI.",
+          "alt": "A class holds posters about Uganda and ABI; pupils’ faces are lightly blurred."
+        },
+        {
+          "jpeg": "02-school-partnership/photos/abi-003-uganda-classroom-display.jpg",
+          "webp": "02-school-partnership/photos/abi-003-uganda-classroom-display.webp",
+          "caption": "Uganda information displayed in an English classroom in Bendorf on 24 June 2017.",
+          "alt": "A classroom blackboard displays a Uganda culture poster, flags and learning material."
+        },
+        {
+          "jpeg": "02-school-partnership/photos/abi-022-school-access-ramp-with-railings.jpg",
+          "webp": "02-school-partnership/photos/abi-022-school-access-ramp-with-railings.webp",
+          "caption": "One of the two school access ramps financed through the pupils’ fundraising.",
+          "alt": "A concrete ramp with metal railings leads to a school building; nearby pupils’ faces are lightly blurred."
+        },
+        {
+          "jpeg": "02-school-partnership/photos/abi-023-school-entrance-ramp.jpg",
+          "webp": "02-school-partnership/photos/abi-023-school-entrance-ramp.webp",
+          "caption": "A second entrance ramp documented in the school partnership archive.",
+          "alt": "A concrete access ramp leads to a school doorway; a nearby child’s face is lightly blurred."
+        },
+        {
+          "jpeg": "02-school-partnership/photos/abi-055-school-materials-handover.jpg",
+          "webp": "02-school-partnership/photos/abi-055-school-materials-handover.webp",
+          "caption": "An ABI team member hands school materials to a Royal College Namugongo student.",
+          "alt": "A team member gives books to a student using a wheelchair; the student’s face is lightly blurred."
+        },
+        {
+          "jpeg": "02-school-partnership/photos/abi-078-royal-college-support-handover.jpg",
+          "webp": "02-school-partnership/photos/abi-078-royal-college-support-handover.webp",
+          "caption": "Royal College Namugongo students and the ABI team at a support handover. The cheque is dated 18 September 2018.",
+          "alt": "Students and ABI team members hold a cheque outside Royal College; students’ faces are lightly blurred."
+        },
+        {
+          "jpeg": "02-school-partnership/photos/abi-163-christmas-gift-boxes-in-germany.jpg",
+          "webp": "02-school-partnership/photos/abi-163-christmas-gift-boxes-in-germany.webp",
+          "caption": "Pupils in Germany prepare Christmas gift boxes for their counterparts in Uganda.",
+          "alt": "German pupils hold wrapped gift boxes; children’s faces are lightly blurred."
+        },
+        {
+          "jpeg": "02-school-partnership/photos/abi-010-gift-boxes-with-students-in-uganda.jpg",
+          "webp": "02-school-partnership/photos/abi-010-gift-boxes-with-students-in-uganda.webp",
+          "caption": "Students in Uganda with donated gift boxes, learning materials and personal items.",
+          "alt": "Students stand with gift boxes and donated supplies outdoors; young people’s faces are lightly blurred."
+        }
+      ],
+      "suggested_public_photo_directory": "/images/projects/abi-uganda/02-school-partnership/",
+      "suggested_public_pdf_path": "/downloads/berichte/abi-school-partnership-report-en.pdf"
+    },
+    {
+      "report_folder": "03-mobility-aids-2018",
+      "title": "Mobility aids for participation in Uganda",
+      "destination_url": null,
+      "pdf": "03-mobility-aids-2018/abi-mobility-aids-2018-report-en.pdf",
+      "word": "03-mobility-aids-2018/abi-mobility-aids-2018-report-en.docx",
+      "article": "03-mobility-aids-2018/article-fragment.html",
+      "page_specific_update": null,
+      "photo_metadata": "03-mobility-aids-2018/photo-captions-and-alt-text.csv",
+      "standalone_preview": "03-mobility-aids-2018/index.html",
+      "plain_text": "03-mobility-aids-2018/website-text.txt",
+      "edited_photos": [
+        {
+          "jpeg": "03-mobility-aids-2018/photos/abi-014-container-and-mobility-aids.jpg",
+          "webp": "03-mobility-aids-2018/photos/abi-014-container-and-mobility-aids.webp",
+          "caption": "Mobility aids are made available beside a shipping container during the 2018 project.",
+          "alt": "People gather beside an open container holding mobility equipment; children’s faces are lightly blurred."
+        },
+        {
+          "jpeg": "03-mobility-aids-2018/photos/abi-013-mobility-aid-recipients.jpg",
+          "webp": "03-mobility-aids-2018/photos/abi-013-mobility-aid-recipients.webp",
+          "caption": "Children and adults gather with wheelchairs and other mobility aids during the 2018 distribution.",
+          "alt": "Children and adults use wheelchairs and walking aids outdoors; children’s faces are lightly blurred."
+        },
+        {
+          "jpeg": "03-mobility-aids-2018/photos/abi-016-crutch-distribution.jpg",
+          "webp": "03-mobility-aids-2018/photos/abi-016-crutch-distribution.webp",
+          "caption": "A participant receives support with crutches at a distribution activity.",
+          "alt": "A supporter discusses crutches with participants."
+        },
+        {
+          "jpeg": "03-mobility-aids-2018/photos/abi-018-wheelchair-support.jpg",
+          "webp": "03-mobility-aids-2018/photos/abi-018-wheelchair-support.webp",
+          "caption": "Wheelchair support during the 2018 mobility-aid project.",
+          "alt": "A participant sits in a wheelchair with a supporter nearby; the young person’s face is lightly blurred."
+        },
+        {
+          "jpeg": "03-mobility-aids-2018/photos/abi-019-wheelchair-adjustment.jpg",
+          "webp": "03-mobility-aids-2018/photos/abi-019-wheelchair-adjustment.webp",
+          "caption": "A wheelchair is adjusted for a participant during the distribution.",
+          "alt": "A supporter adjusts a participant’s wheelchair."
+        },
+        {
+          "jpeg": "03-mobility-aids-2018/photos/abi-020-mobility-project-participants.jpg",
+          "webp": "03-mobility-aids-2018/photos/abi-020-mobility-project-participants.webp",
+          "caption": "Participants and supporters at a mobility-aid distribution activity.",
+          "alt": "Participants and supporters gather with mobility aids."
+        }
+      ],
+      "suggested_public_photo_directory": "/images/projects/abi-uganda/03-mobility-aids-2018/",
+      "suggested_public_pdf_path": "/downloads/berichte/abi-mobility-aids-2018-report-en.pdf"
+    },
+    {
+      "report_folder": "04-women-and-crafts",
+      "title": "Craft enterprise for women with disabilities",
+      "destination_url": null,
+      "pdf": "04-women-and-crafts/abi-women-and-crafts-report-en.pdf",
+      "word": "04-women-and-crafts/abi-women-and-crafts-report-en.docx",
+      "article": "04-women-and-crafts/article-fragment.html",
+      "page_specific_update": null,
+      "photo_metadata": "04-women-and-crafts/photo-captions-and-alt-text.csv",
+      "standalone_preview": "04-women-and-crafts/index.html",
+      "plain_text": "04-women-and-crafts/website-text.txt",
+      "edited_photos": [
+        {
+          "jpeg": "04-women-and-crafts/photos/abi-006-artisan-at-sewing-workstation.jpg",
+          "webp": "04-women-and-crafts/photos/abi-006-artisan-at-sewing-workstation.webp",
+          "caption": "Archival photograph from July 2017 showing an artisan using a wheelchair at her sewing workstation.",
+          "alt": "An artisan using a wheelchair works at a sewing table with a small child; the child’s face is lightly blurred."
+        },
+        {
+          "jpeg": "04-women-and-crafts/photos/abi-007-handmade-products-display.jpg",
+          "webp": "04-women-and-crafts/photos/abi-007-handmade-products-display.webp",
+          "caption": "Handmade bags and small craft products displayed in July 2017.",
+          "alt": "Handmade bags and smaller fabric products are arranged on shelves."
+        }
+      ],
+      "suggested_public_photo_directory": "/images/projects/abi-uganda/04-women-and-crafts/",
+      "suggested_public_pdf_path": "/downloads/berichte/abi-women-and-crafts-report-en.pdf"
+    },
+    {
+      "report_folder": "05-rwengoma-school-meals",
+      "title": "Supporting school meals at Rwengoma Primary",
+      "destination_url": null,
+      "pdf": "05-rwengoma-school-meals/abi-rwengoma-school-meals-report-en.pdf",
+      "word": "05-rwengoma-school-meals/abi-rwengoma-school-meals-report-en.docx",
+      "article": "05-rwengoma-school-meals/article-fragment.html",
+      "page_specific_update": null,
+      "photo_metadata": "05-rwengoma-school-meals/photo-captions-and-alt-text.csv",
+      "standalone_preview": "05-rwengoma-school-meals/index.html",
+      "plain_text": "05-rwengoma-school-meals/website-text.txt",
+      "edited_photos": [
+        {
+          "jpeg": "05-rwengoma-school-meals/photos/abi-155-rwengoma-school-contribution.jpg",
+          "webp": "05-rwengoma-school-meals/photos/abi-155-rwengoma-school-contribution.webp",
+          "caption": "The Rwengoma Primary School contribution cheque records UGX 1,000,000 and is dated 11 October 2018.",
+          "alt": "School representatives and supporters hold a cheque for one million Ugandan shillings."
+        },
+        {
+          "jpeg": "05-rwengoma-school-meals/photos/abi-142-school-community-gathering.jpg",
+          "webp": "05-rwengoma-school-meals/photos/abi-142-school-community-gathering.webp",
+          "caption": "Pupils gathered during a school community visit in the ABI archive.",
+          "alt": "Pupils in blue uniforms gather outdoors; visible children’s faces are lightly blurred."
+        }
+      ],
+      "suggested_public_photo_directory": "/images/projects/abi-uganda/05-rwengoma-school-meals/",
+      "suggested_public_pdf_path": "/downloads/berichte/abi-rwengoma-school-meals-report-en.pdf"
+    },
+    {
+      "report_folder": "06-royal-junior-school-fees",
+      "title": "School fee support for six Royal Junior pupils",
+      "destination_url": null,
+      "pdf": "06-royal-junior-school-fees/abi-royal-junior-school-fees-report-en.pdf",
+      "word": "06-royal-junior-school-fees/abi-royal-junior-school-fees-report-en.docx",
+      "article": "06-royal-junior-school-fees/article-fragment.html",
+      "page_specific_update": null,
+      "photo_metadata": "06-royal-junior-school-fees/photo-captions-and-alt-text.csv",
+      "standalone_preview": "06-royal-junior-school-fees/index.html",
+      "plain_text": "06-royal-junior-school-fees/website-text.txt",
+      "edited_photos": [
+        {
+          "jpeg": "06-royal-junior-school-fees/photos/abi-033-royal-junior-pupil-1.jpg",
+          "webp": "06-royal-junior-school-fees/photos/abi-033-royal-junior-pupil-1.webp",
+          "caption": "A Royal Junior Namugongo pupil supported through the school-fee initiative.",
+          "alt": "Portrait of a Royal Junior pupil wearing a yellow school T-shirt; the face is lightly blurred."
+        },
+        {
+          "jpeg": "06-royal-junior-school-fees/photos/abi-035-royal-junior-pupil-2.jpg",
+          "webp": "06-royal-junior-school-fees/photos/abi-035-royal-junior-pupil-2.webp",
+          "caption": "A Royal Junior Namugongo pupil supported through the school-fee initiative.",
+          "alt": "Portrait of a Royal Junior pupil wearing a green school T-shirt; the face is lightly blurred."
+        },
+        {
+          "jpeg": "06-royal-junior-school-fees/photos/abi-036-royal-junior-pupil-3.jpg",
+          "webp": "06-royal-junior-school-fees/photos/abi-036-royal-junior-pupil-3.webp",
+          "caption": "A Royal Junior Namugongo pupil supported through the school-fee initiative.",
+          "alt": "Portrait of a Royal Junior pupil wearing a red school T-shirt; the face is lightly blurred."
+        },
+        {
+          "jpeg": "06-royal-junior-school-fees/photos/abi-034-royal-junior-pupil-4.jpg",
+          "webp": "06-royal-junior-school-fees/photos/abi-034-royal-junior-pupil-4.webp",
+          "caption": "A Royal Junior Namugongo pupil supported through the school-fee initiative.",
+          "alt": "Portrait of a Royal Junior pupil wearing a yellow school T-shirt; the face is lightly blurred."
+        },
+        {
+          "jpeg": "06-royal-junior-school-fees/photos/abi-037-royal-junior-pupil-5.jpg",
+          "webp": "06-royal-junior-school-fees/photos/abi-037-royal-junior-pupil-5.webp",
+          "caption": "A Royal Junior Namugongo pupil supported through the school-fee initiative.",
+          "alt": "Portrait of a Royal Junior pupil wearing a yellow school T-shirt; the face is lightly blurred."
+        },
+        {
+          "jpeg": "06-royal-junior-school-fees/photos/abi-038-royal-junior-pupil-6.jpg",
+          "webp": "06-royal-junior-school-fees/photos/abi-038-royal-junior-pupil-6.webp",
+          "caption": "A Royal Junior Namugongo pupil supported through the school-fee initiative.",
+          "alt": "Portrait of a Royal Junior pupil wearing a green school T-shirt; the face is lightly blurred."
+        },
+        {
+          "jpeg": "06-royal-junior-school-fees/photos/abi-021-german-school-donation.jpg",
+          "webp": "06-royal-junior-school-fees/photos/abi-021-german-school-donation.webp",
+          "caption": "Pupils and staff of Wilhelm-Remy-Gymnasium Bendorf present their fundraising cheque.",
+          "alt": "Pupils and staff present a large donation cheque at a German school; pupils’ faces are lightly blurred."
+        }
+      ],
+      "suggested_public_photo_directory": "/images/projects/abi-uganda/06-royal-junior-school-fees/",
+      "suggested_public_pdf_path": "/downloads/berichte/abi-royal-junior-school-fees-report-en.pdf"
+    }
+  ],
+  "package_revision": "corrected source ZIP completed on 2026-11-09"
+}
