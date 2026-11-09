@@ -11,6 +11,13 @@ registration: "mailto:info@bantu-ev.org?subject=Registration%20Education%20for%2
 registrationLabel: "Register by e-mail"
 cost: "free, incl. lunch and childcare"
 pinUntil: 2026-12-12
+eventName: "Training series “Education for all …?!”"
+eventKind: training
+sessions:
+  - { date: 2026-11-21T10:00:00+01:00, time: "10:00–15:00", title: "Educational justice in global comparison" }
+  - { date: 2026-11-28T10:00:00+01:00, time: "10:00–15:00", title: "The right to education and inclusive education" }
+  - { date: 2026-12-05T10:00:00+01:00, time: "10:00–15:00", title: "Education financing and room for local action" }
+  - { date: 2026-12-12T10:00:00+01:00, time: "10:00–15:00", title: "Bringing educational justice into your own practice, with closing session" }
 project: p26-214-bildung-fuer-alle
 ---
 

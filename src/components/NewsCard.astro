@@ -2,7 +2,7 @@
 import Icon from './Icon.astro';
 import { formatDate, formatLongDate, href, newsPath, ui, type Lang } from '../i18n';
 import { slugOf, type NewsItem } from '../lib/content';
-interface Props { lang: Lang; item: NewsItem; showImage?: boolean; headingLevel?: 2 | 3 }
+interface Props { lang: Lang; item: NewsItem; showImage?: boolean; headingLevel?: 2 | 3 | 4 }
 const { lang, item, showImage = false, headingLevel = 3 } = Astro.props;
 const d = item.data;
 const t = ui[lang];

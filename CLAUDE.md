@@ -34,6 +34,11 @@ src/components/OrderForm.astro + public/shop/bestellung.php   shop orders (chair
                         (giftPath), old /shop/geschenk-* URLs redirect (redirects.mjs). Chair's decision 08.11.2026.
 src/data/downloads.ts   files offered on /downloads and /berichte (live in public/downloads/)
 src/data/impact.ts      verified impact figures + timeline
+src/data/events.ts      events page list (past/ongoing events that have no news file): DE/EN/FR, dates 'YYYY[-MM[-DD]]',
+                        kind labels, links to project/news; sources = Jahresberichte Inland 2022–2024 / Ausland 2023–2025,
+                        project pages. src/lib/events.ts merges them with news `type: event` (eventName, eventKind,
+                        `sessions` = single dates of a series) and splits upcoming / ongoing / past-by-year at build time.
+                        Rendered by src/views/EventsView.astro (chair, 09.11.2026: all past, current and future events).
 src/data/redirects.mjs  old WordPress URLs -> new pages
 src/content/projects/{de,en,fr}/<slug>.md   one file per project and language (same file name!)
 src/content/news/{de,en,fr}/<slug>.md       news, events (type: event), announcements (pinUntil); optional `photos` (src stem + width/height:

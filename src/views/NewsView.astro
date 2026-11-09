@@ -4,27 +4,24 @@ import PageHead from '../components/PageHead.astro';
 import NewsCard from '../components/NewsCard.astro';
 import { r, ui, type Lang } from '../i18n';
 import { getEvents, getNews } from '../lib/content';
-import { eventNode } from '../lib/schema';
 import { org } from '../data/site';
 
-interface Props { lang: Lang; mode: 'news' | 'events' }
-const { lang, mode } = Astro.props;
+// News page. The events page has its own view (EventsView.astro) since 09.11.2026.
+interface Props { lang: Lang; mode?: 'news' }
+const { lang } = Astro.props;
 const de = lang === 'de';
 const fr = lang === 'fr';
 const t = ui[lang];
-const { upcoming, past } = await getEvents(lang);
-const schema = mode === 'events' ? upcoming.map((e) => eventNode(e, lang, Astro.site)).filter((x): x is Record<string, unknown> => !!x) : [];
+const { upcoming } = await getEvents(lang);
 const news = (await getNews(lang)).filter((n) => n.data.type !== 'event');
-const title = mode === 'news' ? (de ? 'Aktuelles' : fr ? 'Actualités' : 'News') : (de ? 'Veranstaltungen' : fr ? 'Événements' : 'Events');
-const lead = mode === 'news'
-  ? (de ? 'Neuigkeiten, Ankündigungen und Termine von Bantu e.V.' : fr ? 'Actualités, annonces et événements de Bantu e.V.' : 'News, announcements and events from Bantu e.V.')
-  : (de ? 'Workshops, Begegnungen und Schulungen, meist kostenfrei und mit Kinderbetreuung.' : fr ? 'Ateliers, rencontres et formations, le plus souvent gratuits et avec garde d’enfants.' : 'Workshops, encounters and trainings, mostly free of charge and with childcare.');
+const title = de ? 'Aktuelles' : fr ? 'Actualités' : 'News';
+const lead = de ? 'Neuigkeiten, Ankündigungen und Termine von Bantu e.V.' : fr ? 'Actualités, annonces et événements de Bantu e.V.' : 'News, announcements and events from Bantu e.V.';
 ---
-<Base lang={lang} title={title} description={lead} altHref={r(mode, de ? 'en' : 'de')} schema={schema}>
+<Base lang={lang} title={title} description={lead} altHref={r('news', de ? 'en' : 'de')}>
   <PageHead lang={lang} title={title} lead={lead}>
     <div class="btn-row tabs">
-      <a class={`btn ${mode === 'news' ? 'btn--dark' : 'btn--outline'}`} href={r('news', lang)} aria-current={mode === 'news' ? 'page' : undefined}>{de ? 'Neuigkeiten' : fr ? 'Actualités' : 'News'}</a>
-      <a class={`btn ${mode === 'events' ? 'btn--dark' : 'btn--outline'}`} href={r('events', lang)} aria-current={mode === 'events' ? 'page' : undefined}>{de ? 'Veranstaltungen' : fr ? 'Événements' : 'Events'}</a>
+      <a class="btn btn--dark" href={r('news', lang)} aria-current="page">{de ? 'Neuigkeiten' : fr ? 'Actualités' : 'News'}</a>
+      <a class="btn btn--outline" href={r('events', lang)}>{de ? 'Veranstaltungen' : fr ? 'Événements' : 'Events'}</a>
     </div>
   </PageHead>
 
@@ -34,30 +31,21 @@ const lead = mode === 'news'
       {upcoming.length > 0
         ? <div class="grid grid--3">{upcoming.map((n) => <NewsCard lang={lang} item={n} showImage />)}</div>
         : <p class="muted">{t.noUpcoming}</p>}
+      <p class="more"><a class="link-arrow" href={r('events', lang)}>{de ? 'Alle Termine und Rückblick auf unsere Veranstaltungen' : fr ? 'Toutes les dates et rétrospective de nos événements' : 'All dates and a look back at our events'}</a></p>
     </div>
   </section>
 
-  {mode === 'news' && (
-    <section class="section section--alt">
-      <div class="wrap">
-        <h2>{de ? 'Neuigkeiten' : fr ? 'Dernières nouvelles' : 'Latest news'}</h2>
-        <div class="grid grid--3">{news.map((n) => <NewsCard lang={lang} item={n} />)}</div>
-        <p class="small muted rss">RSS: <a href={r('news', lang).replace(/\/$/, '') + '/rss.xml'}>{de ? 'Neuigkeiten abonnieren' : fr ? 'S’abonner aux actualités' : 'Subscribe to news'}</a> · Instagram: <a href={org.socials[0].url}>@bantu_ev</a></p>
-      </div>
-    </section>
-  )}
-
-  {mode === 'events' && past.length > 0 && (
-    <section class="section section--alt">
-      <div class="wrap">
-        <h2>{t.past}</h2>
-        <div class="grid grid--3">{past.map((n) => <NewsCard lang={lang} item={n} />)}</div>
-      </div>
-    </section>
-  )}
+  <section class="section section--alt">
+    <div class="wrap">
+      <h2>{de ? 'Neuigkeiten' : fr ? 'Dernières nouvelles' : 'Latest news'}</h2>
+      <div class="grid grid--3">{news.map((n) => <NewsCard lang={lang} item={n} />)}</div>
+      <p class="small muted rss">RSS: <a href={r('news', lang).replace(/\/$/, '') + '/rss.xml'}>{de ? 'Neuigkeiten abonnieren' : fr ? 'S’abonner aux actualités' : 'Subscribe to news'}</a> · Instagram: <a href={org.socials[0].url}>@bantu_ev</a></p>
+    </div>
+  </section>
 </Base>
 <style>
   .tabs { margin-top: 1.25rem; }
   .tabs .btn { padding: .55rem 1.1rem; }
   .rss { margin-top: 2rem; }
+  .more { margin: 1.25rem 0 0; font-weight: 700; }
 </style>

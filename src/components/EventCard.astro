@@ -1,0 +1,43 @@
+---
+// Card for an upcoming or ongoing event from src/data/events.ts (news events use NewsCard).
+import Icon from './Icon.astro';
+import { href, ui, type Lang } from '../i18n';
+import { evDate, type Ev } from '../lib/events';
+interface Props { lang: Lang; ev: Ev; headingLevel?: 3 | 4 }
+const { lang, ev, headingLevel = 3 } = Astro.props;
+const t = ui[lang];
+const H = `h${headingLevel}`;
+const de = lang === 'de';
+const fr = lang === 'fr';
+---
+<article class="card ecard">
+  {ev.image && <img src={href(ev.image.src)} alt={ev.image.alt} loading="lazy" class="ecard__img" />}
+  <div class="card__body">
+    <div class="card__meta">
+      <span class="tag tag--event">{ev.kind}</span>
+      <span><strong><time datetime={ev.dtStart}>{evDate(ev, lang)}</time></strong></span>
+    </div>
+    <H>{ev.title}</H>
+    <p>{ev.summary}</p>
+    <ul class="ecard__facts">
+      {ev.time && <li><Icon name="clock" class="ic" /> <span class="sr-only">{t.when}: </span>{ev.time}</li>}
+      {ev.rhythm && <li><Icon name="calendar" class="ic" /> {ev.rhythm}</li>}
+      {ev.place && <li><Icon name="pin" class="ic" /> <span class="sr-only">{t.where}: </span>{ev.place}</li>}
+    </ul>
+    {ev.note && <p class="ecard__note">{ev.note}</p>}
+    {(ev.projectHref || ev.newsHref) && (
+      <p class="ecard__links">
+        {ev.projectHref && <a href={ev.projectHref}>{de ? 'Zum Projekt' : fr ? 'Voir le projet' : 'About the project'}<span class="sr-only">: {ev.title}</span></a>}
+        {ev.newsHref && <a href={ev.newsHref}>{de ? 'Zum Beitrag' : fr ? 'Lire l’article' : 'Read the post'}<span class="sr-only">: {ev.title}</span></a>}
+      </p>
+    )}
+  </div>
+</article>
+<style>
+  .ecard__img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; background: var(--bg-2); }
+  .ecard__facts { list-style: none; padding: 0; margin: .3rem 0 0; display: grid; gap: .3rem; font-size: .95rem; color: var(--ink-2); }
+  .ecard__facts li { display: flex; gap: .45rem; align-items: flex-start; margin: 0; }
+  .ecard__note { margin: .6rem 0 0; font-size: .92rem; color: var(--muted); }
+  .ecard__links { margin: .8rem 0 0; display: flex; flex-wrap: wrap; gap: .4rem 1.2rem; font-weight: 700; }
+  .ic { width: 1.1em; height: 1.1em; margin-top: .2em; flex: none; }
+</style>

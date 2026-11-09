@@ -88,6 +88,11 @@ const news = defineCollection({
     registration: z.string().optional(),
     registrationLabel: z.string().optional(),
     cost: z.string().optional(),
+    /** Events page: short name for the agenda ("Ubuntu Talks") and format tag (labels in src/data/events.ts). */
+    eventName: z.string().optional(),
+    eventKind: z.enum(['training', 'community', 'workshop', 'conference', 'exchange', 'culture', 'tasting', 'celebration', 'art', 'school']).optional(),
+    /** Single dates of a series (e.g. four training Saturdays), each listed in the events agenda. */
+    sessions: z.array(z.object({ date: z.coerce.date(), title: z.string(), time: z.string().optional() })).default([]),
     /** Show in the bar at the top of every page until this date */
     pinUntil: z.coerce.date().optional(),
     project: z.string().optional(),

@@ -11,6 +11,13 @@ registration: "mailto:info@bantu-ev.org?subject=Anmeldung%20Bildung%20f%C3%BCr%2
 registrationLabel: "Per E-Mail anmelden"
 cost: "kostenfrei, mit Mittagessen und Kinderbetreuung"
 pinUntil: 2026-12-12
+eventName: "Schulungsreihe „Bildung für alle …?!“"
+eventKind: training
+sessions:
+  - { date: 2026-11-21T10:00:00+01:00, time: "10–15 Uhr", title: "Bildungsgerechtigkeit im globalen Vergleich" }
+  - { date: 2026-11-28T10:00:00+01:00, time: "10–15 Uhr", title: "Bildungsrechte und inklusive Bildung" }
+  - { date: 2026-12-05T10:00:00+01:00, time: "10–15 Uhr", title: "Bildungsfinanzierung und lokale Handlungsspielräume" }
+  - { date: 2026-12-12T10:00:00+01:00, time: "10–15 Uhr", title: "Bildungsgerechtigkeit in die eigene Praxis übertragen, mit Abschluss" }
 project: p26-214-bildung-fuer-alle
 ---
 

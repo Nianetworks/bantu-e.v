@@ -11,6 +11,8 @@ registration: "mailto:info@bantu-ev.org?subject=Anmeldung%20Ubuntu%20Talks"
 registrationLabel: "Per E-Mail anmelden"
 cost: "Eintritt frei"
 pinUntil: 2026-11-22
+eventName: "Ubuntu Talks"
+eventKind: community
 project: ubuntu-talks-2026
 image: "/images/ubuntu-talks-illustration.webp"
 imageAlt: "Illustration zu den Ubuntu Talks: Menschen verschiedener Generationen um einen gemeinsamen Tisch"

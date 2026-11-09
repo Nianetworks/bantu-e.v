@@ -1,0 +1,289 @@
+---
+// Events page: agenda of coming dates, ongoing formats and a year-by-year look back (since 2022).
+// Data: news files with `type: event` + src/data/events.ts, merged in src/lib/events.ts.
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import NewsCard from '../components/NewsCard.astro';
+import EventCard from '../components/EventCard.astro';
+import Icon from '../components/Icon.astro';
+import { formatDate, href, r, ui, type Lang } from '../i18n';
+import { evDate, getEventPage, type Ev } from '../lib/events';
+import { eventNode } from '../lib/schema';
+import { org } from '../data/site';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const de = lang === 'de';
+const fr = lang === 'fr';
+const T = (d: string, e: string, f: string) => (de ? d : fr ? f : e);
+const t = ui[lang];
+const { upcoming, ongoing, agenda, byYear, past } = await getEventPage(lang);
+const schema = [...upcoming, ...ongoing]
+  .filter((e) => e.news)
+  .map((e) => eventNode(e.news!, lang, Astro.site))
+  .filter((x): x is Record<string, unknown> => !!x);
+
+const id = {
+  up: T('demnaechst', 'upcoming', 'a-venir'),
+  on: T('laufend', 'ongoing', 'en-cours'),
+  past: T('rueckblick', 'look-back', 'retrospective'),
+  plan: T('veranstaltung-planen', 'plan-an-event', 'organiser-un-evenement'),
+  year: T('jahr', 'year', 'annee'),
+};
+const title = T('Veranstaltungen', 'Events', 'Événements');
+const lead = T(
+  'Workshops, Begegnungen und Schulungen, meist kostenfrei und mit Kinderbetreuung. Hier finden Sie unsere nächsten Termine, was gerade läuft, und einen Rückblick auf unsere Veranstaltungen seit 2022.',
+  'Workshops, encounters and trainings, mostly free of charge and with childcare. Here you will find our next dates, what is running right now and a look back at our events since 2022.',
+  'Ateliers, rencontres et formations, le plus souvent gratuits et avec garde d’enfants. Retrouvez ici nos prochaines dates, ce qui est en cours et une rétrospective de nos événements depuis 2022.',
+);
+const firstYear = byYear.length ? byYear[byYear.length - 1][0] : undefined;
+const yearRound = T('im Lauf des Jahres', 'during the year', 'au fil de l’année');
+const projectLabel = T('Zum Projekt', 'About the project', 'Voir le projet');
+const newsLabel = T('Zum Beitrag', 'Read the post', 'Lire l’article');
+const dayParts = (d: Date) => ({
+  wd: formatDate(d, lang, { weekday: 'short' }),
+  d: formatDate(d, lang, { day: 'numeric' }),
+  m: formatDate(d, lang, { month: 'short' }),
+  iso: formatDate(d, 'de', { year: 'numeric', month: '2-digit', day: '2-digit' }).split('.').reverse().join('-'),
+  long: formatDate(d, lang, { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }),
+});
+// recurring formats over one year read "during the year · weekly"; one-off events with only a known year show the year
+const tlDate = (ev: Ev, year: number) => (ev.rhythm && ev.precision === 'year' && ev.dtStart === String(year) && !ev.dtEnd ? yearRound : evDate(ev, lang, year));
+const pastAlt = ongoing.length === 0;
+---
+<Base lang={lang} title={title} description={lead} altHref={r('events', de ? 'en' : 'de')} schema={schema}>
+  <PageHead lang={lang} title={title} lead={lead}>
+    <div class="btn-row tabs">
+      <a class="btn btn--outline" href={r('news', lang)}>{T('Neuigkeiten', 'News', 'Actualités')}</a>
+      <a class="btn btn--dark" href={r('events', lang)} aria-current="page">{title}</a>
+    </div>
+  </PageHead>
+
+  <nav class="section section--tight jumpnav" aria-label={T('Auf dieser Seite', 'On this page', 'Sur cette page')}>
+    <div class="wrap">
+      <ul class="jump">
+        <li><a href={`#${id.up}`}><Icon name="calendar" class="jic" />{t.upcoming}</a></li>
+        {ongoing.length > 0 && <li><a href={`#${id.on}`}><Icon name="clock" class="jic" />{T('Gerade laufend', 'Running now', 'En cours')}</a></li>}
+        {byYear.length > 0 && <li><a href={`#${id.past}`}><Icon name="report" class="jic" />{T('Rückblick', 'Look back', 'Rétrospective')}{firstYear && ` ${firstYear}–${byYear[0][0]}`}</a></li>}
+        <li><a href={`#${id.plan}`}><Icon name="mail" class="jic" />{T('Veranstaltung anfragen', 'Request an event', 'Demander un événement')}</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Upcoming -->
+  <section class="section section--tight sec" id={id.up} aria-labelledby="h-up">
+    <div class="wrap">
+      <h2 id="h-up">{t.upcoming}</h2>
+      {agenda.length === 0 && <p class="muted">{t.noUpcoming}</p>}
+      {agenda.length > 0 && (
+        <>
+          <h3 class="subhead">{T('Alle Termine im Überblick', 'All dates at a glance', 'Toutes les dates en un coup d’œil')}</h3>
+          <ol class="agenda">
+            {agenda.map((a) => {
+              const p = dayParts(a.date);
+              const link = a.ev.newsHref ?? a.ev.projectHref;
+              return (
+                <li class="agenda__row">
+                  <time class="agenda__date" datetime={p.iso}>
+                    <span class="sr-only">{p.long}</span>
+                    <span aria-hidden="true" class="agenda__wd">{p.wd}</span>
+                    <span aria-hidden="true" class="agenda__d">{p.d}</span>
+                    <span aria-hidden="true" class="agenda__m">{p.m}</span>
+                  </time>
+                  <div class="agenda__main">
+                    <p class="agenda__name">
+                      {link ? <a href={link}>{a.ev.name}</a> : a.ev.name}
+                      {a.part && <span class="agenda__part">{T('Termin', 'Session', 'Séance')} {a.part.replace('/', T(' von ', ' of ', ' sur '))}</span>}
+                    </p>
+                    {a.title && <p class="agenda__topic">{a.title}</p>}
+                    <p class="agenda__facts">
+                      {a.time && <span><Icon name="clock" class="ic" /><span class="sr-only">{t.when}: </span>{a.time}</span>}
+                      {a.ev.place && <span><Icon name="pin" class="ic" /><span class="sr-only">{t.where}: </span>{a.ev.place}</span>}
+                    </p>
+                  </div>
+                  {a.ev.registration && (
+                    <a class="btn btn--outline agenda__reg" href={a.ev.registration.href}>{T('Anmelden', 'Register', 'S’inscrire')}<span class="sr-only">: {a.ev.name}{a.part && `, ${p.long}`}</span></a>
+                  )}
+                </li>
+              );
+            })}
+          </ol>
+        </>
+      )}
+      {upcoming.length > 0 && (
+        <>
+          <h3 class="subhead">{T('Details und Anmeldung', 'Details and registration', 'Détails et inscription')}</h3>
+          <div class="grid grid--3">
+            {upcoming.map((ev) => ev.news ? <NewsCard lang={lang} item={ev.news} showImage headingLevel={4} /> : <EventCard lang={lang} ev={ev} headingLevel={4} />)}
+          </div>
+        </>
+      )}
+    </div>
+  </section>
+
+  <!-- Ongoing -->
+  {ongoing.length > 0 && (
+    <section class="section section--alt sec" id={id.on} aria-labelledby="h-on">
+      <div class="wrap">
+        <h2 id="h-on">{T('Gerade laufend', 'Running now', 'En cours')}</h2>
+        <p class="intro">{T('Projekte und Reihen, die schon begonnen haben.', 'Projects and series that have already begun.', 'Projets et cycles déjà commencés.')}</p>
+        <div class="grid grid--3">
+          {ongoing.map((ev) => ev.news ? <NewsCard lang={lang} item={ev.news} showImage /> : <EventCard lang={lang} ev={ev} />)}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- Look back -->
+  {byYear.length > 0 && (
+    <section class={`section sec ${pastAlt ? 'section--alt' : ''}`} id={id.past} aria-labelledby="h-past">
+      <div class="wrap">
+        <h2 id="h-past">{T('Rückblick', 'Look back', 'Rétrospective')}</h2>
+        <p class="intro">{T(
+          `${past.length} Veranstaltungen und Formate seit ${firstYear}: in Berlin, in Sachsen-Anhalt, in Uganda und online. Unter jedem Eintrag führen Links zum Projekt oder zum Beitrag.`,
+          `${past.length} events and formats since ${firstYear}: in Berlin, in Saxony-Anhalt, in Uganda and online. Links under each entry lead to the project or the post.`,
+          `${past.length} événements et formats depuis ${firstYear} : à Berlin, en Saxe-Anhalt, en Ouganda et en ligne. Sous chaque entrée, des liens mènent au projet ou à l’article.`,
+        )}</p>
+        <nav aria-label={T('Rückblick nach Jahren', 'Look back by year', 'Rétrospective par année')}>
+          <ul class="jump jump--years">
+            {byYear.map(([y, list]) => <li><a href={`#${id.year}-${y}`}>{y}<span class="jump__n">{list.length}</span></a></li>)}
+          </ul>
+        </nav>
+
+        {byYear.map(([year, list]) => (
+          <section class="year" id={`${id.year}-${year}`} aria-labelledby={`h-${year}`}>
+            <h3 class="year__h" id={`h-${year}`}>{year}</h3>
+            <ol class="tl">
+              {list.map((ev) => (
+                <li class="tl__item">
+                  <div class="tl__date">
+                    <time datetime={ev.dtStart}>{tlDate(ev, year)}</time>
+                    {ev.rhythm && <span class="tl__rhythm">{ev.rhythm}</span>}
+                  </div>
+                  <article class="tl__card">
+                    <div class="tl__text">
+                      <p class="tl__meta">
+                        <span class="tag">{ev.kind}</span>
+                        {ev.place && <span class="tl__place"><Icon name="pin" class="ic" /><span class="sr-only">{t.where}: </span>{ev.place}</span>}
+                      </p>
+                      <h4>{ev.title}</h4>
+                      <p>{ev.summary}</p>
+                      {ev.highlights.length > 0 && (
+                        <ul class="tl__hl">
+                          {ev.highlights.map((h) => <li><time datetime={h.dt}>{h.label}</time><span>{h.text}</span></li>)}
+                        </ul>
+                      )}
+                      {(ev.newsHref || ev.projectHref) && (
+                        <p class="tl__links">
+                          {ev.newsHref && <a class="link-arrow" href={ev.newsHref}>{newsLabel}<span class="sr-only">: {ev.title}</span></a>}
+                          {ev.projectHref && <a class="link-arrow" href={ev.projectHref}>{projectLabel}<span class="sr-only">: {ev.title}</span></a>}
+                        </p>
+                      )}
+                    </div>
+                    {ev.image && <img class="tl__img" src={href(ev.image.src)} alt={ev.image.alt} loading="lazy" decoding="async" width="320" height="200" />}
+                  </article>
+                </li>
+              ))}
+            </ol>
+          </section>
+        ))}
+      </div>
+    </section>
+  )}
+
+  <!-- Plan an event -->
+  <section class={`section sec ${pastAlt ? '' : 'section--alt'}`} id={id.plan} aria-labelledby="h-plan">
+    <div class="wrap plan">
+      <div>
+        <h2 id="h-plan">{T('Eine Veranstaltung mit uns planen', 'Plan an event with us', 'Organiser un événement avec nous')}</h2>
+        <p>{T(
+          'Sie möchten einen Workshop oder eine Schulung für Ihre Schule, Ihren Verein oder Ihr Team? Wir freuen uns über Ihre Anfrage.',
+          'Would you like a workshop or training for your school, association or team? We look forward to hearing from you.',
+          'Vous souhaitez un atelier ou une formation pour votre école, votre association ou votre équipe ? Nous attendons votre demande avec plaisir.',
+        )}</p>
+        <div class="btn-row">
+          <a class="btn btn--dark" href={r('offers', lang)}>{T('Unsere Bildungsangebote', 'Our education offers', 'Nos formations')}</a>
+          <a class="btn btn--outline" href={r('contact', lang)}>{T('Kontakt aufnehmen', 'Get in touch', 'Nous contacter')}</a>
+        </div>
+      </div>
+      <p class="small muted plan__follow">
+        {T('Neue Termine kündigen wir hier, in den', 'We announce new dates here, in our', 'Nous annonçons les nouvelles dates ici, dans les')} <a href={r('news', lang)}>{T('Neuigkeiten', 'news', 'actualités')}</a> (<a href={r('news', lang).replace(/\/$/, '') + '/rss.xml'}>RSS</a>) {T('und auf Instagram an:', 'and on Instagram:', 'et sur Instagram :')} <a href={org.socials[0].url}>@bantu_ev</a>.
+      </p>
+    </div>
+  </section>
+</Base>
+<style>
+  .tabs { margin-top: 1.25rem; }
+  .tabs .btn { padding: .55rem 1.1rem; }
+  .jumpnav { padding-block: 1.25rem 0; }
+  .jump { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: .5rem; }
+  .jump li { margin: 0; }
+  .jump a { display: inline-flex; align-items: center; gap: .45rem; min-height: 44px; padding: .45rem 1rem; border-radius: 999px; border: 2px solid var(--ink); color: var(--ink); font-weight: 700; text-decoration: none; }
+  .jump a:hover { background: var(--ink); color: var(--bg); }
+  .jic { width: 1.1em; height: 1.1em; flex: none; }
+  .jump--years { margin: 1rem 0 .5rem; }
+  .jump__n { display: inline-grid; place-items: center; min-width: 1.6em; height: 1.6em; padding: 0 .35em; border-radius: 999px; background: var(--gold); color: var(--on-gold, #000); font-size: .8rem; }
+  .sec, .year { scroll-margin-top: calc(var(--header-h, 90px) + 1rem); }
+  .subhead { font-size: 1.2rem; margin: 1.6rem 0 .9rem; }
+  .intro { max-width: 70ch; color: var(--ink-2); }
+  .ic { width: 1.05em; height: 1.05em; flex: none; margin-top: .2em; }
+
+  /* Agenda */
+  .agenda { list-style: none; padding: 0; margin: 0 0 1rem; display: grid; gap: .7rem; }
+  .agenda__row { margin: 0; display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 1rem; align-items: center; padding: .85rem 1rem; background: var(--surface); border: 1px solid var(--line); border-left: 5px solid var(--gold); border-radius: var(--radius-sm); }
+  .agenda__date { width: 64px; text-align: center; border-radius: 12px; background: var(--gold); color: #000; padding: .3rem 0; line-height: 1.05; }
+  .agenda__wd, .agenda__m { display: block; font-size: .75rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; }
+  .agenda__d { display: block; font-family: var(--font-serif); font-weight: 700; font-size: 1.55rem; }
+  .agenda__main { min-width: 0; }
+  .agenda__main p { margin: 0; overflow-wrap: anywhere; }
+  .agenda__name { font-weight: 700; font-size: 1.08rem; display: flex; flex-wrap: wrap; gap: .3rem .7rem; align-items: baseline; }
+  .agenda__part { font-weight: 600; font-size: .85rem; color: var(--muted); }
+  .agenda__topic { color: var(--ink-2); margin-top: .15rem !important; }
+  .agenda__facts { display: flex; flex-wrap: wrap; gap: .25rem 1.1rem; font-size: .92rem; color: var(--ink-2); margin-top: .3rem !important; }
+  .agenda__facts > span { display: inline-flex; gap: .4rem; align-items: flex-start; }
+  .agenda__reg { padding: .5rem 1rem; }
+  @media (max-width: 640px) {
+    .agenda__row { grid-template-columns: auto minmax(0, 1fr); }
+    .agenda__reg { grid-column: 1 / -1; justify-self: start; }
+  }
+
+  /* Timeline */
+  .year { margin-top: 2.2rem; }
+  .year__h { font-size: clamp(1.6rem, 3vw, 2.1rem); display: flex; align-items: center; gap: .8rem; margin: 0 0 1rem; }
+  .year__h::after { content: ''; flex: 1; height: 3px; border-radius: 2px; background: var(--gold); }
+  .tl { list-style: none; padding: 0; margin: 0; display: grid; gap: 1rem; }
+  .tl__item { margin: 0; display: grid; grid-template-columns: 11.5rem minmax(0, 1fr); gap: 1.25rem; align-items: start; }
+  .tl__date { position: relative; padding: .9rem 0 0 1.4rem; font-weight: 700; color: var(--ink); line-height: 1.3; }
+  .tl__date::before { content: ''; position: absolute; left: 0; top: 1.05rem; width: 12px; height: 12px; border-radius: 50%; background: var(--gold); box-shadow: 0 0 0 3px var(--surface), 0 0 0 4px var(--line-strong); }
+  .tl__date time { display: block; }
+  .tl__rhythm { display: block; font-weight: 600; font-size: .88rem; color: var(--muted); margin-top: .2rem; }
+  .tl__card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 1.1rem 1.3rem 1.2rem; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 1.2rem; align-items: start; }
+  .tl__text > * { margin: 0; }
+  .tl__text { display: grid; gap: .5rem; min-width: 0; overflow-wrap: anywhere; }
+  .tl__text h4 { font-size: 1.2rem; }
+  .tl__text p { color: var(--ink-2); }
+  .tl__meta { display: flex; flex-wrap: wrap; gap: .35rem .9rem; align-items: center; font-size: .9rem; }
+  .tl__place { display: inline-flex; gap: .35rem; align-items: flex-start; color: var(--ink-2); }
+  .tl__hl { list-style: none; padding: .7rem .9rem; margin: .1rem 0 0; display: grid; gap: .45rem; background: var(--bg-2); border-radius: var(--radius-sm); font-size: .95rem; }
+  .tl__hl li { margin: 0; display: grid; grid-template-columns: minmax(5rem, 7.5rem) minmax(0, 1fr); gap: .6rem; }
+  .tl__hl time { font-weight: 700; color: var(--ink); }
+  .tl__links { display: flex; flex-wrap: wrap; gap: .3rem 1.4rem; font-weight: 700; }
+  .tl__img { width: 200px; aspect-ratio: 16 / 10; height: auto; object-fit: cover; border-radius: var(--radius-sm); background: var(--bg-2); }
+  @media (max-width: 860px) {
+    .tl__item { grid-template-columns: minmax(0, 1fr); gap: .3rem; }
+    .tl__date { padding-top: 0; }
+    .tl__date::before { top: .3rem; }
+    .tl__date time, .tl__rhythm { display: inline; }
+    .tl__rhythm::before { content: ' · '; }
+  }
+  @media (max-width: 600px) {
+    .tl__card { grid-template-columns: minmax(0, 1fr); }
+    .tl__img { width: 100%; order: -1; }
+    .tl__hl li { grid-template-columns: minmax(0, 1fr); gap: 0; }
+  }
+
+  .plan { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 1.5rem 2.5rem; align-items: end; }
+  .plan p { max-width: 62ch; color: var(--ink-2); }
+  .plan__follow { margin: 0; }
+  @media (max-width: 760px) { .plan { grid-template-columns: minmax(0, 1fr); } }
+</style>

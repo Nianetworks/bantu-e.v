@@ -11,6 +11,13 @@ registration: "mailto:info@bantu-ev.org?subject=Inscription%20L%E2%80%99%C3%A9du
 registrationLabel: "S’inscrire par e-mail"
 cost: "gratuit, avec déjeuner et garde d’enfants"
 pinUntil: 2026-12-12
+eventName: "Cycle de formation « L’éducation pour tous …?! »"
+eventKind: training
+sessions:
+  - { date: 2026-11-21T10:00:00+01:00, time: "10 h à 15 h", title: "La justice éducative en comparaison mondiale" }
+  - { date: 2026-11-28T10:00:00+01:00, time: "10 h à 15 h", title: "Le droit à l’éducation et l’éducation inclusive" }
+  - { date: 2026-12-05T10:00:00+01:00, time: "10 h à 15 h", title: "Financement de l’éducation et marges d’action locales" }
+  - { date: 2026-12-12T10:00:00+01:00, time: "10 h à 15 h", title: "Mettre la justice éducative en pratique, avec séance de clôture" }
 project: p26-214-bildung-fuer-alle
 ---
 

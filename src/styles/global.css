@@ -193,7 +193,7 @@ code { font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: .95em;
 .grid--4 { grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr)); }
 .card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; display: flex; flex-direction: column; position: relative; }
 .card__body { padding: 1.3rem 1.4rem 1.5rem; display: flex; flex-direction: column; gap: .55rem; flex: 1; }
-.card__body h3 { margin: 0; font-size: 1.25rem; }
+.card__body :is(h3, h4) { margin: 0; font-size: 1.25rem; }
 .card__body p { margin: 0; color: var(--ink-2); font-size: 1rem; }
 .card__meta { display: flex; flex-wrap: wrap; gap: .4rem; font-size: .88rem; color: var(--muted); align-items: center; }
 .card a.stretched { text-decoration: none; color: inherit; }
@@ -202,7 +202,7 @@ code { font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: .95em;
 .card:has(a.stretched:focus-visible) { outline: 3px solid var(--focus); outline-offset: 3px; }
 .card--link { transition: box-shadow .2s, transform .2s, border-color .2s; }
 .card--link:hover { box-shadow: var(--shadow); transform: translateY(-3px); border-color: var(--line-strong); }
-.card--link:hover h3 { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 4px; }
+.card--link:hover :is(h3, h4) { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 4px; }
 .card__foot { margin-top: auto; padding-top: .7rem; }
 
 .tag { display: inline-flex; align-items: center; gap: .4rem; padding: .22rem .65rem; border-radius: 999px; font-size: .82rem; font-weight: 700; background: var(--bg-2); color: var(--ink-2); border: 1px solid var(--line); }
