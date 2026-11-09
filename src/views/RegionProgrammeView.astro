@@ -56,6 +56,7 @@ const area = rg.title[lang];
           <div>
             <h2 id={`h-${s.anchor[lang]}`} class="h3">{s.title[lang]}</h2>
             <p>{s.text[lang]}</p>
+            {s.points && <ul class="service__points">{s.points[lang].map((pt) => <li>{pt}</li>)}</ul>}
           </div>
           {s.cta && <a class="btn btn--dark" href={r(s.cta.route, lang)}>{s.cta.label[lang]} <Icon name="arrow" /></a>}
         </div>
@@ -110,6 +111,9 @@ const area = rg.title[lang];
   .service > div { min-width: 0; }
   .service h2 { margin-top: 0; hyphens: auto; overflow-wrap: break-word; }
   .service p { margin-bottom: 0; max-width: 75ch; }
+  .service__points { margin: .9rem 0 0; padding-left: 1.2rem; max-width: 75ch; }
+  .service__points li { margin: .3rem 0; }
+  .service__points li::marker { color: var(--green-text); }
   .service .btn { flex-shrink: 0; }
   @media (max-width: 760px) { .service { flex-direction: column; align-items: flex-start; } }
   .rp-siblings { list-style: none; padding: 0; margin: 0 0 1.25rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: .9rem; }

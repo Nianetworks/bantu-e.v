@@ -36,9 +36,11 @@ src/views/SponsorshipView.astro + public/mitmachen/patenschaft.php   "Education 
                         09.11.2026): pages /mitmachen/bildungspatenschaft/ (route `sponsorship`), online form -> the second server-side
                         script (same pattern as the shop: honeypot, dwell time, 3 requests/15 min per hashed IP, mail to info@ + sponsor
                         in the page language, backup ~/bantu-patenschaften/patenschaften.jsonl, HTML answer without JS). No payment
-                        data, no direct debit mandate: Bantu sends the GLS bank details afterwards. Programme + fillable PDF forms
-                        DE/EN/FR = `sponsorshipDocs` (public/downloads/patenschaft/). Privacy policy section 8. Guide values 25/40/70 EUR
-                        per month are from the programme brochure; actual costs are confirmed per support plan.
+                        data, no direct debit mandate: Bantu sends the GLS bank details afterwards. The programme is presented ON the
+                        page (chair, 09.11.2026: no PDFs, neither brochure nor form; texts = the chair's programme drafts + documented
+                        results from the project pages). Also shown as a `services` block on the international education programme page
+                        (/auslandsarbeit/bildung/, programmes.ts). Privacy policy section 8. Guide values 25/40/70 EUR per month are
+                        guide values; actual costs are confirmed per support plan.
 src/data/downloads.ts   files offered on /downloads and /berichte (live in public/downloads/). Membership forms DE/EN/FR =
                         `membershipForms` (public/downloads/mitgliedschaft/, return address Postfach 120344; versions of 09.11.2026);
                         links carry ?v=<membershipFormVersion> because PDFs are cached 30 days: raise it when a form is replaced.

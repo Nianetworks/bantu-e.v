@@ -1,14 +1,18 @@
 ---
-// "Education into the Future": education sponsorship page with the online form (decision of the chair, 09.11.2026).
-// The form posts to public/mitmachen/patenschaft.php (our own server, like the shop order form): spam checks, e-mail to
-// info@ and a confirmation to the sponsor, backup outside the web root. Without JavaScript the script answers with a plain
-// page. No payment data is collected here; Bantu sends the bank details afterwards (no direct debit mandate).
+// "Education into the Future": the education sponsorship programme of Bantu e.V. and ABI (Uganda) presented on the page itself,
+// with the online form at the end (decision of the chair, 09.11.2026: no PDFs, neither brochure nor form; everything on the website).
+// Texts = the chair's programme drafts of 09.11.2026 and documented results from the project pages (Royal College Namugongo,
+// P 24/200 Msingi, Ruhaama CRC P 21/23 + P 22/29, P 26/230 Pearl Kita). Guide values 25/40/70 EUR are guide values, costs are
+// confirmed per support plan. The form posts to public/mitmachen/patenschaft.php (own server, like the shop form): spam checks,
+// e-mail to info@ and a confirmation to the sponsor, backup outside the web root, plain HTML answer without JavaScript.
+// No payment data is collected here; Bantu sends the bank details afterwards (no direct debit mandate).
 import Base from '../layouts/Base.astro';
 import PageHead from '../components/PageHead.astro';
 import Icon from '../components/Icon.astro';
-import { href, r, type Lang } from '../i18n';
+import SdgIcons from '../components/SdgIcons.astro';
+import { href, r, projectPath, type Lang } from '../i18n';
 import { org } from '../data/site';
-import { sponsorshipDocs } from '../data/downloads';
+import { regionProgrammePath } from '../data/programmes';
 
 interface Props { lang: Lang }
 const { lang } = Astro.props;
@@ -21,17 +25,125 @@ const lead = T(
   'Education sponsorships by Bantu e.V. in Uganda: helping children and young people enter education, continue learning and pursue their ambitions.',
   'Parrainages éducatifs de Bantu e.V. en Ouganda : aider des enfants et des jeunes à accéder à l’éducation, à poursuivre leurs études et à réaliser leurs ambitions.',
 );
-const docs = sponsorshipDocs.filter((d) => d.lang.toLowerCase() === lang);
-const programme = docs.find((d) => d.kind === 'programme');
-const form = docs.find((d) => d.kind === 'form');
-const stages = [
+const programmeHref = regionProgrammePath(lang, 'international', 'education');
+
+/* ---------- programme texts ---------- */
+const intro = {
+  open: T('Wenn es in Ihrer Kindheit selbstverständlich war, zur Schule gehen zu können, nehmen Sie sich einen Moment: Was hat Ihnen diese Sicherheit ermöglicht?', 'If you grew up knowing that you would go to school, take a moment to consider what that certainty made possible.', 'Si vous avez grandi avec la certitude de pouvoir aller à l’école, prenez un instant pour mesurer tout ce que cette sécurité vous a permis.'),
+  paras: [
+    T('Sie konnten Interessen entdecken, Abschlüsse erwerben und eine Zukunft über Ihre unmittelbaren Lebensumstände hinaus planen. Vielleicht hat Ihre Familie dafür viel auf sich genommen. Vielleicht haben öffentliche Angebote, Stipendien oder die Unterstützung anderer Menschen dazu beigetragen.', 'You could develop interests, gain qualifications and imagine a future beyond your immediate circumstances. Perhaps your family made considerable sacrifices. Perhaps public services, scholarships or other people’s support helped you along the way.', 'Vous avez pu découvrir vos centres d’intérêt, obtenir des diplômes et envisager un avenir au-delà de votre situation immédiate. Votre famille a peut-être fait de grands sacrifices. Des services publics, des bourses ou le soutien d’autres personnes ont peut-être accompagné votre parcours.'),
+    T('Vielen Kindern fehlt diese Sicherheit noch immer. Eine Familie kann Bildung sehr wichtig finden und sich die nächsten Schulgebühren trotzdem nicht leisten. Ein gehörloses Kind kann in der Nähe einer Schule leben, ohne Zugang zu Unterricht in einer für es verständlichen Sprache zu haben. Fehlende Menstruationsprodukte, Wasser oder eine geschützte, barrierefreie Toilette können den Schulbesuch erschweren. Junge Menschen, die Eltern werden, können mit Betreuungspflichten, finanzieller Not und dem Ausschluss vom Unterricht konfrontiert sein.', 'For many children, that certainty is still missing. A family may value education deeply and still be unable to afford the next school term. A deaf child may have a school nearby but no access to teaching in a language they understand. A girl may struggle to attend because she lacks menstrual products, water or a private, accessible toilet. A young person who becomes a parent may face childcare responsibilities, financial hardship and exclusion from school.', 'Pour beaucoup d’enfants, cette certitude n’existe pas encore. Une famille peut accorder une grande importance à l’éducation sans pouvoir payer le prochain trimestre. Un enfant sourd peut vivre près d’une école sans bénéficier d’un enseignement dans une langue qu’il comprend. Le manque de protections menstruelles, d’eau ou de toilettes privées et accessibles peut compromettre la présence en classe. Un jeune qui devient parent peut cumuler responsabilités de garde, difficultés financières et exclusion scolaire.'),
+    T('Solche Barrieren können einen Bildungsweg unterbrechen, bevor ein junger Mensch eine faire Chance auf einen Anfang hatte.', 'These barriers can interrupt an education before a learner has had a fair opportunity to begin.', 'Ces obstacles peuvent interrompre un parcours avant même que l’élève ait eu une véritable chance de commencer.'),
+  ],
+  callout: T('Bantu e.V. arbeitet gemeinsam mit Anchored Bridges Initiatives (ABI) und Bildungspartnern in Uganda daran, diese Chance zu eröffnen. Wir laden Sie ein, dazu beizutragen.', 'Bantu e.V., together with Anchored Bridges Initiatives (ABI) and education partners in Uganda, is working to make that opportunity possible. We invite you to help.', 'Bantu e.V., avec Anchored Bridges Initiatives (ABI) et des partenaires éducatifs en Ouganda, agit pour rendre cette chance possible. Nous vous invitons à y contribuer.'),
+  facts: [
+    [T('Partner vor Ort', 'Local partner', 'Partenaire sur place'), T('Anchored Bridges Initiatives (ABI), Kampala, Zusammenarbeit seit 2021', 'Anchored Bridges Initiatives (ABI), Kampala, working together since 2021', 'Anchored Bridges Initiatives (ABI), Kampala, partenaires depuis 2021')],
+    [T('Land', 'Country', 'Pays'), 'Uganda'],
+    [T('Bildungsstufen', 'Education stages', 'Étapes éducatives'), T('Frühe Bildung, barrierefreies Lernen, weiterführende Schule, berufliche Ausbildung', 'Early childhood, accessible learning, secondary school, vocational training', 'Petite enfance, apprentissage accessible, secondaire, formation professionnelle')],
+    [T('Ihr Beitrag', 'Your contribution', 'Votre contribution'), T('ab 25 EUR im Monat, Zuwendungsbestätigung inklusive', 'from 25 EUR a month, donation receipt included', 'dès 25 EUR par mois, reçu fiscal inclus')],
+  ],
+};
+const access = {
+  h: T('Eine echte Möglichkeit zur Teilhabe', 'A real opportunity to participate', 'Une possibilité réelle de participer'),
+  p1: T('Ein Schulplatz wird nutzbar, wenn Lernende ihn erreichen, sich den Besuch leisten, kommunizieren, am Unterricht teilnehmen und sicher weiterlernen können. Finanzielle Förderung muss mit Barrierefreiheit, geeignetem Unterricht, persönlicher Sicherheit und Unterstützung im Alltag zusammenwirken.', 'A school place becomes meaningful when a learner can reach it, afford to attend, communicate, participate and continue learning safely. Financial support must work alongside disability accessibility, appropriate teaching, personal safety and support for the circumstances that affect attendance.', 'Une place à l’école prend tout son sens lorsque l’élève peut s’y rendre, en assumer les frais, communiquer, participer et continuer à apprendre en sécurité. Le soutien financier doit aller de pair avec l’accessibilité liée au handicap, un enseignement adapté, la sécurité et un accompagnement tenant compte du quotidien.'),
+  q: T('Was hindert diesen jungen Menschen am Zugang zu Bildung, und welche Unterstützung kann diese Barriere abbauen?', 'What is preventing this learner from accessing education, and what support would help remove that barrier?', 'Qu’est-ce qui empêche cet élève d’accéder à l’éducation, et quel soutien peut contribuer à lever cet obstacle ?'),
+  qLabel: T('Die Frage, mit der jeder Förderplan beginnt', 'The question every support plan starts with', 'La question au début de chaque plan de soutien'),
+  p2: T('Manche benötigen einen Beitrag zu den Schulgebühren. Andere brauchen zusätzlich Transport, eine geeignete Unterkunft, zugängliche Lernmaterialien oder Kommunikationsunterstützung. Für den Wiedereinstieg nach einer Schwangerschaft oder früher Elternschaft kann eine andere Kombination nötig sein. Gemeinsam mit lokalen Partnern, Familien und Lernenden richten wir die Unterstützung gezielt aus.', 'One learner may need tuition support. Another may also need transport, boarding, accessible materials or communication support. A learner returning after pregnancy or early parenthood may need a different combination of assistance. Working with local partners, families and learners, we direct support where it makes a practical difference.', 'Un élève peut avoir besoin d’une aide pour les frais de scolarité. Un autre peut aussi avoir besoin de transport, d’hébergement, de supports accessibles ou d’une aide à la communication. Le retour aux études après une grossesse ou une parentalité précoce peut nécessiter une autre combinaison d’aides. Avec les partenaires locaux, les familles et les élèves, nous orientons ce soutien vers les besoins concrets.'),
+};
+const stages = {
+  h: T('Unterstützung an wichtigen Bildungsübergängen', 'Support through important education stages', 'Accompagner les étapes importantes du parcours'),
+  p: T('Unser Patenschaftsprogramm verbindet Förderung in verschiedenen Bildungsphasen: von der frühen Kindheit über die weiterführende Schule bis zur beruflichen Ausbildung. Es soll den Einstieg ermöglichen und dabei helfen, Übergänge zu bewältigen, an denen finanzielle und andere Barrieren den Bildungsweg unterbrechen können.', 'Our sponsorship programme connects support at several stages, from early childhood to secondary education and vocational training. It aims to help learners enter education and navigate the transitions at which financial and other barriers can interrupt their progress.', 'Notre programme relie plusieurs étapes : petite enfance, enseignement secondaire et formation professionnelle. Il vise à faciliter l’entrée dans l’éducation et les transitions où des obstacles financiers ou autres risquent d’interrompre la progression.'),
+  cards: [
+    { icon: 'heart', h: T('Ein früher Anfang im Pearl Kindergarten Kampala', 'An early start at Pearl Kindergarten Kampala', 'Un premier départ au Pearl Kindergarten Kampala'),
+      p: T('Über den Pearl Kindergarten Kampala unterstützen wir frühe Bildung für Kinder aus einkommensarmen Familien. Patenschaften können gebührenfreie Plätze für Familien sichern, die keinen Beitrag leisten können, sowie Lernmaterialien, Mahlzeiten und passende Unterstützung mitfinanzieren. Sie erhalten den Zugang auch nach der ersten Förderphase, wenn selbst geringe Gebühren unerschwinglich bleiben.', 'Through Pearl Kindergarten Kampala, we support access to early learning for children from low-income families. Sponsorship can help sustain fee-free places for families unable to contribute, alongside learning materials, meals and appropriate support. It also protects access beyond the initial funded period, when even modest fees may remain unaffordable.', 'À travers le Pearl Kindergarten Kampala, nous soutenons l’accès à l’éducation préscolaire des enfants de familles à faibles revenus. Le parrainage peut maintenir des places gratuites pour les familles qui ne peuvent pas contribuer, tout en participant aux frais de matériel, de repas et d’accompagnement. Il préserve aussi cet accès après la première période de financement, lorsque même des frais modestes restent inabordables.'),
+      partners: T('Partner: Pearl Kindertagesstätte Kampala (Projekt P 26/230)', 'Partner: Pearl Kindergarten Kampala (project P 26/230)', 'Partenaire : jardin d’enfants Pearl, Kampala (projet P 26/230)'), link: projectPath(lang, 'p26-230-pearl-kita-kampala'), linkLabel: T('Zum Projekt', 'See the project', 'Voir le projet') },
+    { icon: 'access', h: T('Zugängliches Lernen für gehörlose Kinder und Kinder mit Behinderungen', 'Accessible learning for deaf children and children with disabilities', 'Un apprentissage accessible aux enfants sourds et aux enfants en situation de handicap'),
+      p: T('Über die Rwera Unit for the Deaf und die Uganda School for the Deaf können Patenschaften Bildungsangebote, bei Bedarf die Unterbringung sowie individuelle Lernunterstützung mitfinanzieren. Teilhabe erfordert zugängliche Kommunikation, geeigneten Unterricht, Lernmaterialien und eine sichere Umgebung. Die Unterstützung richtet sich nach dem Bedarf der Lernenden und bezieht Familien oder Betreuungspersonen ein.', 'Through the Rwera Unit for the Deaf and the Uganda School for the Deaf, sponsorship can help meet the costs of education, boarding where appropriate, and individual learning support. Participation requires accessible communication, suitable teaching, learning materials and a safe environment. Support responds to the learner’s needs and involves their family or caregivers.', 'À travers la Rwera Unit for the Deaf et l’Uganda School for the Deaf, le parrainage peut contribuer aux frais d’éducation, d’hébergement lorsque cela convient, et de soutien individuel. Participer suppose une communication accessible, un enseignement adapté, des supports appropriés et un environnement sûr. L’accompagnement répond aux besoins de l’élève et associe sa famille ou les personnes qui s’en occupent.'),
+      partners: T('Partner: Rwera Unit for the Deaf, Uganda School for the Deaf', 'Partners: Rwera Unit for the Deaf, Uganda School for the Deaf', 'Partenaires : Rwera Unit for the Deaf, Uganda School for the Deaf') },
+    { icon: 'school', h: T('Den Weg durch die weiterführende Schule sichern', 'Continuity through secondary school', 'Assurer la continuité dans le secondaire'),
+      p: T('Beim Übergang zur weiterführenden Schule entstehen Kosten, die Familien häufig nicht tragen können. Das Royal College Namugongo hat für förderberechtigte Lernende eine Ermäßigung der Unterrichtsgebühren um 30 % angeboten. Wir möchten die verbleibenden 70 % sowie weitere vereinbarte Bildungskosten finanzieren: Die Schule trägt durch die Ermäßigung bei, Patinnen und Paten schließen die verbleibende Lücke.', 'Moving from primary to secondary education can bring costs that families cannot meet. Royal College Namugongo has offered a 30 % tuition reduction for eligible sponsored learners. Our fundraising seeks to cover the remaining 70 % of tuition together with other agreed education costs: the school contributes through reduced tuition, sponsors close the remaining gap.', 'Le passage au secondaire peut entraîner des coûts que les familles ne peuvent pas assumer. Le Royal College Namugongo a proposé une réduction de 30 % des frais d’enseignement pour les élèves parrainés éligibles. Notre collecte vise à financer les 70 % restants ainsi que les autres frais éducatifs convenus : l’établissement contribue par cette réduction, les marraines et parrains comblent le besoin restant.'),
+      tag: T('30 % Gebührenermäßigung der Schule', '30 % tuition reduction by the school', '30 % de réduction accordée par l’école'),
+      partners: T('Partner: Royal College Namugongo', 'Partner: Royal College Namugongo', 'Partenaire : Royal College Namugongo'), link: projectPath(lang, 'royal-college-namugongo'), linkLabel: T('Zum Projekt', 'See the project', 'Voir le projet') },
+    { icon: 'hand', h: T('Weiterlernen und berufliche Fähigkeiten erwerben', 'Further learning and professional skills', 'Poursuivre ses études et acquérir des compétences professionnelles'),
+      p: T('Für ältere Lernende umfasst das Programm Wege in technische Berufe sowie in die Pflege- und Hebammenausbildung. Die Entebbe Atuwanguza Memorial School und die Lyantonde School of Nursing and Midwifery haben Teilstipendien von 30 % zu den jeweils vereinbarten Bedingungen angeboten; technische Ausbildungsplätze bietet unter anderem das Nakawa Vocational Training College. Diese Wege eröffnen anerkannte Qualifikationen, weitere Bildung, Erwerbsmöglichkeiten und mehr Selbstständigkeit.', 'For older learners, the programme includes pathways into technical training, nursing and midwifery. Entebbe Atuwanguza Memorial School and Lyantonde School of Nursing and Midwifery have offered 30 % partial scholarships under agreed terms; technical training options include Nakawa Vocational Training College. These pathways open up recognised qualifications, further study, work and greater independence.', 'Pour les élèves plus âgés, le programme comprend des voies vers les métiers techniques, les soins infirmiers et la maïeutique. L’Entebbe Atuwanguza Memorial School et la Lyantonde School of Nursing and Midwifery ont proposé des bourses partielles de 30 % selon les conditions convenues ; le Nakawa Vocational Training College offre des places de formation technique. Ces parcours ouvrent l’accès à des qualifications reconnues, à d’autres études, à l’emploi et à une plus grande autonomie.'),
+      tag: T('30 % Teilstipendien der Schulen', '30 % partial scholarships by the schools', '30 % de bourses partielles des écoles'),
+      partners: T('Partner: Entebbe Atuwanguza Memorial School, Lyantonde School of Nursing and Midwifery, Nakawa Vocational Training College', 'Partners: Entebbe Atuwanguza Memorial School, Lyantonde School of Nursing and Midwifery, Nakawa Vocational Training College', 'Partenaires : Entebbe Atuwanguza Memorial School, Lyantonde School of Nursing and Midwifery, Nakawa Vocational Training College') },
+  ],
+  note: T('Beiträge der Einrichtungen, Förderberechtigung und verfügbare Plätze werden für jeden Förderplan schriftlich bestätigt, bevor er beginnt. Eine Ermäßigung der Unterrichtsgebühren deckt Mahlzeiten, Transport, Unterkunft oder Prüfungsgebühren nicht automatisch ab.', 'Partner contributions, eligibility and available places are confirmed in writing for each support plan before it starts. A tuition reduction does not automatically cover meals, transport, boarding or examination fees.', 'Les contributions des établissements, les critères d’éligibilité et les places disponibles sont confirmés par écrit pour chaque plan de soutien avant son début. Une réduction des frais d’enseignement ne couvre pas automatiquement les repas, le transport, l’hébergement ni les frais d’examen.'),
+};
+const prio = {
+  h: T('Barrieren über die Schulgebühren hinaus abbauen', 'Addressing barriers beyond tuition', 'Lever les obstacles au-delà des frais de scolarité'),
+  p: T('Wir stärken das Programm so, dass es auf die Umstände reagieren kann, die Lernende von Bildung fernhalten. Unsere Förderprioritäten:', 'We are strengthening the programme’s capacity to respond to the circumstances that keep learners away from education. Our funding priorities:', 'Nous renforçons la capacité du programme à répondre aux situations qui éloignent les élèves de l’éducation. Nos priorités de financement :'),
+  items: [
+    [T('Die tatsächlichen Teilnahmekosten', 'The full cost of participation', 'Le coût réel de la participation'), T('Notwendige Materialien, Prüfungsgebühren, Transport, Mahlzeiten oder Unterkunft nach dem festgestellten Bedarf.', 'Essential materials, examination fees, transport, meals or boarding, according to assessed need.', 'Matériel indispensable, frais d’examen, transport, repas ou hébergement, selon les besoins évalués.')],
+    [T('Barrierefreiheit', 'Disability accessibility', 'L’accessibilité liée au handicap'), T('Kommunikationsunterstützung, zugängliche Materialien und praktische Anpassungen, die Teilhabe ermöglichen.', 'Communication support, accessible materials and practical adjustments that enable participation.', 'Soutien à la communication, supports accessibles et aménagements pratiques permettant de participer.')],
+    [T('Menstruationsgesundheit und Würde', 'Menstrual health and dignity', 'La santé menstruelle et la dignité'), T('Geeignete Produkte, Informationen sowie sichere, geschützte und barrierefreie Sanitäranlagen.', 'Appropriate products, information and access to safe, private and accessible sanitation.', 'Produits adaptés, informations et accès à des installations sanitaires sûres, privées et accessibles.')],
+    [T('Weiterlernen und Wiedereinstieg', 'Continuation and return to education', 'La poursuite et la reprise des études'), T('Gemeinsam mit lokalen Partnern entwickelte Unterstützung für schwangere Lernende und junge Eltern, die Kinderbetreuung und weitere Verpflichtungen berücksichtigt.', 'Support for pregnant learners and young parents, developed with local partners and responsive to childcare and other responsibilities.', 'Accompagnement des élèves enceintes et des jeunes parents, élaboré avec les partenaires locaux et tenant compte de la garde des enfants et des autres responsabilités.')],
+    [T('Kontinuität in Notlagen', 'Continuity during hardship', 'La continuité en période difficile'), T('Rechtzeitige Hilfe, wenn eine unerwartete finanzielle Schwierigkeit einen bestehenden Bildungsweg gefährdet.', 'Timely assistance when an unexpected financial difficulty puts an existing education at risk.', 'Aide apportée à temps lorsqu’une difficulté financière imprévue menace un parcours déjà engagé.')],
+  ],
+};
+const how = {
+  h: T('So funktioniert eine Patenschaft', 'How a sponsorship works', 'Comment fonctionne un parrainage'),
+  steps: [
+    [T('Sie wählen', 'You choose', 'Vous choisissez'), T('Betrag und Rhythmus: 25, 40 oder 70 EUR je Zahlung, monatlich, vierteljährlich, jährlich oder einmalig, oder einen eigenen Betrag. Dazu eine Bildungsstufe, oder Sie lassen Ihren Beitrag dort einsetzen, wo er am dringendsten gebraucht wird.', 'An amount and a rhythm: 25, 40 or 70 EUR per payment, monthly, quarterly, annually or as a one-off gift, or an amount of your own. Plus an education stage, or you let us direct your contribution to where it is needed most.', 'Un montant et un rythme : 25, 40 ou 70 EUR par versement, mensuel, trimestriel, annuel ou unique, ou un montant de votre choix. Plus une étape éducative, ou vous nous laissez affecter votre contribution là où le besoin est le plus grand.')],
+    [T('Wir bestätigen', 'We confirm', 'Nous confirmons'), T('Innerhalb weniger Tage melden wir uns, bestätigen die Förderung und schicken Ihnen die Bankverbindung für Ihre Überweisung oder Ihren Dauerauftrag. Es wird kein Lastschriftmandat erteilt.', 'Within a few days we get back to you, confirm the sponsorship and send you the bank details for your transfer or standing order. No direct debit mandate is given.', 'Sous quelques jours, nous vous recontactons, confirmons le parrainage et vous envoyons les coordonnées bancaires pour votre virement ou votre ordre permanent. Aucun mandat de prélèvement n’est donné.')],
+    [T('Sie bleiben informiert', 'You stay informed', 'Vous restez informés'), T('Sie erhalten eine Zuwendungsbestätigung für das Finanzamt und mindestens einmal im Jahr einen Bericht zum Programm und zu der Bildungsstufe, die Sie unterstützen.', 'You receive a donation receipt for the tax office and, at least once a year, a report on the programme and the stage you support.', 'Vous recevez un reçu fiscal et, au moins une fois par an, un rapport sur le programme et l’étape que vous soutenez.')],
+  ],
+  guideH: T('Richtwerte je Monat', 'Guide values per month', 'Valeurs indicatives par mois'),
+  tiers: [
+    ['25 EUR', T('ein Platz in der frühen Bildung oder in Grundschule und barrierefreiem Lernen', 'a place in early childhood or primary and accessible education', 'une place en petite enfance ou en primaire et apprentissage accessible'), T('300 EUR im Jahr', '300 EUR a year', '300 EUR par an')],
+    ['40 EUR', T('ein Platz an einer weiterführenden Schule', 'a secondary school place', 'une place dans l’enseignement secondaire'), T('480 EUR im Jahr', '480 EUR a year', '480 EUR par an')],
+    ['70 EUR', T('ein Ausbildungsplatz in Technik, Pflege oder Hebammenwesen', 'a vocational, nursing or midwifery place', 'une place en formation technique, en soins infirmiers ou obstétricaux'), T('840 EUR im Jahr', '840 EUR a year', '840 EUR par an')],
+  ],
+  guide: T('Die tatsächlichen Kosten unterscheiden sich je nach Lernenden und Einrichtung und werden für jeden Förderplan bestätigt. Die Beiträge werden je Bildungsstufe gebündelt, damit der Platz eines Kindes nicht von einer einzelnen Zahlung abhängt. Bantu e.V. ist als gemeinnützig anerkannt.', 'Actual costs differ between learners and institutions and are confirmed for each support plan. Contributions are pooled for each stage so that a learner’s place does not depend on a single payment arriving on time. Bantu e.V. is a registered charity.', 'Les coûts réels varient selon les élèves et les établissements et sont confirmés pour chaque plan de soutien. Les contributions sont mises en commun par étape, de sorte que la place d’un enfant ne dépende pas d’un seul versement. Bantu e.V. est une association reconnue d’intérêt général.'),
+  cta: T('Patenschaft anfragen', 'Request a sponsorship', 'Demander un parrainage'),
+};
+const governance = {
+  h: T('Auswahl, Begleitung und Verantwortung', 'Selection, support and responsibility', 'Sélection, accompagnement et responsabilité'),
+  cards: [
+    { icon: 'people', h: T('So werden Lernende ausgewählt', 'How learners are selected', 'Comment les élèves sont sélectionnés'), p: T('Anchored Bridges Initiatives (ABI) und die Partnerschulen schlagen Lernende vor, deren Bildungsweg aus finanziellen, behinderungsbedingten oder sozialen Gründen gefährdet ist. Vorrang haben Kinder mit Behinderungen, Mädchen, schwangere Lernende und junge Eltern sowie Familien ohne regelmäßiges Einkommen. ABI prüft jeden Vorschlag gemeinsam mit den Lernenden und ihren Familien und hält fest, was über die Schulgebühren hinaus gebraucht wird.', 'Anchored Bridges Initiatives (ABI) and the partner schools propose learners whose education is at risk for financial, disability-related or social reasons. Priority is given to children with disabilities, girls, pregnant learners and young parents, and families without a regular income. ABI assesses each proposal together with the learner and the family and records what is needed beyond tuition.', 'Anchored Bridges Initiatives (ABI) et les écoles partenaires proposent des élèves dont le parcours est menacé pour des raisons financières, liées au handicap ou sociales. La priorité va aux enfants en situation de handicap, aux filles, aux élèves enceintes et aux jeunes parents, ainsi qu’aux familles sans revenu régulier. ABI examine chaque proposition avec l’élève et sa famille et note ce qui est nécessaire au-delà des frais de scolarité.') },
+    { icon: 'calendar', h: T('Gemeinsam entschieden, jedes Jahr überprüft', 'Decided together, reviewed every year', 'Décidé ensemble, revu chaque année'), p: T('Bantu e.V. und ABI entscheiden gemeinsam über jeden Förderplan. Die Pläne werden vor jedem Schuljahr überprüft und angepasst, wenn sich die Lebensumstände ändern, damit eine Unterbrechung nicht das Ende des Bildungswegs bedeutet.', 'Bantu e.V. and ABI decide together on each support plan. Plans are reviewed before every school year and adjusted when a learner’s circumstances change, so that an interruption does not end the education.', 'Bantu e.V. et ABI décident ensemble de chaque plan de soutien. Les plans sont revus avant chaque année scolaire et adaptés lorsque la situation de l’élève change, afin qu’une interruption ne mette pas fin à sa scolarité.') },
+    { icon: 'report', h: T('Zuständigkeiten und Zahlungen', 'Responsibilities and payments', 'Responsabilités et paiements'), p: T('Bantu e.V. nimmt die Beiträge in Deutschland entgegen, stellt Zuwendungsbestätigungen aus und führt die Programmbuchhaltung. ABI koordiniert in Uganda mit Schulen und Familien, prüft Rechnungen und bestätigt die Teilnahme. Gebühren werden gegen Rechnung der Einrichtung bezahlt, und jede Zahlung wird mit Belegen dokumentiert, wie in unseren geförderten Projekten.', 'Bantu e.V. receives contributions in Germany, issues donation receipts and keeps the programme accounts. ABI coordinates with the schools and families in Uganda, checks invoices and confirms attendance. Fees are paid against invoices from the institution, and every payment is documented with receipts, as in our funded projects.', 'Bantu e.V. reçoit les contributions en Allemagne, délivre les reçus fiscaux et tient la comptabilité du programme. ABI coordonne en Ouganda avec les écoles et les familles, vérifie les factures et confirme la présence. Les frais sont payés sur facture de l’établissement, et chaque paiement est documenté par des justificatifs, comme dans nos projets financés.') },
+  ],
+};
+const results = {
+  h: T('Was wir mit unseren Partnern bereits erreicht haben', 'What we have already achieved with our partners', 'Ce que nous avons déjà réalisé avec nos partenaires'),
+  p: T('Das Patenschaftsprogramm baut auf Projekten auf, die Bantu e.V. und ABI seit 2021 gemeinsam umgesetzt haben. Alle Zahlen stammen aus unseren Sach- und Jahresberichten.', 'The sponsorship programme builds on projects Bantu e.V. and ABI have carried out together since 2021. All figures come from our project and annual reports.', 'Le programme de parrainage s’appuie sur des projets menés ensemble par Bantu e.V. et ABI depuis 2021. Tous les chiffres proviennent de nos rapports de projet et rapports annuels.'),
+  cards: [
+    { v: '6', l: T('Kinder', 'pupils', 'enfants'), h: T('Royal College und Royal Junior Namugongo', 'Royal College and Royal Junior Namugongo', 'Royal College et Royal Junior Namugongo'), p: T('Mit Spenden der Schülerinnen und Schüler des Wilhelm-Remy-Gymnasiums Bendorf (Aktion Tagwerk 2017) übernahm ABI das Schulgeld von sechs Kindern und baute Rampen. Alle sechs haben die Grundschule abgeschlossen und besuchen eine weiterführende Schule.', 'With funds raised by pupils of the Wilhelm-Remy-Gymnasium Bendorf (Aktion Tagwerk 2017), ABI covered the school fees of six pupils and built access ramps. All six completed primary school and moved on to secondary school.', 'Grâce aux dons collectés par les élèves du Wilhelm-Remy-Gymnasium de Bendorf (Aktion Tagwerk 2017), ABI a pris en charge les frais de scolarité de six enfants et construit des rampes d’accès. Les six ont terminé l’école primaire et poursuivent leurs études dans le secondaire.'), link: projectPath(lang, 'royal-college-namugongo') },
+    { v: '18', l: T('Absolventinnen', 'graduates', 'diplômées'), h: T('Msingi School, Mbarara (P 24/200)', 'Msingi School, Mbarara (P 24/200)', 'Msingi School, Mbarara (P 24/200)'), p: T('18 junge Frauen haben 2024/25 eine 24-wöchige Friseur- und Kosmetikausbildung durchlaufen; alle 18 bestanden die Abschlussprüfung, sieben wurden direkt von ihren Praktikumsbetrieben eingestellt.', 'In 2024/25, 18 young women completed a 24-week hairdressing and cosmetology training; all 18 passed their final examinations and seven were hired straight away by their placement salons.', 'En 2024/25, 18 jeunes femmes ont suivi une formation de 24 semaines en coiffure et esthétique ; les 18 ont réussi l’examen final et sept ont été embauchées aussitôt par leur salon de stage.'), link: projectPath(lang, 'p24-200-msingi-school') },
+    { v: '225', l: T('Menschen in IT-Kursen', 'people in IT courses', 'personnes en cours d’informatique'), h: T('Ruhaama Community Resource Centre (P 21/23, P 22/29)', 'Ruhaama Community Resource Centre (P 21/23, P 22/29)', 'Ruhaama Community Resource Centre (P 21/23, P 22/29)'), p: T('225 Menschen besuchten IT-Kurse, 175 davon mit Zertifikat; 350 Schülerinnen und Schüler erhielten Nachhilfe.', '225 people took IT courses, 175 of them with a certificate, and 350 pupils received tutoring.', '225 personnes ont suivi des cours d’informatique, dont 175 avec certificat ; 350 élèves ont bénéficié d’un soutien scolaire.'), link: projectPath(lang, 'ruhaama-community-resource-centre') },
+    { v: '2026', l: T('Start der Kita', 'kindergarten opens', 'ouverture du jardin d’enfants'), h: T('Pearl Kindertagesstätte Kampala (P 26/230)', 'Pearl Kindergarten Kampala (P 26/230)', 'Jardin d’enfants Pearl, Kampala (P 26/230)'), p: T('Seit Oktober 2026 bauen wir mit ABI einen Montessori-Kindergarten in Namuwongo auf, gefördert von der Stiftung Nord-Süd-Brücken mit Mitteln des BMZ. Patenschaften sichern gebührenfreie Plätze, wenn die geförderte Aufbauphase endet.', 'Since October 2026 we have been setting up a Montessori kindergarten in Namuwongo with ABI, funded by Stiftung Nord-Süd-Brücken with funds from the BMZ. Sponsorships will sustain fee-free places once the funded start-up phase ends.', 'Depuis octobre 2026, nous créons avec ABI un jardin d’enfants Montessori à Namuwongo, financé par la Stiftung Nord-Süd-Brücken avec des fonds du BMZ. Les parrainages assureront des places gratuites à la fin de la phase de lancement financée.'), link: projectPath(lang, 'p26-230-pearl-kita-kampala') },
+  ],
+  more: T('Zum Projekt', 'See the project', 'Voir le projet'),
+};
+const trust = {
+  h: T('Berichte, Datenschutz und Schutz', 'Reporting, privacy and protection', 'Rapports, confidentialité et protection'),
+  reportsH: T('Berichte an Patinnen und Paten', 'Reports to sponsors', 'Rapports aux marraines et parrains'),
+  reportsP: T('Sie erhalten mindestens einmal im Jahr einen schriftlichen Bericht zum Programm und zu der Bildungsstufe, die Sie unterstützen, mit Angaben zu Teilnahme, Fortsetzung und Ausgaben. Bantu e.V. veröffentlicht jedes Jahr einen Jahresbericht und einen Transparenzbericht und ist Mitglied der Initiative Transparente Zivilgesellschaft.', 'You receive a written update on the programme and the stage you support at least once a year, with figures on attendance, continuation and expenditure. Bantu e.V. publishes an annual report and a transparency report every year and is a member of the Transparent Civil Society Initiative.', 'Vous recevez au moins une fois par an un rapport écrit sur le programme et l’étape que vous soutenez, avec des chiffres sur la présence, la poursuite des études et les dépenses. Bantu e.V. publie chaque année un rapport annuel et un rapport de transparence et est membre de l’Initiative pour une société civile transparente.'),
+  reportsLink: T('Unsere Jahres- und Transparenzberichte', 'Our annual and transparency reports', 'Nos rapports annuels et de transparence'),
+  protectH: T('Schutz der Lernenden', 'Protecting learners', 'Protection des élèves'),
+  protectP: T('Namen, Geschichten und Fotos von Lernenden geben wir nur mit informierter Einwilligung weiter; Kinder werden ohne Einwilligung der Eltern nie erkennbar gezeigt. Personenbezogene Daten dienen ausschließlich der Abwicklung der Förderung. Fragen und Beschwerden sind jederzeit möglich an', 'Learners’ names, stories and photographs are shared only with informed consent, and children are never shown identifiably without their parents’ consent. Personal data is used solely to administer the support. Questions and complaints can be addressed at any time to', 'Les noms, histoires et photos des élèves ne sont partagés qu’avec un consentement éclairé ; les enfants ne sont jamais montrés de façon reconnaissable sans l’accord de leurs parents. Les données personnelles servent uniquement à administrer le soutien. Questions et réclamations peuvent être adressées à tout moment à'),
+};
+const invite = {
+  eyebrow: T('Eine Einladung', 'An invitation', 'Une invitation'),
+  h: T('Helfen Sie, den nächsten Schulabschnitt möglich zu machen.', 'Help make the next school term possible.', 'Aidez à rendre possible le prochain trimestre scolaire.'),
+  sub: T('Unterstützen Sie einen jungen Menschen beim Weiterlernen und beim nächsten Schritt in eine selbst gewählte Zukunft.', 'Help a learner continue. Help a young person take the next step towards the future they choose.', 'Aidez un élève à poursuivre. Aidez un jeune à faire le pas suivant vers l’avenir qu’il choisit.'),
+  p: T('Wenn Bildung dazu beigetragen hat, dass Sie Ihr heutiges Leben aufbauen konnten, kennen Sie ihren bleibenden Wert. Sie können eine regelmäßige Patenschaft übernehmen, einen vereinbarten Bildungszeitraum finanzieren oder mit uns über einen größeren Beitrag für mehrere Lernende oder eine Maßnahme zur Barrierefreiheit sprechen. Jede Vereinbarung schützt die Würde, die Privatsphäre und die Mitbestimmung der Lernenden.', 'If education helped you build the life you have today, you understand its lasting value. You can take on a regular sponsorship, fund an agreed period of education, or talk to us about a larger commitment for several learners or an accessibility priority. Every arrangement protects learners’ dignity, privacy and voice.', 'Si l’éducation vous a aidé à construire la vie que vous menez aujourd’hui, vous en connaissez la valeur durable. Vous pouvez prendre un parrainage régulier, financer une période de scolarité convenue ou parler avec nous d’un engagement plus important pour plusieurs élèves ou une priorité d’accessibilité. Chaque accord protège la dignité, la vie privée et la parole des élèves.'),
+  sdg: T('Unsere Arbeit trägt zu Nachhaltigkeitsziel 4 bei: hochwertige Bildung für alle.', 'Our work contributes to Sustainable Development Goal 4: quality education for all.', 'Notre travail contribue à l’objectif de développement durable 4 : une éducation de qualité pour tous.'),
+  cta: T('Patenschaft anfragen', 'Request a sponsorship', 'Demander un parrainage'),
+  contact: T('Größeren Beitrag besprechen', 'Discuss a larger contribution', 'Discuter d’une contribution importante'),
+};
+
+/* ---------- form ---------- */
+const formStages = [
   { v: 'greatest', l: T('Dort, wo die Unterstützung am dringendsten gebraucht wird', 'Where the need is greatest', 'Là où le besoin est le plus grand') },
   { v: 'early', l: T('Frühe Bildung (Pearl Kindergarten Kampala)', 'Early childhood (Pearl Kindergarten Kampala)', 'Petite enfance (jardin d’enfants Pearl, Kampala)') },
   { v: 'primary', l: T('Grundschule und barrierefreies Lernen (z. B. Rwera Unit for the Deaf)', 'Primary and accessible learning (e.g. Rwera Unit for the Deaf)', 'Primaire et apprentissage accessible (p. ex. Rwera Unit for the Deaf)') },
   { v: 'secondary', l: T('Weiterführende Schule (Royal College Namugongo)', 'Secondary education (Royal College Namugongo)', 'Enseignement secondaire (Royal College Namugongo)') },
   { v: 'vocational', l: T('Berufliche Ausbildung, Pflege- und Hebammenausbildung', 'Vocational, nursing and midwifery training', 'Formation professionnelle, soins infirmiers et obstétricaux') },
 ];
-const priorities = [
+const formPriorities = [
   { v: 'costs', l: T('Schulgebühren, Materialien, Mahlzeiten, Unterkunft oder Transport', 'School fees, materials, meals, boarding or transport', 'Frais de scolarité, matériel, repas, internat ou transport') },
   { v: 'accessibility', l: T('Barrierefreiheit und Kommunikationsunterstützung', 'Disability accessibility and communication support', 'Accessibilité et aide à la communication') },
   { v: 'menstrual', l: T('Menstruationsgesundheit, Produkte und barrierefreie Sanitäranlagen', 'Menstrual health, products and accessible sanitation', 'Santé menstruelle, produits et sanitaires accessibles') },
@@ -50,15 +162,6 @@ const tiers = [
   { v: '70', l: T('70 EUR: Ausbildungsplatz in Technik, Pflege oder Hebammenwesen', '70 EUR: a vocational, nursing or midwifery place', '70 EUR : une place en formation technique, en soins infirmiers ou obstétricaux') },
 ];
 const s = {
-  how: T('So funktioniert eine Patenschaft', 'How a sponsorship works', 'Comment fonctionne un parrainage'),
-  steps: [
-    T('Sie füllen das Formular aus: Betrag, Rhythmus, bevorzugte Bildungsstufe und Ihre Kontaktdaten.', 'You fill in the form: amount, rhythm, preferred education stage and your contact details.', 'Vous remplissez le formulaire : montant, rythme, étape éducative souhaitée et vos coordonnées.'),
-    T('Wir melden uns innerhalb weniger Tage, bestätigen die Förderung und schicken Ihnen die Bankverbindung für Überweisung oder Dauerauftrag. Es wird kein Lastschriftmandat erteilt.', 'We get back to you within a few days, confirm the sponsorship and send you the bank details for your transfer or standing order. No direct debit mandate is given.', 'Nous vous recontactons sous quelques jours, confirmons le parrainage et vous envoyons les coordonnées bancaires pour votre virement ou ordre permanent. Aucun mandat de prélèvement n’est donné.'),
-    T('Sie erhalten eine Zuwendungsbestätigung und mindestens einmal im Jahr einen Bericht zum Programm und zur Bildungsstufe, die Sie unterstützen.', 'You receive a donation receipt and, at least once a year, a report on the programme and the stage you support.', 'Vous recevez un reçu fiscal et, au moins une fois par an, un rapport sur le programme et l’étape que vous soutenez.'),
-  ],
-  guide: T('Richtwerte je Monat. Die tatsächlichen Kosten unterscheiden sich je nach Lernenden und Einrichtung und werden für jeden Förderplan bestätigt.', 'Monthly guide values. Actual costs differ between learners and institutions and are confirmed for each support plan.', 'Valeurs indicatives par mois. Les coûts réels varient selon les élèves et les établissements et sont confirmés pour chaque plan de soutien.'),
-  docsH: T('Programm und Formular als PDF', 'Programme and form as PDF', 'Programme et formulaire en PDF'),
-  docsP: T('Lieber auf Papier? Hier finden Sie die Programmbeschreibung und das ausfüllbare Formular zum Herunterladen.', 'Prefer paper? Download the programme description and the fillable form here.', 'Vous préférez le papier ? Téléchargez ici la description du programme et le formulaire à remplir.'),
   formH: T('Patenschaft anfragen', 'Request a sponsorship', 'Demander un parrainage'),
   formP: T('Mit diesem Formular stimmen Bantu e.V. und ABI eine passende Förderung mit Ihnen ab. Pflichtfelder sind markiert.', 'With this form Bantu e.V. and ABI confirm a suitable sponsorship with you. Required fields are marked.', 'Avec ce formulaire, Bantu e.V. et ABI conviennent avec vous d’un soutien adapté. Les champs obligatoires sont marqués.'),
   req: T('Pflichtfeld', 'required', 'obligatoire'),
@@ -95,32 +198,179 @@ const s = {
   questions: T('Fragen zur Patenschaft?', 'Questions about sponsorship?', 'Des questions sur le parrainage ?'),
 };
 const privacyHref = r('privacy', lang, '#patenschaftsformular');
+const jumpForm = T('Patenschaft anfragen', 'Request a sponsorship', 'Demander un parrainage');
+const jumpHow = T('So funktioniert es', 'How it works', 'Comment ça marche');
 ---
-<Base lang={lang} title={`${title}: ${T('Bildungspatenschaft', 'Education sponsorship', 'Parrainage éducatif')}`} description={lead} altHref={r('sponsorship', de ? 'en' : 'de')}>
-  <PageHead lang={lang} title={title} lead={lead} eyebrow={T('Bildungspatenschaften', 'Education sponsorships', 'Parrainages éducatifs')} crumbs={[{ label: T('Mitmachen', 'Get involved', 'S’engager'), href: r('join', lang) }]} />
+<Base lang={lang} title={`${title}: ${T('Bildungspatenschaften in Uganda', 'Education sponsorships in Uganda', 'Parrainages éducatifs en Ouganda')}`} description={lead} altHref={r('sponsorship', de ? 'en' : 'de')}>
+  <PageHead lang={lang} title={title} lead={lead} eyebrow={T('Bildungspatenschaften · Programm Bildung', 'Education sponsorships · Education programme', 'Parrainages éducatifs · Programme Éducation')} crumbs={[{ label: T('Mitmachen', 'Get involved', 'S’engager'), href: r('join', lang) }]}>
+    <div class="btn-row head-ctas">
+      <a class="btn btn--gold" href="#formular">{jumpForm}</a>
+      <a class="btn btn--outline" href="#so-funktioniert-es">{jumpHow}</a>
+    </div>
+  </PageHead>
 
-  <section class="section section--tight">
-    <div class="wrap two-col">
-      <div>
-        <h2>{s.how}</h2>
-        <ol class="steps">{s.steps.map((st) => <li>{st}</li>)}</ol>
-        <h3>{T('Richtwerte', 'Guide values', 'Valeurs indicatives')}</h3>
-        <ul class="tiers">{tiers.map((t) => <li><Icon name="school" class="ic" /><span>{t.l}</span></li>)}</ul>
-        <p class="small muted">{s.guide}</p>
+  <section class="section section--tight" aria-labelledby="h-intro">
+    <div class="wrap intro">
+      <div class="intro__text">
+        <h2 id="h-intro" class="sr-only">{T('Warum Bildungspatenschaften', 'Why education sponsorships', 'Pourquoi des parrainages éducatifs')}</h2>
+        <p class="intro__open">{intro.open}</p>
+        {intro.paras.map((p) => <p>{p}</p>)}
       </div>
-      <div class="panel docs">
-        <h2 class="h3">{s.docsH}</h2>
-        <p>{s.docsP}</p>
-        <ul class="docs__list">
-          {programme && <li><a href={href(programme.file)} download><Icon name="download" class="ic" />{programme.title[lang]} <span class="muted small">({programme.size})</span></a></li>}
-          {form && <li><a href={href(form.file)} download><Icon name="download" class="ic" />{form.title[lang]} <span class="muted small">({form.size})</span></a></li>}
-        </ul>
-        <p class="small muted">{T('Weitere Sprachen auf der', 'Other languages on the', 'Autres langues sur la page')} <a href={r('downloads', lang)}>{T('Downloads-Seite', 'downloads page', 'Téléchargements')}</a>.</p>
+      <div class="panel intro__side">
+        <p class="intro__callout">{intro.callout}</p>
+        <dl class="kv intro__facts">
+          {intro.facts.map(([k, v]) => <><dt>{k}</dt><dd>{v}</dd></>)}
+        </dl>
+        <p class="small"><a class="link-arrow" href={programmeHref}>{T('Programm Bildung in der Internationalen Zusammenarbeit', 'Education programme in our international cooperation', 'Programme Éducation de la coopération internationale')}</a></p>
       </div>
     </div>
   </section>
 
-  <section class="section section--alt" id="formular">
+  <section class="section section--alt" aria-labelledby="h-access">
+    <div class="wrap access">
+      <div>
+        <h2 id="h-access">{access.h}</h2>
+        <p>{access.p1}</p>
+        <p>{access.p2}</p>
+      </div>
+      <figure class="question">
+        <figcaption class="eyebrow">{access.qLabel}</figcaption>
+        <blockquote class="question__q"><p>{access.q}</p></blockquote>
+      </figure>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="h-stages">
+    <div class="wrap">
+      <div class="section-head"><div><h2 id="h-stages">{stages.h}</h2><p>{stages.p}</p></div></div>
+      <ol class="stages" role="list">
+        {stages.cards.map((c, i) => (
+          <li class="card stage">
+            <div class="stage__top">
+              <span class="icon-badge" aria-hidden="true"><Icon name={c.icon as any} /></span>
+              <span class="stage__no">{String(i + 1).padStart(2, '0')}</span>
+            </div>
+            <h3>{c.h}</h3>
+            <p>{c.p}</p>
+            {c.tag && <p class="stage__tag"><span class="tag tag--active">{c.tag}</span></p>}
+            <p class="small muted stage__partners">{c.partners}</p>
+            {c.link && <a class="link-arrow stage__link" href={c.link}>{c.linkLabel}</a>}
+          </li>
+        ))}
+      </ol>
+      <p class="notice notice--info stages__note">{stages.note}</p>
+    </div>
+  </section>
+
+  <section class="section section--alt" aria-labelledby="h-prio">
+    <div class="wrap">
+      <div class="section-head"><div><h2 id="h-prio">{prio.h}</h2><p>{prio.p}</p></div></div>
+      <ol class="prio" role="list">
+        {prio.items.map(([h, p], i) => (
+          <li class="prio__item">
+            <span class="prio__no" aria-hidden="true">{i + 1}</span>
+            <div><h3>{h}</h3><p>{p}</p></div>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="section section--deep" id="so-funktioniert-es" aria-labelledby="h-how">
+    <div class="wrap">
+      <h2 id="h-how">{how.h}</h2>
+      <ol class="steps" role="list">
+        {how.steps.map(([h, p], i) => (
+          <li class="step">
+            <span class="step__no" aria-hidden="true">{i + 1}</span>
+            <h3>{h}</h3>
+            <p>{p}</p>
+          </li>
+        ))}
+      </ol>
+      <h3 class="how__guide-h">{how.guideH}</h3>
+      <ul class="stat-grid tiers" role="list">
+        {how.tiers.map(([v, l, y]) => (
+          <li class="stat">
+            <div class="stat__value">{v}</div>
+            <div class="stat__label">{l}</div>
+            <div class="stat__source">{y}</div>
+          </li>
+        ))}
+      </ul>
+      <p class="how__guide">{how.guide}</p>
+      <div class="btn-row"><a class="btn btn--gold" href="#formular">{how.cta}</a></div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="h-gov">
+    <div class="wrap">
+      <h2 id="h-gov">{governance.h}</h2>
+      <div class="grid grid--3 gov">
+        {governance.cards.map((c) => (
+          <div class="panel gov__card">
+            <span class="icon-badge" aria-hidden="true"><Icon name={c.icon as any} /></span>
+            <h3>{c.h}</h3>
+            <p>{c.p}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--alt" aria-labelledby="h-results">
+    <div class="wrap">
+      <div class="section-head"><div><h2 id="h-results">{results.h}</h2><p>{results.p}</p></div></div>
+      <ul class="results" role="list">
+        {results.cards.map((c) => (
+          <li class="card result">
+            <div class="result__figure"><span class="result__v">{c.v}</span><span class="result__l">{c.l}</span></div>
+            <h3>{c.h}</h3>
+            <p>{c.p}</p>
+            <a class="link-arrow" href={c.link}>{results.more}<span class="sr-only">: {c.h}</span></a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="h-trust">
+    <div class="wrap">
+      <h2 id="h-trust">{trust.h}</h2>
+      <div class="grid grid--2 trust">
+        <div class="panel trust__card trust__card--gold">
+          <h3>{trust.reportsH}</h3>
+          <p>{trust.reportsP}</p>
+          <a class="link-arrow" href={r('reports', lang)}>{trust.reportsLink}</a>
+        </div>
+        <div class="panel trust__card trust__card--green">
+          <h3>{trust.protectH}</h3>
+          <p>{trust.protectP} <a href={`mailto:${org.email}`}>{org.email}</a>.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--deep invite" aria-labelledby="h-invite">
+    <div class="wrap invite__wrap">
+      <div>
+        <div class="eyebrow">{invite.eyebrow}</div>
+        <h2 id="h-invite" class="invite__h">{invite.h}</h2>
+        <p class="invite__sub">{invite.sub}</p>
+        <p>{invite.p}</p>
+        <div class="btn-row">
+          <a class="btn btn--gold" href="#formular">{invite.cta}</a>
+          <a class="btn btn--light" href={r('contact', lang)}>{invite.contact}</a>
+        </div>
+      </div>
+      <div class="invite__sdg">
+        <SdgIcons lang={lang} goals={[4]} size="lg" />
+        <p class="small">{invite.sdg}</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--alt" id="formular" aria-labelledby="sform-h">
     <div class="wrap">
       <div class="sform panel" data-sform data-net-error={s.netError} data-sending={s.sending}>
         <form method="post" action={href('/mitmachen/patenschaft.php')} data-sform-form>
@@ -154,7 +404,7 @@ const privacyHref = r('privacy', lang, '#patenschaftsformular');
             <legend>{s.stage} <span class="req">({s.req})</span></legend>
             <p class="sform__hint" id="sform-stage-hint">{s.stageNote}</p>
             <div class="sform__choices" aria-describedby="sform-stage-hint">
-              {stages.map((st, i) => <label class="choice"><input type="radio" name="stage" value={st.v} required checked={i === 0} /><span>{st.l}</span></label>)}
+              {formStages.map((st, i) => <label class="choice"><input type="radio" name="stage" value={st.v} required checked={i === 0} /><span>{st.l}</span></label>)}
             </div>
           </fieldset>
 
@@ -162,7 +412,7 @@ const privacyHref = r('privacy', lang, '#patenschaftsformular');
             <legend>{s.prio}</legend>
             <p class="sform__hint">{s.prioNote}</p>
             <div class="sform__choices">
-              {priorities.map((p) => <label class="choice"><input type="checkbox" name={`priority_${p.v}`} value="1" /><span>{p.l}</span></label>)}
+              {formPriorities.map((p) => <label class="choice"><input type="checkbox" name={`priority_${p.v}`} value="1" /><span>{p.l}</span></label>)}
             </div>
           </fieldset>
 
@@ -275,17 +525,76 @@ const privacyHref = r('privacy', lang, '#patenschaftsformular');
   });
 </script>
 <style>
-  .two-col { display: grid; grid-template-columns: 1.15fr .85fr; gap: clamp(1.5rem, 5vw, 4rem); align-items: start; }
-  .steps { padding-left: 1.3rem; max-width: 62ch; }
-  .steps li { margin: .5rem 0; }
-  .tiers { list-style: none; padding: 0; margin: 0 0 .6rem; display: grid; gap: .5rem; max-width: 62ch; }
-  .tiers li { display: flex; gap: .6rem; align-items: flex-start; margin: 0; }
-  .ic { width: 1.2em; height: 1.2em; flex: none; margin-top: .15em; }
-  .docs { border-top: 6px solid var(--gold); }
-  .docs .h3 { font-size: 1.3rem; margin-top: 0; }
-  .docs__list { list-style: none; padding: 0; margin: .5rem 0 1rem; display: grid; gap: .5rem; }
-  .docs__list li { margin: 0; }
-  .docs__list a { display: flex; gap: .6rem; align-items: flex-start; min-height: 44px; padding: .5rem .2rem; font-weight: 700; }
+  .head-ctas { margin-top: 1.5rem; }
+  /* Opening */
+  .intro { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, .85fr); gap: clamp(1.5rem, 5vw, 4.5rem); align-items: start; }
+  .intro__text p { max-width: 66ch; }
+  .intro__open { font-family: var(--font-serif); font-size: clamp(1.3rem, 2.4vw, 1.7rem); line-height: 1.35; color: var(--ink); margin: 0 0 1.25rem; }
+  .intro__side { border-top: 6px solid var(--gold); position: sticky; top: calc(var(--header-h, 90px) + 1rem); }
+  .intro__callout { font-family: var(--font-serif); font-size: 1.15rem; line-height: 1.45; margin: 0 0 1.25rem; }
+  .intro__facts { margin-bottom: 1rem; }
+  .intro__facts dt { font-size: .85rem; text-transform: uppercase; letter-spacing: .06em; }
+  /* The question */
+  .access { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, .8fr); gap: clamp(1.5rem, 5vw, 4.5rem); align-items: center; }
+  .access p { max-width: 66ch; }
+  .question { margin: 0; }
+  .question__q { margin: .5rem 0 0; padding: 1.5rem 1.75rem; border-left: 8px solid var(--gold); background: var(--surface); border-radius: 0 var(--radius) var(--radius) 0; font-size: clamp(1.25rem, 2.2vw, 1.6rem); line-height: 1.35; font-style: normal; color: var(--ink); }
+  .question__q p { margin: 0; }
+  /* Stages */
+  .stages { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr)); gap: 1.25rem; counter-reset: none; }
+  .stage { padding: 1.5rem; gap: .6rem; }
+  .stage__top { display: flex; justify-content: space-between; align-items: center; margin-bottom: .5rem; }
+  .stage__no { font-family: var(--font-serif); font-weight: 700; font-size: 1.6rem; color: var(--muted); }
+  .stage h3 { font-size: 1.2rem; margin: 0; hyphens: auto; overflow-wrap: anywhere; }
+  .stage p { margin: 0; color: var(--ink-2); }
+  .stage__tag { margin-top: .2rem; }
+  .stage__partners { margin-top: auto; padding-top: .5rem; border-top: 1px solid var(--line); }
+  .stage__link { font-weight: 700; min-height: var(--tap); display: inline-flex; align-items: center; }
+  .stages__note { margin-top: 1.5rem; }
+  /* Priorities */
+  .prio { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr)); gap: 1rem 2rem; }
+  .prio__item { display: flex; gap: 1rem; align-items: flex-start; padding: 1rem 0; border-top: 2px solid var(--line); }
+  .prio__no { flex: none; width: 2.6rem; height: 2.6rem; border-radius: 50%; display: grid; place-items: center; background: var(--gold); color: var(--on-gold, #000); font-family: var(--font-serif); font-weight: 700; font-size: 1.2rem; }
+  .prio__item > div { min-width: 0; }
+  .prio__item h3 { font-size: 1.1rem; margin: .3rem 0 .3rem; hyphens: auto; overflow-wrap: anywhere; }
+  .prio__item p { margin: 0; color: var(--ink-2); }
+  /* How it works (deep band) */
+  .steps { list-style: none; padding: 0; margin: 1.5rem 0 2.5rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr)); gap: 1.5rem 2.5rem; }
+  .step { position: relative; padding-top: .5rem; border-top: 2px solid rgba(255,255,255,.25); }
+  .step__no { display: block; font-family: var(--font-serif); font-weight: 700; font-size: 2.4rem; line-height: 1; color: var(--gold); margin: .6rem 0 .5rem; }
+  .step h3 { font-size: 1.25rem; margin: 0 0 .4rem; }
+  .step p { margin: 0; color: var(--on-deep-muted); }
+  .how__guide-h { font-size: 1.25rem; margin: 0 0 1rem; }
+  .tiers { list-style: none; padding: 0; margin: 0; }
+  .how__guide { max-width: 70ch; margin: 1.5rem 0; color: var(--on-deep-muted); }
+  /* Governance */
+  .gov__card .icon-badge { margin-bottom: 1rem; }
+  .gov__card h3 { font-size: 1.2rem; hyphens: auto; overflow-wrap: anywhere; }
+  .gov__card p { margin: 0; color: var(--ink-2); }
+  /* Results */
+  .results { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr)); gap: 1.25rem; }
+  .result { padding: 1.5rem; gap: .5rem; border-top: 6px solid var(--green); }
+  .result__figure { display: flex; align-items: baseline; gap: .6rem; flex-wrap: wrap; margin-bottom: .25rem; }
+  .result__v { font-family: var(--font-serif); font-weight: 700; font-size: clamp(2.2rem, 4vw, 3rem); line-height: 1; color: var(--ink); }
+  .result__l { font-weight: 700; color: var(--green-text); }
+  .result h3 { font-size: 1.1rem; margin: 0; hyphens: auto; overflow-wrap: anywhere; }
+  .result p { margin: 0; color: var(--ink-2); }
+  .result .link-arrow { margin-top: auto; padding-top: .5rem; font-weight: 700; min-height: var(--tap); display: inline-flex; align-items: center; }
+  /* Trust */
+  .trust__card h3 { font-size: 1.2rem; margin-top: 0; hyphens: auto; overflow-wrap: anywhere; }
+  .trust__card--gold { border-top: 6px solid var(--gold); }
+  .trust__card--green { border-top: 6px solid var(--green); }
+  .trust__card .link-arrow { font-weight: 700; min-height: var(--tap); display: inline-flex; align-items: center; }
+  /* Invitation */
+  .invite__wrap { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, .6fr); gap: clamp(1.5rem, 5vw, 4rem); align-items: center; }
+  .invite__h { font-size: clamp(1.7rem, 3.4vw, 2.5rem); max-width: 22ch; }
+  .invite__sub { font-family: var(--font-serif); font-size: 1.2rem; color: var(--on-deep); max-width: 50ch; }
+  .invite p { max-width: 66ch; }
+  .invite p:not(.invite__sub) { color: var(--on-deep-muted); }
+  .invite .btn-row { margin-top: 1.5rem; }
+  .invite__sdg { display: grid; justify-items: center; text-align: center; gap: .75rem; }
+  .invite__sdg p { color: var(--on-deep-muted); margin: 0; }
+  /* Form */
   .sform h2 { font-size: clamp(1.3rem, 2.6vw, 1.6rem); margin: 0 0 .5rem; }
   .sform__field { margin: 1.4rem 0 0; border: 0; padding: 0; min-width: 0; }
   .sform__field > label, .sform__field legend { display: block; font-weight: 700; margin-bottom: .4rem; padding: 0; }
@@ -311,5 +620,9 @@ const privacyHref = r('privacy', lang, '#patenschaftsformular');
   .sform__done h2:focus { outline: none; }
   .sform__next p { font-weight: 600; }
   .sform__done [data-f='reference'] { white-space: nowrap; }
-  @media (max-width: 860px) { .two-col { grid-template-columns: 1fr; } }
+  @media (max-width: 900px) {
+    .intro, .access, .invite__wrap { grid-template-columns: 1fr; }
+    .intro__side { position: static; }
+    .invite__sdg { justify-items: start; text-align: left; }
+  }
 </style>

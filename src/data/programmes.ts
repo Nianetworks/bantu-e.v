@@ -6,7 +6,7 @@ import type { Lang } from '../i18n';
 type L = Record<Lang, string>;
 export type ProgrammeKey = 'education' | 'health' | 'cooperation' | 'civic' | 'migration';
 export type Region = 'inland' | 'international';
-export type Service = { title: L; text: L; region: Region; anchor: L; cta?: { label: L; route: 'contact' | 'join' | 'offers' } };
+export type Service = { title: L; text: L; region: Region; anchor: L; points?: Record<Lang, string[]>; cta?: { label: L; route: 'contact' | 'join' | 'offers' | 'sponsorship' } };
 export type Programme = {
   key: ProgrammeKey;
   no: number;
@@ -50,6 +50,23 @@ export const programmes: Programme[] = [
           en: 'Workshops, trainings and political-education seminars that we offer together with AfricAvenir International e.V.: on global justice, anti-racism, colonial history and the Sustainable Development Goals. We also offer process support, facilitation and mediation for organisations. Schools, associations, public bodies and teams can book formats with us.', fr: 'Des ateliers, formations et séminaires d’éducation politique que nous proposons avec AfricAvenir International e.V. : sur la justice globale, la critique du racisme, l’histoire coloniale et les objectifs de développement durable. Nous proposons aussi un accompagnement de processus, de la facilitation et de la médiation pour les organisations. Écoles, associations, administrations et équipes peuvent réserver des formats chez nous.',
         },
         cta: { label: { de: 'Zu unseren Bildungsangeboten', en: 'See our workshops and training', fr: 'Voir nos ateliers et formations' }, route: 'offers' },
+      },
+      {
+        // "Education into the Future": education sponsorships with ABI in Uganda (chair, 09.11.2026). Full programme + online form at /mitmachen/bildungspatenschaft/.
+        title: { de: 'Education into the Future: Bildungspatenschaften in Uganda', en: 'Education into the Future: education sponsorships in Uganda', fr: 'Education into the Future : parrainages éducatifs en Ouganda' },
+        region: 'international',
+        anchor: { de: 'bildungspatenschaften', en: 'education-sponsorships', fr: 'parrainages-educatifs' },
+        text: {
+          de: 'Unser Patenschaftsprogramm mit Anchored Bridges Initiatives (ABI) verbindet Förderung an den Übergängen, an denen Bildungswege abbrechen: von der frühen Bildung über barrierefreies Lernen und die weiterführende Schule bis zur beruflichen Ausbildung. Patinnen und Paten wählen Betrag, Rhythmus und Bildungsstufe; ABI und die Partnerschulen schlagen Lernende vor, deren Bildungsweg aus finanziellen, behinderungsbedingten oder sozialen Gründen gefährdet ist. Ab 25 EUR im Monat, mit Zuwendungsbestätigung und einem Bericht mindestens einmal im Jahr.',
+          en: 'Our sponsorship programme with Anchored Bridges Initiatives (ABI) connects support at the transitions where education breaks off: from early childhood through accessible learning and secondary school to vocational training. Sponsors choose the amount, rhythm and education stage; ABI and the partner schools propose learners whose education is at risk for financial, disability-related or social reasons. From 25 EUR a month, with a donation receipt and a report at least once a year.',
+          fr: 'Notre programme de parrainage avec Anchored Bridges Initiatives (ABI) relie le soutien aux transitions où les parcours s’interrompent : de la petite enfance à la formation professionnelle, en passant par l’apprentissage accessible et le secondaire. Les marraines et parrains choisissent le montant, le rythme et l’étape éducative ; ABI et les écoles partenaires proposent des élèves dont le parcours est menacé pour des raisons financières, liées au handicap ou sociales. Dès 25 EUR par mois, avec reçu fiscal et un rapport au moins une fois par an.',
+        },
+        points: {
+          de: ['Frühe Bildung: Pearl Kindergarten Kampala (25 EUR im Monat)', 'Barrierefreies Lernen: Rwera Unit for the Deaf, Uganda School for the Deaf (25 EUR)', 'Weiterführende Schule: Royal College Namugongo, 30 % Gebührenermäßigung der Schule (40 EUR)', 'Ausbildung, Pflege und Hebammenwesen: Entebbe Atuwanguza Memorial School, Lyantonde School of Nursing and Midwifery, Nakawa Vocational Training College (70 EUR)'],
+          en: ['Early childhood: Pearl Kindergarten Kampala (25 EUR a month)', 'Accessible learning: Rwera Unit for the Deaf, Uganda School for the Deaf (25 EUR)', 'Secondary school: Royal College Namugongo, 30 % tuition reduction by the school (40 EUR)', 'Vocational, nursing and midwifery training: Entebbe Atuwanguza Memorial School, Lyantonde School of Nursing and Midwifery, Nakawa Vocational Training College (70 EUR)'],
+          fr: ['Petite enfance : Pearl Kindergarten Kampala (25 EUR par mois)', 'Apprentissage accessible : Rwera Unit for the Deaf, Uganda School for the Deaf (25 EUR)', 'Secondaire : Royal College Namugongo, 30 % de réduction accordée par l’école (40 EUR)', 'Formation professionnelle, soins infirmiers et obstétricaux : Entebbe Atuwanguza Memorial School, Lyantonde School of Nursing and Midwifery, Nakawa Vocational Training College (70 EUR)'],
+        },
+        cta: { label: { de: 'Zum Programm und zur Patenschaft', en: 'Programme and sponsorship form', fr: 'Programme et formulaire de parrainage' }, route: 'sponsorship' },
       },
     ],
     sdgs: [4, 10, 17],
