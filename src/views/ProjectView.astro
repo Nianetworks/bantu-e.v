@@ -7,6 +7,7 @@ import SdgIcons from '../components/SdgIcons.astro';
 import ProjectCard from '../components/ProjectCard.astro';
 import NewsCard from '../components/NewsCard.astro';
 import ProjectMedia from '../components/ProjectMedia.astro';
+import Icon from '../components/Icon.astro';
 import { render } from 'astro:content';
 import { href, projectPath, r, ui, type Lang } from '../i18n';
 import { getNews, getProjects, slugOf, type Project } from '../lib/content';
@@ -54,11 +55,14 @@ const donateRef = slug.includes('pearl') ? 'Pearl Kita' : slug.includes('ruziba'
             {d.stats.map((s) => <div class="stat"><div class="stat__value">{s.value}</div><div class="stat__label">{s.label}</div></div>)}
           </div>
         )}
+        {d.report && (
+          <p class="report-cta"><a class="btn btn--gold" href={href(d.report.href)} download><Icon name="download" class="btn-ic" />{d.report.label}</a>{d.report.note && <span class="small muted report-note">{d.report.note}</span>}</p>
+        )}
         <div class="prose"><Content /></div>
-        <ProjectMedia part="gallery" lang={lang} gallery={d.gallery} video={d.video} id={slug} />
+        <ProjectMedia part="gallery" lang={lang} gallery={d.gallery} video={d.video} id={slug} galleryTitle={d.galleryTitle} />
         <FundingNote lang={lang} note={d.fundingNote} logos={d.fundingLogos} disclaimer={d.disclaimer} funders={d.funders} />
       </div>
-      <aside class="project__side">
+      <div class="project__side">
         <div class="panel">
           <h2 class="side-title">{de ? 'Auf einen Blick' : fr ? 'En bref' : 'At a glance'}</h2>
           <dl class="facts">
@@ -83,11 +87,21 @@ const donateRef = slug.includes('pearl') ? 'Pearl Kita' : slug.includes('ruziba'
             <a class="btn btn--gold" href={r('donate', lang)}>{t.donate}</a>
           </div>
         )}
+        {d.report && (
+          <div class="panel">
+            <h2 class="side-title">{de ? 'Bericht' : fr ? 'Rapport' : 'Report'}</h2>
+            <p class="small">{d.report.note}</p>
+            <a class="btn btn--outline" href={href(d.report.href)} download>{d.report.label}</a>
+            {d.report.alternates.length > 0 && (
+              <p class="small report-alts">{de ? 'Auch auf' : fr ? 'Aussi en' : 'Also in'} {d.report.alternates.map((a, i) => <><a href={href(a.href)} download lang={a.lang} hreflang={a.lang}>{a.name}<span class="sr-only"> (PDF)</span></a>{i < d.report.alternates.length - 1 && ' · '}</>)}</p>
+            )}
+          </div>
+        )}
         <div class="panel">
           <h2 class="side-title">{t.contact}</h2>
           <p class="small"><a href="mailto:info@bantu-ev.org">info@bantu-ev.org</a></p>
         </div>
-      </aside>
+      </div>
     </div>
   </section>
 
@@ -112,6 +126,10 @@ const donateRef = slug.includes('pearl') ? 'Pearl Kita' : slug.includes('ruziba'
 <style>
   .head-tags { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: 1rem; }
   .project { display: grid; grid-template-columns: minmax(0, 1fr) 330px; gap: clamp(1.5rem, 4vw, 3rem); align-items: start; }
+  .report-cta { margin: 0 0 1.25rem; display: flex; flex-wrap: wrap; gap: .5rem 1rem; align-items: center; }
+  .report-note { max-width: 40ch; }
+  .btn-ic { width: 1.1em; height: 1.1em; }
+  .report-alts { margin: .6rem 0 0; }
   .project__figure { margin: 0 0 1.5rem; border-radius: 18px; overflow: hidden; border: 1px solid var(--line); }
   .project__figure img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; }
   .project__stats { margin: 1.5rem 0 2rem; }

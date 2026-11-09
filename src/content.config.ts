@@ -34,6 +34,10 @@ const projects = defineCollection({
     imageAlt: z.string().optional(),
     /** Shown on the placeholder until a real photo exists (see docs/04_Foto-Briefing.md) */
     photoBrief: z.string().optional(),
+    /** Heading above the photo gallery (default: "N Fotos aus dem Austausch") */
+    galleryTitle: z.string().optional(),
+    /** Downloadable project report (PDF in public/downloads/berichte/): button under the stats and in the side column */
+    report: z.object({ href: z.string(), label: z.string(), note: z.string().optional(), alternates: z.array(z.object({ lang: z.string(), name: z.string(), href: z.string() })).default([]) }).optional(),
     /** Photo gallery under the project text, shown as even tiles; a click opens the whole photo in the viewer.
      *  `section`: heading of a themed group (consecutive photos with the same value form one group).
      *  `focus`: CSS object-position for cropping the tile (e.g. "50% 35%"); without it, photos far from 3:2 are shown whole. */

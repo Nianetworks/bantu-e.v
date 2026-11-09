@@ -42,6 +42,11 @@ src/data/events.ts      events page list (past/ongoing events that have no news 
                         `sessions` = single dates of a series) and splits upcoming / ongoing / past-by-year at build time.
                         Rendered by src/views/EventsView.astro (chair, 09.11.2026: all past, current and future events).
 src/data/redirects.mjs  old WordPress URLs -> new pages
+public/images/projects/p23-91-ediri/  14 photos of the EDIRI pilot 2023 (P 23/91), from the OURS report; children's faces blurred by the
+                        chair's editor (09.11.2026), 480 px thumbs for the gallery. Report PDFs DE/EN/FR in public/downloads/berichte/
+                        (bantu-ev-ediri-*), built from one HTML template (chair's folder Claude outputs/EDIRI_Bericht_2026-11); texts =
+                        OURS progress report 09.11.2023 + Jahresbericht 2023 Ausland. Project front matter `report` (button + side box,
+                        `alternates` = other languages) and `galleryTitle`. Downloads group `projectReports`.
 src/content/projects/{de,en,fr}/<slug>.md   one file per project and language (same file name!)
 src/content/news/{de,en,fr}/<slug>.md       news, events (type: event), announcements (pinUntil); optional `photos` (src stem + width/height:
                         <src>.jpg, <src>-800.webp, <src>-<width>.webp in public/images/news/, EXIF/GPS stripped) shown below the text.

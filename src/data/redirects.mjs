@@ -65,4 +65,9 @@ export const fileRedirects = {
   '/aktuelles/abonnieren': '/aktuelles/',
   '/en/news/follow': '/en/news/',
   '/fr/actualites/suivre': '/fr/actualites/',
+  // EDIRI report (P 23/91), 09.11.2026: requested addresses lead to the existing project pages and the English PDF.
+  '/en/projects/cerebral-palsy-ediri-pilot': '/en/projects/p23-91-ours-zerebralparese/',
+  '/projekte/zerebralparese-ediri-pilotprojekt': '/projekte/p23-91-ours-zerebralparese/',
+  '/fr/projets/paralysie-cerebrale-projet-pilote-ediri': '/fr/projets/p23-91-ours-zerebralparese/',
+  '/documents/reports/Bantu_EDIRI_Cerebral_Palsy_Pilot_Report_2023.pdf': '/downloads/berichte/bantu-ev-ediri-pilot-report-2023-en.pdf',
 };
