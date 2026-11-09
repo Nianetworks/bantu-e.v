@@ -12,7 +12,6 @@ export const routes = {
   international: { de: '/auslandsarbeit/', en: '/en/international-cooperation/', fr: '/fr/cooperation-internationale/' },
   projects: { de: '/projekte/', en: '/en/projects/', fr: '/fr/projets/' },
   news: { de: '/aktuelles/', en: '/en/news/', fr: '/fr/actualites/' },
-  follow: { de: '/aktuelles/abonnieren/', en: '/en/news/follow/', fr: '/fr/actualites/suivre/' },
   events: { de: '/veranstaltungen/', en: '/en/events/', fr: '/fr/evenements/' },
   impact: { de: '/wirkung/', en: '/en/impact/', fr: '/fr/impact/' },
   reports: { de: '/berichte/', en: '/en/reports/', fr: '/fr/rapports/' },
@@ -28,8 +27,6 @@ export const routes = {
   offers: { de: '/bildungsangebote/', en: '/en/education-offers/', fr: '/fr/formations/' },
 } as const;
 export type RouteKey = keyof typeof routes;
-/** RSS feed per language (src/pages/<lang>/rss.xml.js). Keep these XML addresses stable for feed readers. */
-export const feedPath: Record<Lang, string> = { de: '/aktuelles/rss.xml', en: '/en/news/rss.xml', fr: '/fr/actualites/rss.xml' };
 
 const base = (import.meta.env.BASE_URL || '/').replace(/\/$/, '');
 

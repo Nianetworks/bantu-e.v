@@ -79,7 +79,7 @@ RewriteRule ^ https://${host}%{REQUEST_URI} [R=301,L,NE]
 # Old WordPress addresses -> new pages
 ${rules.join('\n')}
 # Old WordPress feeds and system paths
-RewriteRule ^feed/?$ /aktuelles/rss.xml [R=301,L]
+RewriteRule ^feed/?$ /aktuelles/ [R=301,L]
 RewriteRule ^(wp-admin|wp-login\\.php|xmlrpc\\.php|wp-json)(/.*)?$ - [R=410,L]
 </IfModule>
 

@@ -2,9 +2,9 @@
 import Base from '../layouts/Base.astro';
 import PageHead from '../components/PageHead.astro';
 import NewsCard from '../components/NewsCard.astro';
+import SocialLinks from '../components/SocialLinks.astro';
 import { r, ui, type Lang } from '../i18n';
 import { getEvents, getNews } from '../lib/content';
-import { org } from '../data/site';
 
 // News page. The events page has its own view (EventsView.astro) since 09.11.2026.
 interface Props { lang: Lang; mode?: 'news' }
@@ -39,13 +39,17 @@ const lead = de ? 'Neuigkeiten, Ankündigungen und Termine von Bantu e.V.' : fr 
     <div class="wrap">
       <h2>{de ? 'Neuigkeiten' : fr ? 'Dernières nouvelles' : 'Latest news'}</h2>
       <div class="grid grid--3">{news.map((n) => <NewsCard lang={lang} item={n} />)}</div>
-      <p class="small muted rss"><a href={r('follow', lang)}>{de ? 'Neuigkeiten verfolgen' : fr ? 'Suivre les actualités' : 'Follow our news'}</a> (RSS) · Instagram: <a href={org.socials[0].url}>@bantu_ev</a></p>
+      <div class="follow">
+        <p class="follow__h">{de ? 'Folgen Sie uns in den sozialen Medien:' : fr ? 'Suivez-nous sur les réseaux sociaux :' : 'Follow us on social media:'}</p>
+        <SocialLinks lang={lang} />
+      </div>
     </div>
   </section>
 </Base>
 <style>
   .tabs { margin-top: 1.25rem; }
   .tabs .btn { padding: .55rem 1.1rem; }
-  .rss { margin-top: 2rem; }
+  .follow { margin-top: 2.25rem; display: grid; gap: .6rem; }
+  .follow__h { margin: 0; font-weight: 700; }
   .more { margin: 1.25rem 0 0; font-weight: 700; }
 </style>

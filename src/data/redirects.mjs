@@ -58,4 +58,11 @@ export const wordpressRedirects = {
 // not for the Astro meta-refresh pages (those cannot replace a PDF path).
 export const fileRedirects = {
   '/downloads/flyer/ubuntu-talks-15-11-2026-flyer.pdf': '/aktuelles/ubuntu-talks-22-11-2026/',
+  // RSS removed on the chair's instruction (09.11.2026): former feeds and the short-lived info pages lead to the news pages.
+  '/aktuelles/rss.xml': '/aktuelles/',
+  '/en/news/rss.xml': '/en/news/',
+  '/fr/actualites/rss.xml': '/fr/actualites/',
+  '/aktuelles/abonnieren': '/aktuelles/',
+  '/en/news/follow': '/en/news/',
+  '/fr/actualites/suivre': '/fr/actualites/',
 };

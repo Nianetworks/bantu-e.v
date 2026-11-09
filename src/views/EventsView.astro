@@ -6,10 +6,10 @@ import PageHead from '../components/PageHead.astro';
 import NewsCard from '../components/NewsCard.astro';
 import EventCard from '../components/EventCard.astro';
 import Icon from '../components/Icon.astro';
+import SocialLinks from '../components/SocialLinks.astro';
 import { formatDate, href, r, ui, type Lang } from '../i18n';
 import { evDate, getEventPage, type Ev } from '../lib/events';
 import { eventNode } from '../lib/schema';
-import { org } from '../data/site';
 
 interface Props { lang: Lang }
 const { lang } = Astro.props;
@@ -206,9 +206,10 @@ const pastAlt = ongoing.length === 0;
           <a class="btn btn--outline" href={r('contact', lang)}>{T('Kontakt aufnehmen', 'Get in touch', 'Nous contacter')}</a>
         </div>
       </div>
-      <p class="small muted plan__follow">
-        {T('Neue Termine kündigen wir hier, in den', 'We announce new dates here, in our', 'Nous annonçons les nouvelles dates ici, dans les')} <a href={r('news', lang)}>{T('Neuigkeiten', 'news', 'actualités')}</a> (<a href={r('follow', lang)}>{T('Neuigkeiten verfolgen', 'Follow our news', 'Suivre les actualités')}</a>) {T('und auf Instagram an:', 'and on Instagram:', 'et sur Instagram :')} <a href={org.socials[0].url}>@bantu_ev</a>.
-      </p>
+      <div class="plan__follow">
+        <p class="small muted">{T('Neue Termine kündigen wir hier, in den', 'We announce new dates here, in our', 'Nous annonçons les nouvelles dates ici, dans les')} <a href={r('news', lang)}>{T('Neuigkeiten', 'news', 'actualités')}</a> {T('und in den sozialen Medien an:', 'and on social media:', 'et sur les réseaux sociaux :')}</p>
+        <SocialLinks lang={lang} />
+      </div>
     </div>
   </section>
 </Base>
@@ -284,6 +285,7 @@ const pastAlt = ongoing.length === 0;
 
   .plan { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 1.5rem 2.5rem; align-items: end; }
   .plan p { max-width: 62ch; color: var(--ink-2); }
-  .plan__follow { margin: 0; }
+  .plan__follow { display: grid; gap: .6rem; }
+  .plan__follow p { margin: 0; }
   @media (max-width: 760px) { .plan { grid-template-columns: minmax(0, 1fr); } }
 </style>

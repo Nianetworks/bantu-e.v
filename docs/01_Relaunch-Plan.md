@@ -45,7 +45,7 @@ Stand: 07.11.2026 · Verantwortlich: Boaz Murinzi Murema (Vorstand) · Umsetzung
 | `/programme/` | `/en/programmes/` | Übersicht: 5 Programme + Programmsteuerung, Trägerschaften (tubman.network, Kikili) |
 | `/programme/bildung/`, `/gesundheit/`, `/globale-zusammenarbeit/`, `/engagement-und-rechte/`, `/migration-und-integration/` | `/en/programmes/education/` … | Schwerpunkte, Daueraufgaben, laufende und abgeschlossene Projekte (Zuordnung in `src/data/programmes.ts`) |
 | `/projekte/` + `/projekte/<slug>/` | `/en/projects/…` | alle 14 Projekte mit Steckbrief, Zahlen, Förderhinweis |
-| `/aktuelles/` + `/aktuelles/<slug>/` | `/en/news/…` | Neuigkeiten, Ankündigungen, RSS |
+| `/aktuelles/` + `/aktuelles/<slug>/` | `/en/news/…` | Neuigkeiten, Ankündigungen (kein RSS, Entscheidung des Vorsitzenden 09.11.2026) |
 | `/veranstaltungen/` | `/en/events/` | kommende und vergangene Termine |
 | `/wirkung/` | `/en/impact/` | Wirkung in Zahlen, Erfolgsgeschichten |
 | `/berichte/` | `/en/reports/` | Transparenzberichte 2020–2025 (DE/EN), ITZ-10-Punkte |

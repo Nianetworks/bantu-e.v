@@ -48,11 +48,9 @@ src/views/*.astro       page templates (take `lang`)
 src/pages/**            thin DE routes + /en/ routes that render the views
 src/i18n/index.ts       routes per language (de/en/fr), UI strings, main nav (mega menus for the two work areas)
 src/lib/alternates.ts   maps every page to its DE/EN/FR versions (language switch DE · EN · FR, hreflang)
-src/views/FollowView.astro  "Neuigkeiten verfolgen" info pages /aktuelles/abonnieren/, /en/news/follow/, /fr/actualites/suivre/
-                        (route `follow`): plain HTML explanation of the RSS feed, read button -> news page, copy button (JS only,
-                        announces success via role=status, manual instructions on failure), selectable address field. Visible
-                        subscription links point here, never at the raw rss.xml (chair, 09.11.2026). Feeds stay at `feedPath`
-                        (i18n) = src/pages/<lang>/rss.xml.js and in the <head> rel=alternate; never redirect or replace them.
+(no RSS)                The site has NO RSS feed and no feed information pages (chair, 09.11.2026: misleading for visitors).
+                        Former /…/rss.xml and the short-lived follow pages 301-redirect to the news pages (redirects.mjs fileRedirects).
+                        "Follow us" = social media only (org.socials: Instagram, Facebook, X) via the SocialLinks component.
 src/data/sdgs.ts        SDG names; icons in public/sdg/ (SdgIcons component)
 src/lib/schema.ts       JSON-LD @graph (NGO + WebSite on every page; Event nodes from news files with type: event)
 public/partners/        partner logos (OrgCard); public/funders/ funder logos
