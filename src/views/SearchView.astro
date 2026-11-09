@@ -1,0 +1,90 @@
+---
+// Site search (audit 09.11.2026). Pagefind builds a static index of every page at build time (package.json "build");
+// the browser loads only the small index chunks it needs from /pagefind/ on our own server. No external service, no
+// tracking, nothing is sent anywhere. One index per language: this page searches the pages of its own language.
+// The UI (pagefind-ui.js/.css, self-hosted) is themed through CSS variables so it follows light, dark and contrast mode.
+// Without JavaScript the page offers the main entry points instead.
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import { href, r, archiveId, type Lang } from '../i18n';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const de = lang === 'de';
+const fr = lang === 'fr';
+const T = (d: string, e: string, f: string) => (de ? d : fr ? f : e);
+const title = T('Suche', 'Search', 'Recherche');
+const lead = T('Durchsuchen Sie Projekte, Programme, Aktuelles, Veranstaltungen und alle weiteren Seiten in deutscher Sprache.', 'Search projects, programmes, news, events and every other page in English.', 'Recherchez dans les projets, programmes, actualités, événements et toutes les autres pages en français.');
+const quick = [
+  [T('Alle Projekte', 'All projects', 'Tous les projets'), r('projects', lang)],
+  [T('Archiv: abgeschlossene Projekte', 'Archive: completed projects', 'Archives : projets terminés'), r('projects', lang, `#${archiveId[lang]}`)],
+  [T('Programme', 'Programmes', 'Programmes'), r('programmes', lang)],
+  [T('Aktuelles', 'News', 'Actualités'), r('news', lang)],
+  [T('Veranstaltungen', 'Events', 'Événements'), r('events', lang)],
+  [T('Downloads', 'Downloads', 'Téléchargements'), r('downloads', lang)],
+  [T('Mitmachen', 'Get involved', 'S’engager'), r('join', lang)],
+  [T('Kontakt', 'Contact', 'Contact'), r('contact', lang)],
+];
+const bundle = href('/pagefind/');
+const base = (import.meta.env.BASE_URL || '/').replace(/\/?$/, '/');
+---
+<Base lang={lang} title={title} description={lead} altHref={r('search', de ? 'en' : 'de')} noindex>
+  <link slot="head" rel="stylesheet" href={href('/pagefind/pagefind-component-ui.css')} />
+  <PageHead lang={lang} title={title} lead={lead} />
+  <section class="section section--tight">
+    <div class="wrap search-wrap">
+      <div class="search">
+        <pagefind-config bundle-path={bundle} base-url={base} lang={lang} excerpt-length="30"></pagefind-config>
+        <pagefind-input placeholder={T('Wonach suchen Sie?', 'What are you looking for?', 'Que cherchez-vous ?')}></pagefind-input>
+        <pagefind-summary></pagefind-summary>
+        <pagefind-results show-sub-results max-sub-results="3"></pagefind-results>
+      </div>
+      <noscript>
+        <p class="notice notice--info">{T('Die Suche braucht JavaScript. Ohne JavaScript erreichen Sie alle Inhalte über die Einstiege unten und das Menü.', 'The search needs JavaScript. Without it, every page is reachable through the entry points below and the menu.', 'La recherche nécessite JavaScript. Sans JavaScript, toutes les pages restent accessibles par les entrées ci-dessous et le menu.')}</p>
+      </noscript>
+      <h2 class="h3 quick-h">{T('Direkt zu', 'Go straight to', 'Accès direct')}</h2>
+      <ul class="quick" role="list">{quick.map(([l, h]) => <li><a href={h}>{l}</a></li>)}</ul>
+      <script is:inline type="module" src={href('/pagefind/pagefind-component-ui.js')}></script>
+      <script is:inline>
+        // Deep links (/suche/?q=…): fill the search box once the component is ready.
+        (function () {
+          var q = new URLSearchParams(location.search).get('q');
+          if (!q || !window.customElements) return;
+          customElements.whenDefined('pagefind-input').then(function () {
+            var tries = 0;
+            var tick = function () {
+              var inp = document.querySelector('pagefind-input input');
+              if (inp) { inp.value = q; inp.dispatchEvent(new Event('input', { bubbles: true })); return; }
+              if (tries++ < 50) setTimeout(tick, 60);
+            };
+            tick();
+          });
+        })();
+      </script>
+      <p class="small muted">{T('Die Suche läuft vollständig in Ihrem Browser mit einem Index von unserem eigenen Server. Es werden keine Suchbegriffe übertragen oder gespeichert.', 'The search runs entirely in your browser with an index from our own server. No search terms are transmitted or stored.', 'La recherche s’exécute entièrement dans votre navigateur avec un index provenant de notre propre serveur. Aucun terme de recherche n’est transmis ni enregistré.')}</p>
+    </div>
+  </section>
+</Base>
+<style is:global>
+  .search-wrap { max-width: 60rem; }
+  /* Pagefind Component UI tokens mapped to the site's theme variables (light, dark, contrast follow automatically). */
+  :root {
+    --pf-text: var(--ink); --pf-text-secondary: var(--ink-2); --pf-text-muted: var(--muted);
+    --pf-background: var(--surface); --pf-border: var(--line-strong); --pf-border-focus: var(--ink); --pf-hover: var(--bg-2);
+    --pf-mark: var(--ink); --pf-skeleton: var(--bg-2); --pf-skeleton-shine: var(--surface);
+    --pf-outline-focus: var(--focus); --pf-outline-width: 3px; --pf-outline-offset: 3px;
+    --pf-font: var(--font-sans); --pf-input-height: 52px; --pf-input-font-size: 1.1rem; --pf-summary-font-size: .95rem;
+    --pf-result-title-font-size: 1.15rem; --pf-result-excerpt-font-size: 1rem; --pf-border-radius: var(--radius-sm); --pf-results-gap: .75rem;
+    --pf-shadow-sm: none; --pf-shadow-md: var(--shadow); --pf-scroll-shadow: transparent;
+  }
+  .search { margin-bottom: 2.5rem; display: grid; grid-template-columns: minmax(0, 1fr); gap: 1rem; }
+  .search > *, .search .pf-result, .search .pf-result-content { min-width: 0; }
+  .search .pf-result-excerpt, .search .pf-heading-excerpt, .search .pf-result-title { overflow-wrap: anywhere; }
+  .search .pf-result-title, .search .pf-result-link { font-family: var(--font-serif); }
+  .search .pf-result-excerpt mark, .search .pf-heading-excerpt mark { background: var(--gold-soft); color: var(--ink); padding: 0 .1em; }
+  html[data-theme="contrast"] .search mark { background: #ffff00; color: #000; }
+  .quick-h { margin-bottom: .6rem; }
+  .quick { list-style: none; padding: 0; margin: 0 0 1.5rem; display: flex; flex-wrap: wrap; gap: .5rem; }
+  .quick a { display: inline-flex; align-items: center; min-height: var(--tap); padding: .4rem .9rem; border: 1px solid var(--line-strong); border-radius: 999px; background: var(--surface); color: var(--ink); font-weight: 600; text-decoration: none; }
+  .quick a:hover { background: var(--bg-2); text-decoration: underline; }
+</style>

@@ -51,10 +51,11 @@ const compactCss = levels.map(([pre, w]) => `@media (max-width: ${w}px) { ${comp
     <div class="wrap utility__inner">
       <a class="util-link" href={r('easy', lang)}><Icon name="easy" /> {t.easy}</a>
       <div class="utility__right">
+        <a class="util-link" href={r('search', lang)}><Icon name="search" /> <span class="hide-sm">{t.search}</span><span class="sr-only show-sm">{t.search}</span></a>
         <button type="button" class="util-link util-btn" data-a11y-toggle aria-haspopup="dialog" aria-controls="a11y-panel">
           <Icon name="access" /> {t.a11y}
         </button>
-        <a class="util-link" href={`mailto:${org.email}`}><Icon name="mail" /> <span class="hide-sm">{org.email}</span><span class="sr-only show-sm">E-Mail</span></a>
+        <a class="util-link" href={r('contact', lang)}><Icon name="mail" /> {t.contact}</a>
         <nav class="langs" aria-label={t.language}>
           <ul>
             {switchLinks.map((s) => (

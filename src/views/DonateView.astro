@@ -2,6 +2,7 @@
 import Base from '../layouts/Base.astro';
 import PageHead from '../components/PageHead.astro';
 import Placeholder from '../components/Placeholder.astro';
+import Icon from '../components/Icon.astro';
 import { giftPath, href, projectPath, r, ui, type Lang } from '../i18n';
 import { org } from '../data/site';
 import { categories, products } from '../data/shop';
@@ -26,10 +27,44 @@ const purposes = [
 ];
 ---
 <Base lang={lang} title={title} description={lead} altHref={r('donate', de ? 'en' : 'de')}>
-  <PageHead lang={lang} title={title} lead={lead} />
+  <PageHead lang={lang} title={title} lead={lead}>
+    <ul class="trust" role="list" aria-label={de ? 'Vertrauen und Sicherheit' : fr ? 'Confiance et sécurité' : 'Trust and security'}>
+      <li><Icon name="star" class="trust__ic" /> {de ? `Gemeinnützig anerkannt (Freistellungsbescheid vom ${org.tax.exemptionNotice})` : fr ? `Reconnue d’intérêt général (avis d’exonération du ${org.tax.exemptionNotice})` : `Registered charity (tax exemption notice of ${org.tax.exemptionNotice})`}</li>
+      <li><Icon name="report" class="trust__ic" /> {de ? 'Zuwendungsbestätigung für jede Spende' : fr ? 'Reçu fiscal pour chaque don' : 'Donation receipt for every gift'}</li>
+      <li><Icon name="chart" class="trust__ic" /> <a href={r('reports', lang)}>{de ? 'Jahres- und Transparenzberichte seit 2020' : fr ? 'Rapports annuels et de transparence depuis 2020' : 'Annual and transparency reports since 2020'}</a></li>
+      <li><Icon name="people" class="trust__ic" /> {org.memberships[lang][0]}</li>
+    </ul>
+  </PageHead>
+
+  <section class="section section--tight" aria-labelledby="h-regular">
+    <div class="wrap">
+      <div class="section-head"><div><div class="eyebrow">{de ? 'Am meisten bewirkt' : fr ? 'Le plus efficace' : 'Makes the biggest difference'}</div><h2 id="h-regular">{de ? 'Regelmäßig helfen' : fr ? 'Aider régulièrement' : 'Give regularly'}</h2><p>{de ? 'Eine Spende, die jeden Monat kommt, lässt uns planen: Schulgebühren, Mahlzeiten und Lernmaterial müssen zu Beginn jedes Schulabschnitts da sein, nicht irgendwann.' : fr ? 'Un don qui arrive chaque mois nous permet de planifier : frais de scolarité, repas et matériel doivent être là au début de chaque trimestre, pas un jour.' : 'A gift that arrives every month lets us plan: school fees, meals and learning materials have to be there at the start of each term, not eventually.'}</p></div></div>
+      <div class="regular">
+        <div class="panel regular__card regular__card--gold">
+          <h3>{de ? 'Bildungspatenschaft ab 25 EUR im Monat' : fr ? 'Parrainage éducatif dès 25 EUR par mois' : 'Education sponsorship from 25 EUR a month'}</h3>
+          <p>{de ? 'Mit „Education into the Future“ ermöglichen Sie Kindern und jungen Menschen in Uganda den Schulbesuch oder eine Ausbildung: 25 EUR frühe Bildung oder Grundschule, 40 EUR weiterführende Schule, 70 EUR berufliche Ausbildung. Sie wählen Rhythmus und Bildungsstufe, wir berichten mindestens einmal im Jahr.' : fr ? 'Avec « Education into the Future », vous permettez à des enfants et des jeunes en Ouganda d’aller à l’école ou de suivre une formation : 25 EUR petite enfance ou primaire, 40 EUR secondaire, 70 EUR formation professionnelle. Vous choisissez le rythme et l’étape éducative, nous vous informons au moins une fois par an.' : 'With “Education into the Future” you enable children and young people in Uganda to attend school or training: 25 EUR early childhood or primary, 40 EUR secondary school, 70 EUR vocational training. You choose the rhythm and the education stage, we report at least once a year.'}</p>
+          <div class="btn-row">
+            <a class="btn btn--gold" href={r('sponsorship', lang, '#formular')}>{de ? 'Patenschaft anfragen' : fr ? 'Demander un parrainage' : 'Request a sponsorship'}</a>
+            <a class="btn btn--outline" href={r('sponsorship', lang)}>{de ? 'Das Programm kennenlernen' : fr ? 'Découvrir le programme' : 'About the programme'}</a>
+          </div>
+        </div>
+        <div class="panel regular__card">
+          <h3>{de ? 'Dauerspende für unsere Arbeit' : fr ? 'Don régulier pour notre travail' : 'Regular gift for our work'}</h3>
+          <p>{de ? 'Frei verwendbare monatliche Spenden tragen die Arbeit in Berlin, Uganda und Burundi dort, wo gerade keine Förderung greift: Eigenanteile der Projekte, Vorbereitung neuer Anträge, Begleitung der Partner.' : fr ? 'Les dons mensuels libres soutiennent notre travail à Berlin, en Ouganda et au Burundi là où aucun financement n’intervient : parts propres des projets, préparation de nouvelles demandes, accompagnement des partenaires.' : 'Unrestricted monthly gifts carry the work in Berlin, Uganda and Burundi where no grant reaches: the projects’ own contributions, preparing new applications, accompanying the partners.'}</p>
+          {org.donation?.pageUrl
+            ? <p>{de ? 'Wählen Sie im Online-Spendenformular den Rhythmus „monatlich“, per SEPA-Lastschrift oder Überweisung, oder spenden Sie monatlich über PayPal. Oder richten Sie einen Dauerauftrag auf unser GLS-Konto ein (Bankverbindung unten).' : fr ? 'Dans le formulaire de don en ligne, choisissez le rythme « mensuel », par prélèvement SEPA ou virement, ou donnez chaque mois via PayPal. Ou mettez en place un ordre permanent vers notre compte GLS (coordonnées ci-dessous).' : 'In the online donation form choose the rhythm “monthly”, by SEPA direct debit or transfer, or give monthly through PayPal. Or set up a standing order to our GLS account (bank details below).'}</p>
+            : <p>{de ? 'Richten Sie einen Dauerauftrag auf unser GLS-Konto ein (Bankverbindung unten).' : fr ? 'Mettez en place un ordre permanent vers notre compte GLS (coordonnées ci-dessous).' : 'Set up a standing order to our GLS account (bank details below).'}</p>}
+          <div class="btn-row">
+            {org.donation?.pageUrl && <a class="btn btn--dark" href={org.donation.pageUrl} target="_blank" rel="noopener">{de ? 'Monatlich online spenden' : fr ? 'Donner chaque mois en ligne' : 'Give monthly online'}</a>}
+            <a class="btn btn--outline" href="#bank">{de ? 'Bankverbindung' : fr ? 'Coordonnées bancaires' : 'Bank details'}</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
   {org.donation?.pageUrl && (
-    <section class="section section--tight" aria-labelledby="h-online">
+    <section class="section section--tight section--alt" aria-labelledby="h-online">
       <div class="wrap">
         <div class="panel online">
           <div class="online__text">
@@ -41,9 +76,16 @@ const purposes = [
               <a class="btn btn--gold" href={org.donation.pageUrl} target="_blank" rel="noopener">{de ? 'Zum Spendenformular' : fr ? 'Ouvrir le formulaire de don' : 'Open the donation form'}</a>
               <button class="btn btn--outline" type="button" id="load-form" aria-controls="donation-form" aria-expanded="false" data-widget={org.donation.widgetUrl}>{de ? 'Formular hier anzeigen' : fr ? 'Afficher le formulaire sur cette page' : 'Show the form on this page'}</button>
             </div>
+            {org.paypalUrl && (
+              <div class="paypal">
+                <h3 class="h4">{de ? 'Oder mit PayPal' : fr ? 'Ou avec PayPal' : 'Or with PayPal'}</h3>
+                <p>{de ? 'Einmalig oder monatlich über das Spendenkonto von Bantu e.V. bei PayPal. Für eine Zuwendungsbestätigung schreiben Sie uns bitte kurz Ihre Anschrift.' : fr ? 'Une fois ou chaque mois via le compte de dons de Bantu e.V. chez PayPal. Pour un reçu fiscal, envoyez-nous simplement votre adresse.' : 'One-off or monthly through the Bantu e.V. donation account at PayPal. For a donation receipt, just send us your postal address.'}</p>
+                <a class="btn btn--dark" href={org.paypalUrl} rel="noopener" target="_blank"><Icon name="heart" /> {de ? 'Mit PayPal spenden' : fr ? 'Donner avec PayPal' : 'Donate with PayPal'}<span class="sr-only"> {t.newWindow}</span></a>
+              </div>
+            )}
             <p class="small muted">{de
-              ? 'Das Formular wird von unserem Dienstleister twingle bereitgestellt. Erst wenn Sie einen der Knöpfe nutzen, werden Daten (z. B. Ihre IP-Adresse) an twingle übertragen.'
-              : fr ? 'Le formulaire est fourni par notre prestataire twingle. Des données (par exemple votre adresse IP) ne sont transmises à twingle que lorsque vous utilisez l’un des boutons.' : 'The form is provided by our service provider twingle. Data (e.g. your IP address) is only transferred to twingle when you use one of the buttons.'} <a href={r('privacy', lang)}>{de ? 'Mehr zum Datenschutz' : fr ? 'En savoir plus sur la confidentialité' : 'More on privacy'}</a></p>
+              ? 'Das Formular wird von unserem Dienstleister twingle bereitgestellt. Erst wenn Sie einen der Knöpfe nutzen, werden Daten (z. B. Ihre IP-Adresse) an twingle übertragen. Der PayPal-Knopf führt zur Spendenseite von PayPal; auch dorthin werden Daten erst beim Klick übertragen.'
+              : fr ? 'Le formulaire est fourni par notre prestataire twingle. Des données (par exemple votre adresse IP) ne sont transmises à twingle que lorsque vous utilisez l’un des boutons. Le bouton PayPal mène à la page de dons de PayPal ; là aussi, des données ne sont transmises qu’au clic.' : 'The form is provided by our service provider twingle. Data (e.g. your IP address) is only transferred to twingle when you use one of the buttons. The PayPal button leads to PayPal’s donation page; data is transferred there only when you click.'} <a href={r('privacy', lang)}>{de ? 'Mehr zum Datenschutz' : fr ? 'En savoir plus sur la confidentialité' : 'More on privacy'}</a></p>
           </div>
           <div id="donation-form" class="online__form" hidden tabindex="-1" aria-label={de ? 'Online-Spendenformular' : fr ? 'Formulaire de don en ligne' : 'Online donation form'}></div>
         </div>
@@ -53,7 +95,7 @@ const purposes = [
 
   <section class="section section--tight">
     <div class="wrap donate">
-      <div class="panel bank">
+      <div class="panel bank" id="bank">
         <h2>{de ? 'Per Überweisung' : fr ? 'Par virement' : 'By bank transfer'}</h2>
         <dl class="kv bank__kv">
           <dt>{de ? 'Empfänger' : fr ? 'Titulaire du compte' : 'Account holder'}</dt><dd>{org.bank.holder}</dd>
@@ -63,7 +105,6 @@ const purposes = [
           <dt>{de ? 'Verwendungszweck' : fr ? 'Motif du virement' : 'Reference'}</dt><dd><code id="ref">Spende</code> <button class="copy" type="button" data-copy="ref" data-done={t.copied}>{t.copy}</button></dd>
         </dl>
         <p class="small muted">{de ? 'Für eine Zuwendungsbestätigung geben Sie bitte Ihren Namen und Ihre Anschrift im Verwendungszweck an oder schreiben Sie uns kurz.' : fr ? 'Pour recevoir un reçu fiscal, indiquez votre nom et votre adresse dans le motif du virement ou envoyez-nous un court e-mail.' : 'For a donation receipt, please include your name and address in the reference or send us a short e-mail.'}</p>
-        {org.paypalUrl && <p><a class="btn btn--outline" href={org.paypalUrl} rel="noopener">PayPal</a></p>}
       </div>
       <div>
         <h2>{de ? 'Wofür möchten Sie spenden?' : fr ? 'Que souhaitez-vous soutenir ?' : 'What would you like to support?'}</h2>
@@ -159,10 +200,23 @@ const purposes = [
   });
 </script>
 <style>
+  .trust { list-style: none; padding: 0; margin: 1.25rem 0 0; display: flex; flex-wrap: wrap; gap: .5rem 1.5rem; font-size: .95rem; font-weight: 600; }
+  .trust li { display: inline-flex; align-items: center; gap: .45rem; margin: 0; }
+  .trust__ic { width: 1.15em; height: 1.15em; color: var(--green-text); flex: none; }
+  .regular { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr); gap: clamp(1rem, 3vw, 2rem); align-items: stretch; }
+  .regular__card h3 { margin-top: 0; font-size: 1.3rem; }
+  .regular__card--gold { border-top: 6px solid var(--gold); }
+  .regular__card:not(.regular__card--gold) { border-top: 6px solid var(--green); }
+  .regular__card .btn-row { margin-top: 1rem; }
+  @media (max-width: 860px) { .regular { grid-template-columns: 1fr; } }
+  .bank { scroll-margin-top: calc(var(--header-h, 90px) + 1rem); }
   .online { border-top: 6px solid var(--green); display: grid; gap: 1.25rem; }
   .online h2 { margin-top: 0; }
   .online__text p { max-width: 68ch; }
   .online__text .small { margin-top: 1rem; }
+  .paypal { margin-top: 1.25rem; padding-top: 1rem; border-top: 1px solid var(--line); }
+  .paypal .h4 { font-size: 1.05rem; margin: 0 0 .4rem; }
+  .paypal p { margin: 0 0 .75rem; }
   .online__form { min-height: 200px; border-radius: 12px; }
   .online__form:focus { outline: 3px solid var(--focus); outline-offset: 4px; }
   .donate { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(1.5rem, 4vw, 3rem); align-items: start; }

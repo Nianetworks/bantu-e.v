@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import PageHead from '../components/PageHead.astro';
+import Icon from '../components/Icon.astro';
 import { href, r, type Lang } from '../i18n';
 import { downloads, groups, withVersion } from '../data/downloads';
 
@@ -9,13 +10,15 @@ const { lang } = Astro.props;
 const de = lang === 'de';
 const fr = lang === 'fr';
 const title = 'Downloads';
-const lead = de ? 'Berichte, Formulare, Flyer und Logos von Bantu e.V.' : fr ? 'Rapports, formulaires, dépliants et logos de Bantu e.V.' : 'Reports, forms, flyers and logos of Bantu e.V.';
+const lead = de ? 'Formulare und Flyer von Bantu e.V. Unsere Jahres-, Transparenz- und Projektberichte finden Sie auf der Seite Berichte.' : fr ? 'Formulaires et dépliants de Bantu e.V. Nos rapports annuels, de transparence et de projet se trouvent sur la page Rapports.' : 'Forms and flyers of Bantu e.V. Our annual, transparency and project reports are on the Reports page.';
+// Reports live on /berichte/ (audit 09.11.2026: do not mix reports with forms and flyers).
+const shown = groups.filter((g) => g.id !== 'reports' && g.id !== 'projectReports');
 ---
 <Base lang={lang} title={title} description={lead} altHref={r('downloads', de ? 'en' : 'de')}>
   <PageHead lang={lang} title={title} lead={lead} crumbs={[{ label: de ? 'Wirkung' : fr ? 'Impact' : 'Impact', href: r('impact', lang) }]} />
   <section class="section section--tight">
     <div class="wrap dl-groups">
-      {groups.map((g) => (
+      {shown.map((g) => (
         <section class="dl-group">
           <h2>{g.title[lang]}</h2>
           {g.intro && <p class="muted">{g.intro[lang]}</p>}
@@ -32,6 +35,7 @@ const lead = de ? 'Berichte, Formulare, Flyer und Logos von Bantu e.V.' : fr ? '
           </ul>
         </section>
       ))}
+      <p><a class="btn btn--outline" href={r('reports', lang)}><Icon name="report" /> {de ? 'Zu den Berichten' : fr ? 'Voir les rapports' : 'Go to the reports'}</a></p>
       <div class="notice notice--info">{de ? 'Sie suchen ein Dokument, das hier fehlt (z. B. Satzung oder Freistellungsbescheid)? Schreiben Sie uns an info@bantu-ev.org.' : fr ? 'Vous cherchez un document qui ne figure pas ici (par exemple les statuts ou l’avis d’exonération) ? Écrivez à info@bantu-ev.org.' : 'Looking for a document that is not listed (e.g. statutes or tax exemption notice)? Write to info@bantu-ev.org.'}</div>
     </div>
   </section>

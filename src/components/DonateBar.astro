@@ -1,0 +1,34 @@
+---
+// Sticky giving bar for small screens (audit 09.11.2026): whenever the header uses the compact (burger) menu, the donate
+// button is hidden inside the menu, so a visitor reading a long page has no visible way to give. The bar shows "Spenden"
+// and the monthly path (Education into the Future). Hidden on the donate and sponsorship pages (they carry their own
+// calls to action), while the mobile menu is open, and in print. The body gets bottom padding so nothing is covered.
+import Icon from './Icon.astro';
+import { r, ui, type Lang } from '../i18n';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const de = lang === 'de';
+const fr = lang === 'fr';
+const path = Astro.url.pathname;
+const hide = [r('donate', lang), r('sponsorship', lang)].some((p) => path.startsWith(p.split('#')[0]));
+// Same breakpoints as the header's compact menu (Header.astro): below 1280 px, and always with enlarged text.
+const levels: [string, number][] = [['', 1279], ['html[data-text="lg"] ', 99999], ['html[data-text="xl"] ', 99999], ['html[data-text="xxl"] ', 99999]];
+// body:has(.donate-bar): no script needed; browsers without :has() simply never show the bar.
+const css = levels.map(([pre, w]) => `@media (max-width: ${w}px) { ${pre}body:has(.donate-bar):not(.nav-open) .donate-bar { display: flex; } ${pre}body:has(.donate-bar):not(.nav-open) { padding-bottom: var(--donate-bar-space, 5.5rem); } }`).join('\n');
+---
+{!hide && (
+  <aside class="donate-bar" aria-label={de ? 'Spenden und Patenschaft' : fr ? 'Dons et parrainage' : 'Donate and sponsor'}>
+    <a class="btn btn--gold" href={r('donate', lang)}><Icon name="heart" /> {ui[lang].donate}</a>
+    <a class="btn btn--outline" href={r('sponsorship', lang)}>{de ? 'Monatlich helfen' : fr ? 'Aider chaque mois' : 'Give monthly'}</a>
+  </aside>
+)}
+<style is:global>
+  .donate-bar { display: none; position: fixed; inset: auto 0 0 0; z-index: 40; flex-wrap: wrap; justify-content: center; gap: .5rem; padding: .6rem var(--gutter) calc(.6rem + env(safe-area-inset-bottom, 0px)); background: var(--surface); border-top: 1px solid var(--line); box-shadow: var(--shadow); }
+  .donate-bar .btn { flex: 1 1 auto; max-width: 20rem; justify-content: center; white-space: nowrap; }
+  /* When the two buttons wrap onto two lines (very narrow screens, or enlarged text on phones) the page needs more room. */
+  @media (max-width: 340px) { body { --donate-bar-space: 8.5rem; } }
+  @media (max-width: 480px) { html[data-text="lg"] body, html[data-text="xl"] body, html[data-text="xxl"] body { --donate-bar-space: 8.5rem; } }
+  html[data-theme="contrast"] .donate-bar { border-top: 2px solid #fff; box-shadow: none; }
+  @media print { .donate-bar { display: none !important; } body { padding-bottom: 0 !important; } }
+</style>
+<style is:global set:html={css}></style>

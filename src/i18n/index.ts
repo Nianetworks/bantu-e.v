@@ -20,6 +20,8 @@ export const routes = {
   donate: { de: '/spenden/', en: '/en/donate/', fr: '/fr/faire-un-don/' },
   join: { de: '/mitmachen/', en: '/en/get-involved/', fr: '/fr/s-engager/' },
   sponsorship: { de: '/mitmachen/bildungspatenschaft/', en: '/en/get-involved/education-sponsorship/', fr: '/fr/s-engager/parrainage-educatif/' },
+  search: { de: '/suche/', en: '/en/search/', fr: '/fr/recherche/' },
+  partners: { de: '/mitmachen/unternehmen-und-stiftungen/', en: '/en/get-involved/companies-and-foundations/', fr: '/fr/s-engager/entreprises-et-fondations/' },
   contact: { de: '/kontakt/', en: '/en/contact/', fr: '/fr/contact/' },
   imprint: { de: '/impressum/', en: '/en/imprint/', fr: '/fr/mentions-legales/' },
   privacy: { de: '/datenschutz/', en: '/en/privacy/', fr: '/fr/confidentialite/' },
@@ -63,6 +65,7 @@ export const ui = {
     skipNav: 'Zur Navigation springen',
     skipFooter: 'Zum Kontakt springen',
     a11y: 'Barrierefreiheit',
+    search: 'Suche',
     easy: 'Einfache Sprache',
     newWindow: '(öffnet in neuem Fenster)',
     overview: 'Übersicht',
@@ -114,6 +117,7 @@ export const ui = {
     skipNav: 'Skip to navigation',
     skipFooter: 'Skip to contact',
     a11y: 'Accessibility',
+    search: 'Search',
     easy: 'Easy read',
     newWindow: '(opens in a new window)',
     overview: 'Overview',
@@ -165,6 +169,7 @@ export const ui = {
     skipNav: 'Aller à la navigation',
     skipFooter: 'Aller au contact',
     a11y: 'Accessibilité',
+    search: 'Recherche',
     easy: 'Facile à lire',
     newWindow: '(s’ouvre dans une nouvelle fenêtre)',
     overview: 'Vue d’ensemble',
@@ -240,8 +245,8 @@ export function mainNav(lang: Lang): NavItem[] {
         { label: de ? 'Wirkung in Zahlen' : fr ? 'L’impact en chiffres' : 'Impact in numbers', href: r('impact', lang, '#zahlen') },
         { label: de ? 'Beitrag zu den Nachhaltigkeitszielen' : fr ? 'Contribution aux ODD' : 'Contribution to the SDGs', href: r('impact', lang, '#sdg') },
         { label: de ? 'Erfolgsgeschichten' : fr ? 'Réussites' : 'Success stories', href: r('impact', lang, '#geschichten') },
-        { label: de ? 'Jahres- und Transparenzberichte' : fr ? 'Rapports annuels et de transparence' : 'Annual and transparency reports', href: r('reports', lang) },
-        { label: 'Downloads', href: r('downloads', lang) },
+        { label: de ? 'Berichte' : fr ? 'Rapports' : 'Reports', href: r('reports', lang) },
+        { label: de ? 'Downloads: Formulare und Flyer' : fr ? 'Téléchargements : formulaires et dépliants' : 'Downloads: forms and flyers', href: r('downloads', lang) },
       ],
     },
     {
@@ -261,10 +266,12 @@ export function mainNav(lang: Lang): NavItem[] {
         { label: de ? 'Ehrenamt' : fr ? 'Bénévolat' : 'Volunteer', href: r('join', lang, '#volunteer') },
         { label: de ? 'Bildungsangebote anfragen' : fr ? 'Demander un atelier ou une formation' : 'Book a workshop or training', href: r('offers', lang) },
         { label: de ? 'Kooperationen' : fr ? 'Coopérer avec nous' : 'Partner with us', href: r('join', lang, '#cooperation') },
-        { label: de ? 'Kontakt' : fr ? 'Contact' : 'Contact', href: r('contact', lang) },
+        { label: de ? 'Unternehmen & Stiftungen' : fr ? 'Entreprises et fondations' : 'Companies & foundations', href: r('partners', lang) },
       ],
     },
     // Charity shop as its own top-level item, right before the donate button (chair's decision 08.11.2026).
     { label: fr ? 'Boutique' : 'Shop', href: r('shop', lang) },
+    // Contact as a top-level item (audit 09.11.2026: never hide the contact page in a sub-menu).
+    { label: ui[lang].contact, href: r('contact', lang) },
   ];
 }

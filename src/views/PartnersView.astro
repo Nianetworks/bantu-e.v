@@ -1,0 +1,173 @@
+---
+// Partnerships with companies and foundations (audit 09.11.2026: a clear entry for corporate and foundation partners).
+// Everything here describes how Bantu e.V. already works (partners in the South, receipts for every payment, annual and
+// transparency reports, ITZ membership) and invites the forms of cooperation that exist: project co-funding, group
+// sponsorships in Education into the Future, global-learning workshops with AfricAvenir, events and in-kind support.
+// No amounts, no named partner companies (none on record). Tax wording stays general: donations get a receipt;
+// sponsoring with a service in return needs an agreement.
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import Icon from '../components/Icon.astro';
+import Phones from '../components/Phones.astro';
+import { href, r, type Lang } from '../i18n';
+import { org } from '../data/site';
+import { funders } from '../data/people';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const de = lang === 'de';
+const fr = lang === 'fr';
+const T = (d: string, e: string, f: string) => (de ? d : fr ? f : e);
+const title = T('Unternehmen und Stiftungen', 'Companies and foundations', 'Entreprises et fondations');
+const lead = T(
+  'Bildungsgerechtigkeit braucht Partner, die länger denken als ein Projektjahr. Wir laden Unternehmen, Stiftungen und Familienstiftungen ein, mit uns zu arbeiten: in Berlin, Uganda und Burundi.',
+  'Educational justice needs partners who think beyond a single project year. We invite companies, foundations and family foundations to work with us: in Berlin, Uganda and Burundi.',
+  'La justice éducative a besoin de partenaires qui pensent au-delà d’une année de projet. Nous invitons entreprises, fondations et fondations familiales à travailler avec nous : à Berlin, en Ouganda et au Burundi.',
+);
+const mail = (s: string) => `mailto:${org.email}?subject=${encodeURIComponent(s)}`;
+const principles = [
+  { icon: 'people', h: T('Partner vor Ort entscheiden mit', 'Local partners decide with us', 'Les partenaires locaux décident avec nous'), p: T('Unsere Projekte in Uganda und Burundi setzen Organisationen vor Ort um: Anchored Bridges Initiatives (ABI) in Kampala, die Nyentsya Community Development Association in Mbarara, WIV-HR in Bujumbura. Sie kennen die Schulen, Familien und Behörden; wir bringen Förderung, Verwaltung und Berichtswesen ein.', 'Our projects in Uganda and Burundi are carried out by local organisations: Anchored Bridges Initiatives (ABI) in Kampala, the Nyentsya Community Development Association in Mbarara, WIV-HR in Bujumbura. They know the schools, families and authorities; we contribute funding, administration and reporting.', 'Nos projets en Ouganda et au Burundi sont mis en œuvre par des organisations locales : Anchored Bridges Initiatives (ABI) à Kampala, la Nyentsya Community Development Association à Mbarara, WIV-HR à Bujumbura. Elles connaissent les écoles, les familles et les autorités ; nous apportons financement, administration et rapports.') },
+  { icon: 'report', h: T('Jede Zahlung mit Beleg', 'Every payment documented', 'Chaque paiement documenté'), p: T('Wir arbeiten seit Jahren mit öffentlichen Mitteln (Stiftung Nord-Süd-Brücken, BMZ, Engagement Global, Land Berlin) und legen dafür Verwendungsnachweise mit Belegliste vor. Denselben Maßstab legen wir an Partnermittel an: Gebühren gegen Rechnung, Ausgaben mit Beleg, Berichte mit Zahlen.', 'We have worked with public funds for years (Stiftung Nord-Süd-Brücken, BMZ, Engagement Global, the State of Berlin) and account for them with itemised financial reports. We apply the same standard to partner funds: fees against invoices, expenses with receipts, reports with figures.', 'Nous travaillons depuis des années avec des fonds publics (Stiftung Nord-Süd-Brücken, BMZ, Engagement Global, Land de Berlin) et en rendons compte par des décomptes détaillés. Nous appliquons la même rigueur aux fonds de nos partenaires : frais sur facture, dépenses justifiées, rapports chiffrés.') },
+  { icon: 'chart', h: T('Transparenz als Grundsatz', 'Transparency as a principle', 'La transparence comme principe'), p: T('Bantu e.V. veröffentlicht jedes Jahr einen Jahresbericht und einen Transparenzbericht und ist Mitglied der Initiative Transparente Zivilgesellschaft. Partner sehen, was mit ihrem Beitrag geschieht.', 'Bantu e.V. publishes an annual report and a transparency report every year and is a member of the Transparent Civil Society Initiative. Partners can see what happens with their contribution.', 'Bantu e.V. publie chaque année un rapport annuel et un rapport de transparence et est membre de l’Initiative pour une société civile transparente. Les partenaires voient ce que devient leur contribution.') },
+];
+const forms = [
+  { icon: 'globe', h: T('Projektförderung und Kofinanzierung', 'Project funding and co-funding', 'Financement et cofinancement de projets'), p: T('Öffentliche Förderprogramme verlangen Eigenmittel und decken nicht alles ab. Mit Ihrem Beitrag sichern Sie den Eigenanteil eines geförderten Projekts, schließen eine Lücke im Finanzierungsplan oder ermöglichen ein Vorhaben, das noch keine öffentliche Förderung hat, zum Beispiel ein Folgejahr nach dem Ende einer Förderphase.', 'Public funding programmes require own contributions and do not cover everything. Your contribution secures the own share of a funded project, closes a gap in the financing plan or makes a venture possible that has no public funding yet, for example a follow-on year after a funded phase ends.', 'Les programmes publics exigent des fonds propres et ne couvrent pas tout. Votre contribution assure la part propre d’un projet financé, comble une lacune du plan de financement ou rend possible un projet sans financement public, par exemple une année de suite après la fin d’une phase financée.'), link: r('projects', lang), label: T('Unsere Projekte', 'Our projects', 'Nos projets') },
+  { icon: 'school', h: T('Bildungspatenschaften als Unternehmen oder Stiftung', 'Group sponsorships for companies and foundations', 'Parrainages groupés pour entreprises et fondations'), p: T('Im Programm „Education into the Future“ übernehmen Sie mehrere Plätze auf einmal, etwa eine Klasse an einer weiterführenden Schule oder Ausbildungsplätze in Pflege und Hebammenwesen, oder Sie finanzieren eine Maßnahme zur Barrierefreiheit. Richtwerte: 25, 40 oder 70 EUR je Platz und Monat. Sie erhalten mindestens einmal im Jahr einen Bericht zur geförderten Bildungsstufe.', 'In the “Education into the Future” programme you take on several places at once, for example a class at a secondary school or training places in nursing and midwifery, or you fund an accessibility measure. Guide values: 25, 40 or 70 EUR per place and month. You receive a report on the supported stage at least once a year.', 'Dans le programme « Education into the Future », vous prenez plusieurs places à la fois, par exemple une classe dans le secondaire ou des places de formation en soins infirmiers et obstétricaux, ou vous financez une mesure d’accessibilité. Valeurs indicatives : 25, 40 ou 70 EUR par place et par mois. Vous recevez au moins une fois par an un rapport sur l’étape soutenue.'), link: r('sponsorship', lang), label: T('Zum Programm', 'About the programme', 'Voir le programme') },
+  { icon: 'text', h: T('Globales Lernen für Ihr Team', 'Global learning for your team', 'Éducation globale pour votre équipe'), p: T('Gemeinsam mit AfricAvenir International e.V. bieten wir Workshops und Fortbildungen zu globaler Gerechtigkeit, Rassismuskritik, Kolonialgeschichte und den Nachhaltigkeitszielen an. Für Unternehmen und Stiftungen passen wir Formate für Teams, Führungskräfte oder Auszubildende an.', 'Together with AfricAvenir International e.V. we offer workshops and trainings on global justice, anti-racism, colonial history and the Sustainable Development Goals. For companies and foundations we adapt formats for teams, managers or trainees.', 'Avec AfricAvenir International e.V., nous proposons des ateliers et formations sur la justice globale, l’antiracisme, l’histoire coloniale et les objectifs de développement durable. Pour les entreprises et fondations, nous adaptons les formats aux équipes, aux cadres ou aux apprentis.'), link: r('offers', lang), label: T('Bildungsangebote', 'Workshops and training', 'Ateliers et formations') },
+  { icon: 'hand', h: T('Veranstaltungen, Sachleistungen, Fachwissen', 'Events, in-kind support, expertise', 'Événements, dons en nature, expertise'), p: T('Räume für Ubuntu Talks und Schulungen, Technik, Druck, Übersetzungen, Rechts- oder IT-Beratung pro bono: Unterstützung, die keine Spende im engeren Sinn ist, spart uns Mittel für die Arbeit vor Ort. Auch die Begleitung eines Projekts durch Mitarbeitende Ihres Hauses ist möglich.', 'Rooms for Ubuntu Talks and trainings, equipment, printing, translations, pro bono legal or IT advice: support that is not a donation in the narrow sense saves us funds for the work on the ground. Employees of your organisation accompanying a project is possible too.', 'Des salles pour les Ubuntu Talks et les formations, du matériel, l’impression, des traductions, des conseils juridiques ou informatiques pro bono : un soutien qui n’est pas un don au sens strict nous libère des moyens pour le travail sur le terrain. L’accompagnement d’un projet par vos collaborateurs est également possible.'), link: r('events', lang), label: T('Unsere Veranstaltungen', 'Our events', 'Nos événements') },
+];
+const gets = [
+  [T('Zuwendungsbestätigung', 'Donation receipt', 'Reçu fiscal'), T('Bantu e.V. ist als gemeinnützig anerkannt. Für Spenden stellen wir Zuwendungsbestätigungen für das Finanzamt aus. Wenn Sie eine Gegenleistung wünschen, etwa die Nennung Ihres Unternehmens in unserer Kommunikation, ist das Sponsoring; dafür schließen wir eine Vereinbarung, weil es steuerlich anders behandelt wird. Wir klären mit Ihnen vorab, welche Form passt.', 'Bantu e.V. is a registered charity. For donations we issue receipts for the tax office. If you want something in return, such as your company being named in our communication, that is sponsoring; we conclude an agreement for it because it is treated differently for tax purposes. We clarify with you in advance which form fits.', 'Bantu e.V. est reconnue d’intérêt général. Pour les dons, nous délivrons des reçus fiscaux. Si vous souhaitez une contrepartie, par exemple la mention de votre entreprise dans notre communication, il s’agit de sponsoring ; nous concluons alors une convention, car le traitement fiscal est différent. Nous clarifions avec vous à l’avance la forme qui convient.')],
+  [T('Berichte mit Zahlen', 'Reports with figures', 'Des rapports chiffrés'), T('Sie erhalten einen Projekt- oder Programmbericht mit Angaben zu Teilnahme, Ergebnissen und Ausgaben, dazu unseren Jahres- und Transparenzbericht. Auf Wunsch stellen wir Ihnen die Arbeit in Ihrem Haus vor.', 'You receive a project or programme report with figures on participation, results and expenditure, plus our annual and transparency report. On request we present the work at your premises.', 'Vous recevez un rapport de projet ou de programme avec des chiffres sur la participation, les résultats et les dépenses, ainsi que notre rapport annuel et notre rapport de transparence. Sur demande, nous présentons le travail dans vos locaux.')],
+  [T('Sichtbarkeit, wenn Sie es wünschen', 'Visibility, if you wish', 'De la visibilité, si vous le souhaitez'), T('Wir nennen Partner auf der Projektseite und im Jahresbericht, wenn sie das möchten. Kinder und Lernende zeigen wir nie ohne Einwilligung; Fotos und Geschichten entstehen mit den Menschen, nicht über sie.', 'We name partners on the project page and in the annual report if they wish. We never show children and learners without consent; photos and stories are made with people, not about them.', 'Nous mentionnons les partenaires sur la page du projet et dans le rapport annuel s’ils le souhaitent. Nous ne montrons jamais d’enfants ou d’élèves sans consentement ; photos et récits se font avec les personnes, pas à leur sujet.')],
+  [T('Eine Ansprechperson', 'One contact person', 'Un interlocuteur unique'), T('Der Vorstand begleitet jede Partnerschaft persönlich, von der ersten Idee bis zum Bericht. Entscheidungen fallen schnell, weil wir ein kleiner Verein sind.', 'The board accompanies every partnership personally, from the first idea to the report. Decisions are quick because we are a small association.', 'Le conseil d’administration accompagne chaque partenariat personnellement, de la première idée au rapport. Les décisions sont rapides, car nous sommes une petite association.')],
+];
+const steps = [
+  T('Sie schreiben uns, was Sie bewegt: ein Thema, eine Region, ein Budgetrahmen oder einfach die Frage, wo Hilfe gerade am meisten bewirkt.', 'You write to us about what moves you: a topic, a region, a budget range or simply the question where help makes the biggest difference right now.', 'Vous nous écrivez ce qui vous tient à cœur : un thème, une région, un budget ou simplement la question de savoir où l’aide est la plus utile en ce moment.'),
+  T('Wir schlagen innerhalb von zwei Wochen ein bis zwei konkrete Möglichkeiten vor, mit Zahlen aus den Finanzierungsplänen unserer Projekte.', 'Within two weeks we propose one or two concrete options, with figures from our projects’ financing plans.', 'Sous deux semaines, nous proposons une ou deux possibilités concrètes, avec des chiffres issus des plans de financement de nos projets.'),
+  T('Wir halten die Zusammenarbeit schriftlich fest: Zweck, Zeitraum, Berichte, Nennung. Dann geht es los.', 'We put the cooperation in writing: purpose, period, reports, naming. Then we start.', 'Nous formalisons la coopération par écrit : objet, durée, rapports, mention. Puis nous commençons.'),
+];
+const logoFunders = funders.filter((f) => f.logo);
+---
+<Base lang={lang} title={`${title}: ${T('Partnerschaften mit Bantu e.V.', 'Partnerships with Bantu e.V.', 'Partenariats avec Bantu e.V.')}`} description={lead} altHref={r('partners', de ? 'en' : 'de')}>
+  <PageHead lang={lang} title={title} lead={lead} eyebrow={T('Partnerschaften', 'Partnerships', 'Partenariats')} crumbs={[{ label: T('Mitmachen', 'Get involved', 'S’engager'), href: r('join', lang) }]}>
+    <div class="btn-row head-ctas">
+      <a class="btn btn--gold" href="#kontakt">{T('Gespräch vereinbaren', 'Arrange a conversation', 'Prendre rendez-vous')}</a>
+      <a class="btn btn--outline" href="#formen">{T('Formen der Zusammenarbeit', 'Forms of cooperation', 'Formes de coopération')}</a>
+    </div>
+  </PageHead>
+
+  <section class="section section--tight" aria-labelledby="h-principles">
+    <div class="wrap">
+      <h2 id="h-principles">{T('So arbeiten wir', 'How we work', 'Notre façon de travailler')}</h2>
+      <div class="grid grid--3 principles">
+        {principles.map((c) => (
+          <div class="panel principle">
+            <span class="icon-badge" aria-hidden="true"><Icon name={c.icon as any} /></span>
+            <h3>{c.h}</h3>
+            <p>{c.p}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--alt" id="formen" aria-labelledby="h-forms">
+    <div class="wrap">
+      <div class="section-head"><div><h2 id="h-forms">{T('Formen der Zusammenarbeit', 'Forms of cooperation', 'Formes de coopération')}</h2><p>{T('Vier Wege, die sich bewährt haben. Mischformen sind möglich; wir richten uns nach dem, was zu Ihrem Haus passt.', 'Four proven ways. Combinations are possible; we follow what suits your organisation.', 'Quatre voies qui ont fait leurs preuves. Les combinaisons sont possibles ; nous nous adaptons à ce qui convient à votre organisation.')}</p></div></div>
+      <ol class="forms" role="list">
+        {forms.map((c, i) => (
+          <li class="card form-card">
+            <div class="form-card__top"><span class="icon-badge" aria-hidden="true"><Icon name={c.icon as any} /></span><span class="form-card__no">{String(i + 1).padStart(2, '0')}</span></div>
+            <h3>{c.h}</h3>
+            <p>{c.p}</p>
+            <a class="link-arrow form-card__link" href={c.link}>{c.label}</a>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="h-gets">
+    <div class="wrap gets">
+      <div>
+        <h2 id="h-gets">{T('Was Sie von uns bekommen', 'What you get from us', 'Ce que nous vous apportons')}</h2>
+        <dl class="gets__list">
+          {gets.map(([h, p]) => <div class="gets__item"><dt>{h}</dt><dd>{p}</dd></div>)}
+        </dl>
+      </div>
+      <div class="panel steps-panel">
+        <h3>{T('So kommen wir zusammen', 'How we get started', 'Comment nous commençons')}</h3>
+        <ol class="steps">{steps.map((s) => <li>{s}</li>)}</ol>
+        <a class="btn btn--gold" href="#kontakt">{T('Jetzt Kontakt aufnehmen', 'Get in touch now', 'Nous contacter')}</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--alt" aria-labelledby="h-funders">
+    <div class="wrap">
+      <h2 id="h-funders">{T('Wer uns bereits fördert', 'Who already funds our work', 'Qui soutient déjà notre travail')}</h2>
+      <p class="muted">{T('Öffentliche Förderer, Stiftungen und Partnerorganisationen, mit denen wir in den letzten Jahren gearbeitet haben.', 'Public funders, foundations and partner organisations we have worked with in recent years.', 'Bailleurs publics, fondations et organisations partenaires avec lesquels nous avons travaillé ces dernières années.')}</p>
+      <ul class="funders" role="list">
+        {logoFunders.map((f) => (
+          <li><a class="funder" href={f.url} rel="noopener"><span class="funder__plate"><img src={href(f.logo!)} alt="" loading="lazy" /></span><span class="funder__name">{f.name[lang]}</span><span class="small muted">{f.note[lang]}</span></a></li>
+        ))}
+      </ul>
+      <p><a class="link-arrow" href={r('people', lang)}>{T('Alle Partnerorganisationen und Förderer', 'All partner organisations and funders', 'Toutes les organisations partenaires et bailleurs')}</a></p>
+    </div>
+  </section>
+
+  <section class="section section--deep" id="kontakt" aria-labelledby="h-contact">
+    <div class="wrap contact">
+      <div>
+        <div class="eyebrow">{T('Kontakt', 'Contact', 'Contact')}</div>
+        <h2 id="h-contact">{T('Lassen Sie uns sprechen', 'Let’s talk', 'Parlons-en')}</h2>
+        <p>{T('Ob eine erste Frage oder ein konkretes Budget: Schreiben Sie dem Vorstand oder rufen Sie an. Wir antworten innerhalb weniger Tage.', 'Whether a first question or a concrete budget: write to the board or call. We answer within a few days.', 'Qu’il s’agisse d’une première question ou d’un budget concret : écrivez au conseil d’administration ou appelez. Nous répondons sous quelques jours.')}</p>
+        <div class="btn-row">
+          <a class="btn btn--gold" href={mail(T('Partnerschaft mit Bantu e.V.', 'Partnership with Bantu e.V.', 'Partenariat avec Bantu e.V.'))}><Icon name="mail" /> {org.email}</a>
+          <a class="btn btn--light" href={r('contact', lang)}>{T('Kontaktformular', 'Contact form', 'Formulaire de contact')}</a>
+        </div>
+      </div>
+      <div class="contact__side">
+        <p class="contact__who"><strong>{org.board[0]?.name}</strong><br />{org.board[0]?.role[lang]}</p>
+        <Phones lang={lang} variant="plain" />
+        <p class="small">{org.name}<br />{org.address.street}, {org.address.zip} {org.address.city}</p>
+      </div>
+    </div>
+  </section>
+</Base>
+<style>
+  .head-ctas { margin-top: 1.5rem; }
+  .principle .icon-badge { margin-bottom: 1rem; }
+  .principle h3 { font-size: 1.2rem; hyphens: auto; overflow-wrap: anywhere; }
+  .principle p { margin: 0; color: var(--ink-2); }
+  .forms { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr)); gap: 1.25rem; }
+  .form-card { padding: 1.5rem; gap: .6rem; }
+  .form-card__top { display: flex; justify-content: space-between; align-items: center; margin-bottom: .5rem; }
+  .form-card__no { font-family: var(--font-serif); font-weight: 700; font-size: 1.6rem; color: var(--muted); }
+  .form-card h3 { font-size: 1.2rem; margin: 0; hyphens: auto; overflow-wrap: anywhere; }
+  .form-card p { margin: 0; color: var(--ink-2); }
+  .form-card__link { margin-top: auto; padding-top: .5rem; font-weight: 700; min-height: var(--tap); display: inline-flex; align-items: center; }
+  .gets { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, .8fr); gap: clamp(1.5rem, 5vw, 4rem); align-items: start; }
+  .gets__list { margin: 0; display: grid; gap: 1rem; }
+  .gets__item { padding: 1rem 0 0; border-top: 2px solid var(--line); }
+  .gets__item dt { font-family: var(--font-serif); font-weight: 700; font-size: 1.15rem; margin-bottom: .3rem; }
+  .gets__item dd { margin: 0; color: var(--ink-2); max-width: 66ch; }
+  .steps-panel { border-top: 6px solid var(--gold); position: sticky; top: calc(var(--header-h, 90px) + 1rem); }
+  .steps-panel h3 { margin-top: 0; font-size: 1.2rem; }
+  .steps { padding-left: 1.3rem; margin: 0 0 1.25rem; }
+  .steps li { margin: .5rem 0; }
+  .funders { list-style: none; padding: 0; margin: 1.5rem 0 1rem; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 13rem), 1fr)); gap: 1rem; }
+  .funder { display: flex; flex-direction: column; gap: .35rem; height: 100%; padding: 1rem; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); text-decoration: none; color: var(--ink); }
+  .funder:hover { border-color: var(--line-strong); box-shadow: var(--shadow); }
+  .funder:hover .funder__name { text-decoration: underline; }
+  .funder__plate { display: grid; place-items: center; height: 72px; padding: .5rem .75rem; background: #fff; border: 1px solid var(--line); border-radius: 10px; }
+  .funder__plate img { max-width: 100%; max-height: 100%; object-fit: contain; }
+  .funder__name { font-weight: 700; margin-top: .4rem; hyphens: auto; overflow-wrap: anywhere; }
+  .contact { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, .8fr); gap: clamp(1.5rem, 5vw, 4rem); align-items: center; }
+  .contact p { max-width: 60ch; color: var(--on-deep-muted); }
+  .contact .btn-row { margin-top: 1.25rem; }
+  .contact__side { border-left: 4px solid var(--gold); padding-left: 1.25rem; }
+  .contact__who { color: var(--on-deep); }
+  @media (max-width: 900px) { .gets, .contact { grid-template-columns: 1fr; } .steps-panel { position: static; } }
+</style>

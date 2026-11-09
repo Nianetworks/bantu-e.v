@@ -95,12 +95,12 @@ Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), 
 Header always set Strict-Transport-Security "max-age=31536000"
 Header always set Cross-Origin-Opener-Policy "same-origin-allow-popups"
 Header always set X-Permitted-Cross-Domain-Policies "none"
-Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' https://*.twingle.de; style-src 'self' 'unsafe-inline' https://*.twingle.de; img-src 'self' data: https:; font-src 'self' data: https://*.twingle.de; connect-src 'self' https://*.twingle.de; frame-src https://*.twingle.de; form-action 'self' mailto: https://*.twingle.de; frame-ancestors 'self'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests"
+Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval' https://*.twingle.de; style-src 'self' 'unsafe-inline' https://*.twingle.de; img-src 'self' data: https:; font-src 'self' data: https://*.twingle.de; connect-src 'self' https://*.twingle.de; frame-src https://*.twingle.de; form-action 'self' mailto: https://*.twingle.de; frame-ancestors 'self'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests"
 Header always unset X-Powered-By
-<FilesMatch "\\.(html|xml)$">
+<FilesMatch "\\.(html|xml|json)$">
 Header set Cache-Control "no-cache"
 </FilesMatch>
-<FilesMatch "\\.(css|js|woff2?|webp|png|jpe?g|svg|ico|pdf|mp4)$">
+<FilesMatch "\\.(css|js|woff2?|webp|png|jpe?g|svg|ico|pdf|mp4|pagefind|pf_meta|pf_index|pf_fragment)$">
 Header set Cache-Control "public, max-age=2592000"
 </FilesMatch>
 </IfModule>

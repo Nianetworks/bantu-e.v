@@ -13,7 +13,7 @@ Static, trilingual (DE default, EN under `/en/`, FR under `/fr/`) website of **B
 ```bash
 npm ci                 # install (Node >= 22.23)
 npm run dev            # local dev server http://localhost:4321
-npm run build          # astro build + postbuild clean-up (dist/)
+npm run build          # astro build + postbuild clean-up + pagefind search index (dist/)
 npm run check:open     # list all "OPEN:" items (content still to confirm)
 npm run migrate:wp     # one-off export of the old WordPress pages + media into migration/
 ```
@@ -41,6 +41,31 @@ src/views/SponsorshipView.astro + public/mitmachen/patenschaft.php   "Education 
                         results from the project pages). Also shown as a `services` block on the international education programme page
                         (/auslandsarbeit/bildung/, programmes.ts). Privacy policy section 8. Guide values 25/40/70 EUR per month are
                         guide values; actual costs are confirmed per support plan.
+src/components/DonateBar.astro   giving bar on small screens (audit 09.11.2026): fixed strip with "Spenden" + "Monatlich helfen"
+                        (sponsorship), shown only when the header uses the compact menu (same breakpoints as Header.astro), hidden on
+                        the donate and sponsorship pages, while the menu is open and in print; body gets bottom padding via :has().
+                        NOT a pop-up: no overlay, nothing to dismiss (the chair rejects pop-ups, 09.11.2026). Monthly giving comes
+                        first on /spenden/ ("Regelmäßig helfen": sponsorship + twingle "monatlich") and on the homepage (.monthly).
+src/views/PartnersView.astro   /mitmachen/unternehmen-und-stiftungen/ (route `partners`): partnerships with companies and foundations.
+                        Describes existing practice only (local partners, receipts, reports, ITZ) and the four real forms: project
+                        co-funding, group sponsorships, AfricAvenir workshops, in-kind support. Donations get a receipt; sponsoring
+                        with a service in return needs an agreement. No partner companies named (none on record). Funder logos from
+                        people.ts. Nav child + footer link "Unternehmen & Stiftungen", button in the join page's cooperation section.
+src/views/SearchView.astro + Pagefind   site search /suche/, /en/search/, /fr/recherche/ (route `search`, utility-bar link). `npm run build`
+                        runs `pagefind --site dist` after the postbuild: static index per language in dist/pagefind/ (only <main
+                        data-pagefind-body> is indexed; noindex pages such as 404 and the search pages are skipped). Pagefind Component
+                        UI (self-hosted, no external requests, nothing sent anywhere); theme tokens mapped in SearchView (--pf-*).
+                        CSP has 'wasm-unsafe-eval' for the search engine; .pf_* and .pagefind files cached 30 days, .json no-cache.
+src/views/ContactView.astro   contact page (audit 09.11.2026): consented hero photo (heroSlides), answer promise "48 Stunden an
+                        Werktagen" (⚠️ chair's promise), direct channels (mailto/tel), addresses with OpenStreetMap LINK (no Google
+                        Maps embed, rule 4), press note, mailto-composing form with subjects, inline SVG schematic Berlin/Kampala/
+                        Mbarara/Bujumbura (no map embed). Header: utility-bar link "Kontakt" (no raw e-mail) and top-level "Kontakt"
+                        after Shop (fits in one row at 1280 px, measured 09.11.2026).
+src/views/ReportsView.astro   /berichte/ = all reports (audit 09.11.2026): featured latest Jahresbericht, sections Jahresberichte,
+                        Transparenzberichte, Projektberichte with cover images (public/images/berichte/<pdf name>.webp = page 1 of the
+                        PDF, 480 px; regenerate when a PDF changes) and metadata (PDF · language · size); ITZ ten points below.
+                        /downloads/ = forms and flyers only. Brand assets (logos, guidelines) removed from the site (chair, 09.11.2026);
+                        files remain in public/downloads/logos/ for partners who have the links.
 src/data/downloads.ts   files offered on /downloads and /berichte (live in public/downloads/). Membership forms DE/EN/FR =
                         `membershipForms` (public/downloads/mitgliedschaft/, return address Postfach 120344; versions of 09.11.2026);
                         links carry ?v=<membershipFormVersion> because PDFs are cached 30 days: raise it when a form is replaced.
@@ -66,7 +91,7 @@ src/i18n/index.ts       routes per language (de/en/fr), UI strings, main nav (me
 src/lib/alternates.ts   maps every page to its DE/EN/FR versions (language switch DE · EN · FR, hreflang)
 (no RSS)                The site has NO RSS feed and no feed information pages (chair, 09.11.2026: misleading for visitors).
                         Former /…/rss.xml and the short-lived follow pages 301-redirect to the news pages (redirects.mjs fileRedirects).
-                        "Follow us" = social media only (org.socials: Instagram, Facebook, X) via the SocialLinks component.
+                        "Follow us" = social media only (org.socials: Instagram, Facebook, X, LinkedIn since 09.11.2026) via the SocialLinks component.
 src/data/sdgs.ts        SDG names; icons in public/sdg/ (SdgIcons component)
 src/lib/schema.ts       JSON-LD @graph (NGO + WebSite on every page; Event nodes from news files with type: event)
 public/partners/        partner logos (OrgCard); public/funders/ funder logos
@@ -100,7 +125,7 @@ docs/                   plan, go-live/DNS, legal & shop, photo brief, editing gu
 5. **Funding acknowledgements are contractual.** Keep `fundingNote`, `fundingLogos`, `disclaimer` exactly as the funder requires (P 26/224 BIKO, P 26/214 Engagement Global/BMZ, MI2026-24B MITTEinander aktiv). Missing logos = OPEN items.
 6. **Brand (Guidelines v2.1, Nov 2026):** original logo only (globe + interwoven green/blue peace sign + 8 rings, name *below* the emblem). Never use the July-2026 redesign concepts or `bantu_logo.svg`. Stacked logo ≥ 120 px wide; emblem-only ≥ 48 px only in very small spaces. Colours: Gold #FEBF00, Green #3CB04B, Blue #749BCA, Black; text-safe #8A6200 / #2E8A3B / #3F6FA6. Fonts: Noto Serif (headlines), Archivo (text).
 7. **Language parity:** every project/news file exists in `de/`, `en/` and `fr/` with the same file name. German is binding for funder/authority wording (funding sentences stay German, with a translation after it). Views use `de ? 'DE' : fr ? 'FR' : 'EN'`. Write like a person: no em/en dashes as punctuation (ranges like 2021–2025 are fine), no filler phrases.
-10. **Navigation:** Über uns · Inlandsarbeit · Internationale Zusammenarbeit (mega menus: programme → current projects; completed projects only via the archive link `/projekte/#archiv`, `/en/projects/#archive`, `/fr/projets/#archives`) · Wirkung · Aktuelles · Mitmachen · Shop (own top-level item before the donate button, 08.11.2026). Labels stay on one line; with enlarged text the compact menu is always used. Region programme pages: `/inlandsarbeit/<programm>/`, `/auslandsarbeit/<programm>/`. Education offers with AfricAvenir: `/bildungsangebote/`.
+10. **Navigation:** Über uns · Inlandsarbeit · Internationale Zusammenarbeit (mega menus: programme → current projects; completed projects only via the archive link `/projekte/#archiv`, `/en/projects/#archive`, `/fr/projets/#archives`) · Wirkung · Aktuelles · Mitmachen · Shop (own top-level item before the donate button, 08.11.2026) · Kontakt (top-level, audit 09.11.2026). Labels stay on one line; with enlarged text the compact menu is always used. Region programme pages: `/inlandsarbeit/<programm>/`, `/auslandsarbeit/<programm>/`. Education offers with AfricAvenir: `/bildungsangebote/`.
 11. **Contacts:** office +49 (0)30 26934764; mobile +49 176 34213765 only 16:00–20:00, also Signal, Threema, Telegram, WhatsApp (`Phones` component).
 12. **Funding logos:** EZ-KPF projects show SNSB + BMZ; P 26/214 (SDG fund) SNSB + BMZ + Engagement Global; P 26/224 (BIKO) SNSB + SenBJF; Ubuntu Talks BA Mitte + Club Dialog. SDG icons on project, programme and area pages.
 8. **Accessibility is a core requirement (blind and partially sighted users):** target WCAG 2.2 AA. Semantic HTML and landmarks, one `h1`, no skipped heading levels, alt texts (decorative = `aria-hidden`), visible focus, contrast ≥ 4.5:1 in **all three themes** (light, dark, high contrast), targets ≥ 44 px, no hover-only interactions, no autoplay, `lang` on mixed-language text. Colours only via CSS variables in `global.css` (never hard-code text/background colours in components – they break dark/contrast mode). New pages must pass `node` axe check and the reflow check (see below) with text at 150 %.
@@ -122,7 +147,7 @@ Push to `main` → `.github/workflows/deploy.yml`:
 The server (cPanel account `bantuev`) runs `~/bin/bantu-site-deploy.sh` every 10 minutes (cron) and checks out branch `live` into `~/public_html`; log in `~/logs/bantu-site-deploy.log`. Nightly rebuild at 03:17 UTC keeps "upcoming events" current. **Never change the DNS A record of bantu-ev.org – e-mail (MX) runs on the same server.** Details and rollback: `docs/02_Go-Live_GitHub-Pages_DNS.md`.
 - `.htaccess` is generated by `scripts/postbuild-base-path.mjs` (canonical https://www., 301 redirects from `src/data/redirects.mjs`, 404, caching, security headers) – do not edit it on the server.
 - Homepage slideshow (11 photos, prev/next/pause): photos in `public/images/hero/` (1600 px + `-800` version, WebP), captions in `src/data/heroSlides.ts`. Only the first photo is in the HTML (preloaded in HomeView); the others sit in a `<template>` and are mounted by script when needed. Only photos with documented consent and without identifiable children.
-- Donations: twingle form (`org.donation` in `src/data/site.ts`), two-click loading on `/spenden/`.
+- Donations: twingle form (`org.donation` in `src/data/site.ts`), two-click loading on `/spenden/`. Trust line under the page head (gemeinnützig + Freistellungsbescheid date, receipt, reports, ITZ). PayPal: hosted donate button of the Bantu e.V. business account (`org.paypalUrl`, hosted_button_id DHB93M2JA5ZKQ, chair 09.11.2026) as a plain link in the "Online spenden" panel, opening in a new tab; no PayPal script on our pages.
 
 ## Backlog (in priority order)
 1. **By 13.11.2026:** P 26/224 project page is live on bantu-ev.org since 07.11.2026 – still add the Land Berlin logo and the confirmed schools (BIKO contract no. 9).

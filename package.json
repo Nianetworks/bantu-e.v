@@ -6,7 +6,7 @@
   "description": "Website of Bantu e.V. (Berlin) – static Astro site deployed with GitHub Pages",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build && node scripts/postbuild-base-path.mjs",
+    "build": "astro build && node scripts/postbuild-base-path.mjs && pagefind --site dist",
     "preview": "astro preview",
     "check:open": "node scripts/list-open-items.mjs",
     "migrate:wp": "node scripts/migrate-wordpress.mjs"
@@ -22,5 +22,8 @@
     "@fontsource/noto-serif": "^5.3.0",
     "astro": "^7.4.2",
     "uqr": "0.1.2"
+  },
+  "devDependencies": {
+    "pagefind": "^1.6.0"
   }
 }

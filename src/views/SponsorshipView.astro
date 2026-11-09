@@ -254,7 +254,7 @@ const jumpHow = T('So funktioniert es', 'How it works', 'Comment ça marche');
             <p>{c.p}</p>
             {c.tag && <p class="stage__tag"><span class="tag tag--active">{c.tag}</span></p>}
             <p class="small muted stage__partners">{c.partners}</p>
-            {c.link && <a class="link-arrow stage__link" href={c.link}>{c.linkLabel}</a>}
+            {c.link && <a class="link-arrow stage__link" href={c.link}>{c.linkLabel}<span class="sr-only">: {c.h}</span></a>}
           </li>
         ))}
       </ol>

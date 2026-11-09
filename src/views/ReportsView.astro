@@ -4,15 +4,29 @@ import Base from '../layouts/Base.astro';
 import PageHead from '../components/PageHead.astro';
 import { href, r, type Lang } from '../i18n';
 import { org } from '../data/site';
-import { downloads } from '../data/downloads';
+import Icon from '../components/Icon.astro';
+import { coverFor, downloads, type Download } from '../data/downloads';
 
 interface Props { lang: Lang }
 const { lang } = Astro.props;
 const de = lang === 'de';
 const fr = lang === 'fr';
+const T = (d: string, e: string, f: string) => (de ? d : fr ? f : e);
 const reports = downloads.filter((d) => d.group === 'reports');
+const projectReports = downloads.filter((d) => d.group === 'projectReports');
 const years = [...new Set(reports.map((d) => d.year!))].sort((a, b) => b - a);
-const title = de ? 'Jahres- & Transparenzberichte' : fr ? 'Rapports annuels et de transparence' : 'Annual & transparency reports';
+// Preferred language of a report pair: the page language, English for French readers (no French editions exist).
+const prefLang = de ? 'DE' : 'EN';
+const byKind = (kind: Download['kind']) => years.map((y) => {
+  const pair = reports.filter((d) => d.kind === kind && d.year === y);
+  return { year: y, main: pair.find((d) => d.lang === prefLang) ?? pair[0], other: pair.filter((d) => d.lang !== prefLang) };
+}).filter((x) => x.main);
+const annual = byKind('annual');
+const transparency = byKind('transparency');
+const featured = annual[0];
+const langName = (l: Download['lang']) => (l === 'DE' ? 'Deutsch' : l === 'EN' ? 'English' : l === 'FR' ? 'Français' : l);
+const meta = (d: Download) => `PDF · ${langName(d.lang)} · ${d.size}`;
+const title = T('Berichte', 'Reports', 'Rapports');
 const lead = de
   ? 'Wir legen offen, wer wir sind, was wir tun, woher unser Geld kommt und wofür wir es ausgeben.'
   : fr ? 'Nous rendons public qui nous sommes, ce que nous faisons, d’où vient notre argent et comment nous l’utilisons.' : 'We disclose who we are, what we do, where our money comes from and how we spend it.';
@@ -33,25 +47,84 @@ const itz = [
 <Base lang={lang} title={title} description={lead} altHref={r('reports', de ? 'en' : 'de')}>
   <PageHead lang={lang} title={title} lead={lead} crumbs={[{ label: de ? 'Wirkung' : fr ? 'Impact' : 'Impact', href: r('impact', lang) }]} />
 
-  <section class="section section--tight">
-    <div class="wrap">
-      <h2>{de ? 'Berichte zum Herunterladen' : fr ? 'Rapports à télécharger' : 'Reports to download'}</h2>
-      <p>{de ? 'Für jedes Jahr gibt es einen Jahresbericht (Tätigkeit, Projekte und Finanzen) und den Transparenzbericht nach den zehn Punkten der Initiative Transparente Zivilgesellschaft, jeweils auf Deutsch und Englisch. Alle Berichte sind vom Vorstand unterzeichnet.' : fr ? 'Pour chaque année, il existe un rapport annuel (activités, projets et finances) et le rapport de transparence selon les dix points de l’Initiative pour une société civile transparente, en allemand et en anglais. Tous les rapports sont signés par le conseil d’administration.' : 'For each year there is an annual report (activities, projects and finances) and the transparency report following the ten points of the Transparent Civil Society Initiative, in German and English. All reports are signed by the board.'}</p>
-      <div class="years">
-        {years.map((y) => (
-          <div class="year panel">
-            <div class="year__num">{y}</div>
-            <div class="year__links">
-              {reports.filter((d) => d.year === y).map((d) => (
-                <a href={href(d.file)} download>{d.title[lang]} <span class="muted small">PDF · {d.size}</span></a>
-              ))}
+  {featured && (
+    <section class="section section--tight" aria-labelledby="h-featured">
+      <div class="wrap">
+        <div class="featured panel">
+          <a class="featured__cover" href={href(featured.main.file)} download aria-hidden="true" tabindex="-1">
+            <img src={href(coverFor(featured.main))} width="480" height="680" alt="" loading="eager" />
+          </a>
+          <div class="featured__body">
+            <div class="eyebrow">{T('Aktueller Bericht', 'Latest report', 'Dernier rapport')}</div>
+            <h2 id="h-featured">{featured.main.title[lang]}</h2>
+            <p>{T('Tätigkeit, Projekte und Finanzen des Jahres im Überblick: was wir in Berlin, Uganda und Burundi getan haben, mit wem, mit welchen Mitteln und mit welchem Ergebnis. Vom Vorstand unterzeichnet.', 'Activities, projects and finances of the year at a glance: what we did in Berlin, Uganda and Burundi, with whom, with which funds and with what result. Signed by the board.', 'Activités, projets et finances de l’année en bref : ce que nous avons fait à Berlin, en Ouganda et au Burundi, avec qui, avec quels moyens et avec quel résultat. Signé par le conseil d’administration.')}</p>
+            <p class="meta">{meta(featured.main)}</p>
+            <div class="btn-row">
+              <a class="btn btn--gold" href={href(featured.main.file)} download><Icon name="download" /> {T('Jahresbericht herunterladen (PDF)', 'Download the annual report (PDF)', 'Télécharger le rapport annuel (PDF)')}</a>
+              {featured.other.map((o) => <a class="btn btn--outline" href={href(o.file)} download>{o.title[lang]} <span class="small">({o.size})</span></a>)}
             </div>
           </div>
-        ))}
+        </div>
       </div>
-      <p class="small muted" style="margin-top:1rem">{de ? 'Die Einnahmen-Überschuss-Rechnung 2025 veröffentlichen wir nach Abgabe der Steuererklärung.' : fr ? 'Nous publierons le compte de recettes et dépenses 2025 après le dépôt de la déclaration fiscale.' : 'We will publish the 2025 income and expenditure statement after the tax return has been filed.'}</p>
+    </section>
+  )}
+
+  <section class="section section--tight" id="jahresberichte" aria-labelledby="h-annual">
+    <div class="wrap">
+      <div class="section-head"><div><h2 id="h-annual">{T('Jahresberichte', 'Annual reports', 'Rapports annuels')}</h2><p>{T('Für jedes Jahr seit der Gründung: Tätigkeit, Projekte und Finanzen, auf Deutsch und Englisch.', 'For every year since the founding: activities, projects and finances, in German and English.', 'Pour chaque année depuis la création : activités, projets et finances, en allemand et en anglais.')}</p></div></div>
+      <ul class="reports" role="list">
+        {annual.map((r) => (
+          <li class="report">
+            <a class="report__cover" href={href(r.main.file)} download aria-hidden="true" tabindex="-1"><img src={href(coverFor(r.main))} width="480" height="680" alt="" loading="lazy" /></a>
+            <div class="report__body">
+              <h3><a href={href(r.main.file)} download>{r.main.title[lang]}</a></h3>
+              <p class="meta">{meta(r.main)}</p>
+              {r.other.map((o) => <p class="small"><a href={href(o.file)} download hreflang={o.lang.toLowerCase()}>{o.title[lang]}</a> <span class="muted">({meta(o)})</span></p>)}
+            </div>
+          </li>
+        ))}
+      </ul>
     </div>
   </section>
+
+  <section class="section section--tight section--alt" id="transparenzberichte" aria-labelledby="h-transparency-reports">
+    <div class="wrap">
+      <div class="section-head"><div><h2 id="h-transparency-reports">{T('Transparenzberichte', 'Transparency reports', 'Rapports de transparence')}</h2><p>{T('Die zehn Angaben der Initiative Transparente Zivilgesellschaft für jedes Jahr, mit Finanzen und Projekten.', 'The ten disclosures of the Transparent Civil Society Initiative for every year, with finances and projects.', 'Les dix informations de l’Initiative pour une société civile transparente pour chaque année, avec finances et projets.')}</p></div></div>
+      <ul class="reports" role="list">
+        {transparency.map((r) => (
+          <li class="report">
+            <a class="report__cover" href={href(r.main.file)} download aria-hidden="true" tabindex="-1"><img src={href(coverFor(r.main))} width="480" height="680" alt="" loading="lazy" /></a>
+            <div class="report__body">
+              <h3><a href={href(r.main.file)} download>{r.main.title[lang]}</a></h3>
+              <p class="meta">{meta(r.main)}</p>
+              {r.other.map((o) => <p class="small"><a href={href(o.file)} download hreflang={o.lang.toLowerCase()}>{o.title[lang]}</a> <span class="muted">({meta(o)})</span></p>)}
+            </div>
+          </li>
+        ))}
+      </ul>
+      <p class="small muted" style="margin-top:1rem">{de ? 'Die Einnahmen-Überschuss-Rechnung 2025 veröffentlichen wir nach Abgabe der Steuererklärung.' : fr ? 'Nous publierons le compte de recettes et dépenses 2025 après le dépôt de la déclaration fiscale.' : 'We will publish the 2025 income and expenditure statement after filing the tax return.'}</p>
+    </div>
+  </section>
+
+  {projectReports.length > 0 && (
+    <section class="section section--tight" id="projektberichte" aria-labelledby="h-project-reports">
+      <div class="wrap">
+        <div class="section-head"><div><h2 id="h-project-reports">{T('Projektberichte', 'Project reports', 'Rapports de projet')}</h2><p>{T('Berichte unserer Partnerorganisationen zu einzelnen Projekten, aufbereitet für die Website. Gesichter von Kindern auf Fotos sind unkenntlich gemacht.', 'Reports by our partner organisations on individual projects, edited for the website. Children’s faces in photographs are blurred.', 'Rapports de nos organisations partenaires sur des projets précis, édités pour le site web. Les visages des enfants sur les photos sont floutés.')}</p></div></div>
+        <ul class="reports" role="list">
+          {projectReports.map((d) => (
+            <li class="report">
+              <a class="report__cover" href={href(d.file)} download aria-hidden="true" tabindex="-1"><img src={href(coverFor(d))} width="480" height="680" alt="" loading="lazy" /></a>
+              <div class="report__body">
+                <h3><a href={href(d.file)} download>{d.title[lang]}</a></h3>
+                <p class="meta">{meta(d)} · {d.year}</p>
+              </div>
+            </li>
+          ))}
+        </ul>
+        <p class="small"><a class="link-arrow" href={r('downloads', lang)}>{T('Formulare und Flyer: Downloads', 'Forms and flyers: downloads', 'Formulaires et dépliants : téléchargements')}</a></p>
+      </div>
+    </section>
+  )}
 
   <section class="section section--alt" id={de ? 'transparenz' : 'transparency'}>
     <div class="wrap">
@@ -62,7 +135,7 @@ const itz = [
         {itz.map((i) => (
           <li>
             <span class="itz__n">{i.n}</span>
-            <div><h3>{i.t}</h3><p>{i.v}{i.link && <> <a href={i.link}>{de ? 'Mehr' : fr ? 'Plus' : 'More'}</a></>}</p></div>
+            <div><h3>{i.t}</h3><p>{i.v}{i.link && <> <a href={i.link}>{de ? 'Mehr' : fr ? 'Plus' : 'More'}<span class="sr-only">: {i.t}</span></a></>}</p></div>
           </li>
         ))}
       </ol>
@@ -71,15 +144,23 @@ const itz = [
   </section>
 </Base>
 <style>
-  .years { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr)); gap: 1rem; }
-  .year { display: flex; gap: 1.2rem; align-items: center; padding: 1.1rem 1.3rem; }
-  .year__num { font-family: var(--font-serif); font-weight: 700; font-size: 2rem; color: var(--ink); min-width: 4ch; }
-  .year__links { display: grid; gap: .3rem; min-width: 0; }
-  .year__links a { font-weight: 600; text-decoration: none; }
-  .year__links a:hover { text-decoration: underline; }
+  .featured { display: grid; grid-template-columns: minmax(0, 220px) minmax(0, 1fr); gap: clamp(1.25rem, 3vw, 2.5rem); align-items: center; border-top: 6px solid var(--gold); }
+  .featured__cover img, .report__cover img { display: block; width: 100%; height: auto; border: 1px solid var(--line); border-radius: 6px; box-shadow: var(--shadow); background: #fff; }
+  .featured__body h2 { margin: .25rem 0 .5rem; }
+  .featured__body p { max-width: 66ch; }
+  .meta { font-size: .92rem; color: var(--muted); font-weight: 600; }
+  .reports { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 17rem), 1fr)); gap: 1.25rem; }
+  .report { display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 1rem; align-items: start; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 1rem; margin: 0; }
+  .report__body { min-width: 0; }
+  .report h3 { font-size: 1.1rem; margin: 0 0 .25rem; hyphens: auto; overflow-wrap: anywhere; }
+  .report h3 a { color: var(--ink); text-decoration: none; }
+  .report h3 a:hover { text-decoration: underline; }
+  .report .small { margin: .35rem 0 0; }
+  @media (max-width: 700px) { .featured { grid-template-columns: minmax(0, 140px) minmax(0, 1fr); align-items: start; } }
+  @media (max-width: 480px) { .featured { grid-template-columns: 1fr; } .featured__cover { max-width: 180px; } }
   .itz { list-style: none; padding: 0; margin: 1.5rem 0 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 480px), 1fr)); gap: .9rem; }
   .itz li { display: flex; gap: 1rem; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 1rem 1.2rem; margin: 0; }
-  .itz__n { flex: none; width: 34px; height: 34px; border-radius: 50%; background: var(--gold); display: grid; place-items: center; font-weight: 700; }
+  .itz__n { flex: none; width: 34px; height: 34px; border-radius: 50%; background: var(--gold); color: var(--on-gold); display: grid; place-items: center; font-weight: 700; }
   .itz h3 { font-family: var(--font-sans); font-size: 1rem; margin: .2rem 0 .3rem; }
   .itz p { margin: 0; color: var(--ink-2); font-size: .95rem; }
 </style>

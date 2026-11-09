@@ -19,7 +19,8 @@ export default defineConfig({
   integrations: [
     sitemap({
       i18n: { defaultLocale: 'de', locales: { de: 'de-DE', en: 'en-GB' } },
-      filter: (page) => !page.includes('/404'),
+      // No 404 page and no search pages (they carry noindex; Pagefind builds its own index) in the sitemap.
+      filter: (page) => !page.includes('/404') && !/\/(suche|search|recherche)\/$/.test(page),
     }),
   ],
 });

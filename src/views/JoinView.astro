@@ -68,7 +68,7 @@ const formHref = (f: (typeof membershipForms)[number]) => withVersion(href(f.fil
         <p>{de ? 'Online in wenigen Minuten: Sie wählen Betrag, Rhythmus und Bildungsstufe, wir melden uns innerhalb weniger Tage.' : fr ? 'En ligne en quelques minutes : vous choisissez le montant, le rythme et l’étape éducative, nous vous recontactons sous quelques jours.' : 'Online in a few minutes: you choose the amount, rhythm and education stage, we get back to you within a few days.'}</p>
         <div class="btn-row">
           <a class="btn btn--gold" href={r('sponsorship', lang, '#formular')}>{de ? 'Zum Online-Formular' : fr ? 'Formulaire en ligne' : 'Online form'}</a>
-          <a class="btn btn--outline" href={r('sponsorship', lang)}>{de ? 'Mehr zum Programm' : fr ? 'En savoir plus' : 'About the programme'}</a>
+          <a class="btn btn--outline" href={r('sponsorship', lang)}>{de ? 'Mehr zum Programm' : fr ? 'En savoir plus' : 'About the programme'}<span class="sr-only">: Education into the Future</span></a>
         </div>
       </div>
     </div>
@@ -106,7 +106,10 @@ const formHref = (f: (typeof membershipForms)[number]) => withVersion(href(f.fil
       <div class="panel">
         <h3>{de ? 'Kontakt' : fr ? 'Contact' : 'Contact'}</h3>
         <p><a href={`mailto:${org.email}`}>{org.email}</a><br /><Phones lang={lang} variant="plain" /></p>
-        <a class="btn btn--gold" href={r('contact', lang)}>{de ? 'Zum Kontaktformular' : fr ? 'Formulaire de contact' : 'Contact form'}</a>
+        <div class="btn-row">
+          <a class="btn btn--gold" href={r('contact', lang)}>{de ? 'Zum Kontaktformular' : fr ? 'Formulaire de contact' : 'Contact form'}</a>
+          <a class="btn btn--outline" href={r('partners', lang)}>{de ? 'Für Unternehmen und Stiftungen' : fr ? 'Entreprises et fondations' : 'For companies and foundations'}</a>
+        </div>
       </div>
     </div>
   </section>

@@ -51,12 +51,15 @@ export const org = {
     pageUrl: 'https://spenden.twingle.de/genericorganisation/genericproject/tw612f63939f052/page',
     widgetUrl: 'https://spenden.twingle.de/embed/genericorganisation/genericproject/tw612f63939f052/widget',
   },
-  // OPEN: the old site linked paypal.me/bantucomputerprojekt – confirm the account belongs to Bantu e.V. before setting it here.
-  paypalUrl: '' as string,
+  // PayPal donate button of the Bantu e.V. business account (hosted button, chair 09.11.2026). A plain link: no PayPal script
+  // on our pages, data goes to PayPal only when a visitor clicks. The old paypal.me/bantucomputerprojekt link is not used.
+  paypalUrl: 'https://www.paypal.com/donate/?hosted_button_id=DHB93M2JA5ZKQ' as string,
   socials: [
     { name: 'Instagram', icon: 'instagram', url: 'https://www.instagram.com/bantu_ev/' },
     { name: 'Facebook', icon: 'facebook', url: 'https://www.facebook.com/BantueV' },
     { name: 'X (Twitter)', icon: 'x', url: 'https://twitter.com/Bantu_eV' },
+    // LinkedIn company page created by the chair, 09.11.2026.
+    { name: 'LinkedIn', icon: 'linkedin', url: 'https://www.linkedin.com/company/bantu-e-v' },
   ],
   memberships: {
     de: ['Initiative Transparente Zivilgesellschaft (seit 2026)'],

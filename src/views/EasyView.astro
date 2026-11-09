@@ -20,6 +20,8 @@ const blocks: Block[] = de
       { icon: 'calendar', h: 'Wann sind Treffen?', lines: ['Alle Termine stehen auf der Seite Veranstaltungen.', 'Sie können sich per E-Mail anmelden.'], link: ['Zu den Terminen', 'events'] },
       { icon: 'hand', h: 'Wie können Sie mitmachen?', lines: ['Sie können Mitglied werden.', 'Das kostet 5 Euro im Monat.', 'Wenn Sie wenig Geld haben: 2 Euro 50.', 'Sie können auch ohne Geld helfen.', 'Zum Beispiel bei Festen oder beim Übersetzen.'], link: ['Mitmachen', 'join'] },
       { icon: 'gift', h: 'Wie können Sie spenden?', lines: ['Sie können uns Geld überweisen.', 'Das Geld geht in unsere Projekte.', 'Sie bekommen eine Bestätigung für das Finanzamt.'], link: ['Zur Spenden-Seite', 'donate'] },
+      { icon: 'school', h: 'Wie können Sie einem Kind helfen?', lines: ['Sie können eine Patenschaft übernehmen.', 'Das heißt: Sie zahlen jeden Monat Geld.', 'Zum Beispiel 25 Euro.', 'Damit kann ein Kind in Uganda zur Schule gehen.', 'Sie füllen dafür ein Formular auf unserer Seite aus.'], link: ['Zur Patenschaft', 'sponsorship'] },
+      { icon: 'search', h: 'Wie finden Sie etwas auf dieser Seite?', lines: ['Oben auf jeder Seite steht: Suche.', 'Klicken Sie darauf.', 'Schreiben Sie ein Wort in das Feld.', 'Zum Beispiel: Wasser.', 'Dann sehen Sie alle Seiten zu diesem Wort.'], link: ['Zur Suche', 'search'] },
     ]
   : fr ? [
       { icon: 'people', h: 'Qui sommes-nous ?', lines: ['Nous sommes une association.', 'Elle s’appelle Bantu e.V.', 'Notre bureau est à Berlin.', 'Nous existons depuis 2019.', 'Bantu veut dire : les êtres humains.'] },
@@ -29,6 +31,8 @@ const blocks: Block[] = de
       { icon: 'calendar', h: 'Quand ont lieu les rencontres ?', lines: ['Toutes les dates sont sur la page Événements.', 'Vous pouvez vous inscrire par e-mail.'], link: ['Voir les dates', 'events'] },
       { icon: 'hand', h: 'Comment participer ?', lines: ['Vous pouvez devenir membre.', 'Cela coûte 5 euros par mois.', 'Si vous avez peu d’argent : 2 euros 50.', 'Vous pouvez aussi aider sans argent.', 'Par exemple lors de fêtes ou en traduisant.'], link: ['S’engager', 'join'] },
       { icon: 'gift', h: 'Comment faire un don ?', lines: ['Vous pouvez nous virer de l’argent.', 'L’argent va dans nos projets.', 'Vous recevez une attestation pour les impôts.'], link: ['Aller à la page des dons', 'donate'] },
+      { icon: 'school', h: 'Comment aider un enfant ?', lines: ['Vous pouvez devenir marraine ou parrain.', 'Cela veut dire : vous donnez de l’argent chaque mois.', 'Par exemple 25 euros.', 'Ainsi, un enfant en Ouganda peut aller à l’école.', 'Pour cela, vous remplissez un formulaire sur notre site.'], link: ['Vers le parrainage', 'sponsorship'] },
+      { icon: 'search', h: 'Comment trouver quelque chose sur ce site ?', lines: ['En haut de chaque page, il y a : Recherche.', 'Cliquez dessus.', 'Écrivez un mot dans le champ.', 'Par exemple : eau.', 'Vous voyez alors toutes les pages sur ce mot.'], link: ['Vers la recherche', 'search'] },
     ]
   : [
       { icon: 'people', h: 'Who are we?', lines: ['We are an association.', 'It is called Bantu e.V.', 'Our office is in Berlin.', 'We started in 2019.', 'Bantu means: people.'] },
@@ -38,6 +42,8 @@ const blocks: Block[] = de
       { icon: 'calendar', h: 'When are the meetings?', lines: ['All dates are on the events page.', 'You can sign up by e-mail.'], link: ['See the dates', 'events'] },
       { icon: 'hand', h: 'How can you join?', lines: ['You can become a member.', 'It costs 5 euros a month.', 'If you have little money: 2 euros 50.', 'You can also help without money.', 'For example at events or by translating.'], link: ['Get involved', 'join'] },
       { icon: 'gift', h: 'How can you donate?', lines: ['You can send us money by bank transfer.', 'The money goes to our projects.', 'You get a receipt for the tax office.'], link: ['Go to the donation page', 'donate'] },
+      { icon: 'school', h: 'How can you help a child?', lines: ['You can become a sponsor.', 'This means: you give money every month.', 'For example 25 euros.', 'Then a child in Uganda can go to school.', 'You fill in a form on our website for this.'], link: ['Go to sponsorship', 'sponsorship'] },
+      { icon: 'search', h: 'How do you find something on this website?', lines: ['At the top of every page it says: Search.', 'Click on it.', 'Type a word into the box.', 'For example: water.', 'Then you see all pages about this word.'], link: ['Go to the search', 'search'] },
     ];
 ---
 <Base lang={lang} title={title} description={de ? 'Informationen über Bantu e.V. in Einfacher Sprache.' : fr ? 'Informations sur Bantu e.V. en langage facile.' : 'Information about Bantu e.V. in easy read.'} altHref={r('easy', de ? 'en' : 'de')}>

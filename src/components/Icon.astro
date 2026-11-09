@@ -2,6 +2,7 @@
 // Minimal stroke icon set (24×24, currentColor). Decorative by default (aria-hidden).
 interface Props { name: keyof typeof paths; size?: number; class?: string; label?: string }
 const paths = {
+  search: '<circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5L21 21"/>',
   globe: '<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.7 3.8 5.7 3.8 9s-1.3 6.3-3.8 9c-2.5-2.7-3.8-5.7-3.8-9S9.5 5.7 12 3z"/>',
   school: '<path d="M3 9l9-5 9 5-9 5-9-5z"/><path d="M7 11.5V16c0 1.5 2.2 3 5 3s5-1.5 5-3v-4.5"/><path d="M21 9v6"/>',
   water: '<path d="M12 3s6 6.6 6 11a6 6 0 0 1-12 0c0-4.4 6-11 6-11z"/><path d="M9 15a3 3 0 0 0 3 3"/>',
@@ -43,6 +44,7 @@ const paths = {
   facebook: '<path d="M14.5 21v-7.6h2.7l.4-3.1h-3.1V8.4c0-.9.3-1.5 1.6-1.5h1.6V4.2c-.3 0-1.3-.1-2.4-.1-2.3 0-3.9 1.4-3.9 4v2.2H8.8v3.1h2.6V21"/>',
   x: '<path d="M4 4l6.6 8.8L4.3 20h1.6l5.4-6.2 4.6 6.2H20l-6.9-9.2L19 4h-1.6l-5 5.8L8 4z"/>',
   messenger: '<path d="M20 11.5a8 8 0 0 1-11.8 7L4 20l1.5-4A8 8 0 1 1 20 11.5z"/>',
+  linkedin: '<rect x="3.5" y="3.5" width="17" height="17" rx="3"/><path d="M8 10.5v6M8 7.6v.1"/><path d="M11.5 16.5v-6M11.5 13.2c0-1.6 1.1-2.7 2.5-2.7s2.5 1.1 2.5 2.7v3.3"/>',
   easy: '<path d="M4 5.5h7a2 2 0 0 1 2 2V20a2 2 0 0 0-2-2H4zM20 5.5h-5a2 2 0 0 0-2 2V20a2 2 0 0 1 2-2h5z"/>',
 } as const;
 const { name, size = 24, class: cls = 'icon', label } = Astro.props;

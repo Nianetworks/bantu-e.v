@@ -204,6 +204,17 @@ const heroFile = (small = false) => href(`/images/hero/${heroSlides[0].file}${sm
           <h2 id="h-support">{de ? 'Werden Sie Teil davon' : fr ? 'Rejoignez-nous' : 'Become part of it'}</h2>
         </div>
       </div>
+      <div class="panel monthly">
+        <div>
+          <div class="eyebrow">{de ? 'Regelmäßig helfen' : fr ? 'Aider régulièrement' : 'Give regularly'}</div>
+          <h3>{de ? 'Education into the Future: ab 25 EUR im Monat ein Platz in der Schule' : fr ? 'Education into the Future : dès 25 EUR par mois, une place à l’école' : 'Education into the Future: from 25 EUR a month, a place in school'}</h3>
+          <p>{de ? 'Mit einer Bildungspatenschaft ermöglichen Sie Kindern und jungen Menschen in Uganda den Schulbesuch oder eine Ausbildung, gemeinsam mit unserem Partner ABI. Sie wählen Betrag, Rhythmus und Bildungsstufe; wir berichten mindestens einmal im Jahr.' : fr ? 'Avec un parrainage éducatif, vous permettez à des enfants et des jeunes en Ouganda d’aller à l’école ou de suivre une formation, avec notre partenaire ABI. Vous choisissez le montant, le rythme et l’étape éducative ; nous vous informons au moins une fois par an.' : 'With an education sponsorship you enable children and young people in Uganda to attend school or training, together with our partner ABI. You choose the amount, rhythm and education stage; we report at least once a year.'}</p>
+        </div>
+        <div class="btn-row monthly__btns">
+          <a class="btn btn--gold" href={r('sponsorship', lang)}>{de ? 'Patenschaft übernehmen' : fr ? 'Devenir marraine ou parrain' : 'Become a sponsor'}</a>
+          <a class="btn btn--outline" href={r('donate', lang)}>{de ? 'Dauerspende' : fr ? 'Don régulier' : 'Regular gift'}</a>
+        </div>
+      </div>
       <div class="grid grid--4">
         <article class="support">
           <span class="icon-badge"><Icon name="heart" /></span>
@@ -339,6 +350,12 @@ const heroFile = (small = false) => href(`/images/hero/${heroSlides[0].file}${sm
   .story { display: grid; grid-template-columns: 1fr 1.1fr; gap: clamp(1.5rem, 4vw, 3.5rem); align-items: center; }
   .story__media { border-radius: 22px; overflow: hidden; border: 1px solid var(--line); }
 
+  .monthly { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 1.5rem 2.5rem; align-items: center; border-left: 8px solid var(--gold); margin-bottom: 1.5rem; }
+  .monthly h3 { font-size: clamp(1.2rem, 2.2vw, 1.5rem); margin: .2rem 0 .5rem; }
+  .monthly p { margin: 0; max-width: 70ch; color: var(--ink-2); }
+  .monthly__btns { flex-direction: column; align-items: stretch; }
+  .monthly__btns .btn { justify-content: center; }
+  @media (max-width: 860px) { .monthly { grid-template-columns: 1fr; } .monthly__btns { flex-direction: row; align-items: center; } }
   .support { position: relative; display: flex; flex-direction: column; gap: .5rem; padding: 1.5rem; border-radius: var(--radius); background: var(--surface); border: 1px solid var(--line); }
   .support h3 { margin: .5rem 0 0; font-size: 1.3rem; }
   .support h3 a { color: var(--ink); text-decoration: none; }

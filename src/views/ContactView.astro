@@ -1,47 +1,119 @@
 ---
+// Contact page (rebuilt after the audit of 09.11.2026): a human opening with a consented photo and a clear answer
+// promise, then the direct channels and addresses on the left and the message form on the right, then a schematic of
+// where we work. No Google Maps embed (CLAUDE.md rule 4): the address links to OpenStreetMap. The form still composes an
+// e-mail in the visitor's mail program (features.formEndpoint is empty): no third server-side script without a decision.
 import Base from '../layouts/Base.astro';
 import PageHead from '../components/PageHead.astro';
 import Phones from '../components/Phones.astro';
 import SocialLinks from '../components/SocialLinks.astro';
-import { r, type Lang } from '../i18n';
+import Icon from '../components/Icon.astro';
+import { href, r, type Lang } from '../i18n';
 import { features, org } from '../data/site';
+import { heroSlides } from '../data/heroSlides';
+import { regionPath } from '../data/programmes';
 
 interface Props { lang: Lang }
 const { lang } = Astro.props;
 const de = lang === 'de';
 const fr = lang === 'fr';
-const title = de ? 'Kontakt' : fr ? 'Contact' : 'Contact';
-const lead = de ? 'Wir freuen uns auf Ihre Nachricht.' : fr ? 'Nous nous réjouissons de votre message.' : 'We look forward to hearing from you.';
+const T = (d: string, e: string, f: string) => (de ? d : fr ? f : e);
+const title = T('Kontakt', 'Contact', 'Contact');
+const lead = T('Wir freuen uns auf Ihre Nachricht.', 'We look forward to hearing from you.', 'Nous nous réjouissons de votre message.');
+// ⚠️ Promise of the chair (audit plan, 09.11.2026): confirm that the team can keep it.
+const promise = T('Unser Team antwortet innerhalb von 48 Stunden an Werktagen.', 'Our team replies within 48 hours on working days.', 'Notre équipe répond sous 48 heures les jours ouvrables.');
 const osm = 'https://www.openstreetmap.org/search?query=Kameruner%20Str.%201%2C%2013351%20Berlin';
+// Photo with documented consent, no identifiable children (hero slideshow, Okushoma kwa Boona 2024).
+const photo = heroSlides.find((s) => s.file === 'okb-workshop-saal') ?? heroSlides[0];
+const topics = de
+  ? ['Allgemeine Anfrage', 'Presse und Medien', 'Kooperation und Partnerschaft', 'Spende und Bildungspatenschaft', 'Mitgliedschaft und Ehrenamt', 'Bildungsangebot anfragen', 'Shop', 'Beschwerde oder Hinweis']
+  : fr ? ['Demande générale', 'Presse et médias', 'Coopération et partenariat', 'Don et parrainage éducatif', 'Adhésion et bénévolat', 'Demander un atelier ou une formation', 'Boutique', 'Réclamation ou signalement']
+  : ['General enquiry', 'Press and media', 'Cooperation and partnership', 'Donation and education sponsorship', 'Membership and volunteering', 'Book a workshop or training', 'Shop', 'Complaint or concern'];
+const places = [
+  { k: 'berlin', name: 'Berlin', sub: T('Sitz und Büro, Inlandsarbeit', 'Seat and office, work in Germany', 'Siège et bureau, travail en Allemagne'), x: 150, y: 70, href: regionPath(lang, 'inland') },
+  { k: 'kampala', name: 'Kampala', sub: T('Partner ABI (Uganda)', 'Partner ABI (Uganda)', 'Partenaire ABI (Ouganda)'), x: 430, y: 170, href: regionPath(lang, 'international') },
+  { k: 'mbarara', name: 'Mbarara', sub: T('Partner NCDA (Uganda)', 'Partner NCDA (Uganda)', 'Partenaire NCDA (Ouganda)'), x: 395, y: 215, href: regionPath(lang, 'international') },
+  { k: 'bujumbura', name: 'Bujumbura', sub: T('Partner WIV-HR (Burundi)', 'Partner WIV-HR (Burundi)', 'Partenaire WIV-HR (Burundi)'), x: 420, y: 262, href: regionPath(lang, 'international') },
+];
 ---
 <Base lang={lang} title={title} description={lead} altHref={r('contact', de ? 'en' : 'de')}>
-  <PageHead lang={lang} title={title} lead={lead} />
-  <section class="section section--tight">
+  <PageHead lang={lang} title={title} lead={lead}>
+    <p class="promise"><Icon name="clock" class="promise__ic" /> {promise}</p>
+  </PageHead>
+
+  <section class="section section--tight" aria-labelledby="h-direct">
+    <div class="wrap hero">
+      <figure class="hero__photo">
+        <img src={href(`/images/hero/${photo.file}.webp`)} srcset={`${href(`/images/hero/${photo.file}-800.webp`)} 800w, ${href(`/images/hero/${photo.file}.webp`)} 1600w`} sizes="(max-width: 900px) 100vw, 55vw" width="1600" height="1066" alt={photo.caption[lang]} loading="eager" />
+        <figcaption class="small muted">{photo.caption[lang]}</figcaption>
+      </figure>
+      <div class="panel direct">
+        <h2 id="h-direct" class="h3">{T('Direkt erreichen', 'Reach us directly', 'Nous joindre directement')}</h2>
+        <ul class="direct__list" role="list">
+          <li><a href={`mailto:${org.email}`}><span class="icon-badge" aria-hidden="true"><Icon name="mail" /></span><span><strong>E-Mail</strong><br />{org.email}</span></a></li>
+          <li><a href={`tel:${org.officePhoneHref}`}><span class="icon-badge" aria-hidden="true"><Icon name="phone" /></span><span><strong>{T('Büro', 'Office', 'Bureau')}</strong><br />{org.officePhone}</span></a></li>
+          <li><a href={`tel:${org.phoneHref}`}><span class="icon-badge" aria-hidden="true"><Icon name="messenger" /></span><span><strong>{T('Mobil', 'Mobile', 'Mobile')}</strong><br />{org.phone} <span class="small muted">({T(`${org.mobileHours.replace('–', ' bis ')} Uhr, auch über ${org.messengers.join(', ')}`, `${org.mobileHours.replace('–', ' to ')}, also via ${org.messengers.join(', ')}`, `${org.mobileHours.replace('–', ' à ')}, aussi via ${org.messengers.join(', ')}`)})</span></span></a></li>
+        </ul>
+        <h3 class="h4">{T('Folgen Sie uns', 'Follow us', 'Suivez-nous')}</h3>
+        <SocialLinks lang={lang} />
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--alt" aria-labelledby="h-form">
     <div class="wrap contact">
-      <div class="panel">
-        <h2 class="h3">{org.shortName}</h2>
+      <div class="info">
+        <h2 class="h3">{T('Adresse', 'Address', 'Adresse')}</h2>
         <dl class="kv">
-          <dt>{de ? 'Büro' : fr ? 'Bureau' : 'Office'}</dt><dd>{org.address.street}<br />{org.address.zip} {org.address.city}<br /><a href={osm} rel="noopener" target="_blank">{de ? 'Auf der Karte (OpenStreetMap)' : fr ? 'Carte (OpenStreetMap)' : 'Map (OpenStreetMap)'}</a></dd>
-          <dt>{de ? 'Postanschrift (für Briefe und Schriftverkehr)' : fr ? 'Adresse postale (courrier et correspondance)' : 'Postal address (letters and correspondence)'}</dt><dd>{org.postbox.line}<br />{org.postbox.zip} {org.postbox.city}</dd>
-          <dt>E-Mail</dt><dd><a href={`mailto:${org.email}`}>{org.email}</a></dd>
-          <dt>{de ? 'Telefon' : fr ? 'Téléphone' : 'Phone'}</dt><dd><Phones lang={lang} /></dd>
-          <dt>Social Media</dt><dd><SocialLinks lang={lang} /></dd>
+          <dt>{T('Büro', 'Office', 'Bureau')}</dt>
+          <dd>{org.shortName}<br />{org.address.street}<br />{org.address.zip} {org.address.city}<br /><a href={osm} rel="noopener" target="_blank">{T('Auf der Karte (OpenStreetMap)', 'Map (OpenStreetMap)', 'Carte (OpenStreetMap)')}<span class="sr-only"> ({T('öffnet in neuem Fenster', 'opens in a new window', 's’ouvre dans une nouvelle fenêtre')})</span></a></dd>
+          <dt>{T('Postanschrift (Briefe und Schriftverkehr)', 'Postal address (letters and correspondence)', 'Adresse postale (courrier et correspondance)')}</dt>
+          <dd>{org.shortName}<br />{org.postbox.line}<br />{org.postbox.zip} {org.postbox.city}</dd>
+          <dt>{T('Telefon', 'Phone', 'Téléphone')}</dt>
+          <dd><Phones lang={lang} /></dd>
+          <dt>{T('Presse', 'Press', 'Presse')}</dt>
+          <dd>{T('Presseanfragen bitte per E-Mail an', 'Press enquiries by e-mail to', 'Demandes presse par e-mail à')} <a href={`mailto:${org.email}?subject=${encodeURIComponent(T('Presseanfrage', 'Press enquiry', 'Demande presse'))}`}>{org.email}</a>. {T('Berichte und Zahlen finden Sie unter', 'Reports and figures are at', 'Rapports et chiffres :')} <a href={r('reports', lang)}>{T('Berichte', 'Reports', 'Rapports')}</a>.</dd>
         </dl>
       </div>
-      <form class="panel form" id="contact-form" method="post" action={features.formEndpoint || undefined} data-mailto={org.email}>
-        <h2 class="h3">{de ? 'Nachricht schreiben' : fr ? 'Écrire un message' : 'Send a message'}</h2>
-        <label>{de ? 'Name' : fr ? 'Nom' : 'Name'}<input name="name" autocomplete="name" required /></label>
-        <label>E-Mail<input name="email" type="email" autocomplete="email" required /></label>
-        <label>{de ? 'Thema' : fr ? 'Sujet' : 'Topic'}
-          <select name="topic">
-            {(de ? ['Allgemeine Anfrage', 'Spende', 'Mitgliedschaft', 'Ehrenamt', 'Kooperation', 'Presse', 'Shop'] : fr ? ['Demande générale', 'Don', 'Adhésion', 'Bénévolat', 'Partenariat', 'Presse', 'Boutique', 'Atelier ou formation'] : ['General enquiry', 'Donation', 'Membership', 'Volunteering', 'Partnership', 'Press', 'Shop']).map((o) => <option>{o}</option>)}
-          </select>
+      <form class="panel form" id="contact-form" method="post" action={features.formEndpoint || undefined} data-mailto={org.email} aria-labelledby="h-form">
+        <h2 id="h-form" class="h3">{T('Nachricht schreiben', 'Send a message', 'Écrire un message')}</h2>
+        <p class="form__intro">{T('Haben Sie Fragen zu unseren Projekten, möchten Sie kooperieren oder haben Sie Feedback? Schreiben Sie uns.', 'Do you have questions about our projects, would you like to cooperate, or do you have feedback? Write to us.', 'Vous avez des questions sur nos projets, souhaitez coopérer ou avez un retour à nous faire ? Écrivez-nous.')}</p>
+        <label>{T('Name', 'Name', 'Nom')}<input name="name" autocomplete="name" required maxlength="100" /></label>
+        <label>E-Mail<input name="email" type="email" autocomplete="email" required maxlength="200" /></label>
+        <label>{T('Betreff', 'Subject', 'Sujet')}
+          <select name="topic">{topics.map((t) => <option>{t}</option>)}</select>
         </label>
-        <label>{de ? 'Nachricht' : fr ? 'Message' : 'Message'}<textarea name="message" rows="6" required></textarea></label>
-        <p class="small muted">{de ? 'Ihre Angaben verwenden wir nur, um Ihre Anfrage zu beantworten. Mehr in der ' : fr ? 'Nous utilisons vos données uniquement pour répondre à votre demande. Plus d’informations dans notre ' : 'We only use your details to answer your enquiry. More in our '}<a href={r('privacy', lang)}>{de ? 'Datenschutzerklärung' : fr ? 'politique de confidentialité' : 'privacy policy'}</a>.</p>
-        <button class="btn btn--gold" type="submit">{de ? 'Senden' : fr ? 'Envoyer' : 'Send'}</button>
-        {!features.formEndpoint && <p class="small muted">{de ? 'Beim Senden öffnet sich Ihr E-Mail-Programm mit der vorbereiteten Nachricht.' : fr ? 'L’envoi ouvre votre application de messagerie avec le message déjà préparé.' : 'Sending opens your e-mail app with the message prepared.'}</p>}
+        <label>{T('Nachricht', 'Message', 'Message')}<textarea name="message" rows="6" required maxlength="3000"></textarea></label>
+        <p class="small muted">{T('Ihre Angaben verwenden wir nur, um Ihre Anfrage zu beantworten. Mehr in der ', 'We only use your details to answer your enquiry. More in our ', 'Nous utilisons vos données uniquement pour répondre à votre demande. Plus d’informations dans notre ')}<a href={r('privacy', lang)}>{T('Datenschutzerklärung', 'privacy policy', 'politique de confidentialité')}</a>.</p>
+        <button class="btn btn--gold" type="submit">{T('Nachricht senden', 'Send message', 'Envoyer le message')}</button>
+        {!features.formEndpoint && <p class="small muted">{T('Beim Senden öffnet sich Ihr E-Mail-Programm mit der vorbereiteten Nachricht.', 'Sending opens your e-mail program with the prepared message.', 'L’envoi ouvre votre application de messagerie avec le message déjà préparé.')}</p>}
       </form>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="h-where">
+    <div class="wrap where">
+      <div>
+        <h2 id="h-where">{T('Wo wir arbeiten', 'Where we work', 'Où nous travaillons')}</h2>
+        <p>{T('Unser Büro ist in Berlin-Wedding. Die Projekte in Uganda und Burundi setzen unsere Partnerorganisationen vor Ort um; wir planen, finanzieren und berichten gemeinsam.', 'Our office is in Berlin-Wedding. The projects in Uganda and Burundi are carried out by our partner organisations on the ground; we plan, fund and report together.', 'Notre bureau est à Berlin-Wedding. Les projets en Ouganda et au Burundi sont mis en œuvre par nos organisations partenaires sur place ; nous planifions, finançons et rendons compte ensemble.')}</p>
+        <ul class="where__list" role="list">
+          {places.map((p) => <li><a href={p.href}><strong>{p.name}</strong> <span class="muted">{p.sub}</span></a></li>)}
+        </ul>
+      </div>
+      <svg class="where__map" viewBox="0 0 600 320" role="img" aria-label={T('Schematische Karte: Berlin sowie Kampala, Mbarara und Bujumbura in Ostafrika, durch Linien verbunden', 'Schematic map: Berlin and Kampala, Mbarara and Bujumbura in East Africa, joined by lines', 'Carte schématique : Berlin et Kampala, Mbarara et Bujumbura en Afrique de l’Est, reliés par des lignes')}>
+        <defs><pattern id="dots" width="14" height="14" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1.4" class="map__dot" /></pattern></defs>
+        <rect x="0" y="0" width="600" height="320" rx="24" class="map__bg" />
+        <rect x="0" y="0" width="600" height="320" rx="24" fill="url(#dots)" />
+        {places.slice(1).map((p, i) => <path d={`M ${places[0].x} ${places[0].y} C ${places[0].x + 90 + i * 40} ${places[0].y + 40 + i * 50}, ${p.x - 110 - i * 30} ${p.y - 70 + i * 20}, ${p.x} ${p.y}`} class="map__line" />)}
+        {places.map((p) => (
+          <g class={`map__place map__place--${p.k}`}>
+            <circle cx={p.x} cy={p.y} r="16" class="map__halo" />
+            <circle cx={p.x} cy={p.y} r="7" class="map__pin" />
+            <text x={p.k === 'berlin' ? p.x - 28 : p.x + 24} y={p.y + 5} text-anchor={p.k === 'berlin' ? 'end' : 'start'} class="map__label">{p.name}</text>
+          </g>
+        ))}
+        <text x="24" y="296" class="map__caption">{T('Berlin · Uganda · Burundi: schematisch, nicht maßstäblich', 'Berlin · Uganda · Burundi: schematic, not to scale', 'Berlin · Ouganda · Burundi : schéma, pas à l’échelle')}</text>
+      </svg>
     </div>
   </section>
 </Base>
@@ -58,11 +130,44 @@ const osm = 'https://www.openstreetmap.org/search?query=Kameruner%20Str.%201%2C%
   }
 </script>
 <style>
-  .contact { display: grid; grid-template-columns: .9fr 1.1fr; gap: clamp(1.5rem, 4vw, 3rem); align-items: start; }
-  .h3 { font-size: 1.35rem; }
+  .promise { display: inline-flex; align-items: center; gap: .5rem; margin: 1rem 0 0; padding: .5rem .9rem; border-radius: 999px; background: var(--surface); border: 1px solid var(--line); font-weight: 600; }
+  .promise__ic { width: 1.2em; height: 1.2em; color: var(--green-text); flex: none; }
+  .hero { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, .8fr); gap: clamp(1.5rem, 4vw, 3rem); align-items: start; }
+  .hero__photo { margin: 0; }
+  .hero__photo img { width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: cover; border-radius: var(--radius); border: 1px solid var(--line); }
+  .hero__photo figcaption { margin-top: .5rem; }
+  .direct { border-top: 6px solid var(--gold); }
+  .direct .h3 { margin-top: 0; font-size: 1.35rem; }
+  .direct .h4 { font-size: 1.05rem; margin: 1.25rem 0 .6rem; }
+  .direct__list { list-style: none; padding: 0; margin: 0; display: grid; gap: .5rem; }
+  .direct__list li { margin: 0; }
+  .direct__list a { display: flex; align-items: center; gap: .85rem; min-height: var(--tap); padding: .5rem .5rem .5rem .25rem; border-radius: var(--radius-sm); text-decoration: none; color: var(--ink); }
+  .direct__list a:hover { background: var(--bg-2); }
+  .direct__list a:hover strong { text-decoration: underline; }
+  .direct__list .icon-badge { flex: none; width: 44px; height: 44px; border-radius: 12px; }
+  .direct__list .icon-badge :global(svg) { width: 22px; height: 22px; }
+  .contact { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: clamp(1.5rem, 4vw, 3rem); align-items: start; }
+  .info .h3 { font-size: 1.35rem; margin-top: 0; }
   .form { display: grid; gap: .9rem; }
-  .form label { display: grid; gap: .3rem; font-weight: 600; font-size: .92rem; }
-  .form input, .form select, .form textarea { font: 400 1rem var(--font-sans); padding: .7rem .8rem; border: 1px solid #cfc7b4; border-radius: 10px; background: var(--surface); color: var(--ink); }
+  .form .h3 { margin: 0; font-size: 1.35rem; }
+  .form__intro { margin: 0; color: var(--ink-2); }
+  .form label { display: grid; gap: .3rem; font-weight: 600; font-size: .95rem; }
+  .form input, .form select, .form textarea { font: 400 1rem var(--font-sans); min-height: var(--tap); padding: .7rem .8rem; border: 2px solid var(--line-strong); border-radius: var(--radius-sm); background: var(--surface); color: var(--ink); }
   .form button { justify-self: start; }
-  @media (max-width: 860px) { .contact { grid-template-columns: 1fr; } }
+  .where { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: clamp(1.5rem, 4vw, 3rem); align-items: center; }
+  .where p { max-width: 60ch; }
+  .where__list { list-style: none; padding: 0; margin: 1rem 0 0; display: grid; gap: .35rem; }
+  .where__list li { margin: 0; }
+  .where__list a { display: inline-flex; flex-wrap: wrap; gap: .35rem; align-items: baseline; min-height: var(--tap); padding: .35rem .2rem; text-decoration: none; color: var(--ink); }
+  .where__list a:hover strong { text-decoration: underline; }
+  .where__map { width: 100%; height: auto; }
+  .map__bg { fill: var(--surface); stroke: var(--line); }
+  .map__dot { fill: var(--line); }
+  .map__line { fill: none; stroke: var(--gold); stroke-width: 3; stroke-dasharray: 7 7; }
+  .map__halo { fill: var(--gold-soft); }
+  .map__pin { fill: var(--ink); }
+  .map__place--berlin .map__pin { fill: var(--green-text); }
+  .map__label { font: 700 17px var(--font-sans); fill: var(--ink); }
+  .map__caption { font: 13px var(--font-sans); fill: var(--muted); }
+  @media (max-width: 900px) { .hero, .contact, .where { grid-template-columns: 1fr; } .where__map { order: -1; } }
 </style>
