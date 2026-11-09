@@ -26,12 +26,19 @@ src/data/people.ts      people (consent flag!), partner organisations (with webs
 src/data/programmes.ts  2 work areas (regions: /inlandsarbeit/, /auslandsarbeit/), 5 programmes + programme 6 (management),
                         project-to-programme assignment, Trägerschaften. A project's region = front matter `programme: inland|international`
 src/data/shop.ts        shop categories + products (prices empty until the board sets them), shipping, giftLimits, canOrder()
-src/components/OrderForm.astro + public/shop/bestellung.php   shop orders (chair, 08.11.2026): form -> our own server (the ONLY
-                        server-side script; .htaccess allows POST over HTTPS to exactly this file) -> mail to info@ + buyer, backup
+src/components/OrderForm.astro + public/shop/bestellung.php   shop orders (chair, 08.11.2026): form -> our own server (one of only
+                        TWO server-side scripts; .htaccess allows POST over HTTPS to exactly these files) -> mail to info@ + buyer, backup
                         ~/bantu-orders/orders.jsonl; payment by bank transfer to GLS with a unique Verwendungszweck + GiroCode QR (uqr).
                         Prices come only from /shop/katalog.json (src/pages/shop/katalog.json.ts). Gifts live; goods behind shopCheckoutOpen.
                         Gifts (donations) are NOT in the shop: section #geschenke on the donate page, pages at /spenden/<slug>/
                         (giftPath), old /shop/geschenk-* URLs redirect (redirects.mjs). Chair's decision 08.11.2026.
+src/views/SponsorshipView.astro + public/mitmachen/patenschaft.php   "Education into the Future" education sponsorships (chair,
+                        09.11.2026): pages /mitmachen/bildungspatenschaft/ (route `sponsorship`), online form -> the second server-side
+                        script (same pattern as the shop: honeypot, dwell time, 3 requests/15 min per hashed IP, mail to info@ + sponsor
+                        in the page language, backup ~/bantu-patenschaften/patenschaften.jsonl, HTML answer without JS). No payment
+                        data, no direct debit mandate: Bantu sends the GLS bank details afterwards. Programme + fillable PDF forms
+                        DE/EN/FR = `sponsorshipDocs` (public/downloads/patenschaft/). Privacy policy section 8. Guide values 25/40/70 EUR
+                        per month are from the programme brochure; actual costs are confirmed per support plan.
 src/data/downloads.ts   files offered on /downloads and /berichte (live in public/downloads/). Membership forms DE/EN/FR =
                         `membershipForms` (public/downloads/mitgliedschaft/, return address Postfach 120344; versions of 09.11.2026);
                         links carry ?v=<membershipFormVersion> because PDFs are cached 30 days: raise it when a form is replaced.
@@ -97,7 +104,7 @@ docs/                   plan, go-live/DNS, legal & shop, photo brief, editing gu
 8. **Accessibility is a core requirement (blind and partially sighted users):** target WCAG 2.2 AA. Semantic HTML and landmarks, one `h1`, no skipped heading levels, alt texts (decorative = `aria-hidden`), visible focus, contrast ≥ 4.5:1 in **all three themes** (light, dark, high contrast), targets ≥ 44 px, no hover-only interactions, no autoplay, `lang` on mixed-language text. Colours only via CSS variables in `global.css` (never hard-code text/background colours in components – they break dark/contrast mode). New pages must pass `node` axe check and the reflow check (see below) with text at 150 %.
    - Accessibility toolbar: `src/components/A11yPanel.astro` (text size, dark/high contrast, Atkinson Hyperlegible font, spacing, link highlighting, stop motion, read aloud via on-device speech synthesis). Native modal `<dialog>` rendered at the end of `<body>` by Base.astro (its h2 never precedes the page h1); open it with any button `[data-a11y-toggle] aria-haspopup="dialog"`. Settings live in `localStorage` key `bantu-a11y` and are applied as `data-*` attributes on `<html>`; text size also sets `--font-scale`.
    - Pages: `/barrierefreiheit/` (statement + feedback) and `/einfache-sprache/` (easy read) – keep both up to date when content changes.
-9. **Shop:** goods ordering stays off (`features.shopCheckoutOpen = false`) until everything in `docs/03_Rechtliches_und_Shop-Checkliste.md` is done. Symbolic gifts are donations, not sales, and can be ordered now (bank transfer with unique Verwendungszweck). Never add another server-side script or loosen the .htaccess exception without the chair's decision.
+9. **Shop:** goods ordering stays off (`features.shopCheckoutOpen = false`) until everything in `docs/03_Rechtliches_und_Shop-Checkliste.md` is done. Symbolic gifts are donations, not sales, and can be ordered now (bank transfer with unique Verwendungszweck). Exactly two server-side scripts exist (shop order form, sponsorship form); never add another or loosen the .htaccess exceptions without the chair's decision.
 
 ## How to verify a change
 0. Accessibility: run axe-core (Playwright) on changed pages in light, dark and contrast theme, and check for horizontal scrolling at 320 px and at 360 px with text size 150 %.

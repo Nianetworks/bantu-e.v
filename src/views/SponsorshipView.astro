@@ -1,0 +1,315 @@
+---
+// "Education into the Future": education sponsorship page with the online form (decision of the chair, 09.11.2026).
+// The form posts to public/mitmachen/patenschaft.php (our own server, like the shop order form): spam checks, e-mail to
+// info@ and a confirmation to the sponsor, backup outside the web root. Without JavaScript the script answers with a plain
+// page. No payment data is collected here; Bantu sends the bank details afterwards (no direct debit mandate).
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import Icon from '../components/Icon.astro';
+import { href, r, type Lang } from '../i18n';
+import { org } from '../data/site';
+import { sponsorshipDocs } from '../data/downloads';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const de = lang === 'de';
+const fr = lang === 'fr';
+const T = (d: string, e: string, f: string) => (de ? d : fr ? f : e);
+const title = 'Education into the Future';
+const lead = T(
+  'Bildungspatenschaften von Bantu e.V. in Uganda: Kindern und jungen Menschen den Zugang zu Bildung, das Weiterlernen und eigene Ziele ermöglichen.',
+  'Education sponsorships by Bantu e.V. in Uganda: helping children and young people enter education, continue learning and pursue their ambitions.',
+  'Parrainages éducatifs de Bantu e.V. en Ouganda : aider des enfants et des jeunes à accéder à l’éducation, à poursuivre leurs études et à réaliser leurs ambitions.',
+);
+const docs = sponsorshipDocs.filter((d) => d.lang.toLowerCase() === lang);
+const programme = docs.find((d) => d.kind === 'programme');
+const form = docs.find((d) => d.kind === 'form');
+const stages = [
+  { v: 'greatest', l: T('Dort, wo die Unterstützung am dringendsten gebraucht wird', 'Where the need is greatest', 'Là où le besoin est le plus grand') },
+  { v: 'early', l: T('Frühe Bildung (Pearl Kindergarten Kampala)', 'Early childhood (Pearl Kindergarten Kampala)', 'Petite enfance (jardin d’enfants Pearl, Kampala)') },
+  { v: 'primary', l: T('Grundschule und barrierefreies Lernen (z. B. Rwera Unit for the Deaf)', 'Primary and accessible learning (e.g. Rwera Unit for the Deaf)', 'Primaire et apprentissage accessible (p. ex. Rwera Unit for the Deaf)') },
+  { v: 'secondary', l: T('Weiterführende Schule (Royal College Namugongo)', 'Secondary education (Royal College Namugongo)', 'Enseignement secondaire (Royal College Namugongo)') },
+  { v: 'vocational', l: T('Berufliche Ausbildung, Pflege- und Hebammenausbildung', 'Vocational, nursing and midwifery training', 'Formation professionnelle, soins infirmiers et obstétricaux') },
+];
+const priorities = [
+  { v: 'costs', l: T('Schulgebühren, Materialien, Mahlzeiten, Unterkunft oder Transport', 'School fees, materials, meals, boarding or transport', 'Frais de scolarité, matériel, repas, internat ou transport') },
+  { v: 'accessibility', l: T('Barrierefreiheit und Kommunikationsunterstützung', 'Disability accessibility and communication support', 'Accessibilité et aide à la communication') },
+  { v: 'menstrual', l: T('Menstruationsgesundheit, Produkte und barrierefreie Sanitäranlagen', 'Menstrual health, products and accessible sanitation', 'Santé menstruelle, produits et sanitaires accessibles') },
+  { v: 'parents', l: T('Weiterlernen und Wiedereinstieg für schwangere Lernende und junge Eltern', 'Continuation or return for pregnant learners and young parents', 'Poursuite ou reprise des études pour les élèves enceintes et les jeunes parents') },
+];
+const frequencies = [
+  { v: 'monthly', l: T('monatlich', 'monthly', 'mensuel') }, { v: 'quarterly', l: T('vierteljährlich', 'quarterly', 'trimestriel') },
+  { v: 'annually', l: T('jährlich', 'annually', 'annuel') }, { v: 'once', l: T('einmalig', 'one-off', 'unique') },
+];
+const methods = [
+  { v: 'transfer', l: T('Überweisung', 'Bank transfer', 'Virement') }, { v: 'standing', l: T('Dauerauftrag', 'Standing order', 'Ordre permanent') }, { v: 'discuss', l: T('Bitte beraten Sie mich', 'Discuss the options with me', 'À discuter avec moi') },
+];
+const tiers = [
+  { v: '25', l: T('25 EUR: Platz in der frühen Bildung oder in Grundschule und barrierefreiem Lernen', '25 EUR: a place in early childhood or primary and accessible education', '25 EUR : une place en petite enfance ou en primaire et apprentissage accessible') },
+  { v: '40', l: T('40 EUR: Platz an einer weiterführenden Schule', '40 EUR: a secondary school place', '40 EUR : une place dans l’enseignement secondaire') },
+  { v: '70', l: T('70 EUR: Ausbildungsplatz in Technik, Pflege oder Hebammenwesen', '70 EUR: a vocational, nursing or midwifery place', '70 EUR : une place en formation technique, en soins infirmiers ou obstétricaux') },
+];
+const s = {
+  how: T('So funktioniert eine Patenschaft', 'How a sponsorship works', 'Comment fonctionne un parrainage'),
+  steps: [
+    T('Sie füllen das Formular aus: Betrag, Rhythmus, bevorzugte Bildungsstufe und Ihre Kontaktdaten.', 'You fill in the form: amount, rhythm, preferred education stage and your contact details.', 'Vous remplissez le formulaire : montant, rythme, étape éducative souhaitée et vos coordonnées.'),
+    T('Wir melden uns innerhalb weniger Tage, bestätigen die Förderung und schicken Ihnen die Bankverbindung für Überweisung oder Dauerauftrag. Es wird kein Lastschriftmandat erteilt.', 'We get back to you within a few days, confirm the sponsorship and send you the bank details for your transfer or standing order. No direct debit mandate is given.', 'Nous vous recontactons sous quelques jours, confirmons le parrainage et vous envoyons les coordonnées bancaires pour votre virement ou ordre permanent. Aucun mandat de prélèvement n’est donné.'),
+    T('Sie erhalten eine Zuwendungsbestätigung und mindestens einmal im Jahr einen Bericht zum Programm und zur Bildungsstufe, die Sie unterstützen.', 'You receive a donation receipt and, at least once a year, a report on the programme and the stage you support.', 'Vous recevez un reçu fiscal et, au moins une fois par an, un rapport sur le programme et l’étape que vous soutenez.'),
+  ],
+  guide: T('Richtwerte je Monat. Die tatsächlichen Kosten unterscheiden sich je nach Lernenden und Einrichtung und werden für jeden Förderplan bestätigt.', 'Monthly guide values. Actual costs differ between learners and institutions and are confirmed for each support plan.', 'Valeurs indicatives par mois. Les coûts réels varient selon les élèves et les établissements et sont confirmés pour chaque plan de soutien.'),
+  docsH: T('Programm und Formular als PDF', 'Programme and form as PDF', 'Programme et formulaire en PDF'),
+  docsP: T('Lieber auf Papier? Hier finden Sie die Programmbeschreibung und das ausfüllbare Formular zum Herunterladen.', 'Prefer paper? Download the programme description and the fillable form here.', 'Vous préférez le papier ? Téléchargez ici la description du programme et le formulaire à remplir.'),
+  formH: T('Patenschaft anfragen', 'Request a sponsorship', 'Demander un parrainage'),
+  formP: T('Mit diesem Formular stimmen Bantu e.V. und ABI eine passende Förderung mit Ihnen ab. Pflichtfelder sind markiert.', 'With this form Bantu e.V. and ABI confirm a suitable sponsorship with you. Required fields are marked.', 'Avec ce formulaire, Bantu e.V. et ABI conviennent avec vous d’un soutien adapté. Les champs obligatoires sont marqués.'),
+  req: T('Pflichtfeld', 'required', 'obligatoire'),
+  amount: T('Ihr Beitrag je Zahlung', 'Your contribution per payment', 'Votre contribution par versement'),
+  other: T('Anderer Betrag', 'Other amount', 'Autre montant'),
+  otherLabel: T('Eigener Betrag in Euro (5 bis 10.000)', 'Your own amount in euros (5 to 10,000)', 'Votre montant en euros (5 à 10 000)'),
+  freq: T('Zahlungsrhythmus', 'Payment frequency', 'Rythme de paiement'),
+  example: T('Beispiel: 25 EUR monatlich sind 300 EUR im Jahr.', 'Example: 25 EUR monthly is 300 EUR a year.', 'Exemple : 25 EUR par mois, soit 300 EUR par an.'),
+  stage: T('Ihre bevorzugte Bildungsstufe', 'Your preferred education stage', 'Votre étape éducative préférée'),
+  stageNote: T('Bantu bestätigt verfügbare Angebote und Kosten.', 'Bantu confirms available options and costs.', 'Bantu confirme les options disponibles et les coûts.'),
+  prio: T('Weitere Förderinteressen (freiwillig)', 'Additional priorities (optional)', 'Autres priorités (facultatif)'),
+  prioNote: T('Mehrfachauswahl möglich.', 'Select any that apply.', 'Plusieurs choix possibles.'),
+  contact: T('Ihre Kontaktdaten', 'Your contact details', 'Vos coordonnées'),
+  name: T('Vor- und Nachname', 'Full name', 'Prénom et nom'),
+  orgL: T('Organisation oder Unternehmen (freiwillig)', 'Organisation or company (optional)', 'Organisation ou entreprise (facultatif)'),
+  email: T('E-Mail-Adresse', 'E-mail address', 'Adresse e-mail'),
+  emailHint: T('Dorthin schicken wir die Bestätigung und die Bankverbindung.', 'We send the confirmation and the bank details there.', 'Nous y envoyons la confirmation et les coordonnées bancaires.'),
+  phone: T('Telefon (freiwillig)', 'Telephone (optional)', 'Téléphone (facultatif)'),
+  receipt: T('Ich möchte eine Zuwendungsbestätigung (dafür brauchen wir Ihre Postanschrift).', 'I would like a donation receipt (we need your postal address for it).', 'Je souhaite un reçu fiscal (nous avons besoin de votre adresse postale).'),
+  address: T('Postanschrift', 'Postal address', 'Adresse postale'),
+  addressHint: T('Straße und Hausnummer, Postleitzahl, Ort und Land', 'Street and number, postcode, town and country', 'Rue et numéro, code postal, ville et pays'),
+  method: T('Zahlungsweise', 'Payment arrangement', 'Mode de paiement'),
+  methodNote: T('Bantu schickt Ihnen die Bankverbindung. Einen Dauerauftrag richten Sie selbst bei Ihrer Bank ein. Dieses Formular erteilt kein Lastschriftmandat.', 'Bantu sends you the bank details. You set up a standing order with your own bank. This form does not authorise a direct debit.', 'Bantu vous envoie les coordonnées bancaires. Vous mettez en place l’ordre permanent auprès de votre banque. Ce formulaire n’autorise aucun prélèvement.'),
+  message: T('Nachricht an uns (freiwillig)', 'Message to us (optional)', 'Message pour nous (facultatif)'),
+  updates: T('Ich möchte gelegentlich Projektinformationen per E-Mail erhalten (freiwillig, jederzeit abbestellbar).', 'Please e-mail me occasional programme updates (optional, you can stop them at any time).', 'Je souhaite recevoir de temps en temps des informations par e-mail (facultatif, résiliable à tout moment).'),
+  consent: T('Ich bin einverstanden, dass Bantu e.V. meine Angaben zur Bearbeitung meiner Patenschaftsanfrage verwendet.', 'I agree that Bantu e.V. uses my details to process my sponsorship request.', 'J’accepte que Bantu e.V. utilise mes données pour traiter ma demande de parrainage.'),
+  privacyLink: T('Datenschutzerklärung', 'Privacy policy', 'Politique de confidentialité'),
+  submit: T('Anfrage absenden', 'Send request', 'Envoyer la demande'),
+  sending: T('Wird gesendet …', 'Sending…', 'Envoi en cours…'),
+  netError: T('Die Verbindung hat nicht geklappt. Bitte versuchen Sie es noch einmal oder schreiben Sie uns an info@bantu-ev.org.', 'The connection failed. Please try again or write to us at info@bantu-ev.org.', 'La connexion a échoué. Veuillez réessayer ou nous écrire à info@bantu-ev.org.'),
+  doneTitle: T('Vielen Dank für Ihre Patenschaftsanfrage!', 'Thank you for your sponsorship request!', 'Merci pour votre demande de parrainage !'),
+  doneIntro: T('Wir melden uns innerhalb weniger Tage bei Ihnen, bestätigen die Förderung und schicken Ihnen die Bankverbindung. Ihre Referenz:', 'We will get back to you within a few days, confirm the sponsorship and send you our bank details. Your reference:', 'Nous vous recontactons sous quelques jours, confirmons le parrainage et vous envoyons nos coordonnées bancaires. Votre référence :'),
+  doneSummary: T('Ihre Angaben', 'Your details', 'Vos indications'),
+  questions: T('Fragen zur Patenschaft?', 'Questions about sponsorship?', 'Des questions sur le parrainage ?'),
+};
+const privacyHref = r('privacy', lang, '#patenschaftsformular');
+---
+<Base lang={lang} title={`${title}: ${T('Bildungspatenschaft', 'Education sponsorship', 'Parrainage éducatif')}`} description={lead} altHref={r('sponsorship', de ? 'en' : 'de')}>
+  <PageHead lang={lang} title={title} lead={lead} eyebrow={T('Bildungspatenschaften', 'Education sponsorships', 'Parrainages éducatifs')} crumbs={[{ label: T('Mitmachen', 'Get involved', 'S’engager'), href: r('join', lang) }]} />
+
+  <section class="section section--tight">
+    <div class="wrap two-col">
+      <div>
+        <h2>{s.how}</h2>
+        <ol class="steps">{s.steps.map((st) => <li>{st}</li>)}</ol>
+        <h3>{T('Richtwerte', 'Guide values', 'Valeurs indicatives')}</h3>
+        <ul class="tiers">{tiers.map((t) => <li><Icon name="school" class="ic" /><span>{t.l}</span></li>)}</ul>
+        <p class="small muted">{s.guide}</p>
+      </div>
+      <div class="panel docs">
+        <h2 class="h3">{s.docsH}</h2>
+        <p>{s.docsP}</p>
+        <ul class="docs__list">
+          {programme && <li><a href={href(programme.file)} download><Icon name="download" class="ic" />{programme.title[lang]} <span class="muted small">({programme.size})</span></a></li>}
+          {form && <li><a href={href(form.file)} download><Icon name="download" class="ic" />{form.title[lang]} <span class="muted small">({form.size})</span></a></li>}
+        </ul>
+        <p class="small muted">{T('Weitere Sprachen auf der', 'Other languages on the', 'Autres langues sur la page')} <a href={r('downloads', lang)}>{T('Downloads-Seite', 'downloads page', 'Téléchargements')}</a>.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--alt" id="formular">
+    <div class="wrap">
+      <div class="sform panel" data-sform data-net-error={s.netError} data-sending={s.sending}>
+        <form method="post" action={href('/mitmachen/patenschaft.php')} data-sform-form>
+          <h2 id="sform-h">{s.formH}</h2>
+          <p>{s.formP}</p>
+          <input type="hidden" name="lang" value={lang} />
+          <input type="hidden" name="dwell" value="" />
+          <div class="sform__hp" aria-hidden="true"><label>Website <input type="text" name="website" tabindex="-1" autocomplete="off" /></label></div>
+
+          <fieldset class="sform__field">
+            <legend>{s.amount} <span class="req">({s.req})</span></legend>
+            <div class="sform__choices">
+              {tiers.map((t, i) => <label class="choice"><input type="radio" name="amount" value={t.v} required checked={i === 0} /><span>{t.l}</span></label>)}
+              <label class="choice"><input type="radio" name="amount" value="other" data-amount-other /><span>{s.other}</span></label>
+            </div>
+            <div class="sform__sub" data-other-wrap>
+              <label for="sform-other">{s.otherLabel}</label>
+              <input id="sform-other" name="amount_other" type="number" inputmode="decimal" min="5" max="10000" step="0.01" />
+            </div>
+          </fieldset>
+
+          <fieldset class="sform__field">
+            <legend>{s.freq} <span class="req">({s.req})</span></legend>
+            <div class="sform__choices sform__choices--row">
+              {frequencies.map((f, i) => <label class="choice"><input type="radio" name="frequency" value={f.v} required checked={i === 0} /><span>{f.l}</span></label>)}
+            </div>
+            <p class="sform__hint">{s.example}</p>
+          </fieldset>
+
+          <fieldset class="sform__field">
+            <legend>{s.stage} <span class="req">({s.req})</span></legend>
+            <p class="sform__hint" id="sform-stage-hint">{s.stageNote}</p>
+            <div class="sform__choices" aria-describedby="sform-stage-hint">
+              {stages.map((st, i) => <label class="choice"><input type="radio" name="stage" value={st.v} required checked={i === 0} /><span>{st.l}</span></label>)}
+            </div>
+          </fieldset>
+
+          <fieldset class="sform__field">
+            <legend>{s.prio}</legend>
+            <p class="sform__hint">{s.prioNote}</p>
+            <div class="sform__choices">
+              {priorities.map((p) => <label class="choice"><input type="checkbox" name={`priority_${p.v}`} value="1" /><span>{p.l}</span></label>)}
+            </div>
+          </fieldset>
+
+          <fieldset class="sform__field">
+            <legend>{s.contact}</legend>
+            <div class="sform__grid">
+              <div><label for="sform-name">{s.name} <span class="req">({s.req})</span></label><input id="sform-name" name="name" type="text" autocomplete="name" required minlength="2" maxlength="100" /></div>
+              <div><label for="sform-org">{s.orgL}</label><input id="sform-org" name="organisation" type="text" autocomplete="organization" maxlength="120" /></div>
+              <div><label for="sform-email">{s.email} <span class="req">({s.req})</span></label><input id="sform-email" name="email" type="email" autocomplete="email" required maxlength="200" aria-describedby="sform-email-hint" /><p class="sform__hint" id="sform-email-hint">{s.emailHint}</p></div>
+              <div><label for="sform-phone">{s.phone}</label><input id="sform-phone" name="phone" type="tel" autocomplete="tel" maxlength="40" /></div>
+            </div>
+            <div class="sform__check">
+              <input id="sform-receipt" name="receipt" type="checkbox" value="1" data-receipt />
+              <label for="sform-receipt">{s.receipt}</label>
+            </div>
+            <div class="sform__sub" data-address-wrap>
+              <label for="sform-address">{s.address}</label>
+              <textarea id="sform-address" name="address" rows="3" maxlength="500" autocomplete="street-address" aria-describedby="sform-address-hint"></textarea>
+              <p class="sform__hint" id="sform-address-hint">{s.addressHint}</p>
+            </div>
+          </fieldset>
+
+          <fieldset class="sform__field">
+            <legend>{s.method} <span class="req">({s.req})</span></legend>
+            <div class="sform__choices sform__choices--row">
+              {methods.map((m, i) => <label class="choice"><input type="radio" name="method" value={m.v} required checked={i === 0} /><span>{m.l}</span></label>)}
+            </div>
+            <p class="sform__hint">{s.methodNote}</p>
+          </fieldset>
+
+          <div class="sform__field">
+            <label for="sform-message">{s.message}</label>
+            <textarea id="sform-message" name="message" rows="3" maxlength="1500"></textarea>
+          </div>
+
+          <div class="sform__check">
+            <input id="sform-updates" name="updates" type="checkbox" value="1" />
+            <label for="sform-updates">{s.updates}</label>
+          </div>
+          <div class="sform__check">
+            <input id="sform-consent" name="consent" type="checkbox" value="1" required />
+            <label for="sform-consent">{s.consent} <span class="req">({s.req})</span> <a href={privacyHref}>{s.privacyLink}</a></label>
+          </div>
+
+          <p class="sform__error" role="alert" data-sform-error hidden></p>
+          <button type="submit" class="btn btn--gold" data-sform-submit>{s.submit}</button>
+        </form>
+
+        <div class="sform__done" data-sform-done hidden>
+          <h2 tabindex="-1" data-sform-done-h>{s.doneTitle}</h2>
+          <p>{s.doneIntro} <strong data-f="reference"></strong></p>
+          <h3>{s.doneSummary}</h3>
+          <ul data-f="summary"></ul>
+          <div class="sform__next" data-f="next"></div>
+          <p>{s.questions} <a href={`mailto:${org.email}`}>{org.email}</a> · {org.phone}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>
+<script>
+  document.querySelectorAll<HTMLElement>('[data-sform]').forEach((box) => {
+    const form = box.querySelector<HTMLFormElement>('[data-sform-form]')!;
+    const done = box.querySelector<HTMLElement>('[data-sform-done]')!;
+    const err = box.querySelector<HTMLElement>('[data-sform-error]')!;
+    const submit = box.querySelector<HTMLButtonElement>('[data-sform-submit]')!;
+    const loaded = Date.now();
+    // "Other amount": the number field is only needed (and shown) when that option is chosen
+    const otherWrap = form.querySelector<HTMLElement>('[data-other-wrap]')!;
+    const otherInput = otherWrap.querySelector<HTMLInputElement>('input')!;
+    const amountRadios = [...form.querySelectorAll<HTMLInputElement>('input[name="amount"]')];
+    const syncOther = () => { const on = form.querySelector<HTMLInputElement>('input[name="amount"]:checked')?.value === 'other'; otherWrap.hidden = !on; otherInput.required = on; if (on) otherInput.focus(); };
+    amountRadios.forEach((r) => r.addEventListener('change', syncOther));
+    otherWrap.hidden = true;
+    // Address only with a donation receipt
+    const receipt = form.querySelector<HTMLInputElement>('[data-receipt]')!;
+    const addressWrap = form.querySelector<HTMLElement>('[data-address-wrap]')!;
+    const address = addressWrap.querySelector<HTMLTextAreaElement>('textarea')!;
+    const syncAddress = () => { addressWrap.hidden = !receipt.checked; address.required = receipt.checked; };
+    receipt.addEventListener('change', syncAddress);
+    syncAddress();
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      err.hidden = true;
+      (form.elements.namedItem('dwell') as HTMLInputElement).value = String(Date.now() - loaded);
+      const label = submit.textContent;
+      submit.disabled = true;
+      submit.textContent = box.dataset.sending ?? label;
+      try {
+        const res = await fetch(form.action, { method: 'POST', body: new FormData(form), headers: { Accept: 'application/json' } });
+        const data = await res.json().catch(() => null);
+        if (!data || !data.ok) throw new Error(data?.message || box.dataset.netError);
+        done.querySelector<HTMLElement>('[data-f="reference"]')!.textContent = data.reference;
+        const li = (t: string) => Object.assign(document.createElement('li'), { textContent: t });
+        done.querySelector<HTMLElement>('[data-f="summary"]')!.replaceChildren(...(data.summary as string[]).map(li));
+        done.querySelector<HTMLElement>('[data-f="next"]')!.replaceChildren(...(data.next as string[]).map((t) => Object.assign(document.createElement('p'), { textContent: t })));
+        form.hidden = true;
+        done.hidden = false;
+        done.querySelector<HTMLElement>('[data-sform-done-h]')!.focus();
+      } catch (ex) {
+        err.textContent = ex instanceof Error && ex.message ? ex.message : (box.dataset.netError ?? '');
+        err.hidden = false;
+        err.focus?.();
+      } finally {
+        submit.disabled = false;
+        submit.textContent = label;
+      }
+    });
+  });
+</script>
+<style>
+  .two-col { display: grid; grid-template-columns: 1.15fr .85fr; gap: clamp(1.5rem, 5vw, 4rem); align-items: start; }
+  .steps { padding-left: 1.3rem; max-width: 62ch; }
+  .steps li { margin: .5rem 0; }
+  .tiers { list-style: none; padding: 0; margin: 0 0 .6rem; display: grid; gap: .5rem; max-width: 62ch; }
+  .tiers li { display: flex; gap: .6rem; align-items: flex-start; margin: 0; }
+  .ic { width: 1.2em; height: 1.2em; flex: none; margin-top: .15em; }
+  .docs { border-top: 6px solid var(--gold); }
+  .docs .h3 { font-size: 1.3rem; margin-top: 0; }
+  .docs__list { list-style: none; padding: 0; margin: .5rem 0 1rem; display: grid; gap: .5rem; }
+  .docs__list li { margin: 0; }
+  .docs__list a { display: flex; gap: .6rem; align-items: flex-start; min-height: 44px; padding: .5rem .2rem; font-weight: 700; }
+  .sform h2 { font-size: clamp(1.3rem, 2.6vw, 1.6rem); margin: 0 0 .5rem; }
+  .sform__field { margin: 1.4rem 0 0; border: 0; padding: 0; min-width: 0; }
+  .sform__field > label, .sform__field legend { display: block; font-weight: 700; margin-bottom: .4rem; padding: 0; }
+  .sform__grid label { display: block; font-weight: 700; margin-bottom: .35rem; }
+  .req { font-weight: 400; color: var(--muted); font-size: .9rem; }
+  .sform input[type='text'], .sform input[type='email'], .sform input[type='tel'], .sform input[type='number'], .sform textarea {
+    width: 100%; max-width: 34rem; min-height: var(--tap); padding: .55rem .75rem; font: inherit; color: var(--ink); background: var(--surface);
+    border: 2px solid var(--line-strong); border-radius: var(--radius-sm);
+  }
+  .sform__grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr)); gap: .9rem 1.5rem; }
+  .sform__hint { margin: .35rem 0 0; font-size: .92rem; color: var(--muted); font-weight: 400; }
+  .sform__choices { display: grid; gap: .35rem; }
+  .sform__choices--row { grid-template-columns: repeat(auto-fit, minmax(min(100%, 11rem), max-content)); gap: .35rem 1.5rem; }
+  .choice { display: flex; gap: .6rem; align-items: flex-start; min-height: var(--tap); padding: .3rem .2rem; cursor: pointer; }
+  .choice input { width: 1.4rem; height: 1.4rem; margin-top: .15rem; flex: none; accent-color: var(--green-text); }
+  .sform__sub { margin: .8rem 0 0 0; padding-left: 2.2rem; }
+  .sform__sub label { display: block; font-weight: 600; margin-bottom: .35rem; }
+  .sform__check { display: flex; gap: .6rem; align-items: flex-start; margin: 1rem 0 0; }
+  .sform__check input { width: 1.4rem; height: 1.4rem; margin-top: .15rem; flex: none; accent-color: var(--green-text); }
+  .sform__hp { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
+  .sform__error { margin: 1rem 0 0; padding: .75rem 1rem; border-left: 4px solid currentColor; background: var(--bg-2); font-weight: 600; }
+  .sform [data-sform-submit] { margin-top: 1.5rem; }
+  .sform__done h2:focus { outline: none; }
+  .sform__next p { font-weight: 600; }
+  .sform__done [data-f='reference'] { white-space: nowrap; }
+  @media (max-width: 860px) { .two-col { grid-template-columns: 1fr; } }
+</style>

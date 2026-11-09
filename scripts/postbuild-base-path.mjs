@@ -53,12 +53,16 @@ AddType text/vtt .vtt
 RewriteEngine On
 # Certificate validation (AutoSSL / Let's Encrypt) and security.txt must stay reachable
 RewriteRule ^\\.well-known/ - [L]
-# The one exception (shop order form, decision of the chair 08.11.2026): POST over HTTPS to exactly shop/bestellung.php.
-# Any other method on that file falls through to the 405/404 rules below; no other script can run.
+# The two exceptions (shop order form, chair 08.11.2026; sponsorship form, chair 09.11.2026): POST over HTTPS to exactly
+# these files. Any other method on them falls through to the 405/404 rules below; no other script can run.
 RewriteCond %{REQUEST_METHOD} =POST
 RewriteCond %{HTTPS} =on [OR]
 RewriteCond %{HTTP:X-Forwarded-Proto} =https
 RewriteRule ^shop/bestellung\\.php$ - [END]
+RewriteCond %{REQUEST_METHOD} =POST
+RewriteCond %{HTTPS} =on [OR]
+RewriteCond %{HTTP:X-Forwarded-Proto} =https
+RewriteRule ^mitmachen/patenschaft\\.php$ - [END]
 # Self-defence: otherwise this is a static site, so only reading is allowed (no uploads, no form posts to this server)
 RewriteCond %{REQUEST_METHOD} !^(GET|HEAD|OPTIONS)$
 RewriteRule ^ - [R=405,L]

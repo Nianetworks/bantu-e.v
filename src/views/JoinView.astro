@@ -55,7 +55,26 @@ const formHref = (f: (typeof membershipForms)[number]) => withVersion(href(f.fil
     </div>
   </section>
 
-  <section class="section section--alt" id="volunteer">
+  <section class="section section--alt" id="sponsorship">
+    <div class="wrap two-col">
+      <div>
+        <div class="eyebrow">{de ? 'Bildungspatenschaften' : fr ? 'Parrainages éducatifs' : 'Education sponsorships'}</div>
+        <h2>Education into the Future</h2>
+        <p>{de ? 'Mit einer Bildungspatenschaft ermöglichen Sie Kindern und jungen Menschen in Uganda den Zugang zu Bildung: vom Pearl Kindergarten in Kampala über Grund- und weiterführende Schulen bis zur beruflichen Ausbildung. Sie wählen Betrag, Rhythmus und Bildungsstufe; Bantu e.V. und unsere Partnerorganisation ABI bestätigen die Förderung und berichten Ihnen mindestens einmal im Jahr.' : fr ? 'Avec un parrainage éducatif, vous ouvrez l’accès à l’éducation à des enfants et des jeunes en Ouganda : du jardin d’enfants Pearl à Kampala aux écoles primaires et secondaires jusqu’à la formation professionnelle. Vous choisissez le montant, le rythme et l’étape éducative ; Bantu e.V. et notre partenaire ABI confirment le soutien et vous informent au moins une fois par an.' : 'An education sponsorship gives children and young people in Uganda access to education: from the Pearl Kindergarten in Kampala through primary and secondary school to vocational training. You choose the amount, rhythm and education stage; Bantu e.V. and our partner organisation ABI confirm the support and report to you at least once a year.'}</p>
+        <p class="small muted">{de ? 'Richtwerte je Monat: 25 EUR frühe Bildung oder Grundschule, 40 EUR weiterführende Schule, 70 EUR Ausbildung. Jeder Betrag hilft.' : fr ? 'Valeurs indicatives par mois : 25 EUR petite enfance ou primaire, 40 EUR secondaire, 70 EUR formation professionnelle. Chaque montant compte.' : 'Monthly guide values: 25 EUR early childhood or primary, 40 EUR secondary, 70 EUR vocational training. Every amount helps.'}</p>
+      </div>
+      <div class="panel">
+        <h3>{de ? 'Patenschaft anfragen' : fr ? 'Demander un parrainage' : 'Request a sponsorship'}</h3>
+        <p>{de ? 'Online in wenigen Minuten oder mit dem ausfüllbaren PDF-Formular. Wir melden uns innerhalb weniger Tage.' : fr ? 'En ligne en quelques minutes ou avec le formulaire PDF à remplir. Nous vous recontactons sous quelques jours.' : 'Online in a few minutes or with the fillable PDF form. We get back to you within a few days.'}</p>
+        <div class="btn-row">
+          <a class="btn btn--gold" href={r('sponsorship', lang, '#formular')}>{de ? 'Zum Online-Formular' : fr ? 'Formulaire en ligne' : 'Online form'}</a>
+          <a class="btn btn--outline" href={r('sponsorship', lang)}>{de ? 'Mehr zum Programm' : fr ? 'En savoir plus' : 'About the programme'}</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="volunteer">
     <div class="wrap">
       <div class="eyebrow">{de ? 'Ehrenamt' : fr ? 'Bénévolat' : 'Volunteering'}</div>
       <h2>{de ? 'Ehrenamtlich mitmachen' : fr ? 'Devenir bénévole' : 'Volunteer with us'}</h2>
@@ -72,7 +91,7 @@ const formHref = (f: (typeof membershipForms)[number]) => withVersion(href(f.fil
     </div>
   </section>
 
-  <section class="section" id="cooperation">
+  <section class="section section--alt" id="cooperation">
     <div class="wrap two-col">
       <div>
         <div class="eyebrow">{de ? 'Kooperationen' : fr ? 'Partenariats' : 'Partnerships'}</div>

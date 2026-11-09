@@ -19,6 +19,7 @@ export const routes = {
   shop: { de: '/shop/', en: '/en/shop/', fr: '/fr/boutique/' },
   donate: { de: '/spenden/', en: '/en/donate/', fr: '/fr/faire-un-don/' },
   join: { de: '/mitmachen/', en: '/en/get-involved/', fr: '/fr/s-engager/' },
+  sponsorship: { de: '/mitmachen/bildungspatenschaft/', en: '/en/get-involved/education-sponsorship/', fr: '/fr/s-engager/parrainage-educatif/' },
   contact: { de: '/kontakt/', en: '/en/contact/', fr: '/fr/contact/' },
   imprint: { de: '/impressum/', en: '/en/imprint/', fr: '/fr/mentions-legales/' },
   privacy: { de: '/datenschutz/', en: '/en/privacy/', fr: '/fr/confidentialite/' },
@@ -256,6 +257,7 @@ export function mainNav(lang: Lang): NavItem[] {
       href: r('join', lang),
       children: [
         { label: de ? 'Mitglied werden' : fr ? 'Devenir membre' : 'Become a member', href: r('join', lang, '#membership') },
+        { label: de ? 'Bildungspatenschaft' : fr ? 'Parrainage éducatif' : 'Education sponsorship', href: r('sponsorship', lang) },
         { label: de ? 'Ehrenamt' : fr ? 'Bénévolat' : 'Volunteer', href: r('join', lang, '#volunteer') },
         { label: de ? 'Bildungsangebote anfragen' : fr ? 'Demander un atelier ou une formation' : 'Book a workshop or training', href: r('offers', lang) },
         { label: de ? 'Kooperationen' : fr ? 'Coopérer avec nous' : 'Partner with us', href: r('join', lang, '#cooperation') },
