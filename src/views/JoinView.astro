@@ -4,6 +4,7 @@ import Base from '../layouts/Base.astro';
 import PageHead from '../components/PageHead.astro';
 import { href, r, type Lang } from '../i18n';
 import { org } from '../data/site';
+import { membershipFormVersion, membershipForms, withVersion } from '../data/downloads';
 
 interface Props { lang: Lang }
 const { lang } = Astro.props;
@@ -14,6 +15,8 @@ const lead = de
   ? 'Unser Büro ist in Berlin, unser Team ist international. Vieles läuft online. Sie können von überall aus mitmachen.'
   : fr ? 'Notre bureau est à Berlin, notre équipe est internationale. Une grande partie du travail se fait en ligne. Vous pouvez participer de partout.' : 'Our office is in Berlin, our team is international. Much of the work happens online. You can join from anywhere.';
 const mail = (s: string) => `mailto:${org.email}?subject=${encodeURIComponent(s)}`;
+const form = membershipForms.find((f) => f.lang === lang)!;
+const formHref = (f: (typeof membershipForms)[number]) => withVersion(href(f.file), membershipFormVersion);
 ---
 <Base lang={lang} title={title} description={lead} altHref={r('join', de ? 'en' : 'de')}>
   <PageHead lang={lang} title={title} lead={lead} />
@@ -35,12 +38,19 @@ const mail = (s: string) => `mailto:${org.email}?subject=${encodeURIComponent(s)
         <h3>{de ? 'So geht’s' : fr ? 'Comment faire' : 'How it works'}</h3>
         <ol>
           <li>{de ? 'Mitgliedsantrag herunterladen und ausfüllen' : fr ? 'Télécharger et remplir le formulaire d’adhésion' : 'Download and complete the membership form'}</li>
-          <li>{de ? `Per Post an ${org.shortName}, ${org.postbox.line}, ${org.postbox.zip} ${org.postbox.city}, oder eingescannt an ${org.email}` : fr ? `Envoyez-le par courrier à ${org.shortName}, ${org.postbox.line}, ${org.postbox.zip} ${org.postbox.city}, ou scanné par e-mail à ${org.email}` : `Send it by post to ${org.shortName}, ${org.postbox.line}, ${org.postbox.zip} ${org.postbox.city}, or scan it and e-mail it to ${org.email}`}</li>
+          <li>{de
+            ? <>Per Post an unsere <strong>Postanschrift</strong>: {org.shortName}, {org.postbox.line}, {org.postbox.zip} {org.postbox.city} (nicht an die Büroadresse {org.address.street}), oder eingescannt per E-Mail an <a href={`mailto:${org.email}`}>{org.email}</a></>
+            : fr ? <>Par courrier à notre <strong>adresse postale</strong> : {org.shortName}, {org.postbox.line}, {org.postbox.zip} {org.postbox.city}, Allemagne (et non à l’adresse du bureau, {org.address.street}), ou scanné par e-mail à <a href={`mailto:${org.email}`}>{org.email}</a></>
+            : <>By post to our <strong>postal address</strong>: {org.shortName}, {org.postbox.line}, {org.postbox.zip} {org.postbox.city}, Germany (not to the office address, {org.address.street}), or scanned by e-mail to <a href={`mailto:${org.email}`}>{org.email}</a></>}</li>
         </ol>
         <div class="btn-row">
-          <a class="btn btn--dark" href={href('/downloads/mitgliedschaft/bantu-ev-mitgliedsantrag-de.pdf')} download>{de ? 'Mitgliedsantrag (DE)' : fr ? 'Formulaire d’adhésion (DE)' : 'Membership form (DE)'}</a>
-          <a class="btn btn--outline" href={href('/downloads/mitgliedschaft/bantu-ev-membership-form-en.pdf')} download>{de ? 'Formular (EN)' : fr ? 'Formulaire d’adhésion (EN)' : 'Membership form (EN)'}</a>
+          <a class="btn btn--dark" href={formHref(form)} download>{form.label}</a>
         </div>
+        <p class="form-langs small">
+          <span>{de ? 'Sprache des Formulars:' : fr ? 'Langue du formulaire :' : 'Form language:'}</span>
+          {membershipForms.map((f, i) => <><a href={formHref(f)} download lang={f.lang} hreflang={f.lang} aria-current={f.lang === lang ? 'true' : undefined}>{f.name}<span class="sr-only"> (PDF)</span></a>{i < membershipForms.length - 1 && <span aria-hidden="true"> · </span>}</>)}
+        </p>
+        <p class="small muted">{de ? 'Stand November 2026, mit Rücksendeadresse Postfach.' : fr ? 'Version de novembre 2026, avec l’adresse de retour (boîte postale).' : 'Version of November 2026, with the return address (P.O. box).'}</p>
       </div>
     </div>
   </section>
@@ -87,6 +97,9 @@ const mail = (s: string) => `mailto:${org.email}?subject=${encodeURIComponent(s)
   .checks { list-style: none; padding: 0; }
   .checks li { padding-left: 1.6rem; position: relative; margin: .5rem 0; }
   .checks li::before { content: ''; position: absolute; left: 0; top: .45rem; width: 12px; height: 12px; border-radius: 50%; border: 3px solid var(--green); }
+  .form-langs { margin: .9rem 0 0; display: flex; flex-wrap: wrap; gap: .2rem .4rem; align-items: center; }
+  .form-langs a { font-weight: 700; display: inline-flex; align-items: center; min-height: 44px; padding: 0 .3rem; }
+  .form-langs a[aria-current] { text-decoration-thickness: 3px; }
   .grid .panel h3 { font-size: 1.1rem; }
   .grid .panel p { margin: 0; color: var(--ink-2); }
   @media (max-width: 860px) { .two-col { grid-template-columns: 1fr; } }

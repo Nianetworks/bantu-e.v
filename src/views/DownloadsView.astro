@@ -2,7 +2,7 @@
 import Base from '../layouts/Base.astro';
 import PageHead from '../components/PageHead.astro';
 import { href, r, type Lang } from '../i18n';
-import { downloads, groups } from '../data/downloads';
+import { downloads, groups, withVersion } from '../data/downloads';
 
 interface Props { lang: Lang }
 const { lang } = Astro.props;
@@ -22,7 +22,7 @@ const lead = de ? 'Berichte, Formulare, Flyer und Logos von Bantu e.V.' : fr ? '
           <ul class="dl-list">
             {downloads.filter((d) => d.group === g.id).map((d) => (
               <li>
-                <a href={href(d.file)} download>
+                <a href={withVersion(href(d.file), d.version)} download>
                   <span class="dl-ext">{d.file.split('.').pop()!.toUpperCase()}</span>
                   <span class="dl-title">{d.title[lang]}</span>
                   <span class="dl-meta">{d.lang} · {d.size}</span>

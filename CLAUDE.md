@@ -32,7 +32,9 @@ src/components/OrderForm.astro + public/shop/bestellung.php   shop orders (chair
                         Prices come only from /shop/katalog.json (src/pages/shop/katalog.json.ts). Gifts live; goods behind shopCheckoutOpen.
                         Gifts (donations) are NOT in the shop: section #geschenke on the donate page, pages at /spenden/<slug>/
                         (giftPath), old /shop/geschenk-* URLs redirect (redirects.mjs). Chair's decision 08.11.2026.
-src/data/downloads.ts   files offered on /downloads and /berichte (live in public/downloads/)
+src/data/downloads.ts   files offered on /downloads and /berichte (live in public/downloads/). Membership forms DE/EN/FR =
+                        `membershipForms` (public/downloads/mitgliedschaft/, return address Postfach 120344; versions of 09.11.2026);
+                        links carry ?v=<membershipFormVersion> because PDFs are cached 30 days: raise it when a form is replaced.
 src/data/impact.ts      verified impact figures + timeline
 src/data/events.ts      events page list (past/ongoing events that have no news file): DE/EN/FR, dates 'YYYY[-MM[-DD]]',
                         kind labels, links to project/news; sources = Jahresberichte Inland 2022–2024 / Ausland 2023–2025,
