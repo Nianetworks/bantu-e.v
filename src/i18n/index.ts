@@ -218,7 +218,9 @@ export const ui = {
   },
 } as const;
 
-export type NavItem = { label: string; short?: string; href: string; mega?: 'inland' | 'international'; children?: { label: string; href: string }[] };
+/** `util`: shown in the top strip (utility bar) on desktop and inside the burger menu on compact screens, not in the main row
+ *  (chair, 09.11.2026: Aktuelles, Shop and Kontakt move to the top strip; no duplicate contact entry). `icon`: icon in the strip. */
+export type NavItem = { label: string; short?: string; href: string; mega?: 'inland' | 'international'; children?: { label: string; href: string }[]; util?: boolean; icon?: string };
 
 export function mainNav(lang: Lang): NavItem[] {
   const de = lang === 'de';
@@ -252,6 +254,8 @@ export function mainNav(lang: Lang): NavItem[] {
     {
       label: de ? 'Aktuelles' : fr ? 'Actualités' : 'News',
       href: r('news', lang),
+      util: true,
+      icon: 'news',
       children: [
         { label: de ? 'Neuigkeiten' : fr ? 'Dernières nouvelles' : 'Latest news', href: r('news', lang) },
         { label: de ? 'Veranstaltungen' : fr ? 'Événements' : 'Events', href: r('events', lang) },
@@ -269,9 +273,8 @@ export function mainNav(lang: Lang): NavItem[] {
         { label: de ? 'Unternehmen & Stiftungen' : fr ? 'Entreprises et fondations' : 'Companies & foundations', href: r('partners', lang) },
       ],
     },
-    // Charity shop as its own top-level item, right before the donate button (chair's decision 08.11.2026).
-    { label: fr ? 'Boutique' : 'Shop', href: r('shop', lang) },
-    // Contact as a top-level item (audit 09.11.2026: never hide the contact page in a sub-menu).
-    { label: ui[lang].contact, href: r('contact', lang) },
+    // Shop and contact: top strip on desktop (chair, 09.11.2026), burger menu on compact screens.
+    { label: fr ? 'Boutique' : 'Shop', href: r('shop', lang), util: true, icon: 'bag' },
+    { label: ui[lang].contact, href: r('contact', lang), util: true, icon: 'mail' },
   ];
 }

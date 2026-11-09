@@ -41,7 +41,7 @@ const isCurrent = (h: string) => h !== r('home', lang) && current.startsWith(h.s
 
 // Compact (burger) navigation: used on small screens and – because large text needs more room –
 // at wider breakpoints when the visitor has enlarged the text in the accessibility settings.
-const compactRules = ['.header-inner { min-height: 72px; }', '.logo-plate { padding: 8px 10px; margin-bottom: -66px; }', '.nav-toggle { display: inline-flex; align-items: center; gap: .55rem; min-height: var(--tap); background: var(--ink); color: var(--bg); border: 0; border-radius: 999px; padding: .55rem 1.1rem; font: 700 1rem var(--font-sans); cursor: pointer; }', '.nav-list { display: none; position: fixed; inset: var(--header-h, 112px) 0 0 0; background: var(--bg); flex-direction: column; align-items: stretch; gap: 0; padding: 5rem var(--gutter) 2.5rem; overflow-y: auto; border-top: 1px solid var(--line); }', '.is-scrolled .nav-list { padding-top: 1rem; }', '.nav-list.is-open { display: flex; }', '.nav-list > li { border-bottom: 1px solid var(--line); }', '.nav-link { width: 100%; justify-content: space-between; font-size: 1.15rem; padding: .85rem .25rem; white-space: normal; }', '.sub { position: static; box-shadow: none; border: 0; padding: 0 0 .75rem .5rem; min-width: 0; background: transparent; }', '.nav-extra { border-bottom: 0 !important; margin: 1.5rem 0 0 !important; }', '.nav-disclosure[aria-expanded="true"] + .mega { display: block; }', '.mega__intro { border-right: 0; padding: 0 0 .75rem; }', '.mega__lead, .mega__places { display: none; }', '.mega__cols { grid-template-columns: 1fr; gap: .75rem; }', '.nav-donate { width: 100%; white-space: normal; }'];
+const compactRules = ['.header-inner { min-height: 72px; }', '.logo-plate { padding: 8px 10px; margin-bottom: -66px; }', '.nav-toggle { display: inline-flex; align-items: center; gap: .55rem; min-height: var(--tap); background: var(--ink); color: var(--bg); border: 0; border-radius: 999px; padding: .55rem 1.1rem; font: 700 1rem var(--font-sans); cursor: pointer; }', '.nav-list { display: none; position: fixed; inset: var(--header-h, 112px) 0 0 0; background: var(--bg); flex-direction: column; align-items: stretch; gap: 0; padding: 5rem var(--gutter) 2.5rem; overflow-y: auto; border-top: 1px solid var(--line); }', '.is-scrolled .nav-list { padding-top: 1rem; }', '.nav-list.is-open { display: flex; }', '.nav-list > li { border-bottom: 1px solid var(--line); }', '.nav-link { width: 100%; justify-content: space-between; font-size: 1.15rem; padding: .85rem .25rem; white-space: normal; }', '.sub { position: static; box-shadow: none; border: 0; padding: 0 0 .75rem .5rem; min-width: 0; background: transparent; }', '.nav-extra { border-bottom: 0 !important; margin: 1.5rem 0 0 !important; }', '.nav-disclosure[aria-expanded="true"] + .mega { display: block; }', '.mega__intro { border-right: 0; padding: 0 0 .75rem; }', '.mega__lead, .mega__places { display: none; }', '.mega__cols { grid-template-columns: 1fr; gap: .75rem; }', '.nav-donate { width: 100%; white-space: normal; }', '.nav-util { display: block; }', '.util-extra { display: none; }'];
 // With enlarged text the eight top-level items (incl. Shop) never fit the 1200 px header, so those levels always use the compact menu.
 const levels: [string, number][] = [['', 1279], ['html[data-text="lg"] ', 99999], ['html[data-text="xl"] ', 99999], ['html[data-text="xxl"] ', 99999]];
 const compactCss = levels.map(([pre, w]) => `@media (max-width: ${w}px) { ${compactRules.map((rule) => rule.split('{')[0].split(',').map((sel) => pre + sel.trim()).join(', ') + ' {' + rule.split('{').slice(1).join('{')).join(' ')} }`).join('\n');
@@ -51,11 +51,13 @@ const compactCss = levels.map(([pre, w]) => `@media (max-width: ${w}px) { ${comp
     <div class="wrap utility__inner">
       <a class="util-link" href={r('easy', lang)}><Icon name="easy" /> {t.easy}</a>
       <div class="utility__right">
+        {nav.filter((n) => n.util).map((n) => (
+          <a class="util-link util-extra" href={n.href} aria-current={isCurrent(n.href) ? 'page' : undefined}><Icon name={(n.icon ?? 'arrow') as any} /> {n.label}</a>
+        ))}
         <a class="util-link" href={r('search', lang)}><Icon name="search" /> <span class="hide-sm">{t.search}</span><span class="sr-only show-sm">{t.search}</span></a>
         <button type="button" class="util-link util-btn" data-a11y-toggle aria-haspopup="dialog" aria-controls="a11y-panel">
           <Icon name="access" /> {t.a11y}
         </button>
-        <a class="util-link" href={r('contact', lang)}><Icon name="mail" /> {t.contact}</a>
         <nav class="langs" aria-label={t.language}>
           <ul>
             {switchLinks.map((s) => (
@@ -79,7 +81,7 @@ const compactCss = levels.map(([pre, w]) => `@media (max-width: ${w}px) { ${comp
       </button>
       <ul id="nav-list" class="nav-list">
         {nav.map((item, i) => (
-          <li class={item.mega ? 'has-sub has-mega' : item.children ? 'has-sub' : ''}>
+          <li class={`${item.mega ? 'has-sub has-mega' : item.children ? 'has-sub' : ''}${item.util ? ' nav-util' : ''}`}>
             {item.mega ? (
               <>
                 <button type="button" class="nav-link nav-disclosure" aria-expanded="false" aria-controls={`sub-${i}`} data-current={isCurrent(item.href) ? 'true' : undefined}>
@@ -196,6 +198,8 @@ const compactCss = levels.map(([pre, w]) => `@media (max-width: ${w}px) { ${comp
   .util-link { display: inline-flex; align-items: center; gap: .4rem; color: var(--on-deep); text-decoration: none; padding: .35rem .6rem; border-radius: 8px; min-height: 36px; font-weight: 600; }
   .util-link:hover { background: rgba(255,255,255,.12); text-decoration: underline; }
   .util-link .icon { width: 1.15em; height: 1.15em; }
+  .util-link[aria-current='page'] { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: .3em; }
+  .nav-util { display: none; }
   .util-btn { background: transparent; border: 0; font: 600 .9rem var(--font-sans); cursor: pointer; }
   .util-btn[aria-expanded='true'] { background: var(--gold); color: #000; }
   .langs ul { list-style: none; margin: 0 0 0 .35rem; padding: 0; display: flex; align-items: center; }
