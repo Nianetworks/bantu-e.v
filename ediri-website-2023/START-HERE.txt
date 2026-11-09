@@ -1,0 +1,78 @@
+EDIRI PILOT PROJECT 2023
+LIGHTWEIGHT WEBSITE PUBLICATION PACKAGE
+
+Prepared for Bantu e.V. on 9 November 2026.
+Reporting period: 1 June to 30 September 2023.
+
+REPORT
+report/bantu-ediri-pilot-progress-report-2023-en.pdf
+The finished eight-page report for website download.
+
+report/bantu-ediri-pilot-progress-report-2023-en.docx
+The editable Word edition, with the same text and protected images.
+
+WEBSITE COPY
+website/index.html
+A responsive preview of the complete article. Open it in a browser with
+the package's folder structure intact.
+
+website/article-fragment.html
+Article content for a website editor. Upload the photos and PDF first,
+then replace its relative file paths with the paths used by your website.
+
+website/report-text.txt
+Plain text for copying into a content management system.
+
+website/publication-details.txt
+Suggested title, URL slug, page description and lead image.
+
+IMAGES
+photos/webp/
+Fourteen web-optimised activity images in WebP format.
+
+photos/jpeg/
+The same fourteen images as widely compatible JPEG files.
+
+The full-resolution PNG master copies are retained in the original
+EDIRI_2023_Website_Upload_Package.zip. They are omitted from this lightweight
+upload edition because the website uses the JPEG and WebP files.
+
+All fourteen activity images were extracted from the supplied Word file.
+They comprise thirteen photographs and one workshop flipchart image.
+Edits use the original photographic pixels: restrained exposure, colour
+and sharpness adjustments, with permanent expanded face blur. The final
+package contains no AI-generated or reconstructed photographs.
+
+Children's faces and possible minors' faces have been obscured, including
+small and partly hidden faces. Child photographs visible in background
+posters were also obscured. Some nearby adult faces are included in
+conservative blur areas. The private contact list on the radio-studio
+monitor has been obscured. The blur is flattened into every delivered
+image and into the report's embedded photographs.
+
+Web exports retain the original framing and do not enlarge low-resolution
+source files. Their longest edge is capped at 1,600 pixels. Source location
+and camera metadata are excluded.
+
+CAPTIONS AND ACCESSIBILITY
+photo-captions-and-alt-text.csv
+One row per activity image, with filename, dimensions, caption and alt text.
+Use the caption as visible text below a photo and the alt text in the
+website's image accessibility field.
+
+LOGOS
+logos/
+The partner and funder logos extracted from the original report, with
+the current supplied Bantu e.V. logo used in place of the old emblem.
+
+EDITORIAL NOTES
+EDITORIAL-NOTES.txt records source reconciliation and preparation details.
+It is a handover note and does not form part of the public report.
+
+The supplied source documents and unblurred extracted images are not
+included in this upload package. The website has not been changed.
+
+LIGHTWEIGHT EDITION
+The PDF, Word report, JPEG photographs, WebP photographs, logos and
+website files retain their original quality. Duplicate full-resolution
+PNG masters and a macOS folder metadata file have been excluded.

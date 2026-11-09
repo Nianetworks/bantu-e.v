@@ -1,0 +1,8 @@
+Suggested page title: Cerebral palsy EDIRI pilot project | Bantu e.V.
+Suggested URL slug: ediri-cerebral-palsy-pilot-report-2023
+Language: English (United Kingdom)
+Reporting period: 1 June to 30 September 2023
+Source report date: 9 November 2023
+Page description: Results from the 2023 EDIRI pilot in south-western Uganda: home support for 38 children, health worker training and community outreach.
+Suggested lead image: ediri-2023-04-primary-health-workers-group
+Photo captions and alternative text: ../photo-captions-and-alt-text.csv

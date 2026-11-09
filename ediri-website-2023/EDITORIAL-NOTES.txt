@@ -1,0 +1,60 @@
+EDIRI REPORT EDITORIAL HANDOVER
+
+Source documents
+- PROJECT PROGRESS REPORT 9Nov 2023 EzraAbi.docx
+- Cerebral Palsy EDIRI Pilot Project Progress Report.pdf
+
+The original Word report was used to reconcile activity figures and field
+observations. The supplied PDF provided the second report version but
+contained placeholders where photographs should appear.
+
+The public report has been rewritten in clear British English, organised
+by activity and illustrated with all fourteen extracted activity images.
+The eight-page PDF and Word editions present the same material. The
+website article reproduces that content with a responsive photo gallery.
+
+Accuracy decisions
+- The implementation period remains June to September 2023. Preparation
+  in November 2026 does not imply that these are current activity results.
+- The original Word narrative resolves the contradictory workshop
+  attendance wording: 26 health workers attended against a target of 40.
+- Stakeholder attendance is 40, primary health worker training attendance
+  is 26, and hospital sensitization attendance is 35. These are reported
+  separately because overlap between participants is not established.
+- Home follow-up reached 38 children. This is not stated as 38 visits;
+  the report says all planned visits were completed without a visit count.
+- Three outreaches were completed. Radio programming is described without
+  inventing a count of broadcasts or listeners.
+- Equipment is described as procured. The report does not add quantities,
+  named recipients or distribution totals that the Word source does not give.
+- Increased demand for services is attributed to the team's observations.
+  No quantified long-term health or functional outcome is invented.
+- Workshop flipchart wording is preserved in the image and labelled as
+  participants' discussion material rather than clinical guidance.
+- The hospital name 'Devine Mercy Hospital' follows the supplied reports.
+
+Privacy and image preparation
+- The user chose direct photographic edits on the originals. All final
+  assets use those originals, without generative reconstruction.
+- Strong, expanded blur is permanently applied to children's heads and
+  faces and to possible minors where appropriate. Some adult faces were
+  also covered conservatively. Small child images in background posters
+  were obscured, as was a private contact list visible on a monitor.
+- Both web formats contain the same privacy edits. The full-resolution PNG
+  masters remain available in the original package and are omitted here.
+- No unblurred activity image is included in the report or upload package.
+- Original GPS and camera metadata are not included in the photo exports.
+- Current Bantu e.V. brand artwork is used; the other four logos are
+  preserved from the original report without redrawing them.
+
+Quality checks
+- Every report page was rendered and visually reviewed.
+- All fourteen final activity images were reviewed, with close inspection
+  of the photographs containing children and babies.
+- Captions and alternative text are supplied for all activity images.
+- Desktop and phone-width article previews were visually reviewed. The
+  phone-width layout had no horizontal page overflow and no missing alt text.
+- The public article has a real HTML results table with headers and a
+  caption, responsive images, JPEG fallbacks and descriptive alternatives.
+
+This handover note is for the website editor; it is not public article copy.
