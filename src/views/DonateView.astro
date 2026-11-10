@@ -187,12 +187,15 @@ const purposes = [
   const box = document.getElementById('donation-form');
   loadBtn?.addEventListener('click', () => {
     if (!box || box.dataset.loaded) { box?.focus(); return; }
-    const id = '_' + Math.random().toString(36).slice(2, 11);
+    // Letters and digits only: twingle's embed script finds its container through the script id "tw-<id>". It cannot read
+    // the id from the script address any more, because the address now ends in ?tw_lang=… (tested live 10.11.2026).
+    const id = 'bantu' + Math.random().toString(36).slice(2, 11).replace(/[^a-z0-9]/g, '');
     const holder = document.createElement('div');
     holder.id = 'twingle-public-embed-' + id;
     box.appendChild(holder);
     const s = document.createElement('script');
     s.async = true;
+    s.id = 'tw-' + id;
     // twingle shows the form in the language of this page (tw_lang; the embed script passes it on to the form).
     s.src = loadBtn.dataset.widget + '/' + id + '?tw_lang=' + encodeURIComponent(loadBtn.dataset.widgetLang || 'de');
     document.body.appendChild(s);
