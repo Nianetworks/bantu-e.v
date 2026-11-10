@@ -9,15 +9,15 @@ location: "Uganda, über ABI"
 period: "laufend seit 2018; Archivfotos vom Juli 2017"
 partners: ["Anchored Bridges Initiatives (ABI), damals „Ability Beyond the Iris“", "Kunsthandwerkerinnen mit Behinderung"]
 sdgs: [5, 8, 10]
-image: "/images/projects/abi-berichte/04-women-and-crafts/abi-006-artisan-at-sewing-workstation.webp"
-imageAlt: "Eine Kunsthandwerkerin im Rollstuhl arbeitet an einem Nähtisch, ein kleines Kind ist bei ihr; das Gesicht des Kindes ist leicht unkenntlich gemacht."
+image: "/images/projects/abi-berichte/04-women-and-crafts/abi-006-artisan-at-sewing-workstation-v2.webp"
+imageAlt: "Eine Kunsthandwerkerin im Rollstuhl arbeitet an einem Nähtisch, ein kleines Kind ist bei ihr; das Kind ist unkenntlich gemacht."
 galleryTitle: "2 Archivfotos vom Juli 2017"
 report:
-  href: "/downloads/berichte/abi-women-and-crafts-report-en.pdf"
+  href: "/downloads/berichte/abi-women-and-crafts-report-en-v2.pdf"
   label: "Projektbericht herunterladen (PDF, Englisch)"
   note: "Illustrierter Projektbericht, 2 Seiten, 0,6 MB, auf Englisch"
 gallery:
-  - { src: "/images/projects/abi-berichte/04-women-and-crafts/abi-006-artisan-at-sewing-workstation.webp", thumb: "/images/projects/abi-berichte/04-women-and-crafts/abi-006-artisan-at-sewing-workstation-480.webp", width: 1600, height: 1200, thumbWidth: 480, thumbHeight: 360, alt: "Eine Kunsthandwerkerin im Rollstuhl arbeitet an einem Nähtisch, ein kleines Kind ist bei ihr; das Gesicht des Kindes ist leicht unkenntlich gemacht.", caption: "Archivfoto vom Juli 2017: eine Kunsthandwerkerin im Rollstuhl an ihrem Nähplatz.", section: "Handwerk im Archiv (Juli 2017)" }
+  - { src: "/images/projects/abi-berichte/04-women-and-crafts/abi-006-artisan-at-sewing-workstation-v2.webp", thumb: "/images/projects/abi-berichte/04-women-and-crafts/abi-006-artisan-at-sewing-workstation-v2-480.webp", width: 1600, height: 1200, thumbWidth: 480, thumbHeight: 360, alt: "Eine Kunsthandwerkerin im Rollstuhl arbeitet an einem Nähtisch, ein kleines Kind ist bei ihr; das Kind ist unkenntlich gemacht.", caption: "Archivfoto vom Juli 2017: eine Kunsthandwerkerin im Rollstuhl an ihrem Nähplatz.", section: "Handwerk im Archiv (Juli 2017)" }
   - { src: "/images/projects/abi-berichte/04-women-and-crafts/abi-007-handmade-products-display.webp", thumb: "/images/projects/abi-berichte/04-women-and-crafts/abi-007-handmade-products-display-480.webp", width: 1600, height: 1200, thumbWidth: 480, thumbHeight: 360, alt: "Handgemachte Taschen und kleinere Stoffprodukte sind in Regalen angeordnet.", caption: "Handgemachte Taschen und kleine Handwerksprodukte, ausgestellt im Juli 2017.", section: "Handwerk im Archiv (Juli 2017)" }
 order: 17
 sources:

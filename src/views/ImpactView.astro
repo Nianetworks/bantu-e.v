@@ -23,7 +23,7 @@ all.forEach((p) => p.data.sdgs.forEach((g) => bySdg.set(g, [...(bySdg.get(g) ?? 
 const sdgList = [...bySdg.entries()].sort((a, b) => a[0] - b[0]);
 const year = new Date().getFullYear();
 const facts = [
-  { v: String(all.length), l: de ? 'Projekte seit 2019' : fr ? 'projets depuis 2019' : 'projects since 2019' },
+  { v: String(all.length), l: de ? 'Projekte seit 2017' : fr ? 'projets depuis 2017' : 'projects since 2017' },
   { v: '3', l: de ? 'Länder: Uganda, Burundi, Deutschland' : fr ? 'pays : Ouganda, Burundi, Allemagne' : 'countries: Uganda, Burundi, Germany' },
   { v: String(partnersSouth.length + partnersNorth.length), l: de ? 'Partnerorganisationen' : fr ? 'organisations partenaires' : 'partner organisations' },
   { v: String(sdgList.length), l: de ? 'Nachhaltigkeitsziele, zu denen wir beitragen' : fr ? 'objectifs de développement durable auxquels nous contribuons' : 'Sustainable Development Goals we contribute to' },

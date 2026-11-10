@@ -9,15 +9,15 @@ location: "Ouganda, via ABI"
 period: "en cours depuis 2018 ; photos d’archive de juillet 2017"
 partners: ["Anchored Bridges Initiatives (ABI), anciennement « Ability Beyond the Iris »", "Artisanes en situation de handicap"]
 sdgs: [5, 8, 10]
-image: "/images/projects/abi-berichte/04-women-and-crafts/abi-006-artisan-at-sewing-workstation.webp"
-imageAlt: "Une artisane en fauteuil roulant travaille à une table de couture avec un petit enfant ; le visage de l’enfant est légèrement flouté."
+image: "/images/projects/abi-berichte/04-women-and-crafts/abi-006-artisan-at-sewing-workstation-v2.webp"
+imageAlt: "Une artisane en fauteuil roulant travaille à une table de couture avec un petit enfant ; l’enfant est flouté."
 galleryTitle: "2 photos d’archive de juillet 2017"
 report:
-  href: "/downloads/berichte/abi-women-and-crafts-report-en.pdf"
+  href: "/downloads/berichte/abi-women-and-crafts-report-en-v2.pdf"
   label: "Télécharger le rapport de projet (PDF, anglais)"
   note: "Rapport de projet illustré, 2 pages, 0,6 Mo, en anglais"
 gallery:
-  - { src: "/images/projects/abi-berichte/04-women-and-crafts/abi-006-artisan-at-sewing-workstation.webp", thumb: "/images/projects/abi-berichte/04-women-and-crafts/abi-006-artisan-at-sewing-workstation-480.webp", width: 1600, height: 1200, thumbWidth: 480, thumbHeight: 360, alt: "Une artisane en fauteuil roulant travaille à une table de couture avec un petit enfant ; le visage de l’enfant est légèrement flouté.", caption: "Photo d’archive de juillet 2017 : une artisane en fauteuil roulant à son poste de couture.", section: "L’artisanat dans les archives (juillet 2017)" }
+  - { src: "/images/projects/abi-berichte/04-women-and-crafts/abi-006-artisan-at-sewing-workstation-v2.webp", thumb: "/images/projects/abi-berichte/04-women-and-crafts/abi-006-artisan-at-sewing-workstation-v2-480.webp", width: 1600, height: 1200, thumbWidth: 480, thumbHeight: 360, alt: "Une artisane en fauteuil roulant travaille à une table de couture avec un petit enfant ; l’enfant est flouté.", caption: "Photo d’archive de juillet 2017 : une artisane en fauteuil roulant à son poste de couture.", section: "L’artisanat dans les archives (juillet 2017)" }
   - { src: "/images/projects/abi-berichte/04-women-and-crafts/abi-007-handmade-products-display.webp", thumb: "/images/projects/abi-berichte/04-women-and-crafts/abi-007-handmade-products-display-480.webp", width: 1600, height: 1200, thumbWidth: 480, thumbHeight: 360, alt: "Des sacs faits main et de petits produits en tissu sont disposés sur des étagères.", caption: "Sacs faits main et petits produits artisanaux exposés en juillet 2017.", section: "L’artisanat dans les archives (juillet 2017)" }
 order: 17
 sources:
