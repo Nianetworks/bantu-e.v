@@ -1,11 +1,21 @@
-// ABANTU COFFEE – Uganda Collection (12 editions, "Woven Origins v2" bag designs).
+// ABANTU COFFEE – Uganda Collection (12 editions). Label artwork: "Signs of Connection v4" (chair's design pack of 10.11.2026):
+// one front and one matching back label per edition. Every back carries a QR code to the edition's own English page,
+// https://www.bantu-ev.org/en/shop/abantu-coffee-<slug>/ – never change a public slug without new QR codes.
 // Brand (chair, 08.11.2026): ABANTU COFFEE by Bantu e.V., main coffee partner Balambuli Kwigate Coffee (BKC).
-// Roots & Routes (01) and Sebei Elgon (04) are products "coming soon" (chair, 09.11.2026; Sebei Elgon replaced Kanungu Forest).
-// Since 09.11.2026 the planned editions are hidden from the public website (shop.ts → showPlannedEditions = false); before that
-// the other ten editions, Kanungu Forest included, were shown as a collection preview (status 'planned': no price, no reservation, not in the order catalogue) – chair's decision 08.11.2026.
+// PUBLIC since 10.11.2026 (chair: "upload only these four editions now"; shop order in shop.ts → coffeeOrder):
+// 03 Kanungu Forest, 04 Sebei Elgon, 01 Roots & Routes ("coming soon") and 09 Nile Highland (label sample: concept artwork,
+// coffee details not confirmed → `sample: true`, no origin, roast, type or supplier shown, no reservation).
+// The other eight editions stay hidden (status 'planned', shop.ts → showPlannedEditions = false). Their v4 artwork is kept
+// in the chair's design pack for later and is NOT on the website. To publish one of them: add its label files (see
+// labelMedia below), write its entry like the public ones (only confirmed facts) and add the slug to coffeeOrder.
+// Rules from the chair's handoff (10.11.2026): do not invent prices, stock, roast levels, suppliers, tasting notes,
+// certifications or donation percentages; aims are aims, not achieved results. Product facts: Roots & Routes and
+// Kanungu Forest from the label design brief (Dec 2024, v4); Sebei Elgon without roast and coffee type; Nile Highland none yet.
+// The signs on the labels: Sankofa and Asase Ye Duru are Adinkra references of the Akan (Ghana), not Ugandan symbols;
+// "Elevation" and "River Route" are original motifs (design pack: Cultural_References_and_Artwork_Key.md).
 // Stories: chair's decision 08.11.2026 to use the 2025 brochure "Abantu Coffee – Complete 12-Line Collection with Uganda
 // Regional Partners" (05_Programme_&_Projekte/…/Abantu Coffee — Marke und Produktentwicklung/03_Implementierung/03_Daten_Fotos_&_Medien).
-// Taglines follow the current Woven Origins v2 labels. Cooperatives, processing, altitude and impact are written as plans/aims,
+// Taglines of the public editions follow the v4 labels. Cooperatives, processing, altitude and impact are written as plans/aims,
 // because none of them is confirmed yet. Left out on purpose: "certified organic" for Bukonzo (EU organic rules: only for
 // certified products) and the Sebei circumcision/ceremony-funding lines of the brochure.
 // OPEN: have the local-language sayings checked by native speakers (Runyankore, Rukiga, Lukonzo, Luganda, Kinyarwanda).
@@ -16,6 +26,8 @@ import type { L, Product } from './shop';
 export type CoffeeStory = {
   paragraphs: L[];
   sayings?: { text: string; lang: string; language: L; meaning?: L }[];
+  /** The label in words: the sign or motif on the front and what is printed on the back (the label text is German). */
+  label?: L[];
   aims?: L[];
 };
 
@@ -51,31 +63,41 @@ const editionNo = (n: number): L => {
   return { de: `Uganda Collection, Nr. ${nn}`, en: `Uganda Collection, no. ${nn}`, fr: `Uganda Collection, n° ${nn}` };
 };
 
-function coffeeMedia(slug: string, name: string, pattern: L) {
-  const stem = `/images/shop/abantu-coffee/abantu-coffee-${slug}-250g-woven-origins-v2`;
-  return {
-    image: `${stem}-1254.jpg`,
-    imageAlt: {
-      de: `Digitale Verpackungsvorschau: Abantu Coffee ${name}, 250 g, in einem mattschwarzen Beutel mit ${pattern.de} Webmuster sowie den Logos von Bantu e.V. und BKC.`,
-      en: `Digital packaging preview: Abantu Coffee ${name}, 250 g, in a matte charcoal bag with a ${pattern.en} woven pattern and the Bantu e.V. and BKC logos.`,
-      fr: `Aperçu numérique : Abantu Coffee ${name}, 250 g, en sachet noir mat avec un motif tissé ${pattern.fr} et les logos de Bantu e.V. et de BKC.`,
-    },
-    imageCaption: { de: 'Verpackungsvorschau', en: 'Packaging preview', fr: 'Aperçu de l’emballage' },
-    imageWidth: 1254,
-    imageHeight: 1254,
-    imageVariants: [480, 768, 1254].map((width) => ({ width, src: `${stem}-${width}.webp` })),
-    labelImages: [
-      { name: { de: 'Vorderes Etikett', en: 'Front label', fr: 'Étiquette avant' }, src: `${stem}-front-label.jpg` },
-      { name: { de: 'Hinteres Etikett', en: 'Back label', fr: 'Étiquette arrière' }, src: `${stem}-back-label.jpg` },
-    ],
-  };
+/** Front and back of an edition in the shop ("Signs of Connection v4"; chair, 10.11.2026: the front must look like the
+ *  coffee bag). Files in public/images/shop/abantu-coffee/, all 3:4:
+ *  front = abantu-coffee-<slug>-v4-bag-{480,768}.webp + -768.jpg: the single bag cut from the pack's studio visualisations
+ *          (01_Lead_Designs, 02_Collection_Concepts). They are illustrative mockups; the precise artwork is the label.
+ *  back  = abantu-coffee-<slug>-v4-back-{480,800,1200}.webp + -800.jpg: the complete back label (06_Back_Labels) on the
+ *          backdrop colour of the bag photo, with the QR code to the edition's page. */
+function labelMedia(slug: string, front: L, back: L) {
+  const stem = `/images/shop/abantu-coffee/abantu-coffee-${slug}-v4`;
+  return { labels: { front: { stem: `${stem}-bag`, alt: front, widths: [480, 768] }, back: { stem: `${stem}-back`, alt: back, widths: [480, 800, 1200] } } };
 }
+/** Alternative text of the bag mockup (front): what it looks like and what it says. */
+const frontAlt = (name: string, look: L, text: L): L => ({
+  de: `Verpackungsvorschau: Kaffeebeutel von Abantu Coffee ${name}, Vorderseite: ${look.de} Aufschrift: ${text.de}. Unten die Logos von Bantu e.V. („Ein Projekt von“) und Balambuli Kwigate Coffee („Kaffeepartner“).`,
+  en: `Packaging preview: coffee bag of Abantu Coffee ${name}, front: ${look.en} It reads: ${text.en}. At the bottom, the logos of Bantu e.V. (“a project of”) and Balambuli Kwigate Coffee (“coffee partner”).`,
+  fr: `Aperçu de l’emballage : sachet d’Abantu Coffee ${name}, face avant : ${look.fr} On y lit : ${text.fr}. En bas, les logos de Bantu e.V. (« un projet de ») et de Balambuli Kwigate Coffee (« partenaire café »).`,
+});
+/** Alternative text of a back label (German label text): summary; the full content is real text on the edition's page. */
+const backAlt = (name: string, content: L): L => ({
+  de: `Rückseite des Etiketts von Abantu Coffee ${name}, Text auf Deutsch: ${content.de} Dazu ein Lagerhinweis, ein QR-Code zur Seite dieser Edition und leere Felder für Mindesthaltbarkeitsdatum, Charge und Rösterei. Der Inhalt steht als Text auf der Seite der Edition.`,
+  en: `Back of the label of Abantu Coffee ${name}, text in German: ${content.en} Also storage advice, a QR code to this edition’s page and empty fields for best-before date, batch and roaster. The content is given as text on the edition’s page.`,
+  fr: `Dos de l’étiquette d’Abantu Coffee ${name}, texte en allemand : ${content.fr} S’y ajoutent un conseil de conservation, un code QR vers la page de cette édition et des champs vides pour la date de durabilité minimale, le lot et le torréfacteur. Le contenu figure en texte sur la page de l’édition.`,
+});
+/** Story paragraph about the back of the label; `what` says what this edition's back contains. */
+const backNote = (what: L): L => ({
+  de: `Die Rückseite ist auf Deutsch beschriftet. ${what.de} Dazu kommen der Lagerhinweis (kühl, trocken und lichtgeschützt lagern, nach dem Öffnen gut verschließen) und ein QR-Code, der zur englischen Fassung dieser Seite führt. Die Felder für Mindesthaltbarkeitsdatum, Charge und Rösterei sind noch leer; sie werden erst für die tatsächliche Abfüllung ausgefüllt.`,
+  en: `The back is printed in German. ${what.en} It also carries the storage advice (keep cool, dry and away from light; close well after opening) and a QR code that leads to this page. The fields for best-before date, batch and roaster are still empty; they will only be filled in for the actual production run.`,
+  fr: `Le dos est rédigé en allemand. ${what.fr} S’y ajoutent le conseil de conservation (au frais, au sec et à l’abri de la lumière ; bien refermer après ouverture) et un code QR qui mène à la version anglaise de cette page. Les champs pour la date de durabilité minimale, le lot et le torréfacteur sont encore vides ; ils ne seront remplis que pour la production réelle.`,
+});
 
 const productName = (name: string): L => ({ de: `Abantu Coffee „${name}“`, en: `Abantu Coffee “${name}”`, fr: `Abantu Coffee « ${name} »` });
 
-/** One of the ten planned editions (collection preview). */
+/** One of the eight editions that are not public yet (hidden, see showPlannedEditions in shop.ts). Texts from the 2025 brochure;
+ *  check every fact against the v4 label and the chair's handoff before publishing an edition. */
 function planned(e: {
-  no: number; slug: string; name: string; tagline: string; place: L; origin: L; from: L; pattern: L; coop: L; story: CoffeeStory;
+  no: number; slug: string; name: string; tagline: string; place: L; origin: L; from: L; coop: L; story: CoffeeStory;
   extra?: { label: L; value: L }[];
 }): Product {
   const nn = String(e.no).padStart(2, '0');
@@ -99,22 +121,24 @@ function planned(e: {
       row(lbl.status, { de: 'In Vorbereitung, noch nicht bestellbar', en: 'In preparation, not yet available to order', fr: 'En préparation, pas encore disponible' }),
     ],
     story: e.story,
-    ...coffeeMedia(e.slug, e.name, e.pattern),
+    ...labelMedia(e.slug,
+      { de: `Verpackungsvorschau: Kaffeebeutel von Abantu Coffee ${e.name}.`, en: `Packaging preview: coffee bag of Abantu Coffee ${e.name}.`, fr: `Aperçu de l’emballage : sachet d’Abantu Coffee ${e.name}.` },
+      { de: `Rückseite des Etiketts von Abantu Coffee ${e.name}, Text auf Deutsch.`, en: `Back of the label of Abantu Coffee ${e.name}, text in German.`, fr: `Dos de l’étiquette d’Abantu Coffee ${e.name}, texte en allemand.` }),
   };
 }
 
 const allPartners: L = { de: 'alle Partnerkooperativen', en: 'all partner cooperatives', fr: 'toutes les coopératives partenaires' };
 
 export const coffeeProducts: Product[] = [
-  // 01 – product "coming soon". Product facts from the label design brief (Dec 2024, v4).
+  // 01 – "coming soon". Product facts from the label design brief (Dec 2024, v4), as printed on the v4 label.
   {
     slug: 'abantu-coffee-roots-and-routes', category: 'coffee', status: 'coming-soon', edition: 1, editionName: 'Roots & Routes', tagline: 'Sankofa Heritage Coffee',
     name: productName('Roots & Routes'),
     short: { de: 'Sankofa Heritage Coffee · Mount Elgon · mittlere Röstung · 250 g', en: 'Sankofa Heritage Coffee · Mount Elgon · medium roast · 250 g', fr: 'Sankofa Heritage Coffee · mont Elgon · torréfaction moyenne · 250 g' },
     description: {
-      de: 'Arabica vom Mount Elgon in Uganda, mit mittlerer Röstung, aus unserer Linie „Sankofa Heritage“. In der 250-g-Packung. Abantu Coffee ist ein Projekt von Bantu e.V. mit Balambuli Kwigate Coffee (BKC) als Hauptpartner für Kaffee. Die Erlöse unterstützen die Projekte von Bantu e.V.',
-      en: 'A medium-roast Arabica from Mount Elgon in Uganda, from our Sankofa Heritage line. In a 250 g pack. Abantu Coffee is a project of Bantu e.V., with Balambuli Kwigate Coffee (BKC) as its main coffee partner. Proceeds support the projects of Bantu e.V.',
-      fr: 'Un arabica du mont Elgon en Ouganda, à torréfaction moyenne, de notre gamme Sankofa Heritage. En sachet de 250 g. Abantu Coffee est un projet de Bantu e.V., avec Balambuli Kwigate Coffee (BKC) comme principal partenaire café. Les recettes soutiennent les projets de Bantu e.V.',
+      de: 'Arabica vom Mount Elgon in Uganda, mit mittlerer Röstung, aus unserer Linie „Sankofa Heritage“. In der 250-g-Packung. Abantu Coffee ist ein Projekt von Bantu e.V. mit Balambuli Kwigate Coffee (BKC) als Hauptpartner für Kaffee. Die Erlöse sollen die Projekte von Bantu e.V. unterstützen.',
+      en: 'A medium-roast Arabica from Mount Elgon in Uganda, from our Sankofa Heritage line. In a 250 g pack. Abantu Coffee is a project of Bantu e.V., with Balambuli Kwigate Coffee (BKC) as its main coffee partner. Proceeds are meant to support the projects of Bantu e.V.',
+      fr: 'Un arabica du mont Elgon en Ouganda, à torréfaction moyenne, de notre gamme Sankofa Heritage. En sachet de 250 g. Abantu Coffee est un projet de Bantu e.V., avec Balambuli Kwigate Coffee (BKC) comme principal partenaire café. Les recettes doivent soutenir les projets de Bantu e.V.',
     },
     details: [
       row(lbl.origin, { de: 'Mount Elgon, Uganda', en: 'Mount Elgon, Uganda', fr: 'Mont Elgon, Ouganda' }),
@@ -138,12 +162,24 @@ export const coffeeProducts: Product[] = [
           fr: 'Le café vient des pentes du mont Elgon, entre 1 800 et 2 300 mètres d’altitude, sur des sols volcaniques. Notre partenaire principal Balambuli Kwigate Coffee (BKC) y travaille avec de petits producteurs et productrices. Une fermentation de 16 à 40 heures est prévue.',
         },
         {
-          de: 'Auf der Verpackung führt ein QR-Code zu Bantu e.V. Später sollen dort auch Videogeschichten der Bäuerinnen und Bauern und Neuigkeiten aus dem Community Resource Centre zu finden sein.',
-          en: 'A QR code on the pack leads to Bantu e.V. Later it is meant to lead to video stories from the farmers and to news from the Community Resource Centre as well.',
-          fr: 'Sur le sachet, un code QR mène à Bantu e.V. Plus tard, il doit aussi conduire à des récits vidéo des agricultrices et agriculteurs et aux nouvelles du Community Resource Centre.',
+          de: 'Später sollen auf dieser Seite auch Videogeschichten der Bäuerinnen und Bauern und Neuigkeiten aus dem Community Resource Centre zu finden sein.',
+          en: 'Later, video stories from the farmers and news from the Community Resource Centre are meant to be found on this page as well.',
+          fr: 'Plus tard, on doit aussi trouver sur cette page des récits vidéo des agricultrices et agriculteurs et des nouvelles du Community Resource Centre.',
         },
       ],
       sayings: [{ text: 'Sankofa', lang: 'ak', language: lang.akan, meaning: { de: 'Der Blick zurück weist den Weg nach vorn.', en: 'Learning from the past guides us forward.', fr: 'Le regard vers le passé guide nos pas vers l’avenir.' } }],
+      label: [
+        {
+          de: 'Auf dem Etikett blickt der Sankofa-Vogel zurück: ein Adinkra-Zeichen aus der Akan-Kultur Ghanas, hier in einer zeitgenössischen Interpretation. Es steht für das Lernen aus der Vergangenheit. Das Zeichen ist kein ugandisches Symbol; es steht für die Idee der Edition, nicht für die Herkunft des Kaffees.',
+          en: 'On the label the Sankofa bird looks back: an Adinkra sign from the Akan culture of Ghana, in a contemporary interpretation. It stands for learning from the past. The sign is not a Ugandan symbol; it stands for the idea of the edition, not for the origin of the coffee.',
+          fr: 'Sur l’étiquette, l’oiseau Sankofa regarde en arrière : un signe adinkra de la culture akan du Ghana, dans une interprétation contemporaine. Il évoque l’apprentissage du passé. Ce signe n’est pas un symbole ougandais ; il représente l’idée de l’édition, non l’origine du café.',
+        },
+        backNote({
+          de: 'Sie nennt die Angaben zum Kaffee, erzählt die Geschichte in Kurzform und nennt die Ziele der Edition: fairere Einkommen für Kaffeefamilien, Weiterbildung und bessere Bildungschancen.',
+          en: 'It gives the coffee details, tells the story in brief and names the aims of the edition: fairer incomes for coffee-farming families, training and better educational opportunities.',
+          fr: 'Il donne les indications sur le café, raconte l’histoire en bref et cite les objectifs de l’édition : des revenus plus justes pour les familles de caféiculteurs, la formation et de meilleures chances d’éducation.',
+        }),
+      ],
       aims: [
         { de: 'Faire Preise für Kaffeekirschen und saisonale Prämien für die Bäuerinnen und Bauern', en: 'Fair prices for coffee cherries and seasonal bonuses for farmers', fr: 'Des prix justes pour les cerises de café et des primes saisonnières pour les producteurs' },
         { de: 'Schulungen und Geräte für den Anbau', en: 'Training and equipment for farming', fr: 'Formations et équipement agricole' },
@@ -151,14 +187,21 @@ export const coffeeProducts: Product[] = [
         { de: 'Zugang zu Gesundheitsversorgung und Stipendien für Kinder aus Bauernfamilien', en: 'Access to healthcare and scholarships for children from farming families', fr: 'Accès aux soins et bourses d’études pour les enfants des familles d’agriculteurs' },
       ],
     },
-    ...coffeeMedia('roots-and-routes', 'Roots & Routes', { de: 'braun-goldenem', en: 'brown and gold', fr: 'brun et or' }),
+    ...labelMedia('roots-and-routes',
+      frontAlt('Roots & Routes',
+        { de: 'cremefarbener Grund mit dem blauen Sankofa-Vogel, der zurückblickt, vor einem orangefarbenen und einem goldgelben Streifen.', en: 'cream ground with the blue Sankofa bird looking back, in front of an orange and a golden-yellow stripe.', fr: 'fond crème avec l’oiseau Sankofa bleu qui regarde en arrière, devant une bande orange et une bande jaune doré.' },
+        { de: 'Abantu Coffee, Roots & Routes, Sankofa Heritage Coffee, Mount Elgon, Uganda, mittlere Röstung, Arabica, 250 g', en: 'Abantu Coffee, Roots & Routes, Sankofa Heritage Coffee, Mount Elgon, Uganda, medium roast, Arabica, 250 g', fr: 'Abantu Coffee, Roots & Routes, Sankofa Heritage Coffee, mont Elgon, Ouganda, torréfaction moyenne, arabica, 250 g' }),
+      backAlt('Roots & Routes', {
+        de: 'Sankofa Heritage Coffee, Mount Elgon, Uganda, mittlere Röstung, Arabica, 250 g; die Geschichte der Edition; Ziele: fairere Einkommen für Kaffeefamilien, Weiterbildung und bessere Bildungschancen.',
+        en: 'Sankofa Heritage Coffee, Mount Elgon, Uganda, medium roast, Arabica, 250 g; the story of the edition; aims: fairer incomes for coffee-farming families, training and better educational opportunities.',
+        fr: 'Sankofa Heritage Coffee, mont Elgon, Ouganda, torréfaction moyenne, arabica, 250 g ; l’histoire de l’édition ; objectifs : des revenus plus justes pour les familles de caféiculteurs, la formation et de meilleures chances d’éducation.',
+      })),
   },
   planned({
     no: 2, slug: 'ankole-hills', name: 'Ankole Hills', tagline: 'Pastoral Heritage Coffee',
     place: { de: 'Region Ankole', en: 'Ankole Region', fr: 'région d’Ankole' },
     origin: { de: 'Region Ankole, Uganda', en: 'Ankole Region, Uganda', fr: 'Région d’Ankole, Ouganda' },
     from: { de: 'der Region Ankole, Uganda', en: 'the Ankole Region, Uganda', fr: 'région d’Ankole, Ouganda' },
-    pattern: { de: 'ocker-goldenem', en: 'ochre and gold', fr: 'ocre et or' },
     coop: same('Ankole Coffee Producers Cooperative Union'),
     story: {
       paragraphs: [
@@ -182,15 +225,27 @@ export const coffeeProducts: Product[] = [
       ],
     },
   }),
-  // 03 – collection preview since 09.11.2026 (was "coming soon"); roast and coffee type from the label design brief (Dec 2024, v4).
-  planned({
-    no: 3, slug: 'kanungu-forest', name: 'Kanungu Forest', tagline: 'Bwindi Canopy Coffee',
-    place: { de: 'Bwindi Forest Edge', en: 'Bwindi Forest Edge', fr: 'lisière de la forêt de Bwindi' },
-    origin: { de: 'Bwindi Forest Edge, Uganda', en: 'Bwindi Forest Edge, Uganda', fr: 'Lisière de la forêt de Bwindi, Ouganda' },
-    from: { de: 'der Region am Rand des Bwindi-Waldes, Uganda', en: 'the edge of the Bwindi forest, Uganda', fr: 'lisière de la forêt de Bwindi, Ouganda' },
-    pattern: { de: 'dunkelgrün-goldenem', en: 'deep green and gold', fr: 'vert foncé et or' },
-    coop: same('Kanungu Coffee Farmers Cooperative Society'),
-    extra: [row(lbl.plannedRoast, { de: 'dunkel', en: 'dark', fr: 'foncée' }), row(lbl.type, same('Arabica'))],
+  // 03 – "coming soon" again since 10.11.2026 (chair; it was hidden from 09.11.2026). Roast and coffee type from the label design
+  // brief (Dec 2024, v4), as printed on the v4 label. The cooperative is a planned partner, not a confirmed supplier.
+  {
+    slug: 'abantu-coffee-kanungu-forest', category: 'coffee', status: 'coming-soon', edition: 3, editionName: 'Kanungu Forest', tagline: 'Bwindi Canopy Coffee',
+    name: productName('Kanungu Forest'),
+    short: { de: 'Bwindi Canopy Coffee · Bwindi Forest Edge · dunkle Röstung · 250 g', en: 'Bwindi Canopy Coffee · Bwindi Forest Edge · dark roast · 250 g', fr: 'Bwindi Canopy Coffee · lisière de la forêt de Bwindi · torréfaction foncée · 250 g' },
+    description: {
+      de: 'Arabica vom Rand des Bwindi-Waldes in Uganda, mit dunkler Röstung, aus unserer Linie „Bwindi Canopy“. In der 250-g-Packung. Abantu Coffee ist ein Projekt von Bantu e.V. mit Balambuli Kwigate Coffee (BKC) als Hauptpartner für Kaffee. Die Erlöse sollen die Projekte von Bantu e.V. unterstützen.',
+      en: 'A dark-roast Arabica from the edge of the Bwindi forest in Uganda, from our Bwindi Canopy line. In a 250 g pack. Abantu Coffee is a project of Bantu e.V., with Balambuli Kwigate Coffee (BKC) as its main coffee partner. Proceeds are meant to support the projects of Bantu e.V.',
+      fr: 'Un arabica de la lisière de la forêt de Bwindi en Ouganda, à torréfaction foncée, de notre gamme Bwindi Canopy. En sachet de 250 g. Abantu Coffee est un projet de Bantu e.V., avec Balambuli Kwigate Coffee (BKC) comme principal partenaire café. Les recettes doivent soutenir les projets de Bantu e.V.',
+    },
+    details: [
+      row(lbl.origin, { de: 'Bwindi Forest Edge, Uganda', en: 'Bwindi Forest Edge, Uganda', fr: 'Lisière de la forêt de Bwindi, Ouganda' }),
+      row(lbl.edition, editionNo(3)),
+      row(lbl.roast, { de: 'dunkel', en: 'dark', fr: 'foncée' }),
+      row(lbl.type, same('Arabica')),
+      row(lbl.weight, same('250 g')),
+      row(lbl.coop, same('Kanungu Coffee Farmers Cooperative Society')),
+      row(lbl.partner, same(BKC)),
+      row(lbl.project, same('Bantu e.V.')),
+    ],
     story: {
       paragraphs: [
         {
@@ -205,6 +260,18 @@ export const coffeeProducts: Product[] = [
         },
       ],
       sayings: [{ text: 'Ekibira kikuuma obulamu', lang: 'cgg', language: lang.rukiga, meaning: { de: 'Der Wald schützt das Leben.', en: 'The forest protects life.', fr: 'La forêt protège la vie.' } }],
+      label: [
+        {
+          de: 'Auf dem Etikett steht Asase Ye Duru, ein Adinkra-Zeichen aus der Akan-Kultur Ghanas, hier in einer zeitgenössischen Interpretation. Es würdigt die Erde als Grundlage des Lebens. Die kantigen Blattformen wurden eigens für diese Edition gezeichnet. Das Zeichen ist kein ugandisches Symbol; es sagt nichts darüber aus, wo der Kaffee wächst oder wer ihn anbaut.',
+          en: 'The label shows Asase Ye Duru, an Adinkra sign from the Akan culture of Ghana, in a contemporary interpretation. It honours the earth as the basis of life. The angular leaf shapes were drawn specially for this edition. The sign is not a Ugandan symbol, and it says nothing about where the coffee grows or who grows it.',
+          fr: 'L’étiquette montre Asase Ye Duru, un signe adinkra de la culture akan du Ghana, dans une interprétation contemporaine. Il rend hommage à la terre, fondement de la vie. Les formes de feuilles anguleuses ont été dessinées spécialement pour cette édition. Ce signe n’est pas un symbole ougandais et ne dit rien sur le lieu où pousse le café ni sur les personnes qui le cultivent.',
+        },
+        backNote({
+          de: 'Sie nennt die Angaben zum Kaffee, erklärt das Zeichen und verweist für die Geschichte und die Ziele der Edition auf diese Seite.',
+          en: 'It gives the coffee details, explains the sign and refers to this page for the story and the aims of the edition.',
+          fr: 'Il donne les indications sur le café, explique le signe et renvoie à cette page pour l’histoire et les objectifs de l’édition.',
+        }),
+      ],
       aims: [
         { de: 'Waldschutz und Wiederaufforstung', en: 'Forest conservation and reforestation', fr: 'Protection des forêts et reboisement' },
         { de: 'Initiativen zum Schutz des Lebensraums der Berggorillas', en: 'Initiatives to protect the mountain gorilla’s habitat', fr: 'Initiatives pour protéger l’habitat du gorille des montagnes' },
@@ -212,16 +279,26 @@ export const coffeeProducts: Product[] = [
         { de: 'Schulungen für nachhaltigen Anbau am Waldrand', en: 'Training in sustainable farming at the forest edge', fr: 'Formations à une agriculture durable en lisière de forêt' },
       ],
     },
-  }),
-  // 04 – product "coming soon" since 09.11.2026 (chair). Roast and coffee type not confirmed yet, so not shown.
+    ...labelMedia('kanungu-forest',
+      frontAlt('Kanungu Forest',
+        { de: 'dunkelgrüner Grund mit dem cremefarbenen Zeichen Asase Ye Duru und kantigen grünen Blattformen.', en: 'dark green ground with the cream-coloured sign Asase Ye Duru and angular green leaf shapes.', fr: 'fond vert foncé avec le signe Asase Ye Duru de couleur crème et des formes de feuilles vertes anguleuses.' },
+        { de: 'Abantu Coffee, Kanungu Forest, Bwindi Canopy Coffee, Bwindi Forest Edge, Uganda, dunkle Röstung, Arabica, 250 g', en: 'Abantu Coffee, Kanungu Forest, Bwindi Canopy Coffee, Bwindi Forest Edge, Uganda, dark roast, Arabica, 250 g', fr: 'Abantu Coffee, Kanungu Forest, Bwindi Canopy Coffee, Bwindi Forest Edge, Ouganda, torréfaction foncée, arabica, 250 g' }),
+      backAlt('Kanungu Forest', {
+        de: 'Bwindi Canopy Coffee, Bwindi Forest Edge, Uganda, dunkle Röstung, Arabica, 250 g; die Geschichte des Zeichens Asase Ye Duru; Projekt und Ziele.',
+        en: 'Bwindi Canopy Coffee, Bwindi Forest Edge, Uganda, dark roast, Arabica, 250 g; the story of the sign Asase Ye Duru; project and aims.',
+        fr: 'Bwindi Canopy Coffee, Bwindi Forest Edge, Ouganda, torréfaction foncée, arabica, 250 g ; l’histoire du signe Asase Ye Duru ; projet et objectifs.',
+      })),
+  },
+  // 04 – "coming soon" since 09.11.2026 (chair). Roast and coffee type are not confirmed, so they are not shown (the v4 label
+  // says only "Kaffee aus Uganda"). The cooperative is a planned partner, not a confirmed supplier.
   {
     slug: 'abantu-coffee-sebei-elgon', category: 'coffee', status: 'coming-soon', edition: 4, editionName: 'Sebei Elgon', tagline: 'Mountain Heritage Coffee',
     name: productName('Sebei Elgon'),
     short: { de: 'Mountain Heritage Coffee · Osthänge des Mount Elgon · 250 g', en: 'Mountain Heritage Coffee · Eastern slopes of Mount Elgon · 250 g', fr: 'Mountain Heritage Coffee · versant est du mont Elgon · 250 g' },
     description: {
-      de: 'Kaffee von den Osthängen des Mount Elgon in Uganda, aus unserer Linie „Mountain Heritage“. In der 250-g-Packung. Abantu Coffee ist ein Projekt von Bantu e.V. mit Balambuli Kwigate Coffee (BKC) als Hauptpartner für Kaffee. Die Erlöse unterstützen die Projekte von Bantu e.V.',
-      en: 'Coffee from the eastern slopes of Mount Elgon in Uganda, from our Mountain Heritage line. In a 250 g pack. Abantu Coffee is a project of Bantu e.V., with Balambuli Kwigate Coffee (BKC) as its main coffee partner. Proceeds support the projects of Bantu e.V.',
-      fr: 'Un café du versant est du mont Elgon en Ouganda, de notre gamme Mountain Heritage. En sachet de 250 g. Abantu Coffee est un projet de Bantu e.V., avec Balambuli Kwigate Coffee (BKC) comme principal partenaire café. Les recettes soutiennent les projets de Bantu e.V.',
+      de: 'Kaffee von den Osthängen des Mount Elgon in Uganda, aus unserer Linie „Mountain Heritage“. In der 250-g-Packung. Abantu Coffee ist ein Projekt von Bantu e.V. mit Balambuli Kwigate Coffee (BKC) als Hauptpartner für Kaffee. Die Erlöse sollen die Projekte von Bantu e.V. unterstützen.',
+      en: 'Coffee from the eastern slopes of Mount Elgon in Uganda, from our Mountain Heritage line. In a 250 g pack. Abantu Coffee is a project of Bantu e.V., with Balambuli Kwigate Coffee (BKC) as its main coffee partner. Proceeds are meant to support the projects of Bantu e.V.',
+      fr: 'Un café du versant est du mont Elgon en Ouganda, de notre gamme Mountain Heritage. En sachet de 250 g. Abantu Coffee est un projet de Bantu e.V., avec Balambuli Kwigate Coffee (BKC) comme principal partenaire café. Les recettes doivent soutenir les projets de Bantu e.V.',
     },
     details: [
       row(lbl.origin, { de: 'Osthänge des Mount Elgon, Uganda', en: 'Eastern slopes of Mount Elgon, Uganda', fr: 'Versant est du mont Elgon, Ouganda' }),
@@ -245,6 +322,18 @@ export const coffeeProducts: Product[] = [
         },
       ],
       sayings: [{ text: 'Shujaa wa mlima', lang: 'sw', language: lang.swahili, meaning: { de: 'Held des Berges', en: 'Hero of the mountain', fr: 'Héros de la montagne' } }],
+      label: [
+        {
+          de: 'Das Etikett zeigt das Motiv „Elevation“: gestufte Flächen und aufsteigende Linien, eigens für diese Edition gezeichnet. Es steht für Rhythmus und Aufstieg. Es ist weder eine Landkarte noch ein traditionelles Zeichen.',
+          en: 'The label shows the motif “Elevation”: stepped planes and rising lines, drawn specially for this edition. It stands for rhythm and ascent. It is neither a map nor a traditional sign.',
+          fr: 'L’étiquette montre le motif « Elevation » : des plans en gradins et des lignes ascendantes, dessinés spécialement pour cette édition. Il évoque le rythme et l’ascension. Ce n’est ni une carte ni un signe traditionnel.',
+        },
+        backNote({
+          de: 'Sie nennt die Angaben zum Kaffee, erzählt die Geschichte in Kurzform und nennt die Ziele der Edition: Kulturerbe bewahren, junge Menschen fördern und Wissen im Hochlandanbau weitergeben.',
+          en: 'It gives the coffee details, tells the story in brief and names the aims of the edition: preserving cultural heritage, supporting young people and passing on knowledge of highland farming.',
+          fr: 'Il donne les indications sur le café, raconte l’histoire en bref et cite les objectifs de l’édition : préserver le patrimoine culturel, soutenir les jeunes et transmettre le savoir de la culture en altitude.',
+        }),
+      ],
       aims: [
         { de: 'Erhalt des kulturellen Erbes und Dokumentation des Wissens der Ältesten', en: 'Preserving cultural heritage and recording the knowledge of elders', fr: 'Préservation du patrimoine culturel et transmission du savoir des anciens' },
         { de: 'Förderung junger Menschen als Führungspersönlichkeiten', en: 'Leadership training for young people', fr: 'Formation au leadership pour les jeunes' },
@@ -252,14 +341,21 @@ export const coffeeProducts: Product[] = [
         { de: 'Unterstützung für traditionelle Sportarten und Kulturfeste', en: 'Support for traditional sports and cultural festivals', fr: 'Soutien aux sports traditionnels et aux fêtes culturelles' },
       ],
     },
-    ...coffeeMedia('sebei-elgon', 'Sebei Elgon', { de: 'marineblau-goldenem', en: 'navy blue and gold', fr: 'bleu marine et or' }),
+    ...labelMedia('sebei-elgon',
+      frontAlt('Sebei Elgon',
+        { de: 'gelber Beutel mit dem Motiv „Elevation“: drei dunkle, gestufte Flächen, eine helle Diagonale und feine türkisfarbene Linien.', en: 'yellow ground with the motif “Elevation”: three dark stepped planes, a light diagonal and fine teal lines.', fr: 'fond jaune avec le motif « Elevation » : trois plans sombres en gradins, une diagonale claire et de fines lignes turquoise.' },
+        { de: 'Abantu Coffee, Sebei Elgon, Uganda Collection, 250 g', en: 'Abantu Coffee, Sebei Elgon, Uganda Collection, 250 g', fr: 'Abantu Coffee, Sebei Elgon, Uganda Collection, 250 g' }),
+      backAlt('Sebei Elgon', {
+        de: 'Mountain Heritage Coffee, östliche Hänge des Mount Elgon, Uganda, 250 g; die Geschichte der Edition; Ziele: Kulturerbe bewahren, junge Menschen fördern und Wissen im Hochlandanbau weitergeben.',
+        en: 'Mountain Heritage Coffee, eastern slopes of Mount Elgon, Uganda, 250 g; the story of the edition; aims: preserving cultural heritage, supporting young people and passing on knowledge of highland farming.',
+        fr: 'Mountain Heritage Coffee, versant est du mont Elgon, Ouganda, 250 g ; l’histoire de l’édition ; objectifs : préserver le patrimoine culturel, soutenir les jeunes et transmettre le savoir de la culture en altitude.',
+      })),
   },
   planned({
     no: 5, slug: 'bukonzo', name: 'Bukonzo', tagline: 'Mountains of the Moon',
     place: { de: 'Rwenzori-Gebirge', en: 'Rwenzori Mountains', fr: 'monts Rwenzori' },
     origin: { de: 'Rwenzori-Gebirge, Uganda', en: 'Rwenzori Mountains, Uganda', fr: 'Monts Rwenzori, Ouganda' },
     from: { de: 'dem Rwenzori-Gebirge, Uganda', en: 'the Rwenzori Mountains, Uganda', fr: 'monts Rwenzori, Ouganda' },
-    pattern: { de: 'petrol-goldenem', en: 'teal and gold', fr: 'bleu pétrole et or' },
     coop: same('Bukonzo Organic Farmers Cooperative Union'),
     story: {
       paragraphs: [
@@ -288,7 +384,6 @@ export const coffeeProducts: Product[] = [
     place: { de: 'Kraterhochland', en: 'Crater Highlands', fr: 'hautes terres des cratères' },
     origin: { de: 'Kraterhochland, Uganda', en: 'Crater Highlands, Uganda', fr: 'Hautes terres des cratères, Ouganda' },
     from: { de: 'dem Kraterhochland, Uganda', en: 'the Crater Highlands, Uganda', fr: 'hautes terres des cratères, Ouganda' },
-    pattern: { de: 'weinrot-goldenem', en: 'wine red and gold', fr: 'lie-de-vin et or' },
     coop: same('Nkongoro Coffee Farmers Cooperatives Society'),
     story: {
       paragraphs: [
@@ -317,7 +412,6 @@ export const coffeeProducts: Product[] = [
     place: { de: 'Region Rwenzori', en: 'Rwenzori Region', fr: 'région du Rwenzori' },
     origin: { de: 'Region Rwenzori, Uganda', en: 'Rwenzori Region, Uganda', fr: 'Région du Rwenzori, Ouganda' },
     from: { de: 'der Region Rwenzori, Uganda', en: 'the Rwenzori Region, Uganda', fr: 'région du Rwenzori, Ouganda' },
-    pattern: { de: 'indigoblau-goldenem', en: 'indigo and gold', fr: 'indigo et or' },
     coop: same('Mount Rwenzori Coffee Farmers’ Co-operative Union'),
     story: {
       paragraphs: [
@@ -346,7 +440,6 @@ export const coffeeProducts: Product[] = [
     place: same('Uganda'),
     origin: { de: 'Uganda', en: 'Uganda', fr: 'Ouganda' },
     from: { de: 'Uganda', en: 'Uganda', fr: 'Ouganda' },
-    pattern: { de: 'pflaumenfarben-goldenem', en: 'plum and gold', fr: 'prune et or' },
     coop: { de: 'Bukalasi Women’s Association und weitere Frauenkooperativen', en: 'Bukalasi Women’s Association and other women’s cooperatives', fr: 'Bukalasi Women’s Association et d’autres coopératives de femmes' },
     story: {
       paragraphs: [
@@ -370,27 +463,54 @@ export const coffeeProducts: Product[] = [
       ],
     },
   }),
-  planned({
-    no: 9, slug: 'nile-highland', name: 'Nile Highland', tagline: 'Source of the Nile Coffee',
-    place: { de: 'Region der Nilquelle', en: 'Nile Source Region', fr: 'région de la source du Nil' },
-    origin: { de: 'Region der Nilquelle, Uganda', en: 'Nile Source Region, Uganda', fr: 'Région de la source du Nil, Ouganda' },
-    from: { de: 'der Region der Nilquelle, Uganda', en: 'the Nile Source Region, Uganda', fr: 'région de la source du Nil, Ouganda' },
-    pattern: { de: 'tiefblau-goldenem', en: 'deep blue and gold', fr: 'bleu profond et or' },
-    coop: same('Nile Highland Coffee Farmers Association'),
+  // 09 – label SAMPLE since 10.11.2026 (chair): concept artwork, coffee details not confirmed. No origin, roast, coffee type,
+  // supplier, price or stock here until the chair supplies them (v4 label: "Kollektionsentwurf, geplante Uganda-Edition,
+  // Packungsformat 250 g"; the river motif is "keine Karte eines bestimmten Anbaugebiets"). Left out on purpose from the 2025
+  // brochure text: the Nile source region as origin, "pure spring water", the Nile Highland Coffee Farmers Association and
+  // the Luganda saying. The aims are the brochure's aims, shown as provisional. When the details are confirmed: add them,
+  // remove `sample` and `priceNote`, and the edition is treated like the other "coming soon" editions.
+  {
+    slug: 'abantu-coffee-nile-highland', category: 'coffee', status: 'coming-soon', sample: true, edition: 9, editionName: 'Nile Highland', tagline: 'Uganda Collection',
+    name: productName('Nile Highland'),
+    short: { de: 'Muster · geplante Edition der Uganda Collection · Packungsformat 250 g', en: 'Sample · planned edition of the Uganda Collection · 250 g pack format', fr: 'Échantillon · édition prévue de la Uganda Collection · format 250 g' },
+    description: {
+      de: 'Nile Highland ist eine geplante Edition der Uganda Collection von ABANTU COFFEE. Zu sehen ist das Verpackungsmuster. Herkunft, Röstung, Kaffeesorte, Lieferpartner, Preis und Verfügbarkeit stehen noch nicht fest; wir ergänzen sie hier, sobald sie bestätigt sind. Abantu Coffee ist ein Projekt von Bantu e.V. mit Balambuli Kwigate Coffee (BKC) als Hauptpartner für Kaffee.',
+      en: 'Nile Highland is a planned edition of the ABANTU COFFEE Uganda Collection. What you see here is the packaging sample. Origin, roast, coffee type, supply partner, price and availability are not yet fixed; we will add them here as soon as they are confirmed. Abantu Coffee is a project of Bantu e.V., with Balambuli Kwigate Coffee (BKC) as its main coffee partner.',
+      fr: 'Nile Highland est une édition prévue de la Uganda Collection d’ABANTU COFFEE. Vous voyez ici l’échantillon d’emballage. L’origine, la torréfaction, le type de café, le partenaire d’approvisionnement, le prix et la disponibilité ne sont pas encore fixés ; nous les ajouterons ici dès qu’ils seront confirmés. Abantu Coffee est un projet de Bantu e.V., avec Balambuli Kwigate Coffee (BKC) comme principal partenaire café.',
+    },
+    priceNote: { de: 'Kaffeeangaben folgen', en: 'Coffee details to follow', fr: 'Indications à venir' },
+    details: [
+      row(lbl.edition, editionNo(9)),
+      row(lbl.plannedWeight, same('250 g')),
+      row(lbl.partner, same(BKC)),
+      row(lbl.project, same('Bantu e.V.')),
+      row(lbl.status, { de: 'Muster: Angaben zum Kaffee noch nicht bestätigt', en: 'Sample: coffee details not yet confirmed', fr: 'Échantillon : indications sur le café pas encore confirmées' }),
+    ],
     story: {
       paragraphs: [
         {
-          de: 'Bei Jinja verlässt der Nil den Viktoriasee und beginnt seine lange Reise bis zum Mittelmeer. Die Hochländer rund um diese Quelle sind seit Langem ein Ort des Handels und der Begegnung.',
-          en: 'Near Jinja, the Nile leaves Lake Victoria and begins its long journey to the Mediterranean. The highlands around this source have long been a place of trade and encounter.',
-          fr: 'Près de Jinja, le Nil quitte le lac Victoria et commence son long voyage jusqu’à la Méditerranée. Les hautes terres autour de cette source sont depuis longtemps un lieu d’échanges et de rencontres.',
+          de: 'Der Name Nile Highland erinnert an den Nil, der bei Jinja den Viktoriasee verlässt und seine lange Reise bis zum Mittelmeer beginnt. Die Edition greift das Bild des Flusses auf: Bewegung, Handel und Begegnung.',
+          en: 'The name Nile Highland recalls the Nile, which leaves Lake Victoria near Jinja and begins its long journey to the Mediterranean. The edition takes up the image of the river: movement, trade and encounter.',
+          fr: 'Le nom Nile Highland évoque le Nil, qui quitte le lac Victoria près de Jinja et commence son long voyage jusqu’à la Méditerranée. L’édition reprend l’image du fleuve : mouvement, échanges et rencontres.',
         },
         {
-          de: 'Nile Highland erzählt von diesem Ursprung: Kaffee aus dem Hochland an der Quelle des Nils, mit reinem Quellwasser. Geplant ist die Zusammenarbeit mit der Nile Highland Coffee Farmers Association.',
-          en: 'Nile Highland tells of this origin: coffee from the highlands at the source of the Nile, with pure spring water. Cooperation with the Nile Highland Coffee Farmers Association is planned.',
-          fr: 'Nile Highland raconte cette origine : un café des hautes terres de la source du Nil, avec une eau de source pure. Une coopération avec la Nile Highland Coffee Farmers Association est prévue.',
+          de: 'Nile Highland ist noch ein Entwurf. Aus welcher Region der Kaffee kommen wird, mit wem wir dort zusammenarbeiten und wie er geröstet wird, steht noch nicht fest. Diese Angaben ergänzen wir hier, sobald sie bestätigt sind.',
+          en: 'Nile Highland is still a concept. Which region the coffee will come from, who we will work with there and how it will be roasted has not yet been decided. We will add these details here as soon as they are confirmed.',
+          fr: 'Nile Highland est encore un projet. La région d’où viendra le café, les partenaires sur place et la torréfaction ne sont pas encore décidés. Nous ajouterons ces informations ici dès qu’elles seront confirmées.',
         },
       ],
-      sayings: [{ text: 'Ensozi ezivaamu Nnalubaale', lang: 'lg', language: lang.luganda, meaning: { de: 'Die Hügel, aus denen der Nil fließt', en: 'The hills from which the Nile flows', fr: 'Les collines d’où coule le Nil' } }],
+      label: [
+        {
+          de: 'Fließende Bänder ziehen sich über das Etikett. Das eigens entwickelte Flussmotiv „River Route“ steht für Bewegung und Verbindung. Es ist eine grafische Komposition und keine Karte eines bestimmten Anbaugebiets.',
+          en: 'Flowing ribbons run across the label. The specially developed river motif “River Route” stands for movement and connection. It is a graphic composition, not a map of a particular growing area.',
+          fr: 'Des rubans fluides traversent l’étiquette. Le motif fluvial « River Route », conçu pour cette édition, évoque le mouvement et le lien. C’est une composition graphique et non la carte d’une zone de culture précise.',
+        },
+        backNote({
+          de: 'Sie nennt Nile Highland als Kollektionsentwurf und geplante Uganda-Edition im Packungsformat 250 g, erklärt das Flussmotiv und verweist für die Projektziele auf diese Seite.',
+          en: 'It describes Nile Highland as a collection concept and planned Uganda edition in a 250 g pack format, explains the river motif and refers to this page for the project aims.',
+          fr: 'Il présente Nile Highland comme un projet de collection et une édition ougandaise prévue au format 250 g, explique le motif fluvial et renvoie à cette page pour les objectifs du projet.',
+        }),
+      ],
       aims: [
         { de: 'Schutz der Quellen und Wasservorkommen im Hochland', en: 'Protecting highland springs and water sources', fr: 'Protection des sources et des réserves d’eau des hautes terres' },
         { de: 'Erhalt des kulturellen Erbes und Aufbau von Tourismus', en: 'Preserving cultural heritage and developing tourism', fr: 'Préservation du patrimoine culturel et développement du tourisme' },
@@ -398,13 +518,21 @@ export const coffeeProducts: Product[] = [
         { de: 'Verbindung von Ökotourismus und Kaffee', en: 'Linking eco-tourism and coffee', fr: 'Lien entre écotourisme et café' },
       ],
     },
-  }),
+    ...labelMedia('nile-highland',
+      frontAlt('Nile Highland',
+        { de: 'türkisfarbener Beutel mit dem Flussmotiv „River Route“: geschwungene Bänder in Creme und Blau, daneben orangefarbene Striche.', en: 'turquoise bag with the river motif “River Route”: curved ribbons in cream and blue, with orange bars beside them.', fr: 'sachet turquoise avec le motif fluvial « River Route » : des rubans ondulés crème et bleu, à côté de traits orange.' },
+        { de: 'Abantu Coffee, Nile Highland, Uganda Collection, 250 g', en: 'Abantu Coffee, Nile Highland, Uganda Collection, 250 g', fr: 'Abantu Coffee, Nile Highland, Uganda Collection, 250 g' }),
+      backAlt('Nile Highland', {
+        de: 'Kollektionsentwurf, geplante Uganda-Edition, Packungsformat 250 g; die Geschichte des Flussmotivs; der Hinweis, dass die Projektziele auf der Seite der Edition stehen.',
+        en: 'collection concept, planned Uganda edition, pack format 250 g; the story of the river motif; a note that the project aims are given on the edition’s page.',
+        fr: 'projet de collection, édition ougandaise prévue, format 250 g ; l’histoire du motif fluvial ; une note indiquant que les objectifs du projet figurent sur la page de l’édition.',
+      })),
+  },
   planned({
     no: 10, slug: 'kwihangana', name: 'Kwihangana', tagline: 'Patience & Mindful Cultivation',
     place: { de: 'Region Viktoriasee', en: 'Lake Victoria Region', fr: 'région du lac Victoria' },
     origin: { de: 'Region Viktoriasee, Uganda', en: 'Lake Victoria Region, Uganda', fr: 'Région du lac Victoria, Ouganda' },
     from: { de: 'der Region Viktoriasee, Uganda', en: 'the Lake Victoria Region, Uganda', fr: 'région du lac Victoria, Ouganda' },
-    pattern: { de: 'olivgrün-goldenem', en: 'olive green and gold', fr: 'vert olive et or' },
     coop: same('Kibinge Coffee Farmers’ Cooperative Society'),
     story: {
       paragraphs: [
@@ -433,7 +561,6 @@ export const coffeeProducts: Product[] = [
     place: same('Uganda'),
     origin: { de: 'Uganda', en: 'Uganda', fr: 'Ouganda' },
     from: { de: 'Uganda', en: 'Uganda', fr: 'Ouganda' },
-    pattern: { de: 'dunkelbraun-goldenem', en: 'dark brown and gold', fr: 'brun foncé et or' },
     coop: allPartners,
     story: {
       paragraphs: [
@@ -462,7 +589,6 @@ export const coffeeProducts: Product[] = [
     place: same('Uganda'),
     origin: { de: 'Uganda', en: 'Uganda', fr: 'Ouganda' },
     from: { de: 'Uganda', en: 'Uganda', fr: 'Ouganda' },
-    pattern: { de: 'terrakotta-goldenem', en: 'terracotta and gold', fr: 'terre cuite et or' },
     coop: allPartners,
     story: {
       paragraphs: [

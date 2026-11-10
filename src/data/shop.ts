@@ -8,6 +8,9 @@ import { coffeeProducts, type CoffeeStory } from './coffee';
 
 export type L = { de: string; en: string; fr: string };
 export type Category = 'gifts' | 'coffee' | 'merch' | 'crafts';
+/** One side of a pack in the front/back viewer (3:4). Files: `${stem}-<width>.webp` for every width and
+ *  `${stem}-<second width>.jpg` as fallback. */
+export type LabelFace = { stem: string; alt: L; widths: number[] };
 export type Product = {
   slug: string;
   category: Category;
@@ -23,10 +26,15 @@ export type Product = {
   imageWidth?: number;
   imageHeight?: number;
   imageVariants?: { width: number; src: string }[];
-  labelImages?: { name: L; src: string }[];
+  /** ABANTU COFFEE: front = bag mockup (packaging preview), back = back label; shown with the front/back viewer in the
+   *  product card and on the product page (components/ProductGallery.astro). */
+  labels?: { front: LabelFace; back: LabelFace };
   photoBrief?: L;
-  /** 'planned' = ABANTU COFFEE collection preview: no price, no reservation, never orderable, not in /shop/katalog.json */
+  /** 'planned' = ABANTU COFFEE edition that is not public yet: no page, no card, never orderable, not in /shop/katalog.json */
   status: 'available' | 'coming-soon' | 'planned';
+  /** ABANTU COFFEE label sample: concept artwork without confirmed coffee details (origin, roast, type, supplier).
+   *  Shown as "sample", no reservation, not in /shop/katalog.json. Remove the flag once the details are confirmed. */
+  sample?: boolean;
   /** ABANTU COFFEE Uganda Collection: edition number (1–12), plain edition name, tagline from the label, story */
   edition?: number;
   editionName?: string;
@@ -44,12 +52,16 @@ export const shipping: { flat?: number; note: L } = {
   note: { de: 'Versand innerhalb Deutschlands', en: 'Shipping within Germany', fr: 'Livraison en Allemagne' },
 };
 
-/** Limits for symbolic gifts (EUR); the order script applies the same limits. */
-/** Planned ABANTU COFFEE editions (status 'planned') stay off the public website until they are ready (chair, 09.11.2026):
- *  no shop section, no pages, no images. Their data and stories stay in src/data/coffee.ts. Set to true (and restore the
- *  images in public/images/shop/abantu-coffee/) to show the collection preview again. */
+/** Planned ABANTU COFFEE editions (status 'planned') stay off the public website until they are ready (chair, 09.11.2026,
+ *  confirmed 10.11.2026: only four editions are public): no shop card, no pages, no images. Their data and stories stay in
+ *  src/data/coffee.ts. To publish one more edition, give it status 'coming-soon' there and add its label files (see coffee.ts). */
 export const showPlannedEditions = false;
 
+/** Order of the public ABANTU COFFEE editions in the shop (chair, 10.11.2026). Editions not listed follow by edition number. */
+const coffeeOrder = ['abantu-coffee-kanungu-forest', 'abantu-coffee-sebei-elgon', 'abantu-coffee-roots-and-routes', 'abantu-coffee-nile-highland'];
+const coffeeRank = (p: Product) => { const i = coffeeOrder.indexOf(p.slug); return i < 0 ? coffeeOrder.length + (p.edition ?? 0) : i; };
+
+/** Limits for symbolic gifts (EUR); the order script applies the same limits. */
 export const giftLimits = { min: 5, max: 10000, suggestions: [25, 50, 100] };
 
 /** Can this product be ordered with the order form right now? */
@@ -71,7 +83,8 @@ export const categories: { id: Category; name: L; intro: L }[] = [
     id: 'coffee',
     name: { de: 'Abantu Coffee', en: 'Abantu Coffee', fr: 'Abantu Coffee' },
     // Brand (chair, 08.11.2026): ABANTU COFFEE by Bantu e.V., main coffee partner Balambuli Kwigate Coffee (BKC).
-    // Uganda Collection with 12 editions in src/data/coffee.ts: 01 and 03 coming soon, the other ten as a preview (status 'planned').
+    // Uganda Collection with 12 editions in src/data/coffee.ts. Public since 10.11.2026: 03 Kanungu Forest, 04 Sebei Elgon,
+    // 01 Roots & Routes ("coming soon") and 09 Nile Highland (label sample). The other eight stay hidden (status 'planned').
     intro: {
       de: 'ABANTU COFFEE ist unsere eigene Kaffeemarke: ein Projekt von Bantu e.V. mit Balambuli Kwigate Coffee (BKC) als Hauptpartner für Kaffee. Kaffee aus Uganda mit Geschichte; die Erlöse fließen in die Projekte von Bantu e.V.',
       en: 'ABANTU COFFEE is our own coffee brand: a project of Bantu e.V., with Balambuli Kwigate Coffee (BKC) as its main coffee partner. Coffee from Uganda with a story; proceeds support the projects of Bantu e.V.',
@@ -120,7 +133,7 @@ export const products: Product[] = [
     priceNote: { de: 'Betrag frei wählbar', en: 'Choose your amount', fr: 'Choisissez votre montant' },
   },
   // Abantu Coffee – Uganda Collection, see src/data/coffee.ts. Only the editions that are public (see showPlannedEditions).
-  ...coffeeProducts.filter((p) => showPlannedEditions || p.status !== 'planned'),
+  ...coffeeProducts.filter((p) => showPlannedEditions || p.status !== 'planned').sort((a, b) => coffeeRank(a) - coffeeRank(b)),
   // Merchandise – designs to be produced (print-on-demand or small batch).
   {
     slug: 'bantu-stofftasche', category: 'merch', status: 'coming-soon',

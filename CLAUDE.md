@@ -116,14 +116,28 @@ src/lib/alternates.ts   maps every page to its DE/EN/FR versions (language switc
 src/data/sdgs.ts        SDG names; icons in public/sdg/ (SdgIcons component)
 src/lib/schema.ts       JSON-LD @graph (NGO + WebSite on every page; Event nodes from news files with type: event)
 public/partners/        partner logos (OrgCard); public/funders/ funder logos
-public/images/shop/abantu-coffee/  ABANTU COFFEE "Woven Origins v2" bag previews (480/768/1254 WebP + JPEG) and front/back label
-                        previews, shown by components/ProductImage.astro (whole bag, square, no cropping). Digital packaging previews,
-                        not final retail labels. Main coffee partner: Balambuli Kwigate Coffee (BKC). Uganda Collection = 12 editions in
-                        src/data/coffee.ts: 01 Roots & Routes and 04 Sebei Elgon "coming soon" (chair, 09.11.2026). The other ten (status 'planned')
-                        are HIDDEN from the public website since 09.11.2026 (shop.ts showPlannedEditions = false: no section, no pages,
-                        images removed; copies in the chair's Website/Abantu_Coffee_Shop_Upload_2026-11-08 folders). Each
-                        edition has a story (DE/EN/FR) from the 2025 "Complete 12-Line Collection" brochure (chair's choice); unconfirmed
-                        cooperatives/processing/impact are written as plans/aims. No "certified organic" claims; no prices invented.
+public/images/shop/abantu-coffee/  ABANTU COFFEE label pairs, artwork "Signs of Connection v4" (chair's design pack, 10.11.2026):
+                        front = bag mockup abantu-coffee-<slug>-v4-bag-{480,768}.webp + -768.jpg (chair, 10.11.2026: the picture must look
+                        like the coffee bag; single bag cut from the pack's studio visualisations, illustrative), back =
+                        abantu-coffee-<slug>-v4-back-{480,800,1200}.webp + -800.jpg (complete back label from 06_Back_Labels on the
+                        photo's backdrop colour). All 3:4. Shown by
+                        components/ProductGallery.astro = front/back viewer in the shop card and on the product page: arrow to the right
+                        of the bag turns the pack over in place, image area stays 3:4, "Zur Vorderseite" returns, arrow keys/Escape work, no
+                        link to the image file and NO enlarged label page or pop-up (chair's brief). Complete artwork, never cropped.
+                        Every back has a QR code to https://www.bantu-ev.org/en/shop/abantu-coffee-<slug>/ : never change a public slug.
+                        Label designs, not final retail labels (best-before/batch/roaster fields are empty). Main coffee partner:
+                        Balambuli Kwigate Coffee (BKC). Uganda Collection = 12 editions in src/data/coffee.ts. PUBLIC since 10.11.2026
+                        (chair: only these four, in this order): 03 Kanungu Forest, 04 Sebei Elgon, 01 Roots & Routes ("coming soon") and
+                        09 Nile Highland (label SAMPLE, `sample: true`: no origin/roast/type/supplier, no reservation, not in katalog.json,
+                        until the chair confirms the coffee details). The other eight (status 'planned') stay HIDDEN (shop.ts
+                        showPlannedEditions = false: no card, no page, no images on the site); their v4 artwork is in the chair's design
+                        pack (Mac folder Website/…/Abantu_Coffee_Signs_of_Connection_v4…) for later. NEVER unpack a design pack into the
+                        repository: the repo is public on GitHub. Each edition has a story (DE/EN/FR): 2025 "Complete 12-Line Collection"
+                        brochure (chair's choice) plus the v4 label notes (section "Das Etikett": sign/motif, what the German back says).
+                        Rules (chair's handoff 10.11.2026): do not invent prices, stock, roast levels, suppliers, tasting notes,
+                        certifications or donation percentages; aims are aims, not achieved results ("Das sind Ziele, keine erreichten
+                        Ergebnisse. Ein fester Anteil pro Packung ist nicht festgelegt."). Adinkra signs (Sankofa, Asase Ye Duru) are
+                        Akan references (Ghana), not Ugandan symbols. Cooperatives are "planned partner", never confirmed suppliers.
 public/videos/          self-hosted films + VTT captions; shown by src/components/ProjectMedia.astro via front matter `video` (film at
                         the top; `video.transcript` = VTT whose cues appear right below it as "photo descriptions as text"; optional
                         `video.narrated` = film with spoken photo descriptions) and `gallery`. No autoplay, preload none.

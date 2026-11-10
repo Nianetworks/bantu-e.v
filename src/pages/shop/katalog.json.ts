@@ -10,8 +10,8 @@ export function GET() {
     bank: { holder: org.bank.holder, iban: org.bank.iban.replace(/\s+/g, ''), bic: org.bank.bic, bank: org.bank.bank },
     giftLimits: { min: giftLimits.min, max: giftLimits.max },
     shipping: { flat: shipping.flat ?? null },
-    // Planned coffee editions (collection preview) are never orderable and stay out of the price list.
-    products: products.filter((p) => p.status !== 'planned').map((p) => ({
+    // Planned coffee editions and label samples are never orderable and stay out of the price list.
+    products: products.filter((p) => p.status !== 'planned' && !p.sample).map((p) => ({
       slug: p.slug,
       kind: p.category === 'gifts' ? 'gift' : 'goods',
       orderable: canOrder(p),

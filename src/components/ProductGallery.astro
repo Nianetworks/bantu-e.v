@@ -1,134 +1,163 @@
 ---
-import ProductImage from './ProductImage.astro';
+// Front/back viewer for ONE ABANTU COFFEE edition: front = bag mockup (packaging preview), back = back label. Both 3:4.
+// Chair's brief (10.11.2026): each coffee on its own; a visible arrow on the right turns the label over inside the same
+// product card (front <-> back); the image area keeps its size; phones and keyboard are supported; there is a
+// return-to-front action; no separate, oversized label page (so: no link to the image file, no lightbox, no pop-up).
+// The complete artwork is shown (object-fit: contain, the arrow sits beside the label, not on top of it).
+// Keyboard: both controls are real buttons (Enter/Space). With focus on one of them, arrow right/left turns the label
+// and Escape (or Home) returns to the front. Without JavaScript the front is shown and the back follows below it.
+// Used in the shop cards (variant "card") and on the product page (variant "detail").
 import { href, type Lang } from '../i18n';
 import type { Product } from '../data/shop';
 
-interface Props { product: Product; lang: Lang }
-const { product: p, lang } = Astro.props;
-const t = lang === 'de'
-  ? { images: 'Produktansichten', bag: 'Verpackung', front: 'Vorderes Etikett', back: 'Hinteres Etikett', showFront: 'Vorderes Etikett zeigen', showBack: 'Hinteres Etikett zeigen', hint: 'Mit dem Pfeil das Etikett umdrehen.' }
-  : lang === 'fr'
-  ? { images: 'Vues du produit', bag: 'Emballage', front: 'Étiquette avant', back: 'Étiquette arrière', showFront: 'Afficher l’étiquette avant', showBack: 'Afficher l’étiquette arrière', hint: 'Utilisez la flèche pour retourner l’étiquette.' }
-  : { images: 'Product images', bag: 'Packaging', front: 'Front label', back: 'Back label', showFront: 'Show front label', showBack: 'Show back label', hint: 'Use the arrow to turn the label.' };
-const labels = p.labelImages!.slice(0, 2);
-const panelId = `product-gallery-${p.slug}`;
+interface Props { product: Product; lang: Lang; variant?: 'card' | 'detail' }
+const { product: p, lang, variant = 'card' } = Astro.props;
+const { front, back } = p.labels!;
+const name = p.editionName ?? p.name[lang];
+const t = {
+  de: { group: 'Packung', showBack: 'Rückseite zeigen', showFront: 'Vorderseite zeigen', toFront: 'Zur Vorderseite', front: 'Vorderseite', back: 'Rückseite', frontLong: 'Verpackungsvorschau · Vorderseite', backLong: 'Etikett der Rückseite (Entwurf, Text auf Deutsch)' },
+  en: { group: 'Pack', showBack: 'Show the back', showFront: 'Show the front', toFront: 'Back to the front', front: 'Front', back: 'Back', frontLong: 'Packaging preview · front', backLong: 'Back label (design, text in German)' },
+  fr: { group: 'Sachet', showBack: 'Afficher le dos', showFront: 'Afficher la face avant', toFront: 'Retour à la face avant', front: 'Face avant', back: 'Dos', frontLong: 'Aperçu de l’emballage · face avant', backLong: 'Étiquette du dos (projet, texte en allemand)' },
+}[lang];
+// Short captions in the shop card (one row with the return button), full captions on the product page.
+const frontCap = variant === 'detail' ? t.frontLong : t.front;
+const backCap = variant === 'detail' ? t.backLong : t.back;
+const srcset = (face: typeof front) => face.widths.map((w) => `${href(`${face.stem}-${w}.webp`)} ${w}w`).join(', ');
+const fallback = (face: typeof front) => href(`${face.stem}-${face.widths[1]}.jpg`);
+// Width of the label on screen (the card is one column on phones, two on tablets, four on wide screens).
+const sizes = variant === 'detail'
+  ? '(max-width: 820px) calc(100vw - 7.5rem), 28rem'
+  : '(max-width: 559px) calc(100vw - 7.5rem), (max-width: 1099px) min(calc(50vw - 7rem), 20rem), 14rem';
+const areaId = `label-${variant}-${p.slug}`;
 ---
-<section
-  class="product-gallery"
-  id={`viewer-${p.slug}`}
-  data-product-gallery
-  aria-label={`${t.images}: ${p.name[lang]}`}
-  data-show-front={t.showFront}
-  data-show-back={t.showBack}
-  data-bag-caption={p.imageCaption?.[lang] ?? t.bag}
-  data-front-caption={t.front}
-  data-back-caption={t.back}
+<div
+  class:list={['label-flip', `label-flip--${variant}`]}
+  role="group"
+  aria-label={`${t.group}: ${name}`}
+  data-label-flip
+  data-side="front"
+  data-show-back={`${name}: ${t.showBack}`}
+  data-show-front={`${name}: ${t.showFront}`}
+  data-front-caption={frontCap}
+  data-back-caption={backCap}
 >
-  <div class="gallery-controls" role="group" aria-label={t.images} data-gallery-controls hidden>
-    <button type="button" data-gallery-view="bag" aria-pressed="true" aria-controls={panelId}>{t.bag}</button>
-    <button type="button" data-gallery-view="front" aria-pressed="false" aria-controls={panelId}>{t.front}</button>
-    <button type="button" data-gallery-view="back" aria-pressed="false" aria-controls={panelId}>{t.back}</button>
-  </div>
-  <div class="gallery-stage" id={panelId}>
-    <div class="gallery-viewport">
-      <div class="gallery-bag" data-gallery-bag>
-        <ProductImage product={p} lang={lang} variant="detail" />
-      </div>
-      <div class="gallery-labels" data-gallery-labels data-side="front" hidden>
-        <div class="gallery-turn">
-          {labels.map((label, index) => (
-            <div class:list={['gallery-face', { 'gallery-face--back': index === 1 }]} data-gallery-face={index === 0 ? 'front' : 'back'} aria-hidden={index === 1 ? 'true' : 'false'}>
-              <picture>
-                <source type="image/webp" srcset={href(label.src.replace(/\.jpe?g$/i, '.webp'))} />
-                <img src={href(label.src)} alt={`${p.name[lang]}: ${index === 0 ? t.front : t.back}`} width="1181" height="1654" loading="lazy" decoding="async" />
-              </picture>
-            </div>
-          ))}
+  <div class="label-flip__stage">
+    <div class="label-flip__area" id={areaId}>
+      <div class="label-flip__turn">
+        <div class="label-flip__face label-flip__face--front" data-face="front">
+          <picture>
+            <source type="image/webp" srcset={srcset(front)} sizes={sizes} />
+            <img src={fallback(front)} alt={front.alt[lang]} width="768" height="1024" loading={variant === 'detail' ? 'eager' : 'lazy'} fetchpriority={variant === 'detail' ? 'high' : undefined} decoding="async" />
+          </picture>
+        </div>
+        <div class="label-flip__face label-flip__face--back" data-face="back" aria-hidden="true">
+          <picture>
+            <source type="image/webp" srcset={srcset(back)} sizes={sizes} />
+            <img src={fallback(back)} alt={back.alt[lang]} width="1200" height="1600" loading="lazy" decoding="async" />
+          </picture>
         </div>
       </div>
     </div>
-    <button class="gallery-next" type="button" data-gallery-next aria-controls={panelId} aria-label={t.showFront} title={t.showFront} hidden>
-      <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m9 5 7 7-7 7" stroke-linecap="round" stroke-linejoin="round" /></svg>
+    <button class="label-flip__next" type="button" data-flip-next aria-controls={areaId} aria-label={`${name}: ${t.showBack}`} hidden>
+      <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="m9 5 7 7-7 7" stroke-linecap="round" stroke-linejoin="round" /></svg>
     </button>
   </div>
-  <div class="gallery-footer">
-    <p class="gallery-caption" data-gallery-caption aria-live="polite" aria-atomic="true">{p.imageCaption?.[lang] ?? t.bag}</p>
-    <p class="gallery-hint" data-gallery-hint hidden>{t.hint}</p>
+  <div class="label-flip__bar">
+    <p class="label-flip__caption" data-flip-caption aria-live="polite" aria-atomic="true">{frontCap}</p>
+    <button class="label-flip__return" type="button" data-flip-return aria-controls={areaId}>
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M9 14 4 9l5-5" stroke-linecap="round" stroke-linejoin="round" /><path d="M4 9h10a6 6 0 0 1 0 12h-3" stroke-linecap="round" stroke-linejoin="round" /></svg>
+      <span>{t.toFront}</span><span class="sr-only">: {name}</span>
+    </button>
   </div>
   <noscript>
-    {labels.map((label, index) => <figure class="gallery-fallback"><img src={href(label.src)} alt={`${p.name[lang]}: ${index === 0 ? t.front : t.back}`} width="1181" height="1654" loading="lazy" /><figcaption>{index === 0 ? t.front : t.back}</figcaption></figure>)}
+    <figure class="label-flip__fallback">
+      <img src={fallback(back)} alt={back.alt[lang]} width="800" height="1067" loading="lazy" />
+      <figcaption>{t.back}</figcaption>
+    </figure>
   </noscript>
-</section>
+</div>
 
 <script>
-  document.querySelectorAll<HTMLElement>('[data-product-gallery]').forEach((gallery) => {
-    if (gallery.dataset.ready) return;
-    const bag = gallery.querySelector<HTMLElement>('[data-gallery-bag]')!;
-    const labels = gallery.querySelector<HTMLElement>('[data-gallery-labels]')!;
-    const next = gallery.querySelector<HTMLButtonElement>('[data-gallery-next]')!;
-    const caption = gallery.querySelector<HTMLElement>('[data-gallery-caption]')!;
-    const controls = gallery.querySelector<HTMLElement>('[data-gallery-controls]')!;
-    const hint = gallery.querySelector<HTMLElement>('[data-gallery-hint]')!;
-    const buttons = gallery.querySelectorAll<HTMLButtonElement>('[data-gallery-view]');
-    let current: 'bag' | 'front' | 'back' = 'bag';
+  document.querySelectorAll<HTMLElement>('[data-label-flip]').forEach((root) => {
+    if (root.dataset.ready) return;
+    const next = root.querySelector<HTMLButtonElement>('[data-flip-next]')!;
+    const toFront = root.querySelector<HTMLButtonElement>('[data-flip-return]')!;
+    const caption = root.querySelector<HTMLElement>('[data-flip-caption]')!;
+    const faces = root.querySelectorAll<HTMLElement>('[data-face]');
+    const backImg = root.querySelector<HTMLImageElement>('[data-face="back"] img');
+    type Side = 'front' | 'back';
+    const side = () => (root.dataset.side === 'back' ? 'back' : 'front') as Side;
 
-    const show = (view: typeof current) => {
-      current = view;
-      bag.hidden = view !== 'bag';
-      labels.hidden = view === 'bag';
-      if (view !== 'bag') labels.dataset.side = view;
-      labels.querySelectorAll<HTMLElement>('[data-gallery-face]').forEach((face) => {
-        face.setAttribute('aria-hidden', String(face.dataset.galleryFace !== view));
-      });
-      buttons.forEach((button) => button.setAttribute('aria-pressed', String(button.dataset.galleryView === view)));
-      caption.textContent = gallery.dataset[`${view}Caption`]!;
-      const nextLabel = view === 'front' ? gallery.dataset.showBack! : gallery.dataset.showFront!;
-      next.setAttribute('aria-label', nextLabel);
-      next.title = nextLabel;
-      hint.hidden = view === 'bag';
-      gallery.dataset.view = view;
+    const show = (to: Side) => {
+      if (to === 'back' && backImg) backImg.loading = 'eager';
+      root.dataset.side = to;
+      faces.forEach((face) => face.setAttribute('aria-hidden', String(face.dataset.face !== to)));
+      next.setAttribute('aria-label', to === 'front' ? root.dataset.showBack! : root.dataset.showFront!);
+      caption.textContent = to === 'front' ? root.dataset.frontCaption! : root.dataset.backCaption!;
     };
-    buttons.forEach((button) => button.addEventListener('click', () => show(button.dataset.galleryView as typeof current)));
-    next.addEventListener('click', () => show(current === 'front' ? 'back' : 'front'));
-    gallery.addEventListener('keydown', (event) => {
-      if (!(event.target instanceof HTMLButtonElement)) return;
-      if (event.key !== 'ArrowRight' && event.key !== 'ArrowLeft') return;
-      event.preventDefault();
-      show(current === 'bag' ? (event.key === 'ArrowLeft' ? 'back' : 'front') : current === 'front' ? 'back' : 'front');
+    const turn = () => show(side() === 'front' ? 'back' : 'front');
+
+    next.addEventListener('click', turn);
+    toFront.addEventListener('click', () => { show('front'); next.focus(); });
+    root.addEventListener('keydown', (event) => {
+      if (!(event.target instanceof HTMLButtonElement) || event.altKey || event.ctrlKey || event.metaKey) return;
+      if (event.key === 'ArrowRight' || event.key === 'ArrowLeft') {
+        event.preventDefault();
+        turn();
+        if (side() === 'front') next.focus();
+      } else if ((event.key === 'Escape' || event.key === 'Home') && side() === 'back') {
+        event.preventDefault();
+        event.stopPropagation();
+        show('front');
+        next.focus();
+      }
     });
-    controls.hidden = false;
+    // Fetch the back shortly before the label scrolls into view, so the first turn shows it at once.
+    if (backImg && 'IntersectionObserver' in window) {
+      const io = new IntersectionObserver((entries) => {
+        if (entries.some((entry) => entry.isIntersecting)) { backImg.loading = 'eager'; io.disconnect(); }
+      }, { rootMargin: '300px' });
+      io.observe(root);
+    }
     next.hidden = false;
-    gallery.dataset.ready = 'true';
-    show('bag');
+    root.dataset.ready = 'true';
   });
 </script>
 
 <style>
-  .product-gallery { min-width: 0; background: var(--surface); scroll-margin-top: 10rem; }
-  .gallery-stage { display: grid; grid-template-columns: minmax(0, 1fr) 3rem; gap: .5rem; height: clamp(24rem, 46vw, 36rem); padding: .75rem; align-items: center; }
-  .gallery-viewport { position: relative; min-width: 0; width: 100%; height: 100%; perspective: 1200px; }
-  .gallery-bag, .gallery-labels { position: absolute; inset: 0; }
-  .gallery-bag :global(.product-image), .gallery-bag :global(picture) { height: 100%; }
-  .gallery-bag :global(.product-image__img) { height: 100%; object-fit: contain; }
-  .gallery-bag :global(figcaption) { display: none; }
-  .gallery-turn { position: absolute; inset: 0; transform-style: preserve-3d; transition: transform .36s ease-in-out; }
-  .gallery-labels[data-side="back"] .gallery-turn { transform: rotateY(180deg); }
-  .gallery-face { position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; }
-  .gallery-face--back { transform: rotateY(180deg); }
-  .gallery-face picture, .gallery-face img { display: block; width: 100%; height: 100%; }
-  .gallery-face img { object-fit: contain; }
-  .gallery-next { display: inline-flex; justify-content: center; align-items: center; width: 3rem; min-height: 3rem; padding: .5rem; border: 1px solid var(--line-strong); border-radius: 50%; background: var(--surface); color: var(--ink); cursor: pointer; }
-  .gallery-next:hover { background: var(--bg-2); }
-  .gallery-next[hidden], .gallery-controls[hidden] { display: none; }
-  .gallery-footer { border-top: 1px solid var(--line); padding: .85rem 1rem 1rem; }
-  .gallery-caption { margin: 0 0 .7rem; color: var(--muted); font-size: .9rem; }
-  .gallery-controls { display: flex; flex-wrap: wrap; gap: .45rem; padding: .85rem 1rem; border-bottom: 1px solid var(--line); }
-  .gallery-controls button { min-height: 44px; max-width: 100%; padding: .55rem .85rem; border: 1px solid var(--line-strong); border-radius: 999px; background: var(--surface); color: var(--ink); font: inherit; font-size: .9rem; line-height: 1.4; cursor: pointer; }
-  .gallery-controls button[aria-pressed="true"] { border-color: var(--ink); background: var(--ink); color: var(--bg); }
-  .gallery-hint { margin: .75rem 0 0; color: var(--muted); font-size: .85rem; }
-  .gallery-fallback { margin: 1rem; }
-  .gallery-fallback img { display: block; width: 100%; height: auto; }
-  @media (max-width: 820px) { .gallery-stage { height: min(125vw, 36rem); } }
-  @media (prefers-reduced-motion: reduce) { .gallery-turn { transition: none; } }
-  :global(html[data-motion="reduce"]) .gallery-turn { transition: none; }
+  .label-flip { min-width: 0; background: var(--surface); }
+  /* The arrow has its own column, so it never covers the artwork; the column is reserved before the script runs. */
+  .label-flip__stage { display: grid; grid-template-columns: minmax(0, 1fr) 2.75rem; gap: .5rem; align-items: center; padding: .75rem .5rem .5rem .75rem; margin-inline: auto; }
+  .label-flip--card .label-flip__stage { max-width: 24rem; }
+  .label-flip--detail .label-flip__stage { max-width: 33rem; padding: 1rem .75rem .75rem 1rem; }
+  /* Stable image area: always 3:4, whichever side is showing. */
+  .label-flip__area { position: relative; aspect-ratio: 3 / 4; min-width: 0; perspective: 1400px; }
+  .label-flip__turn { position: absolute; inset: 0; transform-style: preserve-3d; transition: transform .36s ease-in-out; }
+  .label-flip[data-side="back"] .label-flip__turn { transform: rotateY(180deg); }
+  .label-flip__face { position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; transition: visibility 0s linear .18s; }
+  .label-flip__face--back { transform: rotateY(180deg); }
+  /* The side that is turned away is really hidden (not only its back face), half-way through the turn. */
+  .label-flip[data-side="front"] .label-flip__face--back, .label-flip[data-side="back"] .label-flip__face--front { visibility: hidden; }
+  .label-flip__face picture, .label-flip__face img { display: block; width: 100%; height: 100%; }
+  .label-flip__face img { object-fit: contain; border-radius: 10px; }
+  .label-flip__next, .label-flip__return { position: relative; z-index: 2; font: inherit; color: var(--ink); background: var(--surface); border: 1px solid var(--line-strong); cursor: pointer; }
+  .label-flip__next { display: inline-flex; justify-content: center; align-items: center; width: 2.75rem; height: 2.75rem; min-width: 44px; min-height: 44px; padding: 0; border-radius: 50%; }
+  .label-flip__next[hidden] { display: none; }
+  .label-flip__next:hover, .label-flip__return:hover { background: var(--bg-2); border-color: var(--ink); }
+  .label-flip__bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .35rem .75rem; min-height: 3.5rem; padding: .35rem .75rem .5rem; border-top: 1px solid var(--line); }
+  .label-flip__caption { margin: 0; flex: 1 1 auto; color: var(--muted); font-size: .85rem; line-height: 1.35; }
+  .label-flip--detail .label-flip__caption { flex-basis: 9rem; }
+  .label-flip__return { display: inline-flex; align-items: center; gap: .4rem; min-height: 44px; padding: .4rem .8rem; border-radius: 999px; font-size: .88rem; font-weight: 700; line-height: 1.2; }
+  /* Space for the return button is always reserved, so the bar does not jump when the label is turned. */
+  .label-flip[data-side="front"] .label-flip__return { visibility: hidden; }
+  .label-flip__fallback { margin: 0; padding: 0 .75rem .75rem; }
+  .label-flip__fallback img { display: block; width: 100%; height: auto; }
+  .label-flip__fallback figcaption { padding-top: .4rem; color: var(--muted); font-size: .85rem; }
+  @media (prefers-reduced-motion: reduce) {
+    .label-flip__turn, .label-flip__face { transition: none; }
+  }
+  :global(html[data-motion="reduce"]) .label-flip__turn, :global(html[data-motion="reduce"]) .label-flip__face { transition: none; }
+  @media print {
+    .label-flip__next, .label-flip__return { display: none; }
+  }
 </style>

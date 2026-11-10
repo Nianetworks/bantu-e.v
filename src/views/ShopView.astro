@@ -3,6 +3,7 @@ import Base from '../layouts/Base.astro';
 import PageHead from '../components/PageHead.astro';
 import Placeholder from '../components/Placeholder.astro';
 import ProductImage from '../components/ProductImage.astro';
+import ProductGallery from '../components/ProductGallery.astro';
 import { href, newsPath, productPath, r, ui, type Lang } from '../i18n';
 import { getEntry } from 'astro:content';
 import { categories, products } from '../data/shop';
@@ -41,20 +42,27 @@ const cuppingPhotos = cupping ? [
 
   {shopCategories.map((c, i) => {
     const items = products.filter((p) => p.category === c.id && p.status !== 'planned');
-    // ABANTU COFFEE: the ten further editions of the Uganda Collection as a preview (chair, 08.11.2026)
+    // ABANTU COFFEE: further editions as a preview. Not used at present: the eight hidden editions stay off the website
+    // (shop.ts → showPlannedEditions = false; chair, 09.11. and 10.11.2026).
     const planned = products.filter((p) => p.category === c.id && p.status === 'planned').sort((a, b) => (a.edition ?? 0) - (b.edition ?? 0));
     return (
       <section class={`section section--tight ${i % 2 ? 'section--alt' : ''}`} id={c.id}>
         <div class="wrap">
           <div class="section-head"><div><h2>{c.name[lang]}</h2><p>{c.intro[lang]}</p></div></div>
+          {c.id === 'coffee' && items.some((p) => p.labels) && (
+            <p class="flip-hint">{de
+              ? 'Jede Edition hat ihren eigenen Beutel; zu sehen sind Verpackungsvorschauen. Der Pfeil rechts neben dem Beutel dreht die Packung um: So sehen Sie das Etikett der Rückseite.'
+              : fr ? 'Chaque édition a son propre sachet ; vous voyez ici des aperçus de l’emballage. La flèche à droite du sachet le retourne : vous voyez ainsi l’étiquette du dos, rédigée en allemand.'
+              : 'Every edition has its own bag; what you see are packaging previews. The arrow to the right of the bag turns the pack over, so you can see the back label, which is printed in German.'}</p>
+          )}
           {items.length > 0 ? (
-            <div class={`grid ${c.id === 'coffee' ? 'grid--2' : 'grid--3'}`}>
+            <div class={`grid ${c.id === 'coffee' ? 'coffee-grid' : 'grid--3'}`}>
               {items.map((p) => (
                 <article class="card card--link">
-                  {p.image ? <ProductImage product={p} lang={lang} /> : <Placeholder lang={lang} ratio="4 / 3" tone={tones[c.id]} label={p.photoBrief?.[lang]} compact={c.id === 'gifts'} />}
+                  {p.labels ? <ProductGallery product={p} lang={lang} variant="card" /> : p.image ? <ProductImage product={p} lang={lang} /> : <Placeholder lang={lang} ratio="4 / 3" tone={tones[c.id]} label={p.photoBrief?.[lang]} compact={c.id === 'gifts'} />}
                   <div class="card__body">
                     <div class="card__meta">
-                      <span class={`tag ${p.status === 'available' ? 'tag--active' : 'tag--planned'}`}>{p.status === 'available' ? (c.id === 'gifts' ? (de ? 'Jetzt möglich' : fr ? 'Disponible dès maintenant' : 'Available now') : (de ? 'Verfügbar' : fr ? 'Disponible' : 'Available')) : t.comingSoon}</span>
+                      <span class={`tag ${p.status === 'available' ? 'tag--active' : 'tag--planned'}`}>{p.sample ? (de ? 'Muster · in Vorbereitung' : fr ? 'Échantillon · en préparation' : 'Sample · in preparation') : p.status === 'available' ? (c.id === 'gifts' ? (de ? 'Jetzt möglich' : fr ? 'Disponible dès maintenant' : 'Available now') : (de ? 'Verfügbar' : fr ? 'Disponible' : 'Available')) : t.comingSoon}</span>
                     </div>
                     <h3><a class="stretched" href={productPath(lang, p.slug)}>{p.name[lang]}</a></h3>
                     <p>{p.short[lang]}</p>
@@ -94,15 +102,15 @@ const cuppingPhotos = cupping ? [
           )}
           {planned.length > 0 && (
             <div class="collection" id="uganda-collection">
-              <h3 class="collection__title">{de ? 'Die Uganda Collection: zehn weitere Editionen in Vorbereitung' : fr ? 'La Uganda Collection : dix autres éditions en préparation' : 'The Uganda Collection: ten more editions in preparation'}</h3>
+              <h3 class="collection__title">{de ? 'Die Uganda Collection: weitere Editionen in Vorbereitung' : fr ? 'La Uganda Collection : d’autres éditions en préparation' : 'The Uganda Collection: more editions in preparation'}</h3>
               <p class="collection__intro">{de
-                ? 'Zwölf Editionen, zwölf Geschichten aus Uganda: von den Hängen des Mount Elgon über die Mondberge des Rwenzori bis an den Viktoriasee. Roots & Routes und Sebei Elgon kommen zuerst. Die zehn weiteren Editionen sind in Vorbereitung; Preis und Verfügbarkeit stehen noch nicht fest. Lernen Sie ihre Geschichten schon jetzt kennen.'
-                : fr ? 'Douze éditions, douze histoires d’Ouganda : des pentes du mont Elgon aux montagnes de la Lune du Rwenzori, jusqu’au lac Victoria. Roots & Routes et Sebei Elgon arrivent en premier. Les dix autres éditions sont en préparation ; prix et disponibilité ne sont pas encore fixés. Découvrez dès maintenant leurs histoires.'
-                : 'Twelve editions, twelve stories from Uganda: from the slopes of Mount Elgon to the Rwenzori, the Mountains of the Moon, and on to Lake Victoria. Roots & Routes and Sebei Elgon come first. The other ten editions are in preparation; price and availability are not yet fixed. Get to know their stories now.'}</p>
+                ? 'Die weiteren Editionen der Uganda Collection sind in Vorbereitung; Preis und Verfügbarkeit stehen noch nicht fest.'
+                : fr ? 'Les autres éditions de la Uganda Collection sont en préparation ; prix et disponibilité ne sont pas encore fixés.'
+                : 'The other editions of the Uganda Collection are in preparation; price and availability are not yet fixed.'}</p>
               <ul class="collection__list" role="list">
                 {planned.map((p) => (
                   <li class="card card--link">
-                    <ProductImage product={p} lang={lang} />
+                    {p.labels && <ProductGallery product={p} lang={lang} variant="card" />}
                     <div class="card__body">
                       <div class="card__meta"><span class="tag tag--planned">{de ? 'Geplant · Nr.' : fr ? 'Prévue · n°' : 'Planned · No.'} {String(p.edition).padStart(2, '0')}</span></div>
                       <h4><a class="stretched" href={productPath(lang, p.slug)}>{p.editionName}</a></h4>
@@ -131,6 +139,12 @@ const cuppingPhotos = cupping ? [
   .cat-nav { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 1.25rem; }
   .cat-nav .tag { text-decoration: none; font-size: .9rem; padding: .35rem .8rem; background: var(--surface); }
   .price { font-weight: 700; color: var(--ink); }
+  /* ABANTU COFFEE: one card per edition with its front/back label viewer. Phones 1 column, tablets 2, wide screens 4. */
+  .coffee-grid { grid-template-columns: minmax(0, 1fr); }
+  @media (min-width: 560px) { .coffee-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (min-width: 1100px) { .coffee-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+  .coffee-grid .card__body { padding: 1rem 1.1rem 1.25rem; }
+  .flip-hint { margin: -.5rem 0 1.25rem; max-width: 70ch; color: var(--ink-2); }
   .empty { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem; }
   .empty p { margin: 0; max-width: 60ch; }
   .cupping { margin-top: clamp(2rem, 5vw, 3rem); display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: clamp(1.25rem, 3vw, 2rem); align-items: center; padding: clamp(1.25rem, 3vw, 2rem); border: 1px solid var(--line); border-radius: 18px; background: var(--surface); }
@@ -150,7 +164,6 @@ const cuppingPhotos = cupping ? [
   .collection__list { list-style: none; padding: 0; margin: 0; display: grid; gap: 1rem; grid-template-columns: repeat(2, minmax(0, 1fr)); }
   @media (min-width: 720px) { .collection__list { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.25rem; } }
   @media (min-width: 1000px) { .collection__list { grid-template-columns: repeat(5, minmax(0, 1fr)); } }
-  .collection__list :global(.product-image__caption) { display: none; }
   .collection__list .card__body { padding: .9rem 1rem 1.1rem; }
   .collection__list h4 { font-size: 1.1rem; margin: .35rem 0 .15rem; }
   .collection__tagline { font-weight: 600; margin: 0 0 .25rem; }

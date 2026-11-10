@@ -19,27 +19,37 @@ const cat = categories.find((c) => c.id === p.category)!;
 const orderable = canOrder(p);
 const canBuy = !orderable && features.shopCheckoutOpen && p.status === 'available' && !!p.checkoutUrl;
 const isGift = p.category === 'gifts';
-// ABANTU COFFEE planned editions: collection preview, no price and no reservation (chair, 08.11.2026)
+// ABANTU COFFEE planned editions: collection preview, no price and no reservation (chair, 08.11.2026). Hidden at present.
 const isPlanned = p.status === 'planned';
+// ABANTU COFFEE label sample (chair, 10.11.2026): concept artwork, coffee details not confirmed, so no reservation.
+const isSample = !!p.sample;
 const story = p.story;
-const collection = p.edition ? products.filter((x) => x.edition).sort((a, b) => (a.edition ?? 0) - (b.edition ?? 0)) : [];
+// The public editions, in shop order (shop.ts → coffeeOrder).
+const collection = p.edition ? products.filter((x) => x.edition) : [];
+// Editions that can be reserved by e-mail right now (named in the notice of a sample or planned edition).
+const reservable = products.filter((x) => x.edition && x.status === 'coming-soon' && !x.sample).map((x) => x.editionName!);
+const listNames = (names: string[]) => names.length < 2 ? names.join('') : `${names.slice(0, -1).join(', ')} ${de ? 'und' : fr ? 'et' : 'and'} ${names[names.length - 1]}`;
+// Shared links (messengers, social networks) show the front label of the edition.
+const shareImage = p.labels ? `${p.labels.front.stem}-${p.labels.front.widths[1]}.jpg` : undefined;
 const storyTitle = de ? `Die Geschichte von ${p.editionName}` : fr ? `L’histoire de ${p.editionName}` : `The story of ${p.editionName}`;
 const mail = `mailto:${org.email}?subject=${encodeURIComponent((de ? 'Vormerken: ' : fr ? 'Réserver : ' : 'Reserve: ') + p.name[lang])}`;
 ---
-<Base lang={lang} title={p.name[lang]} description={p.short[lang]} altHref={(isGift ? giftPath : productPath)(de ? 'en' : 'de', p.slug)}>
+<Base lang={lang} title={p.name[lang]} description={p.short[lang]} altHref={(isGift ? giftPath : productPath)(de ? 'en' : 'de', p.slug)} image={shareImage}>
   <PageHead lang={lang} title={p.name[lang]} lead={p.short[lang]} crumbs={isGift
     ? [{ label: de ? 'Spenden' : fr ? 'Faire un don' : 'Donate', href: r('donate', lang) }, { label: cat.name[lang], href: r('donate', lang, '#geschenke') }]
     : [{ label: 'Shop', href: r('shop', lang) }, { label: cat.name[lang], href: r('shop', lang, `#${cat.id}`) }]} />
   <section class="section section--tight">
     <div class="wrap product">
       <div class="product__media">
-        {p.image && p.labelImages && p.labelImages.length >= 2
-          ? <ProductGallery product={p} lang={lang} />
+        {p.labels
+          ? <ProductGallery product={p} lang={lang} variant="detail" />
           : p.image ? <ProductImage product={p} lang={lang} variant="detail" /> : <Placeholder lang={lang} ratio="1 / 1" label={p.photoBrief?.[lang]} tone={isGift ? 'gold' : 'sand'} />}
       </div>
       <div>
         {isPlanned
           ? <p class="price">{de ? 'Geplante Edition' : fr ? 'Édition prévue' : 'Planned edition'}</p>
+          : isSample
+          ? <p class="price">{de ? 'Muster · in Vorbereitung' : fr ? 'Échantillon · en préparation' : 'Sample · in preparation'}</p>
           : <p class="price">{p.price ? `${p.price.toFixed(2).replace('.', de ? ',' : '.')} €` : (p.priceNote?.[lang] ?? t.priceTbd)}</p>}
         {p.tagline && <p class="tagline">{p.tagline}</p>}
         <p>{p.description[lang]}</p>
@@ -50,16 +60,21 @@ const mail = `mailto:${org.email}?subject=${encodeURIComponent((de ? 'Vormerken:
           {orderable && <a class="btn btn--gold" href="#order-h">{isGift ? (de ? 'Spendengeschenk bestellen' : fr ? 'Commander le don-cadeau' : 'Order this gift') : t.buy}</a>}
           {isGift && <a class="btn btn--outline" href={r('donate', lang, `?ref=${encodeURIComponent(p.donationReference ?? '')}`)}>{de ? 'Lieber online spenden' : fr ? 'Préférer le don en ligne' : 'Donate online instead'}</a>}
           {!isGift && canBuy && <a class="btn btn--gold" href={p.checkoutUrl} rel="noopener">{t.buy}</a>}
-          {!isGift && !isPlanned && !orderable && !canBuy && <a class="btn btn--dark" href={mail}>{t.notify}</a>}
+          {!isGift && !isPlanned && !isSample && !orderable && !canBuy && <a class="btn btn--dark" href={mail}>{t.notify}</a>}
           {story && <a class="btn btn--outline" href="#h-story">{de ? 'Zur Geschichte' : fr ? 'Lire l’histoire' : 'Read the story'}</a>}
           {isPlanned && <a class="btn btn--outline" href={r('shop', lang, '#uganda-collection')}>{de ? 'Alle Editionen' : fr ? 'Toutes les éditions' : 'All editions'}</a>}
           {p.project && <a class="btn btn--outline" href={projectPath(lang, p.project)}>{de ? 'Zum Projekt' : fr ? 'À propos du projet' : 'About the project'}</a>}
         </div>
         {isPlanned
           ? <p class="notice" style="margin-top:1.25rem">{de
-            ? 'Diese Edition ist in Vorbereitung und noch nicht bestellbar. Preis und Verfügbarkeit stehen noch nicht fest. Vormerken können Sie schon jetzt Roots & Routes und Sebei Elgon.'
-            : fr ? 'Cette édition est en préparation et pas encore disponible. Prix et disponibilité ne sont pas encore fixés. Vous pouvez déjà réserver Roots & Routes et Sebei Elgon.'
-            : 'This edition is in preparation and not yet available to order. Price and availability are not yet fixed. You can already reserve Roots & Routes and Sebei Elgon.'}</p>
+            ? `Diese Edition ist in Vorbereitung und noch nicht bestellbar. Preis und Verfügbarkeit stehen noch nicht fest. Vormerken können Sie schon jetzt ${listNames(reservable)}.`
+            : fr ? `Cette édition est en préparation et pas encore disponible. Prix et disponibilité ne sont pas encore fixés. Vous pouvez déjà réserver ${listNames(reservable)}.`
+            : `This edition is in preparation and not yet available to order. Price and availability are not yet fixed. You can already reserve ${listNames(reservable)}.`}</p>
+          : isSample
+          ? <p class="notice" style="margin-top:1.25rem">{de
+            ? `${p.editionName} ist ein Muster: Zu sehen ist die Verpackungsvorschau. Die Angaben zum Kaffee, der Preis und die Verfügbarkeit stehen noch nicht fest; deshalb können Sie diese Edition noch nicht vormerken. Vormerken können Sie schon jetzt ${listNames(reservable)}.`
+            : fr ? `${p.editionName} est un échantillon : vous voyez l’aperçu de l’emballage. Les indications sur le café, le prix et la disponibilité ne sont pas encore fixés ; cette édition ne peut donc pas encore être réservée. Vous pouvez déjà réserver ${listNames(reservable)}.`
+            : `${p.editionName} is a sample: what you see is the packaging preview. The coffee details, price and availability are not yet fixed, so this edition cannot be reserved yet. You can already reserve ${listNames(reservable)}.`}</p>
           : !isGift && !orderable && !canBuy && <p class="notice" style="margin-top:1.25rem">{t.shopClosedNote}</p>}
       </div>
     </div>
@@ -80,10 +95,23 @@ const mail = `mailto:${org.email}?subject=${encodeURIComponent((de ? 'Vormerken:
             ))}
           </figure>
         )}
+        {story.label && story.label.length > 0 && (
+          <>
+            <h3 id="h-label">{de ? 'Das Etikett' : fr ? 'L’étiquette' : 'The label'}</h3>
+            {story.label.map((para) => <p>{para[lang]}</p>)}
+          </>
+        )}
         {story.aims && story.aims.length > 0 && (
           <>
-            <h3>{de ? 'Was diese Edition bewirken soll' : fr ? 'Ce que cette édition veut soutenir' : 'What this edition aims to support'}</h3>
+            <h3 id="h-aims">{de ? 'Was diese Edition bewirken soll' : fr ? 'Ce que cette édition veut soutenir' : 'What this edition aims to support'}</h3>
             <ul class="aims">{story.aims.map((a) => <li>{a[lang]}</li>)}</ul>
+            <p class="aims-note">{de
+              ? 'Das sind Ziele, keine erreichten Ergebnisse. Ein fester Anteil pro Packung ist nicht festgelegt.'
+              : fr ? 'Ce sont des objectifs, non des résultats déjà obtenus. Aucune part fixe par sachet n’a été définie.'
+              : 'These are aims, not results already achieved. No fixed share per pack has been set.'}{isSample && (de
+              ? ' Für diese geplante Edition sind die Ziele vorläufig und können sich noch ändern.'
+              : fr ? ' Pour cette édition prévue, les objectifs sont provisoires et peuvent encore évoluer.'
+              : ' For this planned edition the aims are provisional and may still change.')}</p>
           </>
         )}
       </div>
@@ -92,13 +120,13 @@ const mail = `mailto:${org.email}?subject=${encodeURIComponent((de ? 'Vormerken:
   {collection.length > 2 && (
     <section class="section section--tight" aria-labelledby="h-collection">
       <div class="wrap">
-        <h2 id="h-collection" class="collection-nav__title">{de ? 'Alle Editionen der Uganda Collection' : fr ? 'Toutes les éditions de la Uganda Collection' : 'All editions of the Uganda Collection'}</h2>
+        <h2 id="h-collection" class="collection-nav__title">{de ? 'Die Editionen im Shop' : fr ? 'Les éditions de la boutique' : 'The editions in the shop'}</h2>
         <ol class="collection-nav" role="list">
           {collection.map((x) => (
             <li>
               {x.slug === p.slug
-                ? <span class="collection-nav__item is-current" aria-current="page"><span class="collection-nav__no">{String(x.edition).padStart(2, '0')}</span> {x.editionName}</span>
-                : <a class="collection-nav__item" href={productPath(lang, x.slug)}><span class="collection-nav__no">{String(x.edition).padStart(2, '0')}</span> {x.editionName}{x.status === 'planned' && <span class="sr-only">{de ? ' (geplant)' : fr ? ' (prévue)' : ' (planned)'}</span>}</a>}
+                ? <span class="collection-nav__item is-current" aria-current="page">{x.editionName}{x.sample && <span class="collection-nav__note"> {de ? '(Muster)' : fr ? '(échantillon)' : '(sample)'}</span>}</span>
+                : <a class="collection-nav__item" href={productPath(lang, x.slug)}>{x.editionName}{x.status === 'planned' && <span class="sr-only">{de ? ' (geplant)' : fr ? ' (prévue)' : ' (planned)'}</span>}{x.sample && <span class="collection-nav__note"> {de ? '(Muster)' : fr ? '(échantillon)' : '(sample)'}</span>}</a>}
             </li>
           ))}
         </ol>
@@ -113,7 +141,7 @@ const mail = `mailto:${org.email}?subject=${encodeURIComponent((de ? 'Vormerken:
 </Base>
 <style>
   .product { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(1.5rem, 4vw, 3rem); align-items: start; }
-  .product__media { border-radius: 18px; overflow: hidden; border: 1px solid var(--line); }
+  .product__media { border-radius: 18px; overflow: hidden; border: 1px solid var(--line); background: var(--surface); }
   .price { font-family: var(--font-serif); font-size: 1.6rem; font-weight: 700; margin-bottom: .75rem; }
   @media (max-width: 820px) { .product { grid-template-columns: 1fr; } }
   .order-wrap { max-width: 52rem; }
@@ -129,11 +157,12 @@ const mail = `mailto:${org.email}?subject=${encodeURIComponent((de ? 'Vormerken:
   .saying__meta { margin: 0; color: var(--muted); font-family: var(--font-sans); font-size: 1rem; }
   .aims { margin: 0; padding-left: 1.25rem; }
   .aims li + li { margin-top: .35rem; }
+  .aims-note { margin: 1rem 0 0; color: var(--muted); font-size: .95rem; }
+  .collection-nav__note { font-size: .85rem; opacity: .85; }
   .collection-nav__title { font-size: clamp(1.2rem, 2.2vw, 1.45rem); margin-bottom: 1rem; }
   .collection-nav { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: .5rem; }
   .collection-nav__item { display: inline-flex; align-items: center; gap: .4rem; min-height: 44px; padding: .4rem .9rem; border: 1px solid var(--line); border-radius: 999px; background: var(--surface); color: var(--ink); text-decoration: none; font-size: .95rem; }
   a.collection-nav__item:hover, a.collection-nav__item:focus-visible { border-color: var(--ink); }
   .collection-nav__item.is-current { background: var(--ink); color: var(--bg); border-color: var(--ink); font-weight: 700; }
-  .collection-nav__no { font-variant-numeric: tabular-nums; font-size: .8rem; opacity: .75; }
   .order-wrap :global(.order) { margin-top: 0; }
 </style>
