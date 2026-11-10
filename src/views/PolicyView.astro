@@ -1,0 +1,57 @@
+---
+// Shared renderer for Impressum, Datenschutzerklärung and Erklärung zur Barrierefreiheit (DE/EN/FR).
+// Texts: src/data/policy-content.ts (reviewed copy of 10.11.2026, chair's package revision 2).
+// Slots: "head" (buttons under the page title), "after" (extra sections after the policy text, e.g. the practical
+// accessibility guide). `extraToc` adds those sections to the "On this page" list.
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import { r, type Lang } from '../i18n';
+import { policyContent } from '../data/policy-content';
+interface Props { lang: Lang; page: 'imprint' | 'privacy' | 'accessibility'; extraToc?: { id: string; heading: string }[] }
+const { lang, page, extraToc = [] } = Astro.props;
+const content = policyContent[lang][page];
+const labels = { de: ['Stand', 'Auf dieser Seite'], en: ['Updated', 'On this page'], fr: ['Mise à jour', 'Sur cette page'] }[lang];
+const descriptions = {
+  de: { imprint: 'Impressum von Bantu e.V.: Anbieter, Vertretung, Registereintrag, Kontakt und rechtliche Hinweise.', privacy: 'Datenschutzerklärung von Bantu e.V.: welche Daten wir bei Website, Kontakt, Spenden und Formularen verarbeiten und welche Rechte Sie haben.', accessibility: 'Erklärung zur Barrierefreiheit von Bantu e.V.: Stand, bekannte Einschränkungen, Funktionen zum Anpassen der Darstellung und Kontakt bei Barrieren.' },
+  en: { imprint: 'Legal notice of Bantu e.V.: provider, representation, register entry, contact and legal information.', privacy: 'Privacy policy of Bantu e.V.: what data we process for the website, contact, donations and forms, and your rights.', accessibility: 'Accessibility statement of Bantu e.V.: status, known limitations, display settings and how to report a barrier.' },
+  fr: { imprint: 'Mentions légales de Bantu e.V. : éditeur, représentation, inscription au registre, contact et informations juridiques.', privacy: 'Politique de confidentialité de Bantu e.V. : données traitées pour le site, le contact, les dons et les formulaires, et vos droits.', accessibility: 'Déclaration d’accessibilité de Bantu e.V. : état, limites connues, réglages d’affichage et signalement d’un obstacle.' },
+}[lang][page];
+// EN/FR legal pages are translations; the German text is binding (kept from the previous legal pages).
+const translationNote = lang !== 'de' && page !== 'accessibility'
+  ? (lang === 'fr' ? 'Ceci est une traduction de courtoisie. Seule la version allemande fait foi.' : 'This is a courtesy translation. The German version is legally binding.')
+  : null;
+// Older links into the privacy page keep working: order form (#bestellformular) and sponsorship form (#patenschaftsformular).
+const aliases: Record<string, string[]> = page === 'privacy' ? { formulare: ['bestellformular', 'patenschaftsformular'], forms: ['bestellformular', 'patenschaftsformular'], formulaires: ['bestellformular', 'patenschaftsformular'] } : {};
+const hasHead = Astro.slots.has('head');
+---
+<Base lang={lang} title={content.title} description={descriptions} altHref={r(page, lang === 'de' ? 'en' : 'de')}>
+  {hasHead ? <PageHead lang={lang} title={content.title}><slot name="head" /></PageHead> : <PageHead lang={lang} title={content.title} />}
+  <section class="section section--tight">
+    <div class="narrow prose policy">
+      {translationNote && <p class="notice notice--info">{translationNote}</p>}
+      <p class="small muted">{labels[0]}: <time datetime="2026-11-10">{content.updated}</time></p>
+      <nav class="policy-toc" aria-label={labels[1]}>
+        <strong>{labels[1]}</strong>
+        <ul>
+          {content.sections.map((s) => <li><a href={`#${s.id}`}>{s.heading}</a></li>)}
+          {extraToc.map((s) => <li><a href={`#${s.id}`}>{s.heading}</a></li>)}
+        </ul>
+      </nav>
+      {content.sections.map((s) => <section aria-labelledby={s.id}>
+        {(aliases[s.id] ?? []).map((a) => <span id={a} class="policy-alias"></span>)}
+        <h2 id={s.id}>{s.heading}</h2>
+        {s.paragraphs.map((p) => <p set:html={p} />)}
+      </section>)}
+    </div>
+  </section>
+  <slot name="after" />
+</Base>
+<style>
+  .policy-toc { padding: 1.2rem; border: 1px solid var(--line); border-radius: 12px; margin: 1rem 0 2rem; }
+  .policy-toc ul { margin: .5rem 0 0; padding-left: 1.2rem; }
+  .policy-toc a { overflow-wrap: anywhere; }
+  .policy :global(h2), .policy-alias { scroll-margin-top: 12rem; }
+  .policy-alias { display: block; height: 0; }
+  .policy :global(code) { overflow-wrap: anywhere; }
+  @media print { .policy-toc { display: none; } }
+</style>

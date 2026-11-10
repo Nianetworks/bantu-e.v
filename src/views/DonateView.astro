@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
+import DonationHelp from '../components/DonationHelp.astro';
 import PageHead from '../components/PageHead.astro';
 import Placeholder from '../components/Placeholder.astro';
 import Icon from '../components/Icon.astro';
@@ -30,10 +31,15 @@ const purposes = [
   <PageHead lang={lang} title={title} lead={lead}>
     <ul class="trust" role="list" aria-label={de ? 'Vertrauen und Sicherheit' : fr ? 'Confiance et sécurité' : 'Trust and security'}>
       <li><Icon name="star" class="trust__ic" /> {de ? `Gemeinnützig anerkannt (Freistellungsbescheid vom ${org.tax.exemptionNotice})` : fr ? `Reconnue d’intérêt général (avis d’exonération du ${org.tax.exemptionNotice})` : `Registered charity (tax exemption notice of ${org.tax.exemptionNotice})`}</li>
-      <li><Icon name="report" class="trust__ic" /> {de ? 'Zuwendungsbestätigung für jede Spende' : fr ? 'Reçu fiscal pour chaque don' : 'Donation receipt for every gift'}</li>
+      <li><Icon name="report" class="trust__ic" /> {de ? 'Zuwendungsbestätigung auf Wunsch' : fr ? 'Reçu fiscal sur demande' : 'Tax donation receipt on request'}</li>
       <li><Icon name="chart" class="trust__ic" /> <a href={r('reports', lang)}>{de ? 'Jahres- und Transparenzberichte seit 2020' : fr ? 'Rapports annuels et de transparence depuis 2020' : 'Annual and transparency reports since 2020'}</a></li>
       <li><Icon name="people" class="trust__ic" /> {org.memberships[lang][0]}</li>
     </ul>
+    <nav class="donation-quick" aria-label={de ? 'Spendenweg wählen' : fr ? 'Choisir un moyen de don' : 'Choose how to donate'}>
+      {org.donation?.pageUrl && <a class="btn btn--gold" href={org.donation.pageUrl} target="_blank" rel="noopener">{de ? 'Online spenden' : fr ? 'Donner en ligne' : 'Donate online'}<span class="sr-only"> {t.newWindow}</span></a>}
+      {org.paypalUrl && <a class="btn btn--outline" href={org.paypalUrl} target="_blank" rel="noopener">PayPal<span class="sr-only"> {t.newWindow}</span></a>}
+      <a class="btn btn--outline" href="#bank">{de ? 'Banküberweisung' : fr ? 'Virement bancaire' : 'Bank transfer'}</a>
+    </nav>
   </PageHead>
 
   <section class="section section--tight" aria-labelledby="h-regular">
@@ -52,10 +58,10 @@ const purposes = [
           <h3>{de ? 'Dauerspende für unsere Arbeit' : fr ? 'Don régulier pour notre travail' : 'Regular gift for our work'}</h3>
           <p>{de ? 'Frei verwendbare monatliche Spenden tragen die Arbeit in Berlin, Uganda und Burundi dort, wo gerade keine Förderung greift: Eigenanteile der Projekte, Vorbereitung neuer Anträge, Begleitung der Partner.' : fr ? 'Les dons mensuels libres soutiennent notre travail à Berlin, en Ouganda et au Burundi là où aucun financement n’intervient : parts propres des projets, préparation de nouvelles demandes, accompagnement des partenaires.' : 'Unrestricted monthly gifts carry the work in Berlin, Uganda and Burundi where no grant reaches: the projects’ own contributions, preparing new applications, accompanying the partners.'}</p>
           {org.donation?.pageUrl
-            ? <p>{de ? 'Wählen Sie im Online-Spendenformular den Rhythmus „monatlich“, per SEPA-Lastschrift oder Überweisung, oder spenden Sie monatlich über PayPal. Oder richten Sie einen Dauerauftrag auf unser GLS-Konto ein (Bankverbindung unten).' : fr ? 'Dans le formulaire de don en ligne, choisissez le rythme « mensuel », par prélèvement SEPA ou virement, ou donnez chaque mois via PayPal. Ou mettez en place un ordre permanent vers notre compte GLS (coordonnées ci-dessous).' : 'In the online donation form choose the rhythm “monthly”, by SEPA direct debit or transfer, or give monthly through PayPal. Or set up a standing order to our GLS account (bank details below).'}</p>
+            ? <p>{de ? 'Wählen Sie im Online-Spendenformular den Rhythmus „monatlich“ und zahlen Sie per SEPA-Lastschrift, Kreditkarte oder Google Pay. Oder spenden Sie monatlich über PayPal oder richten Sie einen Dauerauftrag auf unser GLS-Konto ein (Bankverbindung unten).' : fr ? 'Dans le formulaire de don en ligne, choisissez le rythme « mensuel » et payez par prélèvement SEPA, carte bancaire ou Google Pay. Vous pouvez aussi donner chaque mois via PayPal ou mettre en place un ordre permanent vers notre compte GLS (coordonnées ci-dessous).' : 'In the online donation form choose “monthly” and pay by SEPA direct debit, credit card or Google Pay. Or give monthly through PayPal, or set up a standing order to our GLS account (bank details below).'}</p>
             : <p>{de ? 'Richten Sie einen Dauerauftrag auf unser GLS-Konto ein (Bankverbindung unten).' : fr ? 'Mettez en place un ordre permanent vers notre compte GLS (coordonnées ci-dessous).' : 'Set up a standing order to our GLS account (bank details below).'}</p>}
           <div class="btn-row">
-            {org.donation?.pageUrl && <a class="btn btn--dark" href={org.donation.pageUrl} target="_blank" rel="noopener">{de ? 'Monatlich online spenden' : fr ? 'Donner chaque mois en ligne' : 'Give monthly online'}</a>}
+            {org.donation?.pageUrl && <a class="btn btn--dark" href={org.donation.pageUrl} target="_blank" rel="noopener">{de ? 'Online spenden: Rhythmus wählen' : fr ? 'Donner en ligne : choisir la fréquence' : 'Donate online: choose frequency'}</a>}
             <a class="btn btn--outline" href="#bank">{de ? 'Bankverbindung' : fr ? 'Coordonnées bancaires' : 'Bank details'}</a>
           </div>
         </div>
@@ -70,8 +76,8 @@ const purposes = [
           <div class="online__text">
             <h2 id="h-online">{de ? 'Online spenden' : fr ? 'Faire un don en ligne' : 'Donate online'}</h2>
             <p>{de
-              ? 'Mit unserem Online-Spendenformular spenden Sie einmalig oder regelmäßig (monatlich oder jährlich), per SEPA-Lastschrift oder Überweisung auf unser Konto bei der GLS Bank. Sie erhalten eine Zuwendungsbestätigung.'
-              : fr ? 'Avec notre formulaire de don en ligne, vous pouvez donner une fois ou régulièrement (chaque mois ou chaque année), par prélèvement SEPA ou par virement sur notre compte à la GLS Bank. Vous recevez un reçu fiscal.' : 'Use our online donation form to give once or regularly (monthly or yearly), by SEPA direct debit or bank transfer to our account at GLS Bank. You will receive a donation receipt.'}</p>
+              ? 'Mit unserem Online-Spendenformular spenden Sie einmalig oder regelmäßig (monatlich oder jährlich): per SEPA-Lastschrift, Kreditkarte (Visa, Mastercard, American Express) oder Google Pay auf unterstützten Geräten, bei einmaligen Spenden auch per Überweisung. Eine Zuwendungsbestätigung können Sie mit Ihrer Anschrift anfordern.'
+              : fr ? 'Avec notre formulaire de don en ligne, vous pouvez donner une fois ou régulièrement (chaque mois ou chaque année) : par prélèvement SEPA, carte bancaire (Visa, Mastercard, American Express) ou Google Pay sur les appareils compatibles, et pour un don unique aussi par virement. Vous pouvez demander un reçu fiscal en indiquant votre adresse.' : 'Use our online donation form to give once or regularly (monthly or yearly): by SEPA direct debit, credit card (Visa, Mastercard, American Express) or Google Pay on supported devices, and for one-off gifts also by bank transfer. Request a tax donation receipt by providing your postal address.'}</p>
             <div class="btn-row">
               <a class="btn btn--gold" href={org.donation.pageUrl} target="_blank" rel="noopener">{de ? 'Zum Spendenformular' : fr ? 'Ouvrir le formulaire de don' : 'Open the donation form'}</a>
               <button class="btn btn--outline" type="button" id="load-form" aria-controls="donation-form" aria-expanded="false" data-widget={org.donation.widgetUrl}>{de ? 'Formular hier anzeigen' : fr ? 'Afficher le formulaire sur cette page' : 'Show the form on this page'}</button>
@@ -104,7 +110,7 @@ const purposes = [
           <dt>Bank</dt><dd>{org.bank.bank}</dd>
           <dt>{de ? 'Verwendungszweck' : fr ? 'Motif du virement' : 'Reference'}</dt><dd><code id="ref">Spende</code> <button class="copy" type="button" data-copy="ref" data-done={t.copied}>{t.copy}</button></dd>
         </dl>
-        <p class="small muted">{de ? 'Für eine Zuwendungsbestätigung geben Sie bitte Ihren Namen und Ihre Anschrift im Verwendungszweck an oder schreiben Sie uns kurz.' : fr ? 'Pour recevoir un reçu fiscal, indiquez votre nom et votre adresse dans le motif du virement ou envoyez-nous un court e-mail.' : 'For a donation receipt, please include your name and address in the reference or send us a short e-mail.'}</p>
+        <p class="small muted">{de ? 'Für eine Zuwendungsbestätigung schreiben Sie uns bitte Ihren Namen, Ihre Anschrift sowie Betrag und Datum der Spende per E-Mail.' : fr ? 'Pour un reçu fiscal, envoyez-nous par e-mail vos nom, adresse, montant et date du don.' : 'For a tax donation receipt, e-mail us your name, postal address, donation amount and date.'}</p>
       </div>
       <div>
         <h2>{de ? 'Wofür möchten Sie spenden?' : fr ? 'Que souhaitez-vous soutenir ?' : 'What would you like to support?'}</h2>
@@ -146,7 +152,7 @@ const purposes = [
     <div class="wrap grid grid--3">
       <div class="panel">
         <h3>{de ? 'Zuwendungsbestätigung' : fr ? 'Reçu fiscal' : 'Donation receipt'}</h3>
-        <p>{de ? 'Wir stellen Zuwendungsbestätigungen für das Finanzamt aus. Für Spenden bis 300 € reicht in der Regel der Kontoauszug als Nachweis (vereinfachter Zuwendungsnachweis).' : fr ? 'Nous délivrons des reçus fiscaux officiels (Zuwendungsbestätigung) pour l’administration fiscale allemande. Pour les dons jusqu’à 300 €, un relevé bancaire suffit en général.' : 'We issue official donation receipts (Zuwendungsbestätigung) for German tax purposes. For donations up to €300 a bank statement is usually sufficient.'}</p>
+        <p>{de ? 'Wir stellen Zuwendungsbestätigungen für das Finanzamt aus. Für Spenden bis 300 € kann unter den gesetzlichen Voraussetzungen ein vereinfachter Nachweis genutzt werden. Die erforderlichen Unterlagen erläutern wir unten.' : fr ? 'Nous délivrons des reçus fiscaux officiels (Zuwendungsbestätigung) pour l’administration fiscale allemande. Pour les dons jusqu’à 300 €, un justificatif simplifié est possible sous conditions ; les pièces nécessaires sont expliquées ci-dessous.' : 'We issue official donation receipts (Zuwendungsbestätigung) for German tax purposes. For donations up to €300, simplified evidence is possible subject to conditions; the required documents are explained below.'}</p>
       </div>
       <div class="panel">
         <h3>{de ? 'Regelmäßig helfen' : fr ? 'Donner régulièrement' : 'Give regularly'}</h3>
@@ -160,6 +166,7 @@ const purposes = [
       </div>
     </div>
   </section>
+  <DonationHelp lang={lang} />
 </Base>
 <script>
   const refEl = document.getElementById('ref');
@@ -200,6 +207,7 @@ const purposes = [
   });
 </script>
 <style>
+  .donation-quick { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: 1.2rem; }
   .trust { list-style: none; padding: 0; margin: 1.25rem 0 0; display: flex; flex-wrap: wrap; gap: .5rem 1.5rem; font-size: .95rem; font-weight: 600; }
   .trust li { display: inline-flex; align-items: center; gap: .45rem; margin: 0; }
   .trust__ic { width: 1.15em; height: 1.15em; color: var(--green-text); flex: none; }

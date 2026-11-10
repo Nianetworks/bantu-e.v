@@ -1,0 +1,22 @@
+---
+import { donationHelp } from '../data/donation-help';
+import { r, type Lang } from '../i18n';
+import { org } from '../data/site';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const copy = donationHelp[lang];
+---
+<section class="section section--tight" aria-labelledby="donation-help-title">
+  <div class="narrow prose">
+    <h2 id="donation-help-title">{copy.title}</h2>
+    <p>{copy.intro}</p>
+    <p><strong>{copy.contact}</strong> <a href={`mailto:${org.email}?subject=${encodeURIComponent(lang === 'de' ? 'Spende' : lang === 'fr' ? 'Don' : 'Donation')}`}>{org.email}</a> · <a href={`tel:${org.officePhoneHref}`}>{org.officePhone}</a></p>
+    {copy.items.map(([question,answer]) => <details><summary>{question}</summary><p>{answer}</p></details>)}
+    <p><a href={r('privacy', lang)}>{lang === 'de' ? 'Datenschutz bei Spenden' : lang === 'fr' ? 'Confidentialité des dons' : 'Donation privacy'}</a></p>
+  </div>
+</section>
+<style>
+  details { border-bottom: 1px solid var(--line); padding: .8rem 0; }
+  summary { font-weight: 700; cursor: pointer; min-height: 44px; padding: .5rem 0; }
+  summary:focus-visible { outline: 3px solid var(--focus); outline-offset: 4px; }
+</style>

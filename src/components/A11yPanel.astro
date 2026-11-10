@@ -1,6 +1,6 @@
 ---
 // Accessibility settings: text size, colour theme (dark / high contrast), readable font,
-// spacing, link highlighting, stop animations, read aloud (browser speech, on-device).
+// spacing, link highlighting, stop animations, read aloud (browser speech; local or online depending on the voice).
 // Settings are stored only in this browser (localStorage) and applied before first paint
 // by the inline script in Base.astro.
 // Rendered as a native modal <dialog> at the END of <body> (Base.astro), so its heading never
@@ -53,6 +53,7 @@ const sizes = [['md', 'A', '100 %'], ['lg', 'A+', '112 %'], ['xl', 'A++', '125 %
   <div class="a11y-read" data-tts hidden>
     <button type="button" class="btn btn--gold" data-tts-start><Icon name="speaker" /> {t.read}</button>
     <button type="button" class="btn btn--outline" data-tts-stop hidden><Icon name="stop" /> {t.stop}</button>
+    <p class="small muted" style="flex-basis:100%">{de ? 'Je nach Browser und Stimme kann die Sprachausgabe einen Onlinedienst verwenden. Bitte beachten Sie die Datenschutzeinstellungen Ihres Browsers.' : lang === 'fr' ? 'Selon le navigateur et la voix, la lecture peut utiliser un service en ligne. Consultez les paramètres de confidentialité de votre navigateur.' : 'Depending on your browser and voice, speech may use an online service. Check your browser’s privacy settings.'}</p>
   </div>
 
   <div class="a11y-foot">
@@ -125,7 +126,7 @@ const sizes = [['md', 'A', '100 %'], ['lg', 'A+', '112 %'], ['xl', 'A++', '125 %
   });
   apply();
 
-  // Read aloud – uses the browser's built-in speech synthesis (nothing is sent to us).
+  // Read aloud: uses the browser's built-in speech synthesis. Nothing is sent to Bantu; depending on the voice, the browser may use an online speech service (see the notice under the buttons).
   const tts = panel.querySelector('[data-tts]') as HTMLElement;
   if ('speechSynthesis' in window) {
     tts.hidden = false;
@@ -171,7 +172,7 @@ const sizes = [['md', 'A', '100 %'], ['lg', 'A+', '112 %'], ['xl', 'A++', '125 %
   .toggles { display: grid; grid-template-columns: 1fr 1fr; gap: .45rem; margin-top: 1rem; }
   .toggles button { justify-content: flex-start; text-align: left; }
   .toggles button[aria-pressed='true']::after { content: '✓'; margin-left: auto; }
-  .a11y-read { display: flex; gap: .5rem; margin-top: 1rem; }
+  .a11y-read { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 1rem; }
   .a11y-read .btn { flex: 1; }
   .a11y-foot { margin-top: 1rem; border-top: 1px solid var(--line); padding-top: .9rem; }
   .a11y-foot p { margin: .6rem 0 0; }
