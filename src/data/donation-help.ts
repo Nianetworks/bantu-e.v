@@ -6,7 +6,8 @@ export const donationHelp = {
     "items": [
       [
         "Wie erhalte ich eine Zuwendungsbestätigung?",
-        "Bitte geben Sie im Spendenformular an, dass Sie eine Bestätigung wünschen, und hinterlassen Sie die erforderliche Anschrift. Nach einer Überweisung oder PayPal-Spende können Sie uns Name, Anschrift, Betrag und Zahlungsdatum per E-Mail mitteilen. Bantu stellt die steuerliche Bestätigung aus; die Zahlungsbestätigung eines Anbieters ist nicht automatisch dasselbe."
+        "Bitte geben Sie im Online-Spendenformular an, dass Sie eine Zuwendungsbestätigung wünschen, und hinterlassen Sie die erforderliche Anschrift. Bestätigungen zu Spenden über das Online-Formular können Sie danach im Spender-Service mit Ihrer E-Mail-Adresse und der Zahlungs-ID herunterladen. Nach einer Überweisung oder einer Spende über unseren PayPal-Knopf teilen Sie uns Name, Anschrift, Betrag und Zahlungsdatum per E-Mail mit. Bantu stellt die steuerliche Bestätigung aus; die Zahlungsbestätigung eines Anbieters ist nicht automatisch dasselbe.",
+        "selfservice"
       ],
       [
         "Was gilt bei Spenden bis 300 Euro?",
@@ -14,7 +15,8 @@ export const donationHelp = {
       ],
       [
         "Wie ändere oder beende ich eine Dauerspende?",
-        "Einen Dauerauftrag ändern oder beenden Sie bei Ihrer Bank. Eine wiederkehrende PayPal-Zahlung verwalten Sie in Ihrem PayPal-Konto unter den Zahlungen per Abbuchung beziehungsweise Abonnements. Für eine über das twingle-Formular eingerichtete Dauerspende (Lastschrift, Kreditkarte oder Google Pay) kontaktieren Sie uns mit der Referenz und dem gewünschten Änderungszeitpunkt. Für Mitgliedschaften oder gesonderte Patenschaftsvereinbarungen können eigene Bedingungen gelten."
+        "Einen Dauerauftrag ändern oder beenden Sie bei Ihrer Bank. Eine wiederkehrende Zahlung über unseren PayPal-Knopf verwalten Sie in Ihrem PayPal-Konto unter den Zahlungen per Abbuchung beziehungsweise Abonnements. Eine über das Online-Formular eingerichtete Dauerspende können Sie im Spender-Service mit Ihrer E-Mail-Adresse und der Zahlungs-ID ändern; Sie können uns auch mit der Zahlungs-ID und dem gewünschten Änderungszeitpunkt schreiben. Für Mitgliedschaften oder gesonderte Patenschaftsvereinbarungen können eigene Bedingungen gelten.",
+        "selfservice"
       ],
       [
         "Kann ich den Verwendungszweck wählen?",
@@ -32,7 +34,9 @@ export const donationHelp = {
         "Erhalte ich automatisch Werbung?",
         "Eine Spende meldet Sie nicht automatisch zu Werbung oder Projektinformationen an. Eine dafür angebotene Einwilligung ist freiwillig und kann widerrufen werden. Informationen zur Verarbeitung Ihrer Daten stehen in unserer Datenschutzerklärung."
       ]
-    ]
+    ],
+    "selfService": "Spender-Service: Spende verwalten oder Zuwendungsbestätigung herunterladen",
+    "selfServiceHint": "Anmeldung mit E-Mail-Adresse und Zahlungs-ID, für Spenden über das Online-Formular"
   },
   "en": {
     "title": "Questions about your donation",
@@ -41,7 +45,8 @@ export const donationHelp = {
     "items": [
       [
         "How do I request a tax donation receipt?",
-        "Select the receipt option in the form and supply the required postal address. After a bank transfer or PayPal donation, e-mail us your name, address, amount and payment date. Bantu issues the tax receipt; a payment provider’s confirmation is not automatically the same document."
+        "Select the receipt option in the online donation form and supply the required postal address. You can then download receipts for donations made through the online form in the donor self-service, using your e-mail address and the payment ID. After a bank transfer or a donation through our PayPal button, e-mail us your name, address, amount and payment date. Bantu issues the tax receipt; a payment provider’s confirmation is not automatically the same document.",
+        "selfservice"
       ],
       [
         "What about donations up to €300?",
@@ -49,7 +54,8 @@ export const donationHelp = {
       ],
       [
         "How do I change or stop regular donations?",
-        "Manage a standing order with your bank. Manage recurring PayPal payments in your PayPal account’s automatic-payments or subscriptions section. For a recurring donation set up through the twingle form (direct debit, card or Google Pay), contact us with the reference and desired change date. Memberships and separate sponsorship agreements may have their own terms."
+        "Manage a standing order with your bank. Manage a recurring payment made through our PayPal button in your PayPal account’s automatic-payments or subscriptions section. A recurring donation set up through the online form can be changed in the donor self-service, using your e-mail address and the payment ID; you can also e-mail us the payment ID and the date the change should apply. Memberships and separate sponsorship agreements may have their own terms.",
+        "selfservice"
       ],
       [
         "Can I select a donation purpose?",
@@ -67,7 +73,9 @@ export const donationHelp = {
         "Will I automatically receive marketing?",
         "Donating does not automatically subscribe you to marketing or project updates. Any offered consent is optional and can be withdrawn. Our privacy policy explains data processing."
       ]
-    ]
+    ],
+    "selfService": "Donor self-service: manage your donation or download a receipt",
+    "selfServiceHint": "Sign in with your e-mail address and payment ID, for donations made through the online form"
   },
   "fr": {
     "title": "Questions sur votre don",
@@ -76,7 +84,8 @@ export const donationHelp = {
     "items": [
       [
         "Comment demander un justificatif fiscal ?",
-        "Choisissez cette option dans le formulaire et indiquez l’adresse requise. Après un virement ou don PayPal, envoyez-nous par e-mail vos nom, adresse, montant et date du paiement. Bantu établit le justificatif fiscal ; une confirmation de paiement n’est pas automatiquement le même document."
+        "Choisissez cette option dans le formulaire de don en ligne et indiquez l’adresse requise. Vous pouvez ensuite télécharger les justificatifs des dons faits avec le formulaire en ligne dans l’espace donateur, avec votre adresse e-mail et l’identifiant de paiement. Après un virement ou un don via notre bouton PayPal, envoyez-nous par e-mail vos nom, adresse, montant et date du paiement. Bantu établit le justificatif fiscal ; une confirmation de paiement n’est pas automatiquement le même document.",
+        "selfservice"
       ],
       [
         "Et pour les dons jusqu’à 300 euros ?",
@@ -84,7 +93,8 @@ export const donationHelp = {
       ],
       [
         "Comment modifier ou arrêter un don régulier ?",
-        "Gérez un ordre permanent auprès de votre banque. Gérez les paiements PayPal récurrents dans les paiements automatiques ou abonnements de votre compte. Pour un don régulier mis en place avec le formulaire twingle (prélèvement, carte ou Google Pay), contactez-nous avec la référence et la date souhaitée. Une adhésion ou convention de parrainage distincte peut avoir ses propres conditions."
+        "Gérez un ordre permanent auprès de votre banque. Gérez un paiement récurrent fait via notre bouton PayPal dans les paiements automatiques ou abonnements de votre compte PayPal. Un don régulier mis en place avec le formulaire en ligne peut être modifié dans l’espace donateur, avec votre adresse e-mail et l’identifiant de paiement ; vous pouvez aussi nous écrire en indiquant l’identifiant de paiement et la date souhaitée. Une adhésion ou convention de parrainage distincte peut avoir ses propres conditions.",
+        "selfservice"
       ],
       [
         "Puis-je choisir l’objet du don ?",
@@ -102,6 +112,8 @@ export const donationHelp = {
         "Recevrai-je automatiquement de la publicité ?",
         "Un don ne vous abonne pas automatiquement à des communications promotionnelles ou aux nouvelles des projets. Un consentement proposé est facultatif et révocable. Notre politique de confidentialité explique le traitement des données."
       ]
-    ]
+    ],
+    "selfService": "Espace donateur : gérer votre don ou télécharger un justificatif",
+    "selfServiceHint": "Connexion avec votre adresse e-mail et l’identifiant de paiement, pour les dons faits avec le formulaire en ligne"
   }
 } as const;

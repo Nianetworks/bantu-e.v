@@ -50,6 +50,9 @@ export const org = {
     provider: 'twingle',
     pageUrl: 'https://spenden.twingle.de/genericorganisation/genericproject/tw612f63939f052/page',
     widgetUrl: 'https://spenden.twingle.de/embed/genericorganisation/genericproject/tw612f63939f052/widget',
+    // twingle donor self-service (chair, 10.11.2026): sign in with e-mail + payment ID, change donation details,
+    // download receipts issued through twingle. A plain link; nothing is loaded on our pages.
+    selfServiceUrl: 'https://spenden.twingle.de/selfservice/czFDMlJyZVowVENZbjkrYzJHd1BwZz09',
   },
   // PayPal donate button of the Bantu e.V. business account (hosted button, chair 09.11.2026). A plain link: no PayPal script
   // on our pages, data goes to PayPal only when a visitor clicks. The old paypal.me/bantucomputerprojekt link is not used.

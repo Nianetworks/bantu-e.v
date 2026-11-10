@@ -1,17 +1,31 @@
 ---
+// Donor FAQ (native <details>, keyboard-operable). Items marked 'selfservice' also show the labelled link to twingle's
+// donor self-service (org.donation.selfServiceUrl): a plain external link, opened in a new tab, nothing loaded here.
+import Icon from './Icon.astro';
 import { donationHelp } from '../data/donation-help';
-import { r, type Lang } from '../i18n';
+import { r, ui, type Lang } from '../i18n';
 import { org } from '../data/site';
 interface Props { lang: Lang }
 const { lang } = Astro.props;
 const copy = donationHelp[lang];
+const t = ui[lang];
+const selfUrl = org.donation?.selfServiceUrl;
 ---
 <section class="section section--tight" aria-labelledby="donation-help-title">
   <div class="narrow prose">
     <h2 id="donation-help-title">{copy.title}</h2>
     <p>{copy.intro}</p>
     <p><strong>{copy.contact}</strong> <a href={`mailto:${org.email}?subject=${encodeURIComponent(lang === 'de' ? 'Spende' : lang === 'fr' ? 'Don' : 'Donation')}`}>{org.email}</a> · <a href={`tel:${org.officePhoneHref}`}>{org.officePhone}</a></p>
-    {copy.items.map(([question,answer]) => <details><summary>{question}</summary><p>{answer}</p></details>)}
+    {selfUrl && (
+      <p class="selfservice-line"><Icon name="report" /><span><a href={selfUrl} target="_blank" rel="noopener">{copy.selfService}<span class="sr-only"> {t.newWindow}</span></a><br /><span class="small muted">{copy.selfServiceHint}</span></span></p>
+    )}
+    {copy.items.map((item) => (
+      <details>
+        <summary>{item[0]}</summary>
+        <p>{item[1]}</p>
+        {item[2] === 'selfservice' && selfUrl && <p><a href={selfUrl} target="_blank" rel="noopener">{copy.selfService}<span class="sr-only"> {t.newWindow}</span></a></p>}
+      </details>
+    ))}
     <p><a href={r('privacy', lang)}>{lang === 'de' ? 'Datenschutz bei Spenden' : lang === 'fr' ? 'Confidentialité des dons' : 'Donation privacy'}</a></p>
   </div>
 </section>
@@ -19,4 +33,7 @@ const copy = donationHelp[lang];
   details { border-bottom: 1px solid var(--line); padding: .8rem 0; }
   summary { font-weight: 700; cursor: pointer; min-height: 44px; padding: .5rem 0; }
   summary:focus-visible { outline: 3px solid var(--focus); outline-offset: 4px; }
+  .selfservice-line { display: flex; gap: .6rem; align-items: flex-start; padding: .9rem 1rem; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); }
+  .selfservice-line :global(.icon) { width: 1.3em; height: 1.3em; flex: none; margin-top: .15em; color: var(--ink-2); }
+  .selfservice-line a { font-weight: 700; }
 </style>
