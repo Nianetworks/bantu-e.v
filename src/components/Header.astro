@@ -38,10 +38,42 @@ const megas = { inland: megaFor('inland'), international: megaFor('international
 const shortTitle = (p: Project) => p.data.title.replace(/\s+[–—]\s+/, ': ');
 const current = Astro.url.pathname;
 const isCurrent = (h: string) => h !== r('home', lang) && current.startsWith(h.split('#')[0]);
+// Main row = items without `util`; the `util` items (Aktuelles, Shop, Kontakt) sit in the utility strip on desktop and,
+// on compact screens, in the "Mehr" group of the menu panel (children listed flat, e.g. Neuigkeiten + Veranstaltungen).
+const mainItems = nav.filter((n) => !n.util);
+const moreLinks = nav.filter((n) => n.util).flatMap((n) => (n.children ? n.children.map((c) => ({ label: c.label, href: c.href, icon: n.icon })) : [{ label: n.label, href: n.href, icon: n.icon }]));
+const moreTitle = de ? 'Mehr' : fr ? 'Plus' : 'More';
+const accessTitle = de ? 'Barrierefrei nutzen und Sprache' : fr ? 'Accessibilité et langue' : 'Accessibility and language';
+const searchPlaceholder = de ? 'Suchbegriff eingeben' : fr ? 'Saisir un mot-clé' : 'Enter a search term';
+const searchSubmit = de ? 'Suchen' : fr ? 'Rechercher' : 'Search';
 
 // Compact (burger) navigation: used on small screens and – because large text needs more room –
 // at wider breakpoints when the visitor has enlarged the text in the accessibility settings.
-const compactRules = ['.header-inner { min-height: 72px; }', '.logo-plate { padding: 8px 10px; margin-bottom: -66px; }', '.nav-toggle { display: inline-flex; align-items: center; gap: .55rem; min-height: var(--tap); background: var(--ink); color: var(--bg); border: 0; border-radius: 999px; padding: .55rem 1.1rem; font: 700 1rem var(--font-sans); cursor: pointer; }', '.nav-list { display: none; position: fixed; inset: var(--header-h, 112px) 0 0 0; background: var(--bg); flex-direction: column; align-items: stretch; gap: 0; padding: 5rem var(--gutter) 2.5rem; overflow-y: auto; border-top: 1px solid var(--line); }', '.is-scrolled .nav-list { padding-top: 1rem; }', '.nav-list.is-open { display: flex; }', '.nav-list > li { border-bottom: 1px solid var(--line); }', '.nav-link { width: 100%; justify-content: space-between; font-size: 1.15rem; padding: .85rem .25rem; white-space: normal; }', '.sub { position: static; box-shadow: none; border: 0; padding: 0 0 .75rem .5rem; min-width: 0; background: transparent; }', '.nav-extra { border-bottom: 0 !important; margin: 1.5rem 0 0 !important; }', '.nav-disclosure[aria-expanded="true"] + .mega { display: block; }', '.mega__intro { border-right: 0; padding: 0 0 .75rem; }', '.mega__lead, .mega__places { display: none; }', '.mega__cols { grid-template-columns: 1fr; gap: .75rem; }', '.nav-donate { width: 100%; white-space: normal; }', '.nav-util { display: block; }', '.util-extra { display: none; }'];
+const compactRules = [
+  // Header row: smaller logo plate, donate pill + menu button on the right; the utility strip moves into the menu panel (chair, 10.11.2026, MSF pattern).
+  '.utility { display: none; }',
+  '.header-inner { min-height: 68px; --logo-overhang: 56px; }',
+  '.logo-plate { padding: 8px 10px; margin-bottom: calc(-1 * var(--logo-overhang)); }',
+  '.logo-plate img { width: 96px; }',
+  '.header-actions { display: flex; }',
+  '.nav-toggle { display: inline-flex; }',
+  // Panel: fixed below the header (the header has no filter/transform, so the viewport is the containing block), scrolls on its own.
+  '.nav-list { display: none; position: fixed; top: var(--header-h, 120px); right: 0; bottom: 0; left: 0; background: var(--bg); flex-direction: column; align-items: stretch; gap: 0; padding: calc(var(--logo-overhang, 56px) + 1.25rem) var(--gutter) calc(2.5rem + env(safe-area-inset-bottom, 0px)); overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; border-top: 1px solid var(--line); }',
+  '.is-scrolled .nav-list { padding-top: 1rem; }',
+  '.nav-list.is-open { display: flex; }',
+  '.nav-list > li { border-bottom: 1px solid var(--line); width: 100%; max-width: 760px; margin-inline: auto; }',  // tablets: centred column
+  '.nav-link { width: 100%; justify-content: space-between; font-size: 1.15rem; padding: .85rem .25rem; white-space: normal; text-align: left; }',
+  '.sub { position: static; box-shadow: none; border: 0; padding: 0 0 .75rem .5rem; min-width: 0; background: transparent; }',
+  '.nav-extra { display: none; }',  // the donate pill sits in the header row on compact screens
+  '.nav-disclosure[aria-expanded="true"] + .mega { display: block; }',
+  '.mega__intro { border-right: 0; padding: 0 0 .75rem; }',
+  '.mega__lead, .mega__places { display: none; }',
+  '.mega__cols { grid-template-columns: 1fr; gap: .75rem; }',
+  '.nav-donate { width: 100%; white-space: normal; }',
+  '.nav-tools { display: block; border-bottom: 0 !important; }',
+  '.nav-tools--search { margin-bottom: 1rem; }',
+  '.nav-list > li.nav-group { margin-top: 1.75rem; }',
+];
 // With enlarged text the eight top-level items (incl. Shop) never fit the 1200 px header, so those levels always use the compact menu.
 const levels: [string, number][] = [['', 1279], ['html[data-text="lg"] ', 99999], ['html[data-text="xl"] ', 99999], ['html[data-text="xxl"] ', 99999]];
 const compactCss = levels.map(([pre, w]) => `@media (max-width: ${w}px) { ${compactRules.map((rule) => rule.split('{')[0].split(',').map((sel) => pre + sel.trim()).join(', ') + ' {' + rule.split('{').slice(1).join('{')).join(' ')} }`).join('\n');
@@ -76,12 +108,25 @@ const compactCss = levels.map(([pre, w]) => `@media (max-width: ${w}px) { ${comp
       <img class="logo-emblem keep-color" src={href('/brand/bantu-emblem.png')} width="52" height="52" alt={logoAlt} />
     </a>
     <nav id="main-nav" class="main-nav" aria-label={de ? 'Hauptmenü' : fr ? 'Menu principal' : 'Main menu'}>
-      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-list">
-        <Icon name="menu" /><span>{t.menu}</span>
-      </button>
+      <div class="header-actions">
+        <a class="btn btn--gold head-donate" href={r('donate', lang)}><Icon name="heart" /> <span class="head-donate__label">{t.donate}</span></a>
+        {/* The label stays "Menü" in both states (no width jump); the icon switches to a cross and aria-expanded announces the state. */}
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-list">
+          <Icon name="menu" class="icon ic-menu" /><Icon name="close" class="icon ic-close" /><span class="nav-toggle__label">{t.menu}</span>
+        </button>
+      </div>
       <ul id="nav-list" class="nav-list">
-        {nav.map((item, i) => (
-          <li class={`${item.mega ? 'has-sub has-mega' : item.children ? 'has-sub' : ''}${item.util ? ' nav-util' : ''}`}>
+        <li class="nav-tools nav-tools--search">
+          <form class="nav-search" role="search" action={r('search', lang)} method="get">
+            <label class="nav-group__title" for="nav-q">{t.search}</label>
+            <div class="nav-search__row">
+              <input id="nav-q" type="search" name="q" placeholder={searchPlaceholder} autocomplete="off" enterkeyhint="search" />
+              <button type="submit" class="nav-search__btn"><Icon name="search" /><span class="sr-only">{searchSubmit}</span></button>
+            </div>
+          </form>
+        </li>
+        {mainItems.map((item, i) => (
+          <li class={item.mega ? 'has-sub has-mega' : item.children ? 'has-sub' : ''}>
             {item.mega ? (
               <>
                 <button type="button" class="nav-link nav-disclosure" aria-expanded="false" aria-controls={`sub-${i}`} data-current={isCurrent(item.href) ? 'true' : undefined}>
@@ -133,6 +178,27 @@ const compactCss = levels.map(([pre, w]) => `@media (max-width: ${w}px) { ${comp
         <li class="nav-extra">
           <a class="btn btn--gold nav-donate" href={r('donate', lang)}><Icon name="heart" /> {t.donate}</a>
         </li>
+        <li class="nav-tools nav-group">
+          <p class="nav-group__title" id="nav-more-title">{moreTitle}</p>
+          <ul class="nav-group__list" aria-labelledby="nav-more-title">
+            {moreLinks.map((l) => <li><a href={l.href} aria-current={isCurrent(l.href) ? 'page' : undefined}><Icon name={(l.icon ?? 'arrow') as any} /> {l.label}</a></li>)}
+          </ul>
+        </li>
+        <li class="nav-tools nav-group">
+          <p class="nav-group__title" id="nav-access-title">{accessTitle}</p>
+          <ul class="nav-group__list" aria-labelledby="nav-access-title">
+            <li><a href={r('easy', lang)}><Icon name="easy" /> {t.easy}</a></li>
+            <li><button type="button" class="nav-group__btn" data-a11y-toggle aria-haspopup="dialog" aria-controls="a11y-panel"><Icon name="access" /> {t.a11y}</button></li>
+            <li class="nav-langs">
+              <span class="nav-langs__label" id="nav-lang-title"><Icon name="globe" /> {t.language}</span>
+              <ul aria-labelledby="nav-lang-title">
+                {switchLinks.map((sw) => (
+                  <li><a class="nav-lang" href={sw.href} hreflang={sw.lang} lang={sw.lang} aria-current={sw.lang === lang ? 'true' : undefined}><span aria-hidden="true">{sw.lang.toUpperCase()}</span><span class="sr-only">{langNames[sw.lang]}</span></a></li>
+                ))}
+              </ul>
+            </li>
+          </ul>
+        </li>
       </ul>
     </nav>
   </div>
@@ -156,11 +222,18 @@ const compactCss = levels.map(([pre, w]) => `@media (max-width: ${w}px) { ${comp
   // Mobile menu
   const toggle = document.querySelector<HTMLButtonElement>('.nav-toggle');
   const list = document.getElementById('nav-list');
+  // Page content behind the open panel is made inert, so keyboard and screen-reader users stay inside the menu.
+  const behind = () => Array.from(document.querySelectorAll<HTMLElement>('main, footer, .announce, .donate-bar'));
   const setMenu = (open: boolean) => {
     toggle?.setAttribute('aria-expanded', String(open));
     list?.classList.toggle('is-open', open);
     document.body.classList.toggle('nav-open', open);
+    document.documentElement.classList.toggle('nav-open', open);
+    behind().forEach((el) => { if ('inert' in el) (el as any).inert = open; });
+    measure();
   };
+  // Leaving the compact layout (rotation, zoom) closes the panel so the desktop menu is never hidden behind it.
+  window.matchMedia('(min-width: 1280px)').addEventListener('change', () => { if (toggle?.getAttribute('aria-expanded') === 'true') setMenu(false); });
   toggle?.addEventListener('click', () => setMenu(toggle.getAttribute('aria-expanded') !== 'true'));
 
   // Disclosure sub-menus
@@ -191,7 +264,8 @@ const compactCss = levels.map(([pre, w]) => `@media (max-width: ${w}px) { ${comp
 </script>
 
 <style is:global>
-  .site-header { position: sticky; top: 0; z-index: 50; background: color-mix(in srgb, var(--bg) 96%, transparent); backdrop-filter: saturate(1.2) blur(10px); border-bottom: 1px solid var(--line); }
+  /* No filter/transform on the header: a backdrop-filter made it the containing block of the fixed menu panel, which then collapsed to a few lines on phones (seen on iOS, 10.11.2026). */
+  .site-header { position: sticky; top: 0; z-index: 50; background: var(--bg); border-bottom: 1px solid var(--line); }
   .utility { background: var(--deep); color: var(--on-deep); font-size: .9rem; }
   .utility__inner { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: .25rem 1rem; min-height: 40px; }
   .utility__right { display: flex; flex-wrap: wrap; align-items: center; gap: .25rem; }
@@ -199,7 +273,6 @@ const compactCss = levels.map(([pre, w]) => `@media (max-width: ${w}px) { ${comp
   .util-link:hover { background: rgba(255,255,255,.12); text-decoration: underline; }
   .util-link .icon { width: 1.15em; height: 1.15em; }
   .util-link[aria-current='page'] { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: .3em; }
-  .nav-util { display: none; }
   .util-btn { background: transparent; border: 0; font: 600 .9rem var(--font-sans); cursor: pointer; }
   .util-btn[aria-expanded='true'] { background: var(--gold); color: #000; }
   .langs ul { list-style: none; margin: 0 0 0 .35rem; padding: 0; display: flex; align-items: center; }
@@ -257,14 +330,53 @@ const compactCss = levels.map(([pre, w]) => `@media (max-width: ${w}px) { ${comp
   .mega .mega__col a:not(.mega__prog):hover { background: var(--bg-2); text-decoration: underline; }
   .mega__archive { font-weight: 600; color: var(--ink-2); }
   .accent--gold { --accent: var(--gold); } .accent--green { --accent: var(--green); } .accent--blue { --accent: var(--blue); } .accent--red { --accent: var(--c-coral); } .accent--purple { --accent: var(--c-mauve); }
-  .nav-toggle { display: none; }
+  .nav-toggle, .header-actions, .nav-tools { display: none; }
+  .header-actions { align-items: center; justify-content: flex-end; flex-wrap: wrap; gap: .5rem; }
+  .head-donate { padding: .5rem .95rem; min-height: var(--tap); white-space: nowrap; }
+  .nav-toggle { align-items: center; gap: .5rem; min-height: var(--tap); background: var(--ink); color: var(--bg); border: 0; border-radius: 999px; padding: .5rem 1rem; font: 700 1rem var(--font-sans); cursor: pointer; }
+  .nav-toggle .icon { width: 1.25em; height: 1.25em; }
+  .nav-toggle .ic-close, .nav-toggle[aria-expanded='true'] .ic-menu { display: none; }
+  .nav-toggle[aria-expanded='true'] .ic-close { display: inline-block; }
+  .nav-toggle__label { display: inline; }
+  /* Menu panel groups (compact only): search, "Mehr" (Aktuelles, Veranstaltungen, Shop, Kontakt), accessibility + language */
+  .nav-group__title { display: block; margin: 0 0 .5rem; font-size: .78rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+  .nav-search__row { display: flex; gap: .5rem; }
+  .nav-search input { flex: 1 1 auto; min-width: 0; min-height: var(--tap); padding: .5rem .9rem; border: 1.5px solid var(--line-strong, var(--line)); border-radius: 12px; background: var(--surface); color: var(--ink); font: 500 1rem var(--font-sans); }
+  .nav-search input:focus-visible { outline: 3px solid var(--focus, var(--gold)); outline-offset: 2px; }
+  .nav-search__btn { flex: none; display: inline-flex; align-items: center; justify-content: center; width: var(--tap); min-height: var(--tap); border: 0; border-radius: 12px; background: var(--ink); color: var(--bg); cursor: pointer; }
+  .nav-search__btn .icon { width: 1.25em; height: 1.25em; }
+  .nav-group__list { list-style: none; margin: 0; padding: 0; }
+  .nav-group__list > li { margin: 0; border-bottom: 1px solid var(--line); }
+  .nav-group__list > li:last-child { border-bottom: 0; }
+  .nav-group__list > li > a, .nav-group__btn { display: flex; align-items: center; gap: .6rem; width: 100%; min-height: var(--tap); padding: .7rem .25rem; text-decoration: none; color: var(--ink); font: 600 1.05rem var(--font-sans); background: transparent; border: 0; border-radius: 10px; cursor: pointer; text-align: left; }
+  .nav-group__list > li > a:hover, .nav-group__btn:hover { background: var(--bg-2); text-decoration: underline; }
+  .nav-group__list > li > a[aria-current='page'] { box-shadow: inset 4px 0 0 var(--gold); padding-left: .75rem; }
+  .nav-group__list .icon { width: 1.2em; height: 1.2em; flex: none; color: var(--ink-2); }
+  .nav-langs { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem 1rem; padding: .7rem .25rem; }
+  .nav-langs__label { display: inline-flex; align-items: center; gap: .6rem; font: 600 1.05rem var(--font-sans); }
+  .nav-langs__label .icon { width: 1.2em; height: 1.2em; color: var(--ink-2); }
+  .nav-langs ul { list-style: none; margin: 0; padding: 0; display: flex; gap: .4rem; }
+  .nav-langs li { margin: 0; }
+  .nav-langs .nav-lang { display: inline-flex; align-items: center; justify-content: center; min-width: var(--tap); min-height: var(--tap); padding: .3rem .7rem; border: 2px solid var(--line-strong, var(--line)); border-radius: 999px; color: var(--ink); font-weight: 700; letter-spacing: .06em; text-decoration: none; }
+  .nav-langs .nav-lang:hover { background: var(--bg-2); text-decoration: underline; }
+  .nav-langs .nav-lang[aria-current='true'] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
 
   @media (max-width: 560px) {
     .hide-sm { display: none; }
     .show-sm { display: inline; }
     .util-link { padding: .35rem .45rem; }
+    /* Phones (the compact rules below use single-class selectors; these two-class ones win). */
+    .site-header .header-inner { --logo-overhang: 44px; gap: .75rem; }
+    .site-header .logo-plate img { width: 84px; }
+    .site-header .head-donate { padding: .5rem .7rem; gap: .4rem; }
+    .site-header .nav-toggle { padding: .5rem .8rem; gap: .4rem; }
   }
-  body.nav-open { overflow: hidden; }
+  @media (max-width: 374px) {
+    /* Narrow phones: the donate pill keeps its heart icon; its text stays for screen readers (the bottom bar spells it out). */
+    .site-header .head-donate { padding: .5rem .75rem; }
+    .head-donate__label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  }
+  html.nav-open, body.nav-open { overflow: hidden; }
   html[data-theme='contrast'] .logo-plate { background: #fff; }
 </style>
 <style is:global set:html={compactCss}></style>

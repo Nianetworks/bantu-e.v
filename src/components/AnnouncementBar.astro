@@ -26,4 +26,11 @@ const pinned = (await getPinned(lang))[0];
   .announce__inner { display: flex; gap: .75rem; align-items: center; justify-content: center; padding-block: .5rem; text-align: center; flex-wrap: wrap; }
   .announce__label { background: #000; color: var(--gold); font-weight: 700; font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; padding: .15rem .55rem; border-radius: 999px; }
   .announce a { color: #000; font-weight: 700; }
+  /* Phones and tablets: one compact row, label pill left, text wraps beside it instead of three centred lines. */
+  @media (max-width: 1279px) {
+    .announce { font-size: .9rem; }
+    .announce__inner { justify-content: flex-start; text-align: left; flex-wrap: nowrap; gap: .6rem; padding-block: .4rem; }
+    .announce__label { flex: none; }
+    .announce a { line-height: 1.3; }
+  }
 </style>

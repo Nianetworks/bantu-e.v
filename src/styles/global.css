@@ -270,9 +270,6 @@ code { font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: .95em;
 .addr-line .icon, .footer-a11y .icon { color: #ffd34d; }
 .ph__icon .icon { width: 32px; height: 32px; }
 .panel, .card, .stat { min-width: 0; }
-@media (max-width: 400px) {
-  .nav-toggle > span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
-}
 .dl-groups > *, .section-head > *, .itz li > *, .years > *, .features li > *, .mini-list li > *, .easy-block > * { min-width: 0; }
 .mini-list li { flex-wrap: wrap; }
 [hidden] { display: none !important; }
