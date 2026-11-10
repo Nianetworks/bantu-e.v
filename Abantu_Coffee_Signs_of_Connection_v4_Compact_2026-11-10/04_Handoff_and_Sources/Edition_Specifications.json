@@ -1,0 +1,233 @@
+[
+  {
+    "slug": "roots-and-routes",
+    "name": "Roots & Routes",
+    "lines": [
+      "ROOTS &",
+      "ROUTES"
+    ],
+    "symbol": "Sankofa",
+    "kind": "Adinkra interpretation",
+    "theme": "Learning from the past",
+    "bg": "#F6EBD8",
+    "ink": "#102853",
+    "accent": "#073DC7",
+    "second": "#EF562F",
+    "third": "#DCA321",
+    "launch": true,
+    "origin": "Mount Elgon, Uganda",
+    "roast": "MITTLERE RÖSTUNG",
+    "sub": "SANKOFA HERITAGE COFFEE",
+    "graphic": "sankofa",
+    "first_release": true,
+    "page_live": true
+  },
+  {
+    "slug": "ankole-hills",
+    "name": "Ankole Hills",
+    "lines": [
+      "ANKOLE HILLS"
+    ],
+    "symbol": "Pastoral Arcs",
+    "kind": "Original graphic motif",
+    "theme": "Pastoral forms",
+    "bg": "#D6543C",
+    "ink": "#F8E8CE",
+    "accent": "#F3C68F",
+    "second": "#532E49",
+    "third": "#3A938E",
+    "graphic": "horns",
+    "first_release": false,
+    "page_live": false
+  },
+  {
+    "slug": "kanungu-forest",
+    "name": "Kanungu Forest",
+    "lines": [
+      "KANUNGU",
+      "FOREST"
+    ],
+    "symbol": "Asase Ye Duru",
+    "kind": "Adinkra interpretation",
+    "theme": "The earth sustaining life",
+    "bg": "#093C2F",
+    "ink": "#FAEDD4",
+    "accent": "#F1E3BB",
+    "second": "#93C98D",
+    "third": "#F06B47",
+    "launch": true,
+    "origin": "Bwindi Forest Edge, Uganda",
+    "roast": "DUNKLE RÖSTUNG",
+    "sub": "BWINDI CANOPY COFFEE",
+    "graphic": "asase",
+    "first_release": false,
+    "page_live": false
+  },
+  {
+    "slug": "sebei-elgon",
+    "name": "Sebei Elgon",
+    "lines": [
+      "SEBEI ELGON"
+    ],
+    "symbol": "Elevation",
+    "kind": "Original graphic motif",
+    "theme": "Rhythm and ascent",
+    "bg": "#E9BA30",
+    "ink": "#192B35",
+    "accent": "#172C39",
+    "second": "#F7EFD9",
+    "third": "#208894",
+    "graphic": "steps",
+    "first_release": true,
+    "page_live": true,
+    "launch": true,
+    "sub": "MOUNTAIN HERITAGE COFFEE",
+    "origin": "Östliche Hänge des Mount Elgon, Uganda",
+    "roast": null
+  },
+  {
+    "slug": "bukonzo",
+    "name": "Bukonzo",
+    "lines": [
+      "BUKONZO"
+    ],
+    "symbol": "Nsaa",
+    "kind": "Adinkra-inspired weave",
+    "theme": "Workmanship and excellence",
+    "bg": "#173DB0",
+    "ink": "#FAEFD9",
+    "accent": "#FAEFD9",
+    "second": "#112132",
+    "third": "#EF6C50",
+    "graphic": "weave",
+    "first_release": false,
+    "page_live": false
+  },
+  {
+    "slug": "nkongoro",
+    "name": "Nkongoro",
+    "lines": [
+      "NKONGORO"
+    ],
+    "symbol": "Adinkrahene",
+    "kind": "Adinkra interpretation",
+    "theme": "Leadership",
+    "bg": "#D96D38",
+    "ink": "#36213B",
+    "accent": "#38213B",
+    "second": "#F8E7CC",
+    "third": "#E8BC33",
+    "graphic": "rings",
+    "first_release": false,
+    "page_live": false
+  },
+  {
+    "slug": "rwenzori-peaks",
+    "name": "Rwenzori Peaks",
+    "lines": [
+      "RWENZORI",
+      "PEAKS"
+    ],
+    "symbol": "Summit Planes",
+    "kind": "Original graphic motif",
+    "theme": "Rhythm and structure",
+    "bg": "#142943",
+    "ink": "#F7EAD2",
+    "accent": "#A4C5CE",
+    "second": "#F7EAD2",
+    "third": "#DCA92E",
+    "graphic": "summits",
+    "first_release": false,
+    "page_live": false
+  },
+  {
+    "slug": "obushobozi",
+    "name": "Obushobozi",
+    "lines": [
+      "OBUSHOBOZI"
+    ],
+    "symbol": "Dwennimmen",
+    "kind": "Adinkra interpretation",
+    "theme": "Strength with humility",
+    "bg": "#4D2841",
+    "ink": "#F8E9D4",
+    "accent": "#F4AA90",
+    "second": "#DD6B50",
+    "third": "#E8B94B",
+    "graphic": "dwennimmen",
+    "first_release": false,
+    "page_live": false
+  },
+  {
+    "slug": "nile-highland",
+    "name": "Nile Highland",
+    "lines": [
+      "NILE HIGHLAND"
+    ],
+    "symbol": "River Route",
+    "kind": "Original graphic motif",
+    "theme": "Movement and connection",
+    "bg": "#0CA8BA",
+    "ink": "#102A54",
+    "accent": "#F8EDDA",
+    "second": "#123DD0",
+    "third": "#F46C36",
+    "graphic": "river",
+    "first_release": false,
+    "page_live": false
+  },
+  {
+    "slug": "kwihangana",
+    "name": "Kwihangana",
+    "lines": [
+      "KWIHANGANA"
+    ],
+    "symbol": "Akoma",
+    "kind": "Adinkra interpretation",
+    "theme": "Patience and endurance",
+    "bg": "#39483A",
+    "ink": "#F9EBD3",
+    "accent": "#EFE2BD",
+    "second": "#AA733F",
+    "third": "#9EB48C",
+    "graphic": "akoma",
+    "first_release": false,
+    "page_live": false
+  },
+  {
+    "slug": "ubuntu",
+    "name": "Ubuntu",
+    "lines": [
+      "UBUNTU"
+    ],
+    "symbol": "Unity Cup",
+    "kind": "Kwanzaa-inspired original graphic",
+    "theme": "Unity and community",
+    "bg": "#F7EAD5",
+    "ink": "#17241D",
+    "accent": "#18271D",
+    "second": "#B84036",
+    "third": "#307552",
+    "graphic": "unity",
+    "first_release": false,
+    "page_live": false
+  },
+  {
+    "slug": "kukunda",
+    "name": "Kukunda",
+    "lines": [
+      "KUKUNDA"
+    ],
+    "symbol": "Akoma Ntoso",
+    "kind": "Adinkra interpretation",
+    "theme": "Understanding and agreement",
+    "bg": "#662D3F",
+    "ink": "#FAE5D2",
+    "accent": "#F5B29A",
+    "second": "#E96F60",
+    "third": "#2B8885",
+    "graphic": "linked",
+    "first_release": false,
+    "page_live": false
+  }
+]
