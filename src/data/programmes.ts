@@ -39,7 +39,7 @@ export const programmes: Programme[] = [
       de: ['Globales Lernen an Schulen und in der Erwachsenenbildung', 'Bildungsgerechtigkeit zwischen Uganda und Deutschland (SDG 4 und 10)', 'Dekolonisierung von Geschichte, Architektur und Landwirtschaft', 'Jugendaustausch und Dialog auf Augenhöhe', 'Bezahlbare und barrierefreie Schulbildung für Kinder aus armen Familien'],
       en: ['Global learning in schools and adult education', 'Educational justice between Uganda and Germany (SDG 4 and 10)', 'Decolonising history, architecture and agriculture', 'Youth exchange and dialogue as equals', 'Affordable and accessible schooling for children from poor families'], fr: ['Éducation globale à l’école et dans la formation des adultes', 'Justice éducative entre l’Ouganda et l’Allemagne (ODD 4 et 10)', 'Décoloniser l’histoire, l’architecture et l’agriculture', 'Échanges de jeunes et dialogue d’égal à égal', 'Une scolarité abordable et accessible pour les enfants de familles pauvres'],
     },
-    projects: ['p26-214-bildung-fuer-alle', 'p26-224-erde-saat-erbe', 'okushoma-kwa-boona', 'royal-college-namugongo', 'youth-eco-project'],
+    projects: ['p26-214-bildung-fuer-alle', 'p26-224-erde-saat-erbe', 'okushoma-kwa-boona', 'royal-college-namugongo', 'royal-junior-namugongo-schulgeld', 'rwengoma-primary-schulessen', 'youth-eco-project'],
     services: [
       {
         title: { de: 'Allgemeine Bildungsarbeit', en: 'General education work', fr: 'Travail éducatif général' },
@@ -87,7 +87,7 @@ export const programmes: Programme[] = [
       de: ['Früherkennung und Rehabilitation bei Zerebralparese', 'Physiotherapie und gemeindenahe Versorgung', 'Stärkung von Eltern und Selbsthilfegruppen', 'Aufklärung gegen Stigmatisierung von Behinderung'],
       en: ['Early detection and rehabilitation for cerebral palsy', 'Physiotherapy and community-based care', 'Supporting parents and self-help groups', 'Awareness raising against the stigma of disability'], fr: ['Dépistage précoce et réadaptation en cas de paralysie cérébrale', 'Physiothérapie et soins de proximité', 'Soutien aux parents et groupes d’entraide', 'Sensibilisation contre la stigmatisation du handicap'],
     },
-    projects: ['p23-91-ours-zerebralparese'],
+    projects: ['p23-91-ours-zerebralparese', 'mobilitaetshilfen-uganda-2018'],
     sdgs: [3, 10],
   },
   {
@@ -106,7 +106,7 @@ export const programmes: Programme[] = [
       de: ['Frühkindliche Bildung und sichere Betreuung', 'Wasser, Sanitärversorgung und Hygiene (WASH)', 'Berufliche Bildung (TVET) mit anerkanntem Abschluss', 'Digitale Teilhabe und IT-Kompetenzen', 'Einkommen durch Nutztierhaltung und Landwirtschaft'],
       en: ['Early childhood education and safe day care', 'Water, sanitation and hygiene (WASH)', 'Technical and vocational education (TVET) with certification', 'Digital inclusion and IT skills', 'Income from livestock and agriculture'], fr: ['Éducation de la petite enfance et accueil sûr', 'Eau, assainissement et hygiène (WASH)', 'Formation technique et professionnelle (TVET) certifiante', 'Inclusion numérique et compétences informatiques', 'Revenus grâce à l’élevage et à l’agriculture'],
     },
-    projects: ['p26-230-pearl-kita-kampala', 'p26-186-wasser-fuer-ruziba', 'p24-200-msingi-school', 'ruhaama-community-resource-centre', 'nutztiere-und-landwirtschaft'],
+    projects: ['p26-230-pearl-kita-kampala', 'p26-186-wasser-fuer-ruziba', 'p24-200-msingi-school', 'ruhaama-community-resource-centre', 'nutztiere-und-landwirtschaft', 'handwerk-frauen-mit-behinderung'],
     sdgs: [1, 4, 5, 6, 8],
   },
   {

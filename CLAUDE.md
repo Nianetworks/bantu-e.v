@@ -81,6 +81,16 @@ public/images/projects/p23-91-ediri/  14 photos of the EDIRI pilot 2023 (P 23/91
                         (bantu-ev-ediri-*), built from one HTML template (chair's folder Claude outputs/EDIRI_Bericht_2026-11); texts =
                         OURS progress report 09.11.2023 + Jahresbericht 2023 Ausland. Project front matter `report` (button + side box,
                         `alternates` = other languages) and `galleryTitle`. Downloads group `projectReports`.
+public/images/projects/abi-berichte/<report folder>/  photos of the six ABI Uganda reports (chair's package ABI_Uganda_Project_Reports,
+                        09.11.2026; edited there: children's faces lightly blurred, six pupil portraits approved). WebP + -480 thumbs,
+                        captions/alt from the package. PDFs: public/downloads/berichte/abi-*-report-en.pdf (English only), covers in
+                        public/images/berichte/. Pages: nutztiere-und-landwirtschaft (2017 case study added), royal-college-namugongo
+                        (school partnership report merged in), new mobilitaetshilfen-uganda-2018, handwerk-frauen-mit-behinderung,
+                        rwengoma-primary-schulessen, royal-junior-namugongo-schulgeld. EN body = package text verbatim; DE/FR translated.
+                        Facts to keep straight: ABI = Anchored Bridges Initiatives, formerly Ability Beyond the Iris; Royal College
+                        Namugongo = secondary and parent school; Royal Junior Namugongo = primary school of the six pupils; approx.
+                        7,000 EUR = one shared pool (school partnership, Rwengoma meals, six pupils' fees). Word masters, guides and
+                        manifests of the package stay out of the repo.
 src/content/projects/{de,en,fr}/<slug>.md   one file per project and language (same file name!)
 src/content/news/{de,en,fr}/<slug>.md       news, events (type: event), announcements (pinUntil); optional `photos` (src stem + width/height:
                         <src>.jpg, <src>-800.webp, <src>-<width>.webp in public/images/news/, EXIF/GPS stripped) shown below the text.

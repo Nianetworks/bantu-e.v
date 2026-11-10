@@ -116,7 +116,7 @@ const itz = [
               <a class="report__cover" href={href(d.file)} download aria-hidden="true" tabindex="-1"><img src={href(coverFor(d))} width="480" height="680" alt="" loading="lazy" /></a>
               <div class="report__body">
                 <h3><a href={href(d.file)} download>{d.title[lang]}</a></h3>
-                <p class="meta">{meta(d)} · {d.year}</p>
+                <p class="meta">{meta(d)}{d.year ? ` · ${d.year}` : ''}</p>
               </div>
             </li>
           ))}
