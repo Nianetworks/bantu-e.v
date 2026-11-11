@@ -7,8 +7,8 @@ eventStart: 2026-11-22T11:00:00+01:00
 eventEnd: 2026-11-22T19:00:00+01:00
 eventTime: "11–19 Uhr"
 location: "VHS Berlin Mitte, Linienstraße 162, 10115 Berlin, Raum 2.02 (stufenlos)"
-registration: "mailto:info@bantu-ev.org?subject=Anmeldung%20Ubuntu%20Talks"
-registrationLabel: "Per E-Mail anmelden"
+registration: "https://forms.gle/fBRsqho22GvvBTL1A"
+registrationLabel: "Online anmelden (Formular)"
 cost: "Eintritt frei"
 pinUntil: 2026-11-22
 eventName: "Ubuntu Talks"
@@ -16,6 +16,13 @@ eventKind: community
 project: ubuntu-talks-2026
 image: "/images/ubuntu-talks-illustration.webp"
 imageAlt: "Illustration zu den Ubuntu Talks: Menschen verschiedener Generationen um einen gemeinsamen Tisch"
+attachment: { href: "/downloads/flyer/ubuntu-talks-22-11-2026-flyer.pdf", label: "Flyer herunterladen (PDF)" }
+flyer:
+  pdf: "/downloads/flyer/ubuntu-talks-22-11-2026-flyer.pdf"
+  pdfLabel: "Flyer als PDF (2 Seiten, 2,0 MB)"
+  pages:
+    - { src: "/images/veranstaltungen/ubuntu-talks-22-11-2026-flyer-vorderseite", width: 1240, height: 1759, caption: "Vorderseite", alt: "Flyer Ubuntu Talks, Vorderseite: Sonntag, 22.11.2026, 11 bis 19 Uhr, VHS Berlin Mitte. Illustration mit Menschen verschiedener Herkunft und Generationen vor Fernsehturm und Brandenburger Tor. Darunter Ort, Kultur-Dinner, Kinderbetreuung, Eintritt frei, QR-Code zur Anmeldung und die Logos von Bantu e.V., Federation of Ugandans in Germany, Bezirksamt Mitte, MITTEinander aktiv und Club Dialog." }
+    - { src: "/images/veranstaltungen/ubuntu-talks-22-11-2026-flyer-rueckseite", width: 1240, height: 1759, caption: "Rückseite", alt: "Flyer Ubuntu Talks, Rückseite: Programm von 11:00 bis 19:00 Uhr als Zeitleiste, Angebote für den ganzen Tag, Hinweise zur Teilnahme vor Ort und online sowie die Förderlogos. Das Programm steht auch als Text auf der Projektseite." }
 ---
 
 **„Woven Together: Shared Spaces, Shaped Identities.“** Unter diesem Motto laden Bantu e.V. und die Federation of Ugandans in Germany e.V. zu den Ubuntu Talks ein.
@@ -24,6 +31,7 @@ Türöffnung ist um 11 Uhr mit einem freiwilligen Raum für Gebet und Besinnung,
 
 Kinderbetreuung, Safe Space, Raum der Stille sowie Übersetzung Deutsch/Englisch sind vorhanden; weitere Sprachen und Gebärdensprache bitte so früh wie möglich anfragen. Online-Teilnahme ist über eine geschlossene Videokonferenz möglich.
 
-Anmeldung per E-Mail an info@bantu-ev.org oder telefonisch unter +49 176 3421 3765.
+Anmeldung über das [Online-Formular](https://forms.gle/fBRsqho22GvvBTL1A) (Google Formulare) oder, wenn du lieber keine Online-Dienste nutzt, per E-Mail an [info@bantu-ev.org](mailto:info@bantu-ev.org?subject=Anmeldung%20Ubuntu%20Talks) oder telefonisch unter +49 176 3421 3765. Den Link zur Videokonferenz bekommst du nach der Anmeldung.
 
-<!-- OPEN: Datum am 07.11.2026 vom Vorsitzenden auf So 22.11.2026 korrigiert (vorher 15.11.). Uhrzeit und Ort unverändert übernommen – bestätigen. Flyer (zeigt 15.11.) erst nach Korrektur wieder verlinken. -->
+Vertrauen zuerst: Es gibt keinen Livestream. Fotos und Videos entstehen nur mit Einverständnis; wer nicht aufgenommen werden möchte, bekommt ein rotes Band. Gesprächskreise und Safe Space werden nie aufgezeichnet.
+

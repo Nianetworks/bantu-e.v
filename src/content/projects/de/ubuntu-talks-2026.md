@@ -15,6 +15,7 @@ funders: ["Bezirksamt Berlin-Mitte", "MITTEinander aktiv: Fördertopf Partizipat
 fundingNote: "Dieses Projekt wird im Rahmen von „MITTEinander aktiv“ aus dem Fördertopf Partizipation 2026 durch das Bezirksamt Berlin-Mitte gefördert."
 fundingLogos:
   - { src: "/funders/ba-mitte.webp", alt: "Bezirksamt Berlin-Mitte", width: 150 }
+  - { src: "/funders/mitteinander-aktiv.webp", alt: "MITTEinander aktiv", width: 220 }
   - { src: "/funders/club-dialog.webp", alt: "Club Dialog e.V.", width: 150 }
 sdgs: [10, 11, 16]
 stats:
@@ -39,21 +40,27 @@ Berlin-Mitte ist ein vielfältiger Bezirk: Menschen aus Ostafrika und vom ganzen
 | Zeit | Programmpunkt |
 |---|---|
 | 11:00 | Türöffnung · Raum für Gebet und Besinnung (freiwillig, für alle Religionen und Weltanschauungen) |
-| 12:00 | Offizieller Beginn mit Bantu e.V. und FUG |
+| 12:00 | Offizieller Beginn mit Bantu e.V. und FUG: Willkommen und Ubuntu-Gedanke |
 | 12:30 | Runde 1: Ankommen in Berlin-Mitte, Erzählkreise |
-| 13:45 | Mittagspause mit Fingerfood |
+| 13:45 | Mittagspause mit Fingerfood-Buffet |
 | 14:15 | Runde 2: Was ist Ubuntu: Menschlichkeit in einer polarisierten Gesellschaft? |
 | 15:30 | Themeninseln: Generationen, Familie, Arbeit und Behörden, Gesundheit, Glaube, Nachbarschaft |
-| 17:00 | Kultur-Dinner: bring ein Gericht deiner Community mit |
-| 18:30 | Abschlusskreis |
+| 16:45 | Ernte: Was nehmen wir mit? Wir verabreden einen Ubuntu-Kreis, der weitergeht. |
+| 17:00 | Kultur-Dinner: bring ein Gericht deiner Community mit (mit Zutatenkarte für Menschen mit Allergien); dazu ein warmes Abendessen für alle |
+| 18:30 | Abschlusskreis mit Musik, kurzes Feedback per QR-Code (2 Minuten, ohne Namen möglich) |
+| 19:00 | Ende |
 
 Den ganzen Tag: Kaffee, Tee und Snacks · Kinderbetreuung durch eine pädagogische Fachkraft (11–19 Uhr) · Safe Space für vertrauliche Gespräche · Raum der Stille · Übersetzung Deutsch/Englisch, weitere Sprachen und Gebärdensprache auf Anfrage.
 
 ## Teilnahme
 
-Eintritt frei. Der Raum 2.02 in der VHS Berlin Mitte ist stufenlos zugänglich. Online-Teilnahme über eine geschlossene Videokonferenz (Link nach Anmeldung); es gibt keinen Livestream. Anmeldung per E-Mail an [info@bantu-ev.org](mailto:info@bantu-ev.org?subject=Anmeldung%20Ubuntu%20Talks) oder telefonisch unter +49 176 3421 3765.
+Eintritt frei. Der Raum 2.02 in der VHS Berlin Mitte ist stufenlos zugänglich. Online-Teilnahme über eine geschlossene Videokonferenz (Link nach Anmeldung); es gibt keinen Livestream. **Anmeldung:** über das [Online-Formular](https://forms.gle/fBRsqho22GvvBTL1A) (Google Formulare) oder per E-Mail an [info@bantu-ev.org](mailto:info@bantu-ev.org?subject=Anmeldung%20Ubuntu%20Talks) oder telefonisch unter +49 176 3421 3765.
+
+Vertrauen zuerst: Fotos und Videos entstehen nur mit Einverständnis; wer nicht aufgenommen werden möchte, bekommt ein rotes Band. Gesprächskreise und Safe Space werden nie aufgezeichnet.
+
+Alle Angaben auf einen Blick: [Flyer als PDF](/downloads/flyer/ubuntu-talks-22-11-2026-flyer.pdf) (2 Seiten, 2,0 MB) und auf der [Veranstaltungsseite](/aktuelles/ubuntu-talks-22-11-2026/).
 
 Aus dem Tag soll ein fortbestehender **Ubuntu-Kreis** entstehen, der sich auch nach Projektende trifft.
 
 Mit freundlicher Unterstützung des Bezirksamts Mitte von Berlin, Volkshochschule Berlin Mitte.
-<!-- OPEN: Logos von MITTEinander aktiv und Bezirksamt Berlin-Mitte als fundingLogos ergänzen (Pflicht laut § 11 Fördervereinbarung). Nach dem 22.11. Status/Text auf Rückblick umstellen. Datum am 07.11.2026 vom Vorsitzenden von 15.11. auf 22.11.2026 korrigiert; Flyer mit neuem Datum fehlt noch. -->
+<!-- OPEN: Nach dem 22.11. Status/Text auf Rückblick umstellen. Datum am 07.11.2026 vom Vorsitzenden von 15.11. auf 22.11.2026 korrigiert; Flyer mit neuem Datum seit 12.11.2026 online, Logo MITTEinander aktiv ergänzt. -->

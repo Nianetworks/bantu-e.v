@@ -107,6 +107,12 @@ const news = defineCollection({
     /** Event flyer/poster shown in the side column with a link to the full image (same file scheme as photos). */
     poster: z.object({ src: z.string(), width: z.number(), height: z.number(), alt: z.string() }).optional(),
     attachment: z.object({ href: z.string(), label: z.string() }).optional(),
+    /** Event flyer shown in the main column of an event page: page images (same file scheme as photos) + PDF link. */
+    flyer: z.object({
+      pdf: z.string(),
+      pdfLabel: z.string(),
+      pages: z.array(z.object({ src: z.string(), width: z.number(), height: z.number(), alt: z.string(), caption: z.string() })),
+    }).optional(),
     draft: z.boolean().default(false),
     sources: z.array(z.string()).default([]),
   }),
