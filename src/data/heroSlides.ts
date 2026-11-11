@@ -1,6 +1,8 @@
 // Background photos of the homepage hero (rotating slideshow).
 // Source: youth exchange "Okushoma kwa Boona – Bildung für alle" (Teams up!, WLV 3100212054),
 // Mbarara (Uganda), 23.02.–11.03.2024. Photo rights: participation contract § 6 (EP Contract 04.02.2024).
+// Added 11.11.2026 (chair): one photo of the Msingi School training, P 24/200 (consent confirmed by the chair; edited photo 022,
+// cropped to 3:2 and enlarged from 1280 px).
 // Only use photos where no child is identifiable (CLAUDE.md rule 4). Files ending in -r5: approved edit of the same photo
 // from the Okushoma media revision 5 (08.11.2026). Files: public/images/hero/<file>.webp + <file>-800.webp
 import type { Lang } from '../i18n';
@@ -11,6 +13,9 @@ export const heroSlides: HeroSlide[] = [
   { file: 'okb-erste-hilfe', project: 'okushoma-kwa-boona', caption: {
     de: 'Erste-Hilfe-Training beim Jugendaustausch „Okushoma kwa Boona: Bildung für alle“, Mbarara (Uganda), 2024',
     en: 'First-aid training during the youth exchange “Okushoma kwa Boona: Education for all”, Mbarara (Uganda), 2024', fr: 'Formation aux premiers secours pendant l’échange de jeunes « Okushoma kwa Boona : L’éducation pour tous », Mbarara (Ouganda), 2024' } },
+  { file: 'msingi-ausbildung-salon', project: 'p24-200-msingi-school', caption: {
+    de: 'Unterricht im Ausbildungssalon der Msingi School: Friseur- und Kosmetikausbildung für junge Frauen, Mbarara (Uganda)',
+    en: 'A lesson in the training salon of Msingi School: hairdressing and beauty training for young women, Mbarara (Uganda)', fr: 'Un cours dans le salon de formation de la Msingi School : coiffure et esthétique pour jeunes femmes, Mbarara (Ouganda)' } },
   { file: 'okb-workshop-saal', project: 'okushoma-kwa-boona', caption: {
     de: 'Gesprächsrunde zu Bildungsgerechtigkeit mit Teilnehmenden aus Uganda und Deutschland, Mbarara 2024',
     en: 'Discussion round on educational justice with participants from Uganda and Germany, Mbarara 2024', fr: 'Table ronde sur la justice éducative avec des participants d’Ouganda et d’Allemagne, Mbarara 2024' } },
