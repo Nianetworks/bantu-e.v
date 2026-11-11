@@ -20,6 +20,11 @@ const de = lang === 'de';
 const fr = lang === 'fr';
 const t = ui[lang];
 const projects = await getProjects(lang);
+// Success story: photo and alt text come from the project itself (Msingi School, P 24/200), so the homepage shows the
+// same main photo as the project page. A -480.webp copy exists next to every project photo.
+const storyProject = projects.find((p) => p.id.endsWith('p24-200-msingi-school'));
+const storyImage = storyProject?.data.image;
+const storyAlt = storyProject?.data.imageAlt ?? '';
 const featured = projects.filter((p) => p.data.featured && p.data.status === 'active').slice(0, 4);
 const { upcoming } = await getEvents(lang);
 const news = (await getNews(lang)).filter((n) => n.data.type !== 'event').slice(0, 3);
@@ -182,7 +187,9 @@ const heroFile = (small = false) => href(`/images/hero/${heroSlides[0].file}${sm
   <section class="section section--alt cv" aria-labelledby="h-story">
     <div class="wrap story">
       <div class="story__media">
-        <Placeholder lang={lang} label={de ? 'Absolventinnen mit Zertifikaten, Ausbildung im Salon (mit Einverständnis)' : fr ? 'Diplômées avec leurs certificats, formation au salon (avec consentement)' : 'Graduates with certificates, training in the salon (with consent)'} ratio="4 / 3" tone="gold" icon="star" />
+        {storyImage
+          ? <img class="story__img" src={href(storyImage)} srcset={`${href(storyImage.replace(/\.webp$/, '-480.webp'))} 480w, ${href(storyImage)} 1080w`} sizes="(max-width: 900px) calc(100vw - 2rem), 560px" alt={storyAlt} width="1080" height="810" loading="lazy" decoding="async" />
+          : <Placeholder lang={lang} label={de ? 'Absolventinnen mit Zertifikaten, Ausbildung im Salon (mit Einverständnis)' : fr ? 'Diplômées avec leurs certificats, formation au salon (avec consentement)' : 'Graduates with certificates, training in the salon (with consent)'} ratio="4 / 3" tone="gold" icon="star" />}
       </div>
       <div>
         <div class="eyebrow">{de ? 'Erfolgsgeschichte' : fr ? 'Une réussite' : 'Success story'}</div>
@@ -349,6 +356,7 @@ const heroFile = (small = false) => href(`/images/hero/${heroSlides[0].file}${sm
 
   .story { display: grid; grid-template-columns: 1fr 1.1fr; gap: clamp(1.5rem, 4vw, 3.5rem); align-items: center; }
   .story__media { border-radius: 22px; overflow: hidden; border: 1px solid var(--line); }
+  .story__img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; }
 
   .monthly { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 1.5rem 2.5rem; align-items: center; border-left: 8px solid var(--gold); margin-bottom: 1.5rem; }
   .monthly h3 { font-size: clamp(1.2rem, 2.2vw, 1.5rem); margin: .2rem 0 .5rem; }
