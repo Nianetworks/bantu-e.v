@@ -29,7 +29,7 @@ galleryTitle: "14 photographs from the pilot project"
 report:
   href: "/downloads/berichte/bantu-ev-ediri-pilot-report-2023-en.pdf"
   label: "Download the 2023 pilot report (PDF)"
-  note: "Progress report June to September 2023, 8 pages, 1.7 MB"
+  note: "Progress report June to September 2023, 11 pages, 1.5 MB"
   alternates:
     - { lang: "de", name: "Deutsch", href: "/downloads/berichte/bantu-ev-ediri-pilotbericht-2023-de.pdf" }
     - { lang: "fr", name: "Français", href: "/downloads/berichte/bantu-ev-ediri-rapport-pilote-2023-fr.pdf" }

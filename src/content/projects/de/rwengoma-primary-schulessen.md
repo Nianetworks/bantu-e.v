@@ -19,7 +19,7 @@ galleryTitle: "2 Fotos aus dem ABI-Archiv"
 report:
   href: "/downloads/berichte/abi-rwengoma-school-meals-report-en.pdf"
   label: "Projektbericht herunterladen (PDF, Englisch)"
-  note: "Illustrierter Projektbericht, 2 Seiten, 0,4 MB, auf Englisch"
+  note: "Illustrierter Projektbericht, 5 Seiten, 0,5 MB, auf Englisch"
 gallery:
   - { src: "/images/projects/abi-berichte/05-rwengoma-school-meals/abi-155-rwengoma-school-contribution.webp", thumb: "/images/projects/abi-berichte/05-rwengoma-school-meals/abi-155-rwengoma-school-contribution-480.webp", width: 1024, height: 768, thumbWidth: 480, thumbHeight: 360, alt: "Schulvertreter*innen und Unterstützer*innen halten einen Scheck über eine Million Uganda-Schilling.", caption: "Der Scheck für die Rwengoma Primary School über 1.000.000 UGX trägt das Datum 11. Oktober 2018.", section: "Rwengoma Primary School" }
   - { src: "/images/projects/abi-berichte/05-rwengoma-school-meals/abi-142-school-community-gathering.webp", thumb: "/images/projects/abi-berichte/05-rwengoma-school-meals/abi-142-school-community-gathering-480.webp", width: 906, height: 906, thumbWidth: 480, thumbHeight: 480, alt: "Schüler*innen in blauen Uniformen stehen im Freien zusammen; sichtbare Kindergesichter sind leicht unkenntlich gemacht.", caption: "Schüler*innen bei einem Besuch der Schulgemeinschaft im ABI-Archiv.", section: "Rwengoma Primary School" }

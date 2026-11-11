@@ -19,7 +19,7 @@ galleryTitle: "6 Fotos aus dem Projektarchiv 2018"
 report:
   href: "/downloads/berichte/abi-mobility-aids-2018-report-en.pdf"
   label: "Projektbericht 2018 herunterladen (PDF, Englisch)"
-  note: "Illustrierter Projektbericht, 3 Seiten, 1,3 MB, auf Englisch"
+  note: "Illustrierter Projektbericht, 6 Seiten, 0,8 MB, auf Englisch"
 gallery:
   - { src: "/images/projects/abi-berichte/03-mobility-aids-2018/abi-014-container-and-mobility-aids.webp", thumb: "/images/projects/abi-berichte/03-mobility-aids-2018/abi-014-container-and-mobility-aids-480.webp", width: 1080, height: 810, thumbWidth: 480, thumbHeight: 360, alt: "Menschen stehen neben einem offenen Container mit Mobilitätshilfen; die Gesichter der Kinder sind leicht unkenntlich gemacht.", caption: "Mobilitätshilfen werden 2018 neben einem Schiffscontainer bereitgestellt.", section: "Vom Container zur Verteilung" }
   - { src: "/images/projects/abi-berichte/03-mobility-aids-2018/abi-013-mobility-aid-recipients.webp", thumb: "/images/projects/abi-berichte/03-mobility-aids-2018/abi-013-mobility-aid-recipients-480.webp", width: 1080, height: 810, thumbWidth: 480, thumbHeight: 360, alt: "Kinder und Erwachsene nutzen im Freien Rollstühle und Gehhilfen; die Gesichter der Kinder sind leicht unkenntlich gemacht.", caption: "Kinder und Erwachsene mit Rollstühlen und anderen Mobilitätshilfen bei der Verteilung 2018.", section: "Vom Container zur Verteilung" }

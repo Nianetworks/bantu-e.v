@@ -17,7 +17,7 @@ galleryTitle: "6 photographs from the 2017 project archive"
 report:
   href: "/downloads/berichte/abi-livelihoods-2017-report-en.pdf"
   label: "Download the 2017 Uganda livelihoods report (PDF)"
-  note: "Illustrated project report, 3 pages, 0.8 MB, English"
+  note: "Illustrated project report, 6 pages, 1.0 MB, English"
 gallery:
   - { src: "/images/projects/abi-berichte/01-livelihoods-2017/abi-039-women-with-goats.webp", thumb: "/images/projects/abi-berichte/01-livelihoods-2017/abi-039-women-with-goats-480.webp", width: 1080, height: 607, thumbWidth: 480, thumbHeight: 270, alt: "Women stand with tethered goats outdoors.", caption: "Women with goats during the 2017 livelihoods programme.", section: "Goats, pigs and bees" }
   - { src: "/images/projects/abi-berichte/01-livelihoods-2017/abi-028-women-pig-rearing.webp", thumb: "/images/projects/abi-berichte/01-livelihoods-2017/abi-028-women-pig-rearing-480.webp", width: 1080, height: 607, thumbWidth: 480, thumbHeight: 270, alt: "Two women stand beside a wooden pig shelter.", caption: "Women beside a pig-rearing shelter in the 2017 project archive.", section: "Goats, pigs and bees" }

@@ -17,7 +17,7 @@ galleryTitle: "6 photos des archives du projet 2017"
 report:
   href: "/downloads/berichte/abi-livelihoods-2017-report-en.pdf"
   label: "Télécharger le rapport 2017 sur les moyens de subsistance en Ouganda (PDF, anglais)"
-  note: "Rapport de projet illustré, 3 pages, 0,8 Mo, en anglais"
+  note: "Rapport de projet illustré, 6 pages, 1,0 Mo, en anglais"
 gallery:
   - { src: "/images/projects/abi-berichte/01-livelihoods-2017/abi-039-women-with-goats.webp", thumb: "/images/projects/abi-berichte/01-livelihoods-2017/abi-039-women-with-goats-480.webp", width: 1080, height: 607, thumbWidth: 480, thumbHeight: 270, alt: "Des femmes se tiennent dehors avec des chèvres attachées.", caption: "Des femmes avec des chèvres pendant le programme de moyens de subsistance de 2017.", section: "Chèvres, porcs et abeilles" }
   - { src: "/images/projects/abi-berichte/01-livelihoods-2017/abi-028-women-pig-rearing.webp", thumb: "/images/projects/abi-berichte/01-livelihoods-2017/abi-028-women-pig-rearing-480.webp", width: 1080, height: 607, thumbWidth: 480, thumbHeight: 270, alt: "Deux femmes se tiennent près d’un abri à porcs en bois.", caption: "Des femmes près d’un abri à porcs dans les archives du projet de 2017.", section: "Chèvres, porcs et abeilles" }

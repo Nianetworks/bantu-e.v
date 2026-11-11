@@ -19,7 +19,7 @@ galleryTitle: "6 photographs from the 2018 project archive"
 report:
   href: "/downloads/berichte/abi-mobility-aids-2018-report-en.pdf"
   label: "Download the 2018 project report (PDF)"
-  note: "Illustrated project report, 3 pages, 1.3 MB, English"
+  note: "Illustrated project report, 6 pages, 0.8 MB, English"
 gallery:
   - { src: "/images/projects/abi-berichte/03-mobility-aids-2018/abi-014-container-and-mobility-aids.webp", thumb: "/images/projects/abi-berichte/03-mobility-aids-2018/abi-014-container-and-mobility-aids-480.webp", width: 1080, height: 810, thumbWidth: 480, thumbHeight: 360, alt: "People gather beside an open container holding mobility equipment; children’s faces are lightly blurred.", caption: "Mobility aids are made available beside a shipping container during the 2018 project.", section: "From the container to local distribution" }
   - { src: "/images/projects/abi-berichte/03-mobility-aids-2018/abi-013-mobility-aid-recipients.webp", thumb: "/images/projects/abi-berichte/03-mobility-aids-2018/abi-013-mobility-aid-recipients-480.webp", width: 1080, height: 810, thumbWidth: 480, thumbHeight: 360, alt: "Children and adults use wheelchairs and walking aids outdoors; children’s faces are lightly blurred.", caption: "Children and adults gather with wheelchairs and other mobility aids during the 2018 distribution.", section: "From the container to local distribution" }

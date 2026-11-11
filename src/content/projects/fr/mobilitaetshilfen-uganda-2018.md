@@ -19,7 +19,7 @@ galleryTitle: "6 photos des archives du projet 2018"
 report:
   href: "/downloads/berichte/abi-mobility-aids-2018-report-en.pdf"
   label: "Télécharger le rapport de projet 2018 (PDF, anglais)"
-  note: "Rapport de projet illustré, 3 pages, 1,3 Mo, en anglais"
+  note: "Rapport de projet illustré, 6 pages, 0,8 Mo, en anglais"
 gallery:
   - { src: "/images/projects/abi-berichte/03-mobility-aids-2018/abi-014-container-and-mobility-aids.webp", thumb: "/images/projects/abi-berichte/03-mobility-aids-2018/abi-014-container-and-mobility-aids-480.webp", width: 1080, height: 810, thumbWidth: 480, thumbHeight: 360, alt: "Des personnes se rassemblent près d’un conteneur ouvert contenant du matériel de mobilité ; les visages des enfants sont légèrement floutés.", caption: "Des aides à la mobilité sont mises à disposition près d’un conteneur pendant le projet 2018.", section: "Du conteneur à la distribution locale" }
   - { src: "/images/projects/abi-berichte/03-mobility-aids-2018/abi-013-mobility-aid-recipients.webp", thumb: "/images/projects/abi-berichte/03-mobility-aids-2018/abi-013-mobility-aid-recipients-480.webp", width: 1080, height: 810, thumbWidth: 480, thumbHeight: 360, alt: "Des enfants et des adultes utilisent des fauteuils roulants et des aides à la marche en plein air ; les visages des enfants sont légèrement floutés.", caption: "Enfants et adultes avec des fauteuils roulants et d’autres aides à la mobilité lors de la distribution de 2018.", section: "Du conteneur à la distribution locale" }

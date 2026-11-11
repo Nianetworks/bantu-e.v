@@ -19,7 +19,7 @@ galleryTitle: "7 Fotos: die sechs Kinder und die Spendenaktion in Bendorf"
 report:
   href: "/downloads/berichte/abi-royal-junior-school-fees-report-en.pdf"
   label: "Projektbericht herunterladen (PDF, Englisch)"
-  note: "Illustrierter Projektbericht, 2 Seiten, 0,3 MB, auf Englisch"
+  note: "Illustrierter Projektbericht, 5 Seiten, 0,5 MB, auf Englisch"
 gallery:
   - { src: "/images/projects/abi-berichte/06-royal-junior-school-fees/abi-033-royal-junior-pupil-1.webp", thumb: "/images/projects/abi-berichte/06-royal-junior-school-fees/abi-033-royal-junior-pupil-1-480.webp", width: 360, height: 240, thumbWidth: 360, thumbHeight: 240, alt: "Porträt eines Kindes der Royal Junior in einem gelben Schul-T-Shirt; das Gesicht ist leicht unkenntlich gemacht.", caption: "Ein*e Schüler*in der Royal Junior Namugongo, unterstützt durch die Schulgeldinitiative.", section: "Die sechs Schüler*innen der Royal Junior Namugongo" }
   - { src: "/images/projects/abi-berichte/06-royal-junior-school-fees/abi-035-royal-junior-pupil-2.webp", thumb: "/images/projects/abi-berichte/06-royal-junior-school-fees/abi-035-royal-junior-pupil-2-480.webp", width: 360, height: 240, thumbWidth: 360, thumbHeight: 240, alt: "Porträt eines Kindes der Royal Junior in einem grünen Schul-T-Shirt; das Gesicht ist leicht unkenntlich gemacht.", caption: "Ein*e Schüler*in der Royal Junior Namugongo, unterstützt durch die Schulgeldinitiative.", section: "Die sechs Schüler*innen der Royal Junior Namugongo" }

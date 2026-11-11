@@ -5,7 +5,7 @@ import PageHead from '../components/PageHead.astro';
 import { href, r, type Lang } from '../i18n';
 import { org } from '../data/site';
 import Icon from '../components/Icon.astro';
-import { coverFor, downloads, type Download } from '../data/downloads';
+import { coverFor, downloads, withReportVersion, type Download } from '../data/downloads';
 
 interface Props { lang: Lang }
 const { lang } = Astro.props;
@@ -51,8 +51,8 @@ const itz = [
     <section class="section section--tight" aria-labelledby="h-featured">
       <div class="wrap">
         <div class="featured panel">
-          <a class="featured__cover" href={href(featured.main.file)} download aria-hidden="true" tabindex="-1">
-            <img src={href(coverFor(featured.main))} width="480" height="680" alt="" loading="eager" />
+          <a class="featured__cover" href={withReportVersion(href(featured.main.file))} download aria-hidden="true" tabindex="-1">
+            <img src={withReportVersion(href(coverFor(featured.main)))} width="560" height="792" alt="" loading="eager" />
           </a>
           <div class="featured__body">
             <div class="eyebrow">{T('Aktueller Bericht', 'Latest report', 'Dernier rapport')}</div>
@@ -60,8 +60,8 @@ const itz = [
             <p>{T('Tätigkeit, Projekte und Finanzen des Jahres im Überblick: was wir in Berlin, Uganda und Burundi getan haben, mit wem, mit welchen Mitteln und mit welchem Ergebnis. Vom Vorstand unterzeichnet.', 'Activities, projects and finances of the year at a glance: what we did in Berlin, Uganda and Burundi, with whom, with which funds and with what result. Signed by the board.', 'Activités, projets et finances de l’année en bref : ce que nous avons fait à Berlin, en Ouganda et au Burundi, avec qui, avec quels moyens et avec quel résultat. Signé par le conseil d’administration.')}</p>
             <p class="meta">{meta(featured.main)}</p>
             <div class="btn-row">
-              <a class="btn btn--gold" href={href(featured.main.file)} download><Icon name="download" /> {T('Jahresbericht herunterladen (PDF)', 'Download the annual report (PDF)', 'Télécharger le rapport annuel (PDF)')}</a>
-              {featured.other.map((o) => <a class="btn btn--outline" href={href(o.file)} download>{o.title[lang]} <span class="small">({o.size})</span></a>)}
+              <a class="btn btn--gold" href={withReportVersion(href(featured.main.file))} download><Icon name="download" /> {T('Jahresbericht herunterladen (PDF)', 'Download the annual report (PDF)', 'Télécharger le rapport annuel (PDF)')}</a>
+              {featured.other.map((o) => <a class="btn btn--outline" href={withReportVersion(href(o.file))} download>{o.title[lang]} <span class="small">({o.size})</span></a>)}
             </div>
           </div>
         </div>
@@ -75,11 +75,11 @@ const itz = [
       <ul class="reports" role="list">
         {annual.map((r) => (
           <li class="report">
-            <a class="report__cover" href={href(r.main.file)} download aria-hidden="true" tabindex="-1"><img src={href(coverFor(r.main))} width="480" height="680" alt="" loading="lazy" /></a>
+            <a class="report__cover" href={withReportVersion(href(r.main.file))} download aria-hidden="true" tabindex="-1"><img src={withReportVersion(href(coverFor(r.main)))} width="560" height="792" alt="" loading="lazy" /></a>
             <div class="report__body">
-              <h3><a href={href(r.main.file)} download>{r.main.title[lang]}</a></h3>
+              <h3><a href={withReportVersion(href(r.main.file))} download>{r.main.title[lang]}</a></h3>
               <p class="meta">{meta(r.main)}</p>
-              {r.other.map((o) => <p class="small"><a href={href(o.file)} download hreflang={o.lang.toLowerCase()}>{o.title[lang]}</a> <span class="muted">({meta(o)})</span></p>)}
+              {r.other.map((o) => <p class="small"><a href={withReportVersion(href(o.file))} download hreflang={o.lang.toLowerCase()}>{o.title[lang]}</a> <span class="muted">({meta(o)})</span></p>)}
             </div>
           </li>
         ))}
@@ -93,11 +93,11 @@ const itz = [
       <ul class="reports" role="list">
         {transparency.map((r) => (
           <li class="report">
-            <a class="report__cover" href={href(r.main.file)} download aria-hidden="true" tabindex="-1"><img src={href(coverFor(r.main))} width="480" height="680" alt="" loading="lazy" /></a>
+            <a class="report__cover" href={withReportVersion(href(r.main.file))} download aria-hidden="true" tabindex="-1"><img src={withReportVersion(href(coverFor(r.main)))} width="560" height="792" alt="" loading="lazy" /></a>
             <div class="report__body">
-              <h3><a href={href(r.main.file)} download>{r.main.title[lang]}</a></h3>
+              <h3><a href={withReportVersion(href(r.main.file))} download>{r.main.title[lang]}</a></h3>
               <p class="meta">{meta(r.main)}</p>
-              {r.other.map((o) => <p class="small"><a href={href(o.file)} download hreflang={o.lang.toLowerCase()}>{o.title[lang]}</a> <span class="muted">({meta(o)})</span></p>)}
+              {r.other.map((o) => <p class="small"><a href={withReportVersion(href(o.file))} download hreflang={o.lang.toLowerCase()}>{o.title[lang]}</a> <span class="muted">({meta(o)})</span></p>)}
             </div>
           </li>
         ))}
@@ -113,9 +113,9 @@ const itz = [
         <ul class="reports" role="list">
           {projectReports.map((d) => (
             <li class="report">
-              <a class="report__cover" href={href(d.file)} download aria-hidden="true" tabindex="-1"><img src={href(coverFor(d))} width="480" height="680" alt="" loading="lazy" /></a>
+              <a class="report__cover" href={withReportVersion(href(d.file))} download aria-hidden="true" tabindex="-1"><img src={withReportVersion(href(coverFor(d)))} width="560" height="792" alt="" loading="lazy" /></a>
               <div class="report__body">
-                <h3><a href={href(d.file)} download>{d.title[lang]}</a></h3>
+                <h3><a href={withReportVersion(href(d.file))} download>{d.title[lang]}</a></h3>
                 <p class="meta">{meta(d)}{d.year ? ` · ${d.year}` : ''}</p>
               </div>
             </li>

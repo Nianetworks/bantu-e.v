@@ -1,4 +1,5 @@
 ---
+import { withReportVersion } from '../data/downloads';
 import Base from '../layouts/Base.astro';
 import PageHead from '../components/PageHead.astro';
 import Placeholder from '../components/Placeholder.astro';
@@ -56,7 +57,7 @@ const donateRef = slug.includes('pearl') ? 'Pearl Kita' : slug.includes('ruziba'
           </div>
         )}
         {d.report && (
-          <p class="report-cta"><a class="btn btn--gold" href={href(d.report.href)} download><Icon name="download" class="btn-ic" />{d.report.label}</a>{d.report.note && <span class="small muted report-note">{d.report.note}</span>}</p>
+          <p class="report-cta"><a class="btn btn--gold" href={withReportVersion(href(d.report.href))} download><Icon name="download" class="btn-ic" />{d.report.label}</a>{d.report.note && <span class="small muted report-note">{d.report.note}</span>}</p>
         )}
         <div class="prose"><Content /></div>
         <ProjectMedia part="gallery" lang={lang} gallery={d.gallery} video={d.video} id={slug} galleryTitle={d.galleryTitle} />
@@ -91,9 +92,9 @@ const donateRef = slug.includes('pearl') ? 'Pearl Kita' : slug.includes('ruziba'
           <div class="panel">
             <h2 class="side-title">{de ? 'Bericht' : fr ? 'Rapport' : 'Report'}</h2>
             <p class="small">{d.report.note}</p>
-            <a class="btn btn--outline" href={href(d.report.href)} download>{d.report.label}</a>
+            <a class="btn btn--outline" href={withReportVersion(href(d.report.href))} download>{d.report.label}</a>
             {d.report.alternates.length > 0 && (
-              <p class="small report-alts">{de ? 'Auch auf' : fr ? 'Aussi en' : 'Also in'} {d.report.alternates.map((a, i) => <><a href={href(a.href)} download lang={a.lang} hreflang={a.lang}>{a.name}<span class="sr-only"> (PDF)</span></a>{i < d.report.alternates.length - 1 && ' · '}</>)}</p>
+              <p class="small report-alts">{de ? 'Auch auf' : fr ? 'Aussi en' : 'Also in'} {d.report.alternates.map((a, i) => <><a href={withReportVersion(href(a.href))} download lang={a.lang} hreflang={a.lang}>{a.name}<span class="sr-only"> (PDF)</span></a>{i < d.report.alternates.length - 1 && ' · '}</>)}</p>
             )}
           </div>
         )}

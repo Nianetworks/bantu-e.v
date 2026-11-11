@@ -15,7 +15,7 @@ galleryTitle: "2 archive photographs from July 2017"
 report:
   href: "/downloads/berichte/abi-women-and-crafts-report-en-v2.pdf"
   label: "Download the project report (PDF)"
-  note: "Illustrated project report, 2 pages, 0.6 MB, English"
+  note: "Illustrated project report, 5 pages, 0.6 MB, English"
 gallery:
   - { src: "/images/projects/abi-berichte/04-women-and-crafts/abi-006-artisan-at-sewing-workstation-v2.webp", thumb: "/images/projects/abi-berichte/04-women-and-crafts/abi-006-artisan-at-sewing-workstation-v2-480.webp", width: 1600, height: 1200, thumbWidth: 480, thumbHeight: 360, alt: "An artisan using a wheelchair works at a sewing table with a small child; the child is blurred.", caption: "Archival photograph from July 2017 showing an artisan using a wheelchair at her sewing workstation.", section: "Craft work in the archive (July 2017)" }
   - { src: "/images/projects/abi-berichte/04-women-and-crafts/abi-007-handmade-products-display.webp", thumb: "/images/projects/abi-berichte/04-women-and-crafts/abi-007-handmade-products-display-480.webp", width: 1600, height: 1200, thumbWidth: 480, thumbHeight: 360, alt: "Handmade bags and smaller fabric products are arranged on shelves.", caption: "Handmade bags and small craft products displayed in July 2017.", section: "Craft work in the archive (July 2017)" }

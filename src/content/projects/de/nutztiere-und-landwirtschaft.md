@@ -17,7 +17,7 @@ galleryTitle: "6 Fotos aus dem Projektarchiv 2017"
 report:
   href: "/downloads/berichte/abi-livelihoods-2017-report-en.pdf"
   label: "Bericht zum Uganda-Programm 2017 herunterladen (PDF, Englisch)"
-  note: "Illustrierter Projektbericht, 3 Seiten, 0,8 MB, auf Englisch"
+  note: "Illustrierter Projektbericht, 6 Seiten, 1,0 MB, auf Englisch"
 gallery:
   - { src: "/images/projects/abi-berichte/01-livelihoods-2017/abi-039-women-with-goats.webp", thumb: "/images/projects/abi-berichte/01-livelihoods-2017/abi-039-women-with-goats-480.webp", width: 1080, height: 607, thumbWidth: 480, thumbHeight: 270, alt: "Frauen stehen im Freien mit angebundenen Ziegen.", caption: "Frauen mit Ziegen während des Lebensgrundlagen-Programms 2017.", section: "Ziegen, Schweine und Bienen" }
   - { src: "/images/projects/abi-berichte/01-livelihoods-2017/abi-028-women-pig-rearing.webp", thumb: "/images/projects/abi-berichte/01-livelihoods-2017/abi-028-women-pig-rearing-480.webp", width: 1080, height: 607, thumbWidth: 480, thumbHeight: 270, alt: "Zwei Frauen stehen neben einem hölzernen Schweinestall.", caption: "Frauen neben einem Schweinestall im Projektarchiv 2017.", section: "Ziegen, Schweine und Bienen" }

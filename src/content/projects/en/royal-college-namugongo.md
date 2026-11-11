@@ -20,7 +20,7 @@ galleryTitle: "9 photographs from the school partnership archive, 2017 and 2018"
 report:
   href: "/downloads/berichte/abi-school-partnership-report-en.pdf"
   label: "Download the school partnership report (PDF)"
-  note: "Illustrated project report, 4 pages, 0.9 MB, English"
+  note: "Illustrated project report, 7 pages, 1.1 MB, English"
 gallery:
   - { src: "/images/projects/abi-berichte/02-school-partnership/abi-021-german-school-donation.webp", thumb: "/images/projects/abi-berichte/02-school-partnership/abi-021-german-school-donation-480.webp", width: 930, height: 534, thumbWidth: 480, thumbHeight: 276, alt: "Pupils and staff present a large donation cheque at a German school; pupils’ faces are lightly blurred.", caption: "Pupils and staff of Wilhelm-Remy-Gymnasium Bendorf present their fundraising cheque.", section: "Bendorf: fundraising and classroom work" }
   - { src: "/images/projects/abi-berichte/02-school-partnership/abi-024-bendorf-english-class-project.webp", thumb: "/images/projects/abi-berichte/02-school-partnership/abi-024-bendorf-english-class-project-480.webp", width: 1280, height: 720, thumbWidth: 480, thumbHeight: 270, alt: "A class holds posters about Uganda and ABI; pupils’ faces are lightly blurred.", caption: "Pupils in Bendorf share classroom work about Uganda and ABI.", section: "Bendorf: fundraising and classroom work" }

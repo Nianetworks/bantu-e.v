@@ -19,7 +19,7 @@ galleryTitle: "7 photographs: the six pupils and the fundraising in Bendorf"
 report:
   href: "/downloads/berichte/abi-royal-junior-school-fees-report-en.pdf"
   label: "Download the project report (PDF)"
-  note: "Illustrated project report, 2 pages, 0.3 MB, English"
+  note: "Illustrated project report, 5 pages, 0.5 MB, English"
 gallery:
   - { src: "/images/projects/abi-berichte/06-royal-junior-school-fees/abi-033-royal-junior-pupil-1.webp", thumb: "/images/projects/abi-berichte/06-royal-junior-school-fees/abi-033-royal-junior-pupil-1-480.webp", width: 360, height: 240, thumbWidth: 360, thumbHeight: 240, alt: "Portrait of a Royal Junior pupil wearing a yellow school T-shirt; the face is lightly blurred.", caption: "A Royal Junior Namugongo pupil supported through the school-fee initiative.", section: "The six Royal Junior Namugongo pupils" }
   - { src: "/images/projects/abi-berichte/06-royal-junior-school-fees/abi-035-royal-junior-pupil-2.webp", thumb: "/images/projects/abi-berichte/06-royal-junior-school-fees/abi-035-royal-junior-pupil-2-480.webp", width: 360, height: 240, thumbWidth: 360, thumbHeight: 240, alt: "Portrait of a Royal Junior pupil wearing a green school T-shirt; the face is lightly blurred.", caption: "A Royal Junior Namugongo pupil supported through the school-fee initiative.", section: "The six Royal Junior Namugongo pupils" }

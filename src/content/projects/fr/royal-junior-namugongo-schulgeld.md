@@ -19,7 +19,7 @@ galleryTitle: "7 photos : les six élèves et la collecte à Bendorf"
 report:
   href: "/downloads/berichte/abi-royal-junior-school-fees-report-en.pdf"
   label: "Télécharger le rapport de projet (PDF, anglais)"
-  note: "Rapport de projet illustré, 2 pages, 0,3 Mo, en anglais"
+  note: "Rapport de projet illustré, 5 pages, 0,5 Mo, en anglais"
 gallery:
   - { src: "/images/projects/abi-berichte/06-royal-junior-school-fees/abi-033-royal-junior-pupil-1.webp", thumb: "/images/projects/abi-berichte/06-royal-junior-school-fees/abi-033-royal-junior-pupil-1-480.webp", width: 360, height: 240, thumbWidth: 360, thumbHeight: 240, alt: "Portrait d’un élève de la Royal Junior en T-shirt scolaire jaune ; le visage est légèrement flouté.", caption: "Un ou une élève de la Royal Junior Namugongo soutenu(e) par l’initiative pour les frais de scolarité.", section: "Les six élèves de la Royal Junior Namugongo" }
   - { src: "/images/projects/abi-berichte/06-royal-junior-school-fees/abi-035-royal-junior-pupil-2.webp", thumb: "/images/projects/abi-berichte/06-royal-junior-school-fees/abi-035-royal-junior-pupil-2-480.webp", width: 360, height: 240, thumbWidth: 360, thumbHeight: 240, alt: "Portrait d’un élève de la Royal Junior en T-shirt scolaire vert ; le visage est légèrement flouté.", caption: "Un ou une élève de la Royal Junior Namugongo soutenu(e) par l’initiative pour les frais de scolarité.", section: "Les six élèves de la Royal Junior Namugongo" }
