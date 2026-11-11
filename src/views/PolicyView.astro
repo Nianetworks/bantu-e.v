@@ -29,7 +29,7 @@ const hasHead = Astro.slots.has('head');
   <section class="section section--tight">
     <div class="narrow prose policy">
       {translationNote && <p class="notice notice--info">{translationNote}</p>}
-      <p class="small muted">{labels[0]}: <time datetime="2026-11-10">{content.updated}</time></p>
+      <p class="small muted">{labels[0]}: <time datetime={content.updated.split('.').reverse().join('-')}>{content.updated}</time></p>
       <nav class="policy-toc" aria-label={labels[1]}>
         <strong>{labels[1]}</strong>
         <ul>

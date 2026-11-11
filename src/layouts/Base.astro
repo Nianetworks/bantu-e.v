@@ -9,6 +9,7 @@ import { href, languages, r, ui, type Lang } from '../i18n';
 import { alternatesFor } from '../lib/alternates';
 import { org } from '../data/site';
 import { organisationGraph } from '../lib/schema';
+import { metaDescriptionsDe } from '../data/meta-descriptions';
 
 interface Props {
   lang: Lang;
@@ -24,7 +25,8 @@ interface Props {
 const { lang, title, description, altHref, image, noindex, schema = [] } = Astro.props;
 const t = ui[lang];
 const fullTitle = title === org.shortName ? `${org.shortName} | ${org.tagline[lang]}` : `${title} | ${org.shortName}`;
-const desc = description ?? t.footerAbout;
+// German main pages have their own meta description (data/meta-descriptions.ts, 11.11.2026); all others keep the view's.
+const desc = (lang === 'de' ? metaDescriptionsDe[Astro.url.pathname] : undefined) ?? description ?? t.footerAbout;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const ogImage = new URL(href(image ?? '/brand/og-default.jpg'), Astro.site);
 // Same page in the other languages (computed centrally; altHref is only a fallback for the other of DE/EN).

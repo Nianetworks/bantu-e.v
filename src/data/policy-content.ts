@@ -3,13 +3,13 @@ export const policyContent = {
   "de": {
     "privacy": {
       "title": "Datenschutzerklärung",
-      "updated": "10.11.2026",
+      "updated": "11.11.2026",
       "sections": [
         {
           "id": "verantwortlicher",
           "heading": "1. Verantwortlicher und Geltungsbereich",
           "paragraphs": [
-            "Bantu-Vereinigung für globale Bildung, Gerechtigkeit und Zusammenarbeit e.V., Kameruner Str. 1, 13351 Berlin, Deutschland. E-Mail: <a href=\"mailto:info@bantu-ev.org\">info@bantu-ev.org</a>. Telefon: <a href=\"tel:+493026934764\">+49 (0)30 26934764</a>. Vertretungsberechtigter Vorstand: Murema, Murinzi Boaz. Diese Erklärung beschreibt die Verarbeitung personenbezogener Daten bei der Nutzung von www.bantu-ev.org und den hier beschriebenen Kontakt-, Spenden- und Formularangeboten."
+            "Bantu-Vereinigung für globale Bildung, Gerechtigkeit und Zusammenarbeit e.V., Kameruner Str. 1, 13351 Berlin, Deutschland. E-Mail: <a href=\"mailto:info@bantu-ev.org\">info@bantu-ev.org</a>. Telefon: <a href=\"tel:+493026934764\">+49 (0)30 26934764</a>. Vertretungsberechtigter Vorstand: Murema, Murinzi Boaz. Diese Erklärung beschreibt die Verarbeitung personenbezogener Daten bei der Nutzung von www.bantu-ev.org und den hier beschriebenen Kontakt-, Spenden- und Formularangeboten. Bantu e.V. hat keine Datenschutzbeauftragte und keinen Datenschutzbeauftragten benannt; Fragen zum Datenschutz richten Sie bitte an <a href=\"mailto:info@bantu-ev.org\">info@bantu-ev.org</a>."
           ]
         },
         {
@@ -48,7 +48,8 @@ export const policyContent = {
           "heading": "6. Spenden, Banküberweisungen und Mitgliedschaft",
           "paragraphs": [
             "Wir verarbeiten die für Zuordnung und Verwaltung erforderlichen Angaben, insbesondere Name, gegebenenfalls Anschrift und E-Mail-Adresse, Betrag, Datum, Verwendungszweck und Transaktionsreferenz. Bei einer Überweisung erhalten wir die auf dem Kontoauszug enthaltenen Zahlungsangaben. Die Verarbeitung dient der Entgegennahme und Zuordnung Ihrer Spende, der Kommunikation und gegebenenfalls der Ausstellung einer Zuwendungsbestätigung.",
-            "Grundlagen sind Art. 6 Abs. 1 lit. b DSGVO für die Abwicklung, lit. c für gesetzliche Buchführungs- und Nachweispflichten und, soweit erforderlich, lit. f für die ordnungsgemäße Spendenverwaltung. Mitgliedschaftsdaten verarbeiten wir zur Durchführung der Mitgliedschaft. Eine Spende führt nicht automatisch zur Anmeldung für Werbung oder Projektinformationen."
+            "Grundlagen sind Art. 6 Abs. 1 lit. b DSGVO für die Abwicklung, lit. c für gesetzliche Buchführungs- und Nachweispflichten und, soweit erforderlich, lit. f für die ordnungsgemäße Spendenverwaltung. Mitgliedschaftsdaten verarbeiten wir zur Durchführung der Mitgliedschaft. Eine Spende führt nicht automatisch zur Anmeldung für Werbung oder Projektinformationen.",
+            "Überweisungen gehen auf unser Konto bei der GLS Gemeinschaftsbank eG in Bochum. Die Bank verarbeitet dabei die Zahlungsdaten, insbesondere Name, IBAN, Betrag, Datum und Verwendungszweck, zur Kontoführung und Ausführung der Zahlung, und zwar als eigenständig Verantwortliche nach den bankrechtlichen Vorschriften. Bantu erhält diese Angaben über den Kontoauszug und nutzt sie wie oben beschrieben. Einzelheiten enthalten die Datenschutzhinweise der GLS Bank."
           ]
         },
         {
@@ -108,7 +109,7 @@ export const policyContent = {
           "heading": "13. Empfänger und Drittlandverarbeitung",
           "paragraphs": [
             "Daten erhalten nur Personen und Stellen, die sie für den jeweiligen Zweck benötigen, insbesondere zuständige Vereinsmitarbeitende, beauftragte Buchhaltungs- oder IT-Dienstleister, Banken, gewählte Zahlungsdienste und gegebenenfalls Behörden im Rahmen gesetzlicher Pflichten. Dienstleister werden nach ihrer tatsächlichen Aufgabe und datenschutzrechtlichen Rolle eingebunden.",
-            "Bei Übermittlungen in Staaten außerhalb des EWR gelten zusätzlich Art. 44 ff. DSGVO. Soweit erforderlich, kommen insbesondere ein anwendbarer Angemessenheitsbeschluss oder geeignete Garantien wie Standardvertragsklauseln in Betracht. Welche Verarbeitung ein externer, eigenständig verantwortlicher Dienst vornimmt, erläutert dieser in seinen eigenen Datenschutzhinweisen."
+            "Bei Übermittlungen in Staaten außerhalb des EWR gelten zusätzlich Art. 44 ff. DSGVO. PayPal und Stripe können Daten auch außerhalb des EWR verarbeiten, etwa in den USA. Soweit für das Empfängerland kein Angemessenheitsbeschluss der EU-Kommission besteht, stützen sich solche Übermittlungen auf geeignete Garantien nach Art. 46 DSGVO, insbesondere auf die Standardvertragsklauseln der EU-Kommission. Soweit erforderlich, kommen insbesondere ein anwendbarer Angemessenheitsbeschluss oder geeignete Garantien wie Standardvertragsklauseln in Betracht. Welche Verarbeitung ein externer, eigenständig verantwortlicher Dienst vornimmt, erläutert dieser in seinen eigenen Datenschutzhinweisen."
           ]
         },
         {

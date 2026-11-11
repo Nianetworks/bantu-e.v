@@ -37,7 +37,7 @@ const cuppingPhotos = cupping ? [
   </PageHead>
 
   {!features.shopCheckoutOpen && (
-    <div class="wrap" style="margin-top:1.5rem"><p class="notice">{t.shopClosedNote}</p></div>
+    <div class="wrap" style="margin-top:1.5rem"><p class="notice">{de ? 'Der Online-Shop öffnet in Kürze. Preise und Produktfotos folgen. Sie können Produkte schon jetzt per E-Mail vormerken.' : t.shopClosedNote}</p></div>
   )}
 
   {shopCategories.map((c, i) => {
