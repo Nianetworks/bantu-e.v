@@ -1,32 +1,38 @@
 ---
-title: "Schulungsreihe „Bildung für alle …?!“: vier Samstage ab 21. November"
+title: "Schulungsreihe „Bildung für alle …?!“: vier Samstage ab 28. November"
 date: 2026-11-06
 type: event
 summary: "Bildungsgerechtigkeit zwischen Uganda und Deutschland: kostenfreie Schulungstage in Berlin und online, mit Expert*innen live aus Kampala. Jeder Tag einzeln buchbar."
-eventStart: 2026-11-21T10:00:00+01:00
-eventEnd: 2026-12-12T15:00:00+01:00
-eventTime: "Sa 21.11., 28.11., 05.12., 12.12. · 10–15 Uhr"
+eventStart: 2026-11-28T10:00:00+01:00
+eventEnd: 2026-12-19T15:00:00+01:00
+eventTime: "Sa 28.11., 05.12., 12.12., 19.12. · 10–15 Uhr"
 location: "Berlin (barrierefreier Raum, Adresse mit Anmeldebestätigung) und online"
 registration: "mailto:info@bantu-ev.org?subject=Anmeldung%20Bildung%20f%C3%BCr%20alle"
 registrationLabel: "Per E-Mail anmelden"
 cost: "kostenfrei, mit Mittagessen und Kinderbetreuung"
-pinUntil: 2026-12-12
+pinUntil: 2026-12-19
 eventName: "Schulungsreihe „Bildung für alle …?!“"
 eventKind: training
 sessions:
-  - { date: 2026-11-21T10:00:00+01:00, time: "10–15 Uhr", title: "Bildungsgerechtigkeit im globalen Vergleich" }
-  - { date: 2026-11-28T10:00:00+01:00, time: "10–15 Uhr", title: "Bildungsrechte und inklusive Bildung" }
-  - { date: 2026-12-05T10:00:00+01:00, time: "10–15 Uhr", title: "Bildungsfinanzierung und lokale Handlungsspielräume" }
-  - { date: 2026-12-12T10:00:00+01:00, time: "10–15 Uhr", title: "Bildungsgerechtigkeit in die eigene Praxis übertragen, mit Abschluss" }
+  - { date: 2026-11-28T10:00:00+01:00, time: "10–15 Uhr", title: "Bildungsgerechtigkeit im globalen Vergleich" }
+  - { date: 2026-12-05T10:00:00+01:00, time: "10–15 Uhr", title: "Bildungsrechte und inklusive Bildung" }
+  - { date: 2026-12-12T10:00:00+01:00, time: "10–15 Uhr", title: "Bildungsfinanzierung und lokale Handlungsspielräume" }
+  - { date: 2026-12-19T10:00:00+01:00, time: "10–15 Uhr", title: "Bildungsgerechtigkeit in die eigene Praxis übertragen, mit Abschluss" }
 project: p26-214-bildung-fuer-alle
+image: "/images/projects/p26-214-bildung-fuer-alle/videokonferenz-mit-kampala.webp"
+imageAlt: "Jugendliche sitzen an einem langen Tisch mit Laptops, Notizen und Fingerfood; auf dem großen Bildschirm winkt eine Gruppe aus Kampala per Videokonferenz."
+flyer:
+  pages:
+    - { src: "/images/veranstaltungen/bildung-fuer-alle-2026-flyer-de-seite-1", width: 1240, height: 1754, caption: "Seite 1", alt: "Flyer, Seite 1: Kostenfreie Schulungsreihe „Bildung für alle …?!“, Bildungsgerechtigkeit zwischen Uganda und Deutschland. Foto einer Gruppenarbeit mit Zuschaltung aus Kampala, „Verstehen. Vernetzen. Verändern.“, vier Samstage 28.11., 05.12., 12.12. und 19.12.2026, 10:00 bis 15:00 Uhr, Berlin oder Zoom, kostenfrei mit Mittagessen, Kinderbetreuung und Teilnahmebescheinigung, Anmeldung an info@bantu-ev.org mit QR-Code, erster Anmeldeschluss 24.11.2026, Förderlogos." }
+    - { src: "/images/veranstaltungen/bildung-fuer-alle-2026-flyer-de-seite-2", width: 1240, height: 1754, caption: "Seite 2", alt: "Flyer, Seite 2: „Vier Tage. Neue Perspektiven.“ Kurzbeschreibung, zwei Fotos (gemeinsam lernen, Perspektiven teilen), Zielgruppen und das Programm der vier Termine mit Themen, Hinweise zur Anmeldung und Förderlogos. Das Programm steht auch als Text auf dieser Seite." }
 ---
 
 Warum haben manche Kinder Zugang zu guter Bildung und andere nicht, in Kampala wie in Berlin? Unsere neue Schulungsreihe richtet sich an Lehrkräfte, Erzieher*innen, Schulsozialarbeit, Engagierte aus der Diaspora, Eltern und Aktive aus Vereinen.
 
-- **Sa 21.11.2026:** Bildungsgerechtigkeit im globalen Vergleich
-- **Sa 28.11.2026:** Bildungsrechte und inklusive Bildung
-- **Sa 05.12.2026:** Bildungsfinanzierung und lokale Handlungsspielräume
-- **Sa 12.12.2026:** Bildungsgerechtigkeit in die eigene Praxis übertragen, mit Abschluss
+- **Sa 28.11.2026:** Bildungsgerechtigkeit im globalen Vergleich
+- **Sa 05.12.2026:** Bildungsrechte und inklusive Bildung
+- **Sa 12.12.2026:** Bildungsfinanzierung und lokale Handlungsspielräume
+- **Sa 19.12.2026:** Bildungsgerechtigkeit in die eigene Praxis übertragen, mit Abschluss
 
 Anmeldeschluss ist jeweils der Dienstag vor dem Termin. Alle Details auf der Projektseite.
 

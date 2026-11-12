@@ -4,6 +4,8 @@ date: 2026-09-01
 type: news
 summary: "Unser neues BIKO-Projekt bringt Stampflehm, Saatgut und koloniale Spuren in Berliner Schulen, in Kooperation mit AfricAvenir International e.V."
 project: p26-224-erde-saat-erbe
+image: "/images/projects/p26-224-erde-saat-erbe/stampflehm-workshop.webp"
+imageAlt: "Jugendliche verdichten in einer Werkstatt rote Erde in einer Holzschalung mit Stampfern; daneben Eimer mit Lehm."
 ---
 
 Von September bis Dezember 2026 arbeiten drei Lerngruppen der Klassen 9 bis 11 zu kolonialen Kontinuitäten im Bauen und in der Landwirtschaft: Sie bauen ein Stampflehm-Element, säen und beobachten, erkunden koloniale Spuren im Afrikanischen Viertel in Wedding und zeigen ihre Ergebnisse in einer Mini-Ausstellung an ihrer Schule.

@@ -4,6 +4,8 @@ date: 2026-10-29
 type: news
 summary: "Mit Anchored Bridges Initiatives haben wir die Projektvereinbarung unterzeichnet: 60 Kinder aus einkommensschwachen Familien erhalten einen gebührenfreien Kita-Platz."
 project: p26-230-pearl-kita-kampala
+image: "/images/projects/p26-230-pearl-kita/pearl-kita-montessori-raum.webp"
+imageAlt: "Ein heller Gruppenraum mit Holzregalen voller Montessori-Material, Kinderzeichnungen an der Wand und einer Pinnwand „Montessori Kampala“; zwei Erzieherinnen räumen Material ein."
 ---
 
 Am 29. Oktober 2026 haben Bantu e.V. und unsere ugandische Partnerorganisation Anchored Bridges Initiatives (ABI) die Projektvereinbarung für die **Pearl Kindertagesstätte Kampala** unterzeichnet.

@@ -4,6 +4,8 @@ date: 2026-10-29
 type: news
 summary: "Nous avons signé la convention de projet avec Anchored Bridges Initiatives : 60 enfants de familles à faibles revenus obtiennent une place gratuite en jardin d’enfants."
 project: p26-230-pearl-kita-kampala
+image: "/images/projects/p26-230-pearl-kita/pearl-kita-montessori-raum.webp"
+imageAlt: "Une salle de groupe lumineuse avec des étagères en bois pleines de matériel Montessori, des dessins d’enfants au mur et un panneau « Montessori Kampala » ; deux éducatrices rangent le matériel."
 ---
 
 Le 29 octobre 2026, Bantu e.V. et notre partenaire ougandais Anchored Bridges Initiatives (ABI) ont signé la convention de projet pour le **jardin d’enfants Pearl à Kampala**.

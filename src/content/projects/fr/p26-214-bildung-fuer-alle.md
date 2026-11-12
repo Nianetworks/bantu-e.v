@@ -7,7 +7,7 @@ programme: inland
 status: active
 country: "Allemagne / Ouganda"
 location: "Berlin et en ligne"
-period: "Octobre à décembre 2026 · journées de formation les 21.11, 28.11, 05.12 et 12.12.2026"
+period: "Octobre à décembre 2026 · journées de formation les 28.11, 05.12, 12.12 et 19.12.2026"
 start: 2026-10-01
 end: 2026-12-31
 partners: ["AfricAvenir International e.V.", "Anchored Bridges Initiatives (ABI), Kampala"]
@@ -23,6 +23,14 @@ stats:
   - { value: "4", label: "samedis de 5 heures" }
   - { value: "gratuit", label: "avec déjeuner, garde d’enfants et attestation" }
 photoBrief: "Travail de groupe lors d’une journée de formation à Berlin, écran avec des collègues à Kampala"
+image: "/images/projects/p26-214-bildung-fuer-alle/gruppenarbeit-am-runden-tisch.webp"
+imageAlt: "Travail en groupe autour d’une grande table ronde : jeunes et adultes écrivent sur des affiches et des post-it, avec viennoiseries et fruits au centre ; sur l’écran derrière, des collègues de Kampala font signe."
+galleryTitle: "Images du projet"
+gallery:
+  - { src: "/images/projects/p26-214-bildung-fuer-alle/videokonferenz-mit-kampala.webp", thumb: "/images/projects/p26-214-bildung-fuer-alle/videokonferenz-mit-kampala-480.webp", width: 1600, height: 1073, thumbWidth: 480, thumbHeight: 322, alt: "Des jeunes sont assis à une longue table avec ordinateurs, notes et amuse-bouches ; sur le grand écran, un groupe de Kampala fait signe en visioconférence.", caption: "En direct avec Kampala." }
+  - { src: "/images/projects/p26-214-bildung-fuer-alle/gruppenarbeit-mit-moderation.webp", thumb: "/images/projects/p26-214-bildung-fuer-alle/gruppenarbeit-mit-moderation-480.webp", width: 1600, height: 1073, thumbWidth: 480, thumbHeight: 322, alt: "Un animateur montre quelque chose à trois jeunes sur une affiche couverte de post-it colorés ; trois personnes participent en vidéo à l’arrière-plan.", caption: "Travail en groupe avec animation." }
+  - { src: "/images/projects/p26-214-bildung-fuer-alle/austausch-in-der-runde.webp", thumb: "/images/projects/p26-214-bildung-fuer-alle/austausch-in-der-runde-480.webp", width: 1600, height: 1073, thumbWidth: 480, thumbHeight: 322, alt: "Échange animé autour d’une table en bois : des jeunes, dont un en fauteuil roulant, et des adultes rient et discutent ; au mur, des affiches de brainstorming et une affiche « Bantu e.V. ».", caption: "Échange autour de la table." }
+  - { src: "/images/projects/p26-214-bildung-fuer-alle/mittagspause-und-gespraeche.webp", thumb: "/images/projects/p26-214-bildung-fuer-alle/mittagspause-und-gespraeche-480.webp", width: 1600, height: 1073, thumbWidth: 480, thumbHeight: 322, alt: "Pause déjeuner : les participantes et participants discutent en petits groupes, la longue table porte bretzels, quiches, sandwichs et fruits ; à l’écran, des diapositives sur l’Ouganda.", caption: "Déjeuner sur place et temps d’échange." }
 featured: true
 order: 2
 ---
@@ -33,10 +41,10 @@ Pourquoi certains enfants ont-ils accès à une bonne éducation et d’autres n
 
 | Date | Thème |
 |---|---|
-| Sam. 21.11.2026 | La justice éducative en comparaison mondiale |
-| Sam. 28.11.2026 | Le droit à l’éducation et l’éducation inclusive |
-| Sam. 05.12.2026 | Financement de l’éducation et marges d’action locales |
-| Sam. 12.12.2026 | Mettre la justice éducative en pratique, avec séance de clôture |
+| Sam. 28.11.2026 | La justice éducative en comparaison mondiale |
+| Sam. 05.12.2026 | Le droit à l’éducation et l’éducation inclusive |
+| Sam. 12.12.2026 | Financement de l’éducation et marges d’action locales |
+| Sam. 19.12.2026 | Mettre la justice éducative en pratique, avec séance de clôture |
 
 Chaque journée de **10 h à 15 h**, sur place dans un lieu accessible à Berlin (adresse envoyée avec la confirmation) ou en ligne via Zoom. Gratuit, avec déjeuner sur place, attestation de participation et garde d’enfants gratuite (merci de la signaler à l’inscription).
 <!-- OPEN: langue de travail des séances (allemand ? interprétation ?) à confirmer. -->
@@ -50,6 +58,6 @@ Chaque journée de **10 h à 15 h**, sur place dans un lieu accessible à Berlin
 
 ## Inscription
 
-Par e-mail à [info@bantu-ev.org](mailto:info@bantu-ev.org?subject=Inscription%20L%E2%80%99%C3%A9ducation%20pour%20tous). Merci d’indiquer votre nom, vos coordonnées, la ou les dates, sur place ou en ligne, et vos besoins de garde d’enfants. Les inscriptions ferment le mardi précédant chaque date (pour le 21.11 : mardi 17.11.2026). Les places sur place sont limitées ; au moins cinq places par date sont réservées à des personnes sans rattachement institutionnel.
+Par e-mail à [info@bantu-ev.org](mailto:info@bantu-ev.org?subject=Inscription%20L%E2%80%99%C3%A9ducation%20pour%20tous). Merci d’indiquer votre nom, vos coordonnées, la ou les dates, sur place ou en ligne, et vos besoins de garde d’enfants. Les inscriptions ferment le mardi précédant chaque date (pour le 28.11 : mardi 24.11.2026). Les places sur place sont limitées ; au moins cinq places par date sont réservées à des personnes sans rattachement institutionnel.
 
 Questions : [info@bantu-ev.org](mailto:info@bantu-ev.org) · +49 176 34213765
