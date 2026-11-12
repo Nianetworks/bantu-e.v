@@ -13,7 +13,7 @@ image: "/images/projects/abi-berichte/04-women-and-crafts/abi-006-artisan-at-sew
 imageAlt: "Eine Kunsthandwerkerin im Rollstuhl arbeitet an einem Nähtisch, ein kleines Kind ist bei ihr; das Kind ist unkenntlich gemacht."
 galleryTitle: "2 Archivfotos vom Juli 2017"
 report:
-  href: "/downloads/berichte/abi-women-and-crafts-report-en-v2.pdf"
+  href: "/downloads/berichte/abi-women-and-crafts-report-en.pdf"
   label: "Projektbericht herunterladen (PDF, Englisch)"
   note: "Illustrierter Projektbericht, 5 Seiten, 0,6 MB, auf Englisch"
 gallery:

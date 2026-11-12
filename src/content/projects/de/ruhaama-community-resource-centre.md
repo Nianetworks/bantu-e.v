@@ -39,4 +39,4 @@ Digitale Kompetenzen entscheiden heute über Bildungs- und Berufschancen. Gerade
 - **225 Teilnehmende** besuchten IT-Kurse, **175** schlossen mit Zertifikat ab.
 - **350 Schüler*innen** wurden mit Nachhilfe erreicht.
 - Das Zentrum ist ein Treffpunkt der Gemeinde geblieben: 2024 feierten dort die Teilnehmenden unseres Jugendaustauschs gemeinsam den Internationalen Frauentag.
-<!-- OPEN: Quellen nennen 225 Teilnehmende/175 Zertifikate (Tätigkeitsbericht, Pearl-Antrag) bzw. „225 certificates“ (Transparenzbericht 2025, Übersicht) – Zahl prüfen. -->
+<!-- Geklärt 12.11.2026: Sachbericht P 22/29 vom 30.05.2024 = 225 Teilnehmende (Ziel 200 Teilnehmende), 175 Zertifikate; Jahresberichte korrigiert. -->

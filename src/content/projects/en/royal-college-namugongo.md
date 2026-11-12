@@ -1,7 +1,7 @@
 ---
 title: "Royal College Namugongo: School Solidarity between Bendorf and Uganda"
 subtitle: "Learning materials, accessible school routes and Christmas gifts"
-summary: "Pupils at Wilhelm-Remy-Gymnasium Bendorf raised approximately €7,000 for fellow learners in Uganda. Through our partner ABI the money provided school materials and Christmas gift boxes and financed two access ramps at Royal College Namugongo; the partnership also brought Uganda into English classes in Bendorf."
+summary: "Approximately €7,000 from the fundraising of pupils at Wilhelm-Remy-Gymnasium Bendorf went to fellow learners in Uganda. Through our partner ABI the money provided school materials and Christmas gift boxes and financed two access ramps at Royal College Namugongo; the partnership also brought Uganda into English classes in Bendorf."
 programme: international
 status: completed
 country: "Uganda"

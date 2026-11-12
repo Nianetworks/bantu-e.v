@@ -1,7 +1,7 @@
 ---
 title: "Okushoma kwa Boona : l’éducation pour tous !?"
 subtitle: "Échange de jeunes germano-ougandais sur l’éducation inclusive (ODD 4)"
-summary: "Douze jeunes d’Allemagne et d’Ouganda ont exploré pendant un an et demi ce qui empêche l’éducation pour tous, et ce qui la rend possible."
+summary: "Douze jeunes d’Allemagne et d’Ouganda ont exploré pendant près de deux ans (d’août 2023 à juin 2025) ce qui empêche l’éducation pour tous, et ce qui la rend possible."
 code: "WLV 3100212054"
 programme: international
 status: completed
@@ -18,7 +18,7 @@ fundingLogos:
 sdgs: [4, 10, 17]
 stats:
   - { value: "12", label: "participantes et participants d’Allemagne et d’Ouganda" }
-  - { value: "5", label: "phases de projet sur un an et demi" }
+  - { value: "5", label: "phases de projet sur environ 22 mois" }
   - { value: "4", label: "écoles partenaires allemandes dans un nouveau réseau" }
 image: "/images/projects/okushoma-kwa-boona.webp?v=r5"
 imageAlt: "Les jeunes de l’échange, les partenaires et les représentantes du BMZ et d’Engagement Global posent sur une véranda."
@@ -71,7 +71,7 @@ successStory: true
 order: 4
 ---
 
-*Okushoma kwa Boona* signifie « l’éducation pour tous ». Sous ce titre, douze jeunes d’Allemagne et d’Ouganda ont travaillé pendant un an et demi sur l’objectif de développement durable 4 : une éducation de qualité et inclusive.
+*Okushoma kwa Boona* signifie « l’éducation pour tous ». Sous ce titre, douze jeunes d’Allemagne et d’Ouganda ont travaillé pendant près de deux ans sur l’objectif de développement durable 4 : une éducation de qualité et inclusive.
 
 ## Le parcours
 

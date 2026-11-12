@@ -38,7 +38,7 @@ Rwengoma Primary School is a public school whose limited funds made it difficult
 
 Anchored Bridges Initiatives (ABI), formerly Ability Beyond the Iris, delivered the support through the partnership. The handover cheque photographed with school representatives records UGX 1,000,000 and bears the date 11 October 2018.
 
-The UGX 1,000,000 contribution was an allocation from the approximately €7,000 raised by the Bendorf pupils. The wider [school partnership](/en/projects/royal-college-namugongo/) and the [school-fee support](/en/projects/royal-junior-namugongo-schulgeld/) are covered in companion reports.
+The UGX 1,000,000 contribution was an allocation from the approximately €7,000 that went to ABI from the Bendorf pupils’ fundraising (one shared pool, counted once). The wider [school partnership](/en/projects/royal-college-namugongo/) and the [school-fee support](/en/projects/royal-junior-namugongo-schulgeld/) are covered in companion reports.
 
 ## A vegetable garden to support the lunch programme
 

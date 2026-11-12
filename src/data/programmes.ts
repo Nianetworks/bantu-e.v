@@ -193,7 +193,7 @@ export const trusteeships: Trusteeship[] = [
     url: 'https://tubman.network',
     place: 'Berlin',
     // Chair, 12.11.2026: all six historical projects below (incl. ParentCircle) were implemented under Bantu e.V.'s Trägerschaft.
-    // End dates are project-specific (e.g. Towards Safer Spaces until 29.03.2024, YouthECO conference 18.10.2024); this does not
+    // End dates are project-specific (e.g. Towards Safer Spaces until 31.07.2024 after the extension of 14.03.2024, YouthECO conference 18.10.2024); this does not
     // cover current or future activities of the independent tubman.network e.V.
     period: { de: '2022–2024', en: '2022–2024', fr: '2022–2024' },
     text: {
@@ -203,9 +203,9 @@ export const trusteeships: Trusteeship[] = [
     },
     projectsHeading: { de: 'Historische Projekte unter Trägerschaft von Bantu e.V., umgesetzt von tubman.network', en: 'Historical projects under the legal and administrative sponsorship of Bantu e.V., implemented by tubman.network', fr: 'Projets historiques sous le portage juridique et administratif de Bantu e.V., mis en œuvre par tubman.network' },
     projects: {
-      de: ['Ubuntu für alle und Equal Rights for All (2022–2023, DSEE, Deutsche Fernsehlotterie / Deutsches Hilfswerk)', 'FashionEmpowerment (2023, Bezirksamt Berlin-Mitte)', 'Safer Spaces for Mothers und Mama Circle (01.04.2023–29.03.2024, Robert Bosch Stiftung)', 'Black Engagement Matters: Building Black Resilience (2023–2024, DSEE)', 'Youth Eco Project und YouthECO-Konferenz (2024, Erasmus+)', 'ParentCircle'],
-      en: ['Ubuntu for All and Equal Rights for All (2022–2023, DSEE, Deutsche Fernsehlotterie / Deutsches Hilfswerk)', 'FashionEmpowerment (2023, Berlin-Mitte District Office)', 'Safer Spaces for Mothers and Mama Circle (1 Apr 2023 to 29 Mar 2024, Robert Bosch Stiftung)', 'Black Engagement Matters: Building Black Resilience (2023–2024, DSEE)', 'Youth Eco Project and YouthECO conference (2024, Erasmus+)', 'ParentCircle'],
-      fr: ['Ubuntu pour tous et Equal Rights for All (2022–2023, DSEE, Deutsche Fernsehlotterie / Deutsches Hilfswerk)', 'FashionEmpowerment (2023, Bezirksamt Berlin-Mitte)', 'Safer Spaces for Mothers et Mama Circle (du 01.04.2023 au 29.03.2024, Robert Bosch Stiftung)', 'Black Engagement Matters : Building Black Resilience (2023–2024, DSEE)', 'Youth Eco Project et conférence YouthECO (2024, Erasmus+)', 'ParentCircle'],
+      de: ['Ubuntu für alle und Equal Rights for All (2022–2023, DSEE, Deutsche Fernsehlotterie / Deutsches Hilfswerk)', 'FashionEmpowerment (2023, Bezirksamt Berlin-Mitte)', 'Safer Spaces for Mothers und Mama Circle (01.04.2023–31.07.2024, Robert Bosch Stiftung)', 'Black Engagement Matters: Building Black Resilience (2023–2024, DSEE)', 'Youth Eco Project und YouthECO-Konferenz (2024, Erasmus+)', 'ParentCircle'],
+      en: ['Ubuntu for All and Equal Rights for All (2022–2023, DSEE, Deutsche Fernsehlotterie / Deutsches Hilfswerk)', 'FashionEmpowerment (2023, Berlin-Mitte District Office)', 'Safer Spaces for Mothers and Mama Circle (1 Apr 2023 to 31 Jul 2024, Robert Bosch Stiftung)', 'Black Engagement Matters: Building Black Resilience (2023–2024, DSEE)', 'Youth Eco Project and YouthECO conference (2024, Erasmus+)', 'ParentCircle'],
+      fr: ['Ubuntu pour tous et Equal Rights for All (2022–2023, DSEE, Deutsche Fernsehlotterie / Deutsches Hilfswerk)', 'FashionEmpowerment (2023, Bezirksamt Berlin-Mitte)', 'Safer Spaces for Mothers et Mama Circle (du 01.04.2023 au 31.07.2024, Robert Bosch Stiftung)', 'Black Engagement Matters : Building Black Resilience (2023–2024, DSEE)', 'Youth Eco Project et conférence YouthECO (2024, Erasmus+)', 'ParentCircle'],
     },
     slugs: ['ubuntu-fuer-alle', 'fashion-empowerment', 'safer-spaces-tubman-network', 'black-engagement-matters', 'youth-eco-project', 'parent-circle'],
   },

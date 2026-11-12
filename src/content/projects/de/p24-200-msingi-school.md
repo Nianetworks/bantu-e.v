@@ -11,7 +11,7 @@ period: "Dezember 2024 bis Juni 2025"
 start: 2024-12-01
 end: 2025-06-14
 partners: ["Nyentsya Community Development Association (NCDA), Mbarara", "Lehrteam der Msingi School of BTVET"]
-funders: ["Stiftung Nord-Süd-Brücken (EZ-Kleinprojektefonds) mit Mitteln des BMZ", "Schmitz-Stiftungen"]
+funders: ["Stiftung Nord-Süd-Brücken (EZ-Kleinprojektefonds, getragen gemeinsam mit den Schmitz-Stiftungen) mit Mitteln des BMZ"]
 fundingLogos:
   - { src: "/funders/nord-sued-bruecken.svg", alt: "Stiftung Nord-Süd-Brücken", width: 170 }
   - { src: "/funders/bmz-logo.png", alt: "Bundesministerium für wirtschaftliche Zusammenarbeit und Entwicklung", width: 190 }
@@ -27,7 +27,7 @@ galleryTitle: "12 Fotos aus der Ausbildung"
 report:
   href: "/downloads/berichte/bantu-ev-msingi-abschlussbericht-2025-de.pdf"
   label: "Abschlussbericht herunterladen (PDF)"
-  note: "Sach- und Finanzbericht, 13 Seiten, 1,9 MB"
+  note: "Sach- und Finanzbericht, 14 Seiten, 1,9 MB, korrigierte Ausgabe vom 12.11.2026"
 gallery:
   - { src: "/images/projects/msingi-p24-200/msingi-p24-200-022-training-session.webp", thumb: "/images/projects/msingi-p24-200/msingi-p24-200-022-training-session-480.webp", width: 1280, height: 958, thumbWidth: 480, thumbHeight: 359, alt: "Eine Ausbilderin in weißer Bluse spricht im Salon zu Teilnehmerinnen; an den Wänden grüne Spiegelplätze und eine Reihe Frisurenfotos.", caption: "Unterricht im Ausbildungssalon der Msingi School.", section: "Ausbildung im Salon" }
   - { src: "/images/projects/msingi-p24-200/msingi-p24-200-026-training-session.webp", thumb: "/images/projects/msingi-p24-200/msingi-p24-200-026-training-session-480.webp", width: 1080, height: 810, thumbWidth: 480, thumbHeight: 360, alt: "Eine Ausbilderin steht an einem Flipchart, mehrere Teilnehmerinnen sitzen auf Stühlen im Salon und hören zu.", caption: "Theorie am Flipchart: ein Teil der 24-wöchigen Ausbildung.", section: "Ausbildung im Salon" }
@@ -53,7 +53,7 @@ Junge Frauen in Mbarara haben oft kaum Zugang zu einer anerkannten Berufsausbild
 
 ## Ergebnisse
 
-- **18 junge Frauen** (18–35 Jahre) haben die vollständige 24-wöchige Ausbildung durchlaufen.
+- **18 junge Frauen** (18–35 Jahre) haben die Ausbildung abgeschlossen (24 geplante Projektwochen einschließlich Einrichtung der Räume, Praxis und Prüfungen).
 - **Alle 18** bestanden die theoretische und praktische Abschlussprüfung und erhielten ihre Zertifikate.
 - **7 Absolventinnen** wurden direkt von ihren Praktikumsbetrieben eingestellt: eine sofortige Beschäftigungsquote von **39 %**.
 - Alle Teilnehmerinnen nahmen an einem Gesundheitsworkshop (HIV/Aids-Prävention) und an zwei Workshops zu Betriebsführung und Finanzplanung teil.
@@ -64,4 +64,4 @@ Junge Frauen in Mbarara haben oft kaum Zugang zu einer anerkannten Berufsausbild
 >
 > Boaz Murinzi Murema, Vorstand Bantu e.V., im Transparenzbericht 2025
 
-Laut finanziellem Verwendungsnachweis vom 20. März 2026 betrugen die Einnahmen 11.220,74 EUR und die Ausgaben 11.209,95 EUR. Wir danken der Stiftung Nord-Süd-Brücken, den Schmitz-Stiftungen und vor allem dem gesamten Lehrteam der Msingi School für die hervorragende Umsetzung vor Ort.
+Die Einnahmen betrugen 11.220,74 EUR. Die endgültigen Ausgaben werden derzeit abgestimmt (Stand 12.11.2026): Finanzierungsplan, Belegliste und Jahresbericht 2025 weichen geringfügig voneinander ab; der Abschlussbericht nennt die offenen Punkte. Wir danken der Stiftung Nord-Süd-Brücken und den Schmitz-Stiftungen, die gemeinsam den EZ-Kleinprojektefonds tragen, und vor allem dem gesamten Lehrteam der Msingi School für die hervorragende Umsetzung vor Ort.

@@ -11,7 +11,7 @@ period: "Décembre 2024 à juin 2025"
 start: 2024-12-01
 end: 2025-06-14
 partners: ["Nyentsya Community Development Association (NCDA), Mbarara", "Équipe pédagogique de la Msingi School of BTVET"]
-funders: ["Stiftung Nord-Süd-Brücken (fonds pour petits projets) avec des fonds du BMZ", "Schmitz-Stiftungen"]
+funders: ["Stiftung Nord-Süd-Brücken (EZ-Kleinprojektefonds, géré conjointement avec les Schmitz-Stiftungen) avec des fonds du BMZ"]
 fundingLogos:
   - { src: "/funders/nord-sued-bruecken.svg", alt: "Stiftung Nord-Süd-Brücken", width: 170 }
   - { src: "/funders/bmz-logo.png", alt: "Ministère fédéral allemand de la Coopération économique et du Développement", width: 190 }
@@ -27,7 +27,7 @@ galleryTitle: "12 photos de la formation"
 report:
   href: "/downloads/berichte/bantu-ev-msingi-abschlussbericht-2025-de.pdf"
   label: "Télécharger le rapport final (PDF, allemand)"
-  note: "Rapport narratif et financier, 13 pages, 1,9 Mo, en allemand"
+  note: "Rapport narratif et financier, 14 pages, 1,9 Mo, en allemand, édition corrigée du 12 novembre 2026"
 gallery:
   - { src: "/images/projects/msingi-p24-200/msingi-p24-200-022-training-session.webp", thumb: "/images/projects/msingi-p24-200/msingi-p24-200-022-training-session-480.webp", width: 1280, height: 958, thumbWidth: 480, thumbHeight: 359, alt: "Une formatrice en chemisier blanc s’adresse aux participantes dans le salon ; les murs portent des postes à miroir verts et une rangée de photos de coiffures.", caption: "Un cours dans le salon de formation de la Msingi School.", section: "Formation au salon" }
   - { src: "/images/projects/msingi-p24-200/msingi-p24-200-026-training-session.webp", thumb: "/images/projects/msingi-p24-200/msingi-p24-200-026-training-session-480.webp", width: 1080, height: 810, thumbWidth: 480, thumbHeight: 360, alt: "Une formatrice se tient près d’un tableau à feuilles, plusieurs participantes assises dans le salon l’écoutent.", caption: "La théorie au tableau, une partie de la formation de 24 semaines.", section: "Formation au salon" }
@@ -50,7 +50,7 @@ order: 3
 
 ## Résultats
 
-- **18 jeunes femmes** (de 18 à 35 ans) ont suivi les 24 semaines complètes de formation.
+- **18 jeunes femmes** (de 18 à 35 ans) ont achevé la formation (24 semaines de projet prévues, y compris l’aménagement des locaux, la pratique et les examens).
 - **Toutes les 18** ont réussi leurs examens finaux théoriques et pratiques et ont reçu un certificat.
 - **7 diplômées** ont été embauchées directement par leur entreprise de stage, soit un taux d’emploi immédiat de **39 %**.
 - Toutes les participantes ont suivi un atelier de santé (prévention du VIH/sida) et deux ateliers sur la gestion d’entreprise et la planification financière.
@@ -61,4 +61,4 @@ order: 3
 >
 > Boaz Murinzi Murema, directeur, rapport de transparence 2025
 
-Selon le décompte financier du 20 mars 2026, les recettes s’élevaient à 11 220,74 € et les dépenses à 11 209,95 €. Nous remercions la Stiftung Nord-Süd-Brücken, les Schmitz-Stiftungen et surtout toute l’équipe pédagogique de la Msingi School pour son travail remarquable sur le terrain.
+Les recettes s’élevaient à 11 220,74 €. Les dépenses définitives sont en cours de rapprochement (état au 12 novembre 2026) : le plan de financement, la liste des justificatifs et le rapport annuel 2025 divergent légèrement ; le rapport final indique les points ouverts. Nous remercions la Stiftung Nord-Süd-Brücken et les Schmitz-Stiftungen, qui gèrent ensemble l’EZ-Kleinprojektefonds, et surtout toute l’équipe pédagogique de la Msingi School pour son travail remarquable sur le terrain.

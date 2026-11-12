@@ -69,5 +69,7 @@ export const fileRedirects = {
   '/en/projects/cerebral-palsy-ediri-pilot': '/en/projects/p23-91-ours-zerebralparese/',
   '/projekte/zerebralparese-ediri-pilotprojekt': '/projekte/p23-91-ours-zerebralparese/',
   '/fr/projets/paralysie-cerebrale-projet-pilote-ediri': '/fr/projets/p23-91-ours-zerebralparese/',
+  // Report corrections 12.11.2026: descriptive file name without version suffix.
+  '/downloads/berichte/abi-women-and-crafts-report-en-v2.pdf': '/downloads/berichte/abi-women-and-crafts-report-en.pdf',
   '/documents/reports/Bantu_EDIRI_Cerebral_Palsy_Pilot_Report_2023.pdf': '/downloads/berichte/bantu-ev-ediri-pilot-report-2023-en.pdf',
 };

@@ -8,7 +8,7 @@ country: "Deutschland"
 location: "Berlin"
 period: "2023–2024"
 start: 2023-04-01
-end: 2024-03-29
+end: 2024-07-31
 implementer: "tubman.network"
 fiscalSponsorship: true
 funders: ["Robert Bosch Stiftung"]
@@ -43,7 +43,7 @@ Kinderbetreuung ermöglichte es den Erwachsenen, sich auf Gespräche und eigene 
 
 ## Dokumentierte Projektphase
 
-Die Robert Bosch Stiftung förderte „Towards Safer Spaces – geflüchtete BIPoC-Mütter stärken“ vom 1. April 2023 bis 29. März 2024. Im Bericht dokumentiert ist unter anderem das erste MamaCircles-Treffen am 8. Mai 2023.
+Die Robert Bosch Stiftung förderte „Towards Safer Spaces – geflüchtete BIPoC-Mütter stärken“ vom 1. April 2023 bis 31. Juli 2024 (ursprünglich bis 29. März 2024; die Stiftung verlängerte den Förderzeitraum am 14. März 2024). Im Bericht dokumentiert ist unter anderem das erste MamaCircles-Treffen am 8. Mai 2023.
 
 ## Verantwortung und Zusammenarbeit
 

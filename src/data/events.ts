@@ -112,9 +112,9 @@ export const eventEntries: EventEntry[] = [
     kind: 'celebration',
     title: { de: 'Zertifikatsfeier an der Msingi School', en: 'Certificate ceremony at Msingi School', fr: 'Remise des certificats à la Msingi School' },
     summary: {
-      de: 'Nach 24 Wochen Friseur- und Kosmetikausbildung präsentierten die Teilnehmerinnen ihre Arbeiten und erhielten ihre Zertifikate: Alle 18 haben bestanden, sieben wurden direkt von ihren Praktikumsbetrieben eingestellt. Mit unserer Partnerorganisation NCDA.',
-      en: 'After 24 weeks of hairdressing and cosmetology training, the trainees presented their work and received their certificates: all 18 passed, and seven were hired straight away by their placement salons. With our partner organisation NCDA.',
-      fr: 'Après 24 semaines de formation en coiffure et esthétique, les participantes ont présenté leurs travaux et reçu leurs certificats : les 18 ont toutes réussi, et sept ont été embauchées aussitôt par leur salon de stage. Avec notre organisation partenaire NCDA.',
+      de: 'Nach 24 geplanten Projektwochen Friseur- und Kosmetikausbildung präsentierten die Teilnehmerinnen ihre Arbeiten und erhielten ihre Zertifikate: Alle 18 haben bestanden, sieben wurden direkt von ihren Praktikumsbetrieben eingestellt. Mit unserer Partnerorganisation NCDA.',
+      en: 'After 24 scheduled project weeks of hairdressing and cosmetology training, the trainees presented their work and received their certificates: all 18 passed, and seven were hired straight away by their placement salons. With our partner organisation NCDA.',
+      fr: 'Après 24 semaines de projet prévues en coiffure et esthétique, les participantes ont présenté leurs travaux et reçu leurs certificats : les 18 ont toutes réussi, et sept ont été embauchées aussitôt par leur salon de stage. Avec notre organisation partenaire NCDA.',
     },
     place: { de: 'Msingi School of BTVET, Mbarara, Uganda', en: 'Msingi School of BTVET, Mbarara, Uganda', fr: 'Msingi School of BTVET, Mbarara, Ouganda' },
     project: 'p24-200-msingi-school',

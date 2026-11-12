@@ -1,7 +1,7 @@
 ---
 title: "Okushoma kwa Boona: Bildung für alle!?"
 subtitle: "Deutsch-ugandischer Jugendaustausch zu inklusiver Bildung (SDG 4)"
-summary: "Zwölf junge Menschen aus Deutschland und Uganda haben anderthalb Jahre lang gemeinsam untersucht, was Bildung für alle verhindert, und was sie möglich macht."
+summary: "Zwölf junge Menschen aus Deutschland und Uganda haben fast zwei Jahre lang (August 2023 bis Juni 2025) gemeinsam untersucht, was Bildung für alle verhindert, und was sie möglich macht."
 code: "WLV 3100212054"
 programme: international
 status: completed
@@ -18,7 +18,7 @@ fundingLogos:
 sdgs: [4, 10, 17]
 stats:
   - { value: "12", label: "Teilnehmende aus Deutschland und Uganda" }
-  - { value: "5", label: "Projektphasen in 1,5 Jahren" }
+  - { value: "5", label: "Projektphasen in rund 22 Monaten" }
   - { value: "4", label: "deutsche Partnerschulen im neuen Netzwerk" }
 image: "/images/projects/okushoma-kwa-boona.webp?v=r5"
 imageAlt: "Austauschteilnehmende, Partner und Vertreterinnen von BMZ und Engagement Global posieren auf einer Veranda."
@@ -74,7 +74,7 @@ sources:
   - "Bantu_eV_TransparencyReport_2025_Website.pdf; Bantu_eV_Taetigkeitsbericht_2023_2025.pdf"
 ---
 
-*Okushoma kwa Boona* bedeutet „Bildung für alle“. Unter diesem Titel haben sich zwölf junge Menschen aus Deutschland und Uganda über anderthalb Jahre mit dem Nachhaltigkeitsziel 4 beschäftigt: hochwertige und inklusive Bildung.
+*Okushoma kwa Boona* bedeutet „Bildung für alle“. Unter diesem Titel haben sich zwölf junge Menschen aus Deutschland und Uganda über fast zwei Jahre mit dem Nachhaltigkeitsziel 4 beschäftigt: hochwertige und inklusive Bildung.
 
 ## Der Weg
 

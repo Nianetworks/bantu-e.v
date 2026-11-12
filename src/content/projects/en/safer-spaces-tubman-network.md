@@ -8,7 +8,7 @@ country: "Germany"
 location: "Berlin"
 period: "2023–2024"
 start: 2023-04-01
-end: 2024-03-29
+end: 2024-07-31
 implementer: "tubman.network"
 fiscalSponsorship: true
 funders: ["Robert Bosch Stiftung"]
@@ -41,7 +41,7 @@ Childcare allowed adults to focus on conversations and their own concerns. Educa
 
 ## The documented project phase
 
-Robert Bosch Stiftung funded “Towards Safer Spaces – geflüchtete BIPoC-Mütter stärken” from 1 April 2023 to 29 March 2024. The report documents, among other things, the first MamaCircles gathering on 8 May 2023.
+Robert Bosch Stiftung funded “Towards Safer Spaces – geflüchtete BIPoC-Mütter stärken” from 1 April 2023 to 31 July 2024 (originally until 29 March 2024; the foundation extended the funding period on 14 March 2024). The report documents, among other things, the first MamaCircles gathering on 8 May 2023.
 
 ## Responsibility and collaboration
 

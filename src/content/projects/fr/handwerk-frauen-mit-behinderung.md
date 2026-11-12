@@ -13,7 +13,7 @@ image: "/images/projects/abi-berichte/04-women-and-crafts/abi-006-artisan-at-sew
 imageAlt: "Une artisane en fauteuil roulant travaille à une table de couture avec un petit enfant ; l’enfant est flouté."
 galleryTitle: "2 photos d’archive de juillet 2017"
 report:
-  href: "/downloads/berichte/abi-women-and-crafts-report-en-v2.pdf"
+  href: "/downloads/berichte/abi-women-and-crafts-report-en.pdf"
   label: "Télécharger le rapport de projet (PDF, anglais)"
   note: "Rapport de projet illustré, 5 pages, 0,6 Mo, en anglais"
 gallery:

@@ -13,7 +13,7 @@ image: "/images/projects/abi-berichte/04-women-and-crafts/abi-006-artisan-at-sew
 imageAlt: "An artisan using a wheelchair works at a sewing table with a small child; the child is blurred."
 galleryTitle: "2 archive photographs from July 2017"
 report:
-  href: "/downloads/berichte/abi-women-and-crafts-report-en-v2.pdf"
+  href: "/downloads/berichte/abi-women-and-crafts-report-en.pdf"
   label: "Download the project report (PDF)"
   note: "Illustrated project report, 5 pages, 0.6 MB, English"
 gallery:

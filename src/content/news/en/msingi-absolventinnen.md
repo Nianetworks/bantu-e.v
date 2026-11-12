@@ -6,6 +6,6 @@ summary: "All 18 participants passed their hairdressing and cosmetology training
 project: p24-200-msingi-school
 ---
 
-After 24 weeks of theory and practice, all 18 young women at Msingi School of BTVET in Mbarara passed their final exams and received their certificates. Seven were hired directly by their placement businesses: an immediate employment rate of 39 percent.
+After 24 scheduled project weeks of theory, practice and placements, all 18 young women at Msingi School of BTVET in Mbarara passed their final exams and received their certificates. Seven were hired directly by their placement businesses: an immediate employment rate of 39 percent.
 
 We thank our partner NCDA, the Msingi School teaching team, the Stiftung Nord-Süd-Brücken and the Schmitz-Stiftungen.

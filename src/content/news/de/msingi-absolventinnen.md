@@ -6,6 +6,6 @@ summary: "Alle 18 Teilnehmerinnen haben ihre Friseur- und Kosmetikausbildung in 
 project: p24-200-msingi-school
 ---
 
-Nach 24 Wochen Theorie und Praxis haben alle 18 jungen Frauen an der Msingi School of BTVET in Mbarara ihre Abschlussprüfungen bestanden und ihre Zertifikate erhalten. Sieben von ihnen wurden direkt von ihren Praktikumsbetrieben eingestellt: eine sofortige Beschäftigungsquote von 39 Prozent.
+Nach 24 geplanten Projektwochen mit Theorie, Praxis und Praktikum haben alle 18 jungen Frauen an der Msingi School of BTVET in Mbarara ihre Abschlussprüfungen bestanden und ihre Zertifikate erhalten. Sieben von ihnen wurden direkt von ihren Praktikumsbetrieben eingestellt: eine sofortige Beschäftigungsquote von 39 Prozent.
 
 Wir danken unserer Partnerorganisation NCDA, dem Lehrteam der Msingi School, der Stiftung Nord-Süd-Brücken und den Schmitz-Stiftungen.

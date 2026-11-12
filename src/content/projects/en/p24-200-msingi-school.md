@@ -11,7 +11,7 @@ period: "December 2024 to June 2025"
 start: 2024-12-01
 end: 2025-06-14
 partners: ["Nyentsya Community Development Association (NCDA), Mbarara", "Teaching team of Msingi School of BTVET"]
-funders: ["Stiftung Nord-Süd-Brücken (small-projects fund) with funds from the BMZ", "Schmitz-Stiftungen"]
+funders: ["Stiftung Nord-Süd-Brücken (EZ-Kleinprojektefonds, run jointly with the Schmitz-Stiftungen) with funds from the BMZ"]
 fundingLogos:
   - { src: "/funders/nord-sued-bruecken.svg", alt: "Stiftung Nord-Süd-Brücken", width: 170 }
   - { src: "/funders/bmz-logo.png", alt: "Federal Ministry for Economic Cooperation and Development", width: 190 }
@@ -27,7 +27,7 @@ galleryTitle: "12 photographs from the course"
 report:
   href: "/downloads/berichte/bantu-ev-msingi-abschlussbericht-2025-de.pdf"
   label: "Download the final report (PDF, German)"
-  note: "Narrative and financial report, 13 pages, 1.9 MB, in German"
+  note: "Narrative and financial report, 14 pages, 1.9 MB, in German, corrected edition of 12 November 2026"
 gallery:
   - { src: "/images/projects/msingi-p24-200/msingi-p24-200-022-training-session.webp", thumb: "/images/projects/msingi-p24-200/msingi-p24-200-022-training-session-480.webp", width: 1280, height: 958, thumbWidth: 480, thumbHeight: 359, alt: "A trainer in a white blouse speaks to participants in the salon; green mirror stations and a row of hairstyle photos line the walls.", caption: "A lesson in the training salon of Msingi School.", section: "Training in the salon" }
   - { src: "/images/projects/msingi-p24-200/msingi-p24-200-026-training-session.webp", thumb: "/images/projects/msingi-p24-200/msingi-p24-200-026-training-session-480.webp", width: 1080, height: 810, thumbWidth: 480, thumbHeight: 360, alt: "A trainer stands at a flip chart while several participants sit on chairs in the salon and listen.", caption: "Theory at the flip chart, part of the 24-week course.", section: "Training in the salon" }
@@ -50,7 +50,7 @@ Young women in Mbarara often have little access to recognised vocational trainin
 
 ## Results
 
-- **18 young women** (aged 18–35) completed the full 24-week training.
+- **18 young women** (aged 18–35) completed the training (24 scheduled project weeks, including setting up the premises, practical work and examinations).
 - **All 18** passed their theoretical and practical final exams and received certificates.
 - **7 graduates** were hired directly by their placement businesses: an immediate employment rate of **39%**.
 - All participants took part in a health workshop (HIV/AIDS prevention) and two workshops on business management and financial planning.
@@ -61,4 +61,4 @@ Young women in Mbarara often have little access to recognised vocational trainin
 >
 > Boaz Murinzi Murema, Executive Director, Transparency Report 2025
 
-According to the financial statement of 20 March 2026, income was €11,220.74 and expenditure €11,209.95. We thank the Stiftung Nord-Süd-Brücken, the Schmitz-Stiftungen and above all the entire teaching team of Msingi School for their outstanding work on the ground.
+Income was €11,220.74. The final expenditure is being reconciled (status 12 November 2026): the financing plan, the voucher list and the 2025 annual report differ slightly; the final report lists the open points. We thank the Stiftung Nord-Süd-Brücken and the Schmitz-Stiftungen, who jointly run the EZ-Kleinprojektefonds, and above all the entire teaching team of Msingi School for their outstanding work on the ground.
