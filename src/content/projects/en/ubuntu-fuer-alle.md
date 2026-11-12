@@ -10,6 +10,9 @@ period: "2022–2023"
 implementer: "tubman.network"
 fiscalSponsorship: true
 funders: ["German Foundation for Engagement and Volunteering (DSEE)", "Deutsche Fernsehlotterie / Deutsches Hilfswerk"]
+fundingLogos:
+  - { src: "/funders/dsee.svg", alt: "German Foundation for Engagement and Volunteering (DSEE)", width: 200 }
+  - { src: "/funders/deutsche-fernsehlotterie.svg", alt: "Deutsche Fernsehlotterie", width: 200 }
 sdgs: [10, 16]
 image: "/images/projects/tubman-network/ubuntu-fuer-alle/thematic/ubuntu-advice.webp"
 imageAlt: "Thematic illustration: Three adults discuss paperwork at a table with a laptop."

@@ -9,6 +9,8 @@ location: "Namugongo bei Kampala"
 period: "abgeschlossen; finanziert aus der Bendorfer Spendenaktion 2017"
 partners: ["Anchored Bridges Initiatives (ABI), damals „Ability Beyond the Iris“", "Royal Junior Namugongo", "Wilhelm-Remy-Gymnasium Bendorf"]
 funders: ["Spenden der Schulgemeinschaft des Wilhelm-Remy-Gymnasiums Bendorf (Aktion Tagwerk 2017)"]
+fundingLogos:
+  - { src: "/funders/aktion-tagwerk.svg", alt: "Aktion Tagwerk", width: 200 }
 sdgs: [4, 10]
 stats:
   - { value: "6", label: "Kinder erhielten Schulgeldförderung; alle schlossen die Grundschule ab und wechselten auf die weiterführende Schule" }

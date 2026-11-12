@@ -140,8 +140,8 @@ export const partnersNorth: Org[] = [
     url: 'https://tubman.network',
     logo: '/partners/tubman-network.webp',
     text: {
-      de: 'Organisation für Kinder, Jugendliche, Familien und Communities afrikanischer und afro-diasporischer Herkunft. Bis Januar 2024 eine Initiative unter dem Dach von Bantu e.V.; ihr Team hat von 2021 bis 2024 Projekte von Bantu e.V. umgesetzt. Heute ein eigener Verein.',
-      en: 'Organisation for children, young people, families and communities of African and Afro-diasporic heritage. An initiative under the umbrella of Bantu e.V. until January 2024; its team implemented Bantu e.V. projects from 2021 to 2024. Now an association of its own.', fr: 'Organisation pour les enfants, les jeunes, les familles et les communautés d’origine africaine et afro-diasporique. Initiative sous l’égide de Bantu e.V. jusqu’en janvier 2024 ; son équipe a mis en œuvre des projets de Bantu e.V. de 2021 à 2024. Aujourd’hui une association à part entière.',
+      de: 'Organisation für Kinder, Jugendliche, Familien und Communities afrikanischer und afro-diasporischer Herkunft. Bis Januar 2024 eine Initiative unter dem Dach von Bantu e.V.; ihr Team hat von 2022 bis 2024 Projekte von Bantu e.V. umgesetzt. Heute ein eigener Verein.',
+      en: 'Organisation for children, young people, families and communities of African and Afro-diasporic heritage. An initiative under the umbrella of Bantu e.V. until January 2024; its team implemented Bantu e.V. projects from 2022 to 2024. Now an association of its own.', fr: 'Organisation pour les enfants, les jeunes, les familles et les communautés d’origine africaine et afro-diasporique. Initiative sous l’égide de Bantu e.V. jusqu’en janvier 2024 ; son équipe a mis en œuvre des projets de Bantu e.V. de 2022 à 2024. Aujourd’hui une association à part entière.',
     },
   },
   {

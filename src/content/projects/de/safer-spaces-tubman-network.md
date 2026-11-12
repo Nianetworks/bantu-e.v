@@ -12,6 +12,8 @@ end: 2024-03-29
 implementer: "tubman.network"
 fiscalSponsorship: true
 funders: ["Robert Bosch Stiftung"]
+fundingLogos:
+  - { src: "/funders/robert-bosch-stiftung.svg", alt: "Robert Bosch Stiftung", width: 200 }
 sdgs: [3, 5, 10]
 image: "/images/projects/tubman-network/safer-spaces-tubman-network/thematic/mama-peer-support.webp"
 imageAlt: "Thematische Illustration: Fünf Frauen sitzen mit Tee und Notizbüchern zusammen und hören einander zu."

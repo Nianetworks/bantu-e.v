@@ -10,6 +10,8 @@ period: "2023"
 implementer: "tubman.network"
 fiscalSponsorship: true
 funders: ["Bezirksamt Berlin-Mitte"]
+fundingLogos:
+  - { src: "/funders/ba-mitte.webp", alt: "Bezirksamt Berlin-Mitte", width: 200 }
 sdgs: [4, 10]
 image: "/images/projects/tubman-network/fashion-empowerment/thematic/fashion-design-workshop.webp"
 imageAlt: "Thematische Illustration: Sechs Erwachsene betrachten Stoffe und eine Entwurfsskizze an einem Arbeitstisch."

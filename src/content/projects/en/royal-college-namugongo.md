@@ -9,6 +9,8 @@ location: "Namugongo near Kampala"
 period: "2017 to 2018"
 partners: ["Anchored Bridges Initiatives (ABI), formerly “Ability Beyond the Iris”", "Royal College Namugongo", "Wilhelm-Remy-Gymnasium Bendorf"]
 funders: ["Donations from the Wilhelm-Remy-Gymnasium Bendorf school community (Aktion Tagwerk 2017)"]
+fundingLogos:
+  - { src: "/funders/aktion-tagwerk.svg", alt: "Aktion Tagwerk", width: 200 }
 sdgs: [4, 10]
 stats:
   - { value: "€14,189.36", label: "raised by WRG Bendorf on the 2017 action day “Your Day for Africa”" }

@@ -1,23 +1,38 @@
 ---
-import { href, ui, type Lang } from '../i18n';
+// Funding box at the end of a project page (chair, 12.11.2026): funder logos large and clearly visible,
+// the contractual funding sentence (fundingNote, unchanged), a thank-you note naming the funders, and the disclaimer.
+import { href, type Lang } from '../i18n';
 interface Props { lang: Lang; note?: string; logos?: { src: string; alt: string; width: number }[]; disclaimer?: string; funders?: string[] }
 const { lang, note, logos = [], disclaimer, funders = [] } = Astro.props;
+const de = lang === 'de';
+const fr = lang === 'fr';
+const title = de ? 'Förderung und Dank' : fr ? 'Financement et remerciements' : 'Funding and thanks';
+const thanks = de
+  ? 'Herzlichen Dank an alle, die dieses Projekt gefördert und unterstützt haben'
+  : fr ? 'Un grand merci à toutes celles et tous ceux qui ont financé et soutenu ce projet' : 'A heartfelt thank you to everyone who funded and supported this project';
+const show = logos.length > 0 || !!note || funders.length > 0;
 ---
-{(note || funders.length > 0) && (
-  <aside class="funding" aria-label={ui[lang].funders}>
+{show && (
+  <section class="funding" aria-labelledby="h-funding">
+    <h2 id="h-funding" class="funding__title">{title}</h2>
     {logos.length > 0 && (
-      <div class="funding__logos">
-        {logos.map((l) => <img class="keep-color" src={href(l.src)} alt={l.alt} width={l.width} loading="lazy" />)}
-      </div>
+      <ul class="funding__logos" role="list">
+        {logos.map((l) => <li><img class="keep-color" src={href(l.src)} alt={l.alt} loading="lazy" decoding="async" /></li>)}
+      </ul>
     )}
-    {note ? <p class="funding__note">{note}</p> : <p class="funding__note">{ui[lang].funders}: {funders.join(' · ')}</p>}
+    {note && <p class="funding__note">{note}</p>}
+    <p class="funding__thanks">{funders.length > 0 ? <>{thanks}{fr ? ' :' : ':'} <strong>{funders.join(' · ')}</strong>.</> : <>{thanks}.</>}</p>
     {disclaimer && <p class="funding__disclaimer">{disclaimer}</p>}
-  </aside>
+  </section>
 )}
 <style>
-  .funding { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 1.25rem 1.4rem; margin-top: 2.5rem; }
-  .funding__logos { display: inline-flex; flex-wrap: wrap; gap: 1.5rem; align-items: center; margin-bottom: .9rem; background: #fff; padding: .75rem 1rem; border-radius: 12px; }
-  .funding__logos img { height: 56px; width: auto; }
-  .funding__note { margin: 0; font-weight: 600; }
-  .funding__disclaimer { margin: .6rem 0 0; font-size: .9rem; color: var(--muted); }
+  .funding { background: var(--surface); border: 1px solid var(--line); border-top: 6px solid var(--gold); border-radius: var(--radius); padding: 1.5rem clamp(1rem, 3vw, 2rem); margin-top: 3rem; }
+  .funding__title { margin: 0 0 1rem; font-size: clamp(1.3rem, 2.5vw, 1.6rem); }
+  /* Logos sit on a white plate (they are artwork in their own colours) and are shown large. */
+  .funding__logos { list-style: none; margin: 0 0 1.25rem; padding: clamp(1rem, 3vw, 1.75rem); display: flex; flex-wrap: wrap; gap: clamp(1.25rem, 4vw, 2.75rem); align-items: center; justify-content: flex-start; background: #fff; border-radius: 12px; border: 1px solid var(--line); }
+  .funding__logos li { margin: 0; flex: 0 1 auto; max-width: 100%; }
+  .funding__logos img { display: block; height: clamp(72px, 9vw, 104px); width: auto; max-width: 100%; object-fit: contain; }
+  .funding__note { margin: 0 0 .6rem; font-weight: 700; }
+  .funding__thanks { margin: 0; font-size: 1.05rem; }
+  .funding__disclaimer { margin: .8rem 0 0; font-size: .9rem; color: var(--muted); }
 </style>

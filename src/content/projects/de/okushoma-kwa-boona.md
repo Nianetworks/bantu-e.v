@@ -12,6 +12,9 @@ start: 2023-08-01
 end: 2025-06-06
 partners: ["Anchored Bridges Initiatives (ABI), Uganda", "Partnerschulen in Berlin, Bendorf, Andernach und Neuwied"]
 funders: ["Engagement Global im Auftrag des BMZ (Programm Teams up!)"]
+fundingLogos:
+  - { src: "/funders/engagement-global-logo.png", alt: "Engagement Global", width: 200 }
+  - { src: "/funders/bmz-logo.png", alt: "Bundesministerium für wirtschaftliche Zusammenarbeit und Entwicklung", width: 200 }
 sdgs: [4, 10, 17]
 stats:
   - { value: "12", label: "Teilnehmende aus Deutschland und Uganda" }

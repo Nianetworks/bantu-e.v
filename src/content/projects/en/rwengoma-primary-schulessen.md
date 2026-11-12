@@ -9,6 +9,8 @@ location: "Rwengoma"
 period: "contribution dated 11 October 2018"
 partners: ["Anchored Bridges Initiatives (ABI), formerly “Ability Beyond the Iris”", "Rwengoma Primary School", "Wilhelm-Remy-Gymnasium Bendorf"]
 funders: ["Donations from the Wilhelm-Remy-Gymnasium Bendorf school community (Aktion Tagwerk 2017)"]
+fundingLogos:
+  - { src: "/funders/aktion-tagwerk.svg", alt: "Aktion Tagwerk", width: 200 }
 sdgs: [2, 4]
 stats:
   - { value: "UGX 1,000,000", label: "contribution to the lunch programme and vegetable garden" }

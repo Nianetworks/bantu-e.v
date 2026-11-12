@@ -10,6 +10,8 @@ period: "2023–2024"
 implementer: "tubman.network"
 fiscalSponsorship: true
 funders: ["Deutsche Stiftung für Engagement und Ehrenamt (DSEE)"]
+fundingLogos:
+  - { src: "/funders/dsee.svg", alt: "Deutsche Stiftung für Engagement und Ehrenamt (DSEE)", width: 200 }
 sdgs: [10, 16, 17]
 image: "/images/projects/tubman-network/black-engagement-matters/thematic/bem-collaborative-planning.webp"
 imageAlt: "Thematische Illustration: Fünf Erwachsene arbeiten an einem Tisch gemeinsam mit Notizbüchern und einem Plan auf Papier."

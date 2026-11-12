@@ -1,7 +1,7 @@
 ---
 title: "Wasser für Ruziba"
 subtitle: "Solarbetriebene Trinkwasserversorgung in Bujumbura, Burundi"
-summary: "Ein Brunnen mit Solarpumpe, Hochbehälter und drei Zapfstellen bringt sauberes Trinkwasser für rund 900 Menschen im Stadtteil Ruziba."
+summary: "Ein Brunnen mit Solarpumpe, Hochbehälter und drei Zapfstellen soll sauberes Trinkwasser für rund 900 Menschen im Stadtteil Ruziba bringen."
 code: "P 26/186"
 programme: international
 status: active
@@ -17,7 +17,7 @@ fundingLogos:
 sdgs: [3, 6]
 stats:
   - { value: "150", label: "Haushalte als direkte Zielgruppe" }
-  - { value: "≈ 900", label: "Menschen mit sauberem Trinkwasser" }
+  - { value: "≈ 900", label: "Menschen sollen sauberes Trinkwasser erhalten (Ziel)" }
   - { value: "5.000 l", label: "Hochbehälter: Wasserabgabe ohne Strom" }
 photoBrief: "Bohrstelle und Hochbehälter in Ruziba, Menschen an der Zapfstelle (mit Einverständnis)"
 image: "/images/projects/p26-186-ruziba/ruziba-wasserstation.webp"

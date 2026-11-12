@@ -10,6 +10,8 @@ period: "2023"
 implementer: "tubman.network"
 fiscalSponsorship: true
 funders: ["Mairie d’arrondissement de Berlin-Mitte"]
+fundingLogos:
+  - { src: "/funders/ba-mitte.webp", alt: "Mairie d’arrondissement de Berlin-Mitte", width: 200 }
 sdgs: [4, 10]
 image: "/images/projects/tubman-network/fashion-empowerment/thematic/fashion-design-workshop.webp"
 imageAlt: "Illustration thématique : Six adultes examinent des tissus et un croquis autour d’une table de travail."

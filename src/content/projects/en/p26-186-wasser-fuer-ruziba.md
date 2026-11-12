@@ -1,7 +1,7 @@
 ---
 title: "Water for Ruziba"
 subtitle: "Solar-powered drinking water supply in Bujumbura, Burundi"
-summary: "A borehole with a solar pump, an elevated tank and three taps brings clean drinking water to around 900 people in the Ruziba neighbourhood."
+summary: "A borehole with a solar pump, an elevated tank and three taps is to bring clean drinking water to around 900 people in the Ruziba neighbourhood."
 code: "P 26/186"
 programme: international
 status: active
@@ -17,7 +17,7 @@ fundingLogos:
 sdgs: [3, 6]
 stats:
   - { value: "150", label: "households directly reached" }
-  - { value: "≈ 900", label: "people with clean drinking water" }
+  - { value: "≈ 900", label: "people to receive clean drinking water (target)" }
   - { value: "5,000 l", label: "elevated tank: water flows without electricity" }
 photoBrief: "Borehole and elevated tank in Ruziba, people at the tap (with consent)"
 image: "/images/projects/p26-186-ruziba/ruziba-wasserstation.webp"

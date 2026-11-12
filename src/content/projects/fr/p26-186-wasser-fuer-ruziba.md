@@ -1,7 +1,7 @@
 ---
 title: "De l’eau pour Ruziba"
 subtitle: "Approvisionnement en eau potable à énergie solaire à Bujumbura, au Burundi"
-summary: "Un forage avec une pompe solaire, un réservoir surélevé et trois points d’eau apportent de l’eau potable à environ 900 personnes dans le quartier de Ruziba."
+summary: "Un forage avec une pompe solaire, un réservoir surélevé et trois points d’eau doivent apporter de l’eau potable à environ 900 personnes dans le quartier de Ruziba."
 code: "P 26/186"
 programme: international
 status: active
@@ -17,7 +17,7 @@ fundingLogos:
 sdgs: [3, 6]
 stats:
   - { value: "150", label: "ménages directement atteints" }
-  - { value: "≈ 900", label: "personnes avec de l’eau potable" }
+  - { value: "≈ 900", label: "personnes doivent avoir accès à l’eau potable (objectif)" }
   - { value: "5 000 l", label: "réservoir surélevé : l’eau coule sans électricité" }
 photoBrief: "Forage et réservoir surélevé à Ruziba, personnes au point d’eau (avec consentement)"
 image: "/images/projects/p26-186-ruziba/ruziba-wasserstation.webp"

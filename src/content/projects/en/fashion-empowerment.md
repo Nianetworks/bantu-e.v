@@ -10,6 +10,8 @@ period: "2023"
 implementer: "tubman.network"
 fiscalSponsorship: true
 funders: ["Berlin-Mitte District Office"]
+fundingLogos:
+  - { src: "/funders/ba-mitte.webp", alt: "Berlin-Mitte District Office", width: 200 }
 sdgs: [4, 10]
 image: "/images/projects/tubman-network/fashion-empowerment/thematic/fashion-design-workshop.webp"
 imageAlt: "Thematic illustration: Six adults examine fabrics and a design sketch at a worktable."

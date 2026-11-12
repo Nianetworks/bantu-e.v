@@ -10,6 +10,8 @@ period: "2023–2024"
 implementer: "tubman.network"
 fiscalSponsorship: true
 funders: ["Fondation allemande pour l’engagement et le bénévolat (DSEE)"]
+fundingLogos:
+  - { src: "/funders/dsee.svg", alt: "Fondation allemande pour l’engagement et le bénévolat (DSEE)", width: 200 }
 sdgs: [10, 16, 17]
 image: "/images/projects/tubman-network/black-engagement-matters/thematic/bem-collaborative-planning.webp"
 imageAlt: "Illustration thématique : Cinq adultes travaillent ensemble autour d’une table avec des cahiers et un plan sur papier."
