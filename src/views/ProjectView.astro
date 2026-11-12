@@ -60,7 +60,7 @@ const donateRef = slug.includes('pearl') ? 'Pearl Kita' : slug.includes('ruziba'
           <p class="report-cta"><a class="btn btn--gold" href={withReportVersion(href(d.report.href))} download><Icon name="download" class="btn-ic" />{d.report.label}</a>{d.report.note && <span class="small muted report-note">{d.report.note}</span>}</p>
         )}
         <div class="prose"><Content /></div>
-        <ProjectMedia part="gallery" lang={lang} gallery={d.gallery} video={d.video} id={slug} galleryTitle={d.galleryTitle} />
+        <ProjectMedia part="gallery" lang={lang} gallery={d.gallery} video={d.video} id={slug} galleryTitle={d.galleryTitle} galleryNote={d.galleryNote} />
         <FundingNote lang={lang} note={d.fundingNote} logos={d.fundingLogos} disclaimer={d.disclaimer} funders={d.funders} />
       </div>
       <div class="project__side">
@@ -70,7 +70,8 @@ const donateRef = slug.includes('pearl') ? 'Pearl Kita' : slug.includes('ruziba'
             <dt>{de ? 'Arbeitsbereich' : fr ? 'Domaine d’action' : 'Area of work'}</dt><dd><a href={regionPath(lang, d.programme)}>{regions.find((rg) => rg.key === d.programme)!.title[lang]}</a></dd>
             {prog && <><dt>{de ? 'Programm' : fr ? 'Programme' : 'Programme'}</dt><dd><a href={regionProgrammePath(lang, d.programme, prog.key)}>{prog.title[lang]}</a></dd></>}
             <dt>{t.period}</dt><dd>{d.period}</dd>
-            {d.implementer && <><dt>{de ? 'Umsetzung' : fr ? 'Mis en œuvre par' : 'Implemented by'}</dt><dd>{d.implementer}{d.fiscalSponsorship && <> ({de ? 'Bantu e.V. als Trägerverein' : fr ? 'Bantu e.V. comme association porteuse' : 'Bantu e.V. as fiscal sponsor'})</>}</dd></>}
+            {d.fiscalSponsorship && <><dt>{de ? 'Trägerschaft' : fr ? 'Portage juridique et administratif' : 'Legal and administrative project sponsorship'}</dt><dd>Bantu e.V.</dd></>}
+            {d.implementer && <><dt>{de ? 'Umsetzung' : fr ? 'Mise en œuvre' : 'Implementation'}</dt><dd>{d.implementer}</dd></>}
             {d.location && <><dt>{t.location}</dt><dd>{d.location}</dd></>}
             <dt>{t.country}</dt><dd>{d.country}</dd>
             {d.code && <><dt>{t.code}</dt><dd>{d.code}</dd></>}

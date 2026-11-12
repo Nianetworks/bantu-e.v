@@ -1,35 +1,46 @@
 ---
 title: "FashionEmpowerment"
-subtitle: "Fashion, identity and empowerment for young people of African descent in Berlin-Wedding"
-summary: "Throughout 2023, young people designed fashion that reflects their African-European identities. The closing show drew 350 guests."
-programme: inland
-status: completed
+subtitle: "Fashion, identity and creative empowerment in Berlin"
+summary: "Young people of African and African-diaspora backgrounds developed their own designs and expressed cultural identity through fashion."
+programme: "inland"
+status: "completed"
 country: "Germany"
 location: "Berlin-Wedding"
 period: "2023"
-start: 2023-01-01
-end: 2023-12-16
-implementer: "Bantu e.V. with the Tubman.Network team"
+implementer: "tubman.network"
+fiscalSponsorship: true
 funders: ["Berlin-Mitte District Office"]
 sdgs: [4, 10]
-stats:
-  - { value: "weekly", label: "workshops throughout 2023" }
-  - { value: "350", label: "visitors at the closing show" }
-photoBrief: "Accessories on display or a runway moment (with parental consent)"
+image: "/images/projects/tubman-network/fashion-empowerment/thematic/fashion-design-workshop.webp"
+imageAlt: "Thematic illustration: Six adults examine fabrics and a design sketch at a worktable."
+galleryTitle: "Project themes in pictures"
+galleryNote: "The images are thematic illustrations and do not depict documented project participants or events."
+gallery:
+  - {"src": "/images/projects/tubman-network/fashion-empowerment/thematic/fashion-design-workshop.webp", "thumb": "/images/projects/tubman-network/fashion-empowerment/thematic/fashion-design-workshop-thumb.webp", "width": 1536, "height": 1024, "thumbWidth": 640, "thumbHeight": 427, "alt": "Thematic illustration: Six adults examine fabrics and a design sketch at a worktable.", "caption": "Collaborative design with fabrics and sketches.", "section": "Thematic illustrations"}
+  - {"src": "/images/projects/tubman-network/fashion-empowerment/thematic/fashion-accessories.webp", "thumb": "/images/projects/tubman-network/fashion-empowerment/thematic/fashion-accessories-thumb.webp", "width": 1536, "height": 1024, "thumbWidth": 640, "thumbHeight": 427, "alt": "Thematic illustration: Three adults examine a patterned fabric bag and a sketch.", "caption": "Textile accessories as an expression of individual design ideas.", "section": "Thematic illustrations"}
+  - {"src": "/images/projects/tubman-network/fashion-empowerment/thematic/fashion-expression.webp", "thumb": "/images/projects/tubman-network/fashion-empowerment/thematic/fashion-expression-thumb.webp", "width": 1536, "height": 1024, "thumbWidth": 640, "thumbHeight": 427, "alt": "Thematic illustration: Two adults present patterned outfits in front of an applauding audience.", "caption": "Presenting fashion and expressing cultural identity.", "section": "Thematic illustrations"}
 successStory: true
 order: 23
+sources:
+  - "https://tubman.network/previous-projects/"
+  - "Tätigkeitsbericht tubman.network 2022; Rapport Januar–Mai 2023 (lokales Bantu Archiv)"
+  - "Bestätigung von Boaz Murinzi Murema, 12.11.2026: alle sechs hier dokumentierten historischen Projekte unter Trägerschaft von Bantu e.V."
 ---
 
-Throughout 2023, children and young people of African descent met every week at **Salone Market**, a Sierra Leonean restaurant in Berlin-Wedding.
+**Legal and administrative project sponsorship: Bantu e.V. · Implementation: tubman.network**
 
-- **Fashion as identity**: they explored fashion from Africa and the diaspora and, with a tailor, made their own accessories and designs carrying self-chosen empowerment messages.
-- **Speaking about racism**: they shared experiences of racism and ways of dealing with it, and presented their own speeches to a representative of the Berlin-Mitte District Office.
-- **Afrocentric hairstyles**: in cooperation with Ulibia Beauty Empire.
+Fashion offers a way to decide how you want to be seen. FashionEmpowerment brought creative design together with conversations about cultural identity, confidence and experiences of racism.
 
-The project closed with the **FashionEmpowerment Show on 16 December 2023**, held for Sudan Peace Action Day in front of **350 guests**. Berlin Mondiale supported the show; African artists performed, among them artists who had come to Berlin from Ukraine.
+## Creating and expressing identity
 
-The team consisted largely of people with refugee and African migration backgrounds. Several schools showed interest in continuing the workshops.
+Workshops explored textiles and design from Africa and the diaspora. Working with tailor Sulaymane Mare, young people developed accessories and designs carrying empowerment messages they chose themselves. Regular activities at Salone Market in Berlin-Wedding were complemented by collaboration with Ulibia Beauty Empire on Afrocentric hairstyling.
 
-## Implementation
+The early creative work is also documented in the Identity workshops in February 2023 and preparations at Oyoun.
 
-A project of Bantu e.V., implemented by the Tubman.Network team. Tubman.Network worked under the umbrella of Bantu e.V. until January 2024 and is now the independent association [tubman.network e.V.](https://tubman.network).
+## Taking the stage
+
+The FashionEmpowerment show took place on 16 December 2023 as part of Sudan Peace Action Day. Designs, music and community connection brought the shared work into public view. The project report records around 350 guests at the closing event. Berlin Mondiale supported the show.
+
+## Responsibility and collaboration
+
+Bantu e.V. provided the legal and administrative project sponsorship; the tubman.network team implemented the project. The Berlin-Mitte District Office funded FashionEmpowerment.

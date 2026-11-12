@@ -1,39 +1,48 @@
 ---
 title: "FashionEmpowerment"
-subtitle: "Mode, Identität und Empowerment für junge Menschen afrikanischer Abstammung in Berlin-Wedding"
-summary: "Das ganze Jahr 2023 gestalteten junge Menschen Mode, die ihre afrikanisch-europäischen Identitäten zeigt. Zur Abschlussshow kamen 350 Gäste."
-programme: inland
-status: completed
+subtitle: "Mode, Identität und kreatives Empowerment in Berlin"
+summary: "Junge Menschen afrikanischer und afrodiasporischer Herkunft entwickelten eigene Gestaltungsideen und machten kulturelle Identität durch Mode sichtbar."
+programme: "inland"
+status: "completed"
 country: "Deutschland"
 location: "Berlin-Wedding"
 period: "2023"
-start: 2023-01-01
-end: 2023-12-16
-implementer: "Bantu e.V. mit dem Team von Tubman.Network"
+implementer: "tubman.network"
+fiscalSponsorship: true
 funders: ["Bezirksamt Berlin-Mitte"]
 sdgs: [4, 10]
-stats:
-  - { value: "wöchentlich", label: "Workshops über das ganze Jahr 2023" }
-  - { value: "350", label: "Besucher*innen bei der Abschlussshow" }
-photoBrief: "Ausgestellte Accessoires oder Laufsteg-Moment (mit Einverständnis der Eltern)"
+image: "/images/projects/tubman-network/fashion-empowerment/thematic/fashion-design-workshop.webp"
+imageAlt: "Thematische Illustration: Sechs Erwachsene betrachten Stoffe und eine Entwurfsskizze an einem Arbeitstisch."
+galleryTitle: "Einblicke in die Projektthemen"
+galleryNote: "Die Bilder sind thematische Illustrationen und zeigen keine dokumentierten Projektteilnehmenden oder Veranstaltungen."
+gallery:
+  - {"src": "/images/projects/tubman-network/fashion-empowerment/thematic/fashion-design-workshop.webp", "thumb": "/images/projects/tubman-network/fashion-empowerment/thematic/fashion-design-workshop-thumb.webp", "width": 1536, "height": 1024, "thumbWidth": 640, "thumbHeight": 427, "alt": "Thematische Illustration: Sechs Erwachsene betrachten Stoffe und eine Entwurfsskizze an einem Arbeitstisch.", "caption": "Gemeinsames Entwerfen mit Stoffen und Skizzen.", "section": "Thematische Motive"}
+  - {"src": "/images/projects/tubman-network/fashion-empowerment/thematic/fashion-accessories.webp", "thumb": "/images/projects/tubman-network/fashion-empowerment/thematic/fashion-accessories-thumb.webp", "width": 1536, "height": 1024, "thumbWidth": 640, "thumbHeight": 427, "alt": "Thematische Illustration: Drei Erwachsene betrachten eine gemusterte Stofftasche und eine Skizze.", "caption": "Textile Accessoires als Ausdruck eigener Gestaltungsideen.", "section": "Thematische Motive"}
+  - {"src": "/images/projects/tubman-network/fashion-empowerment/thematic/fashion-expression.webp", "thumb": "/images/projects/tubman-network/fashion-empowerment/thematic/fashion-expression-thumb.webp", "width": 1536, "height": 1024, "thumbWidth": 640, "thumbHeight": 427, "alt": "Thematische Illustration: Zwei Erwachsene präsentieren gemusterte Outfits vor einem applaudierenden Publikum.", "caption": "Mode präsentieren und kulturelle Identität ausdrücken.", "section": "Thematische Motive"}
 successStory: true
 order: 23
 sources:
+  - "https://tubman.network/previous-projects/"
+  - "Tätigkeitsbericht tubman.network 2022; Rapport Januar–Mai 2023 (lokales Bantu Archiv)"
+  - "Bestätigung von Boaz Murinzi Murema, 12.11.2026: alle sechs hier dokumentierten historischen Projekte unter Trägerschaft von Bantu e.V."
   - "Bantu_eV_Taetigkeitsbericht_2023_2025.pdf (3.2)"
   - "tubman.network/previous-projects/, abgerufen 08.11.2026"
-  - "Angabe des Vorsitzenden, 08.11.2026: Projekt von Bantu e.V., umgesetzt vom Team von Tubman.Network (ParentCircle war kein Projekt von Bantu e.V.)"
 ---
 
-Das ganze Jahr 2023 trafen sich Kinder und Jugendliche afrikanischer Abstammung jede Woche im **Salone Market**, einem sierra-leonischen Restaurant in Berlin-Wedding.
+**Trägerschaft: Bantu e.V. · Umsetzung: tubman.network**
 
-- **Mode als Ausdruck von Identität**: Sie beschäftigten sich mit Mode aus Afrika und der Diaspora und fertigten mit einem Schneider eigene Accessoires und Entwürfe mit selbst gewählten Empowerment-Botschaften.
-- **Über Rassismus sprechen**: Sie tauschten Erfahrungen mit Rassismus und Strategien im Umgang damit aus und trugen eigene Reden vor einer Vertreterin des Bezirksamts Berlin-Mitte vor.
-- **Afrozentrische Frisuren**: in Zusammenarbeit mit Ulibia Beauty Empire.
+Mode bietet Raum, selbst zu bestimmen, wie man gesehen werden möchte. FashionEmpowerment verband kreative Gestaltung mit Austausch über kulturelle Identität, Selbstvertrauen und Erfahrungen mit Rassismus.
 
-Den Abschluss bildete die **FashionEmpowerment-Show am 16. Dezember 2023** zum Sudan Peace Action Day vor **350 Gästen**. Berlin Mondiale unterstützte die Show; es traten afrikanische Künstler*innen auf, darunter Künstler*innen, die aus der Ukraine nach Berlin gekommen waren.
+## Gestalten und sich ausdrücken
 
-Das Team bestand überwiegend aus Menschen mit Flucht- und afrikanischer Migrationsgeschichte. Mehrere Schulen haben Interesse an einer Fortsetzung der Workshops gezeigt.
+In den Workshops beschäftigten sich junge Menschen mit Textilien und Gestaltung aus Afrika und der Diaspora. Gemeinsam mit dem Schneider Sulaymane Mare entwickelten sie Accessoires und Entwürfe mit selbst gewählten Empowerment-Botschaften. Die regelmäßigen Angebote im Salone Market in Berlin-Wedding wurden durch Zusammenarbeit mit Ulibia Beauty Empire im Bereich afrozentrischer Frisuren ergänzt.
 
-## Umsetzung
+Die frühe kreative Arbeit ist auch in den Identity-Workshops im Februar 2023 und den Vorbereitungen im Oyoun dokumentiert.
 
-Ein Projekt von Bantu e.V., umgesetzt vom Team von Tubman.Network. Tubman.Network arbeitete bis Januar 2024 unter dem Dach von Bantu e.V. und ist heute der eigenständige Verein [tubman.network e.V.](https://tubman.network).
+## Auf die Bühne
+
+Die FashionEmpowerment-Show fand am 16. Dezember 2023 im Rahmen des Sudan Peace Action Day statt. Entwürfe, Musik und Begegnung machten die gemeinsame Arbeit öffentlich sichtbar. Der Projektbericht nennt rund 350 Gäste der Abschlussveranstaltung. Berlin Mondiale unterstützte die Show.
+
+## Verantwortung und Zusammenarbeit
+
+Die Trägerschaft lag bei Bantu e.V.; das Team von tubman.network setzte das Projekt um. Das Bezirksamt Berlin-Mitte förderte FashionEmpowerment.

@@ -1,36 +1,46 @@
 ---
-title: "Ubuntu for All & Equal Rights for All"
-subtitle: "Support for Black and BIPoC refugees from Ukraine in Berlin"
-summary: "After the war began in 2022 we supported around 1,800 BIPoC refugees from Ukraine, with counselling, language courses, job placement and empowerment."
-programme: inland
-status: completed
+title: "Ubuntu for All and Equal Rights for All"
+subtitle: "Advice, connection and community-led support in Berlin"
+summary: "Under Bantu e.V.’s legal and administrative sponsorship, tubman.network supported Black people and people of colour who had fled Ukraine and other war-affected countries."
+programme: "inland"
+status: "completed"
 country: "Germany"
 location: "Berlin"
 period: "2022–2023"
-start: 2022-01-01
-end: 2023-12-31
+implementer: "tubman.network"
+fiscalSponsorship: true
 funders: ["German Foundation for Engagement and Volunteering (DSEE)", "Deutsche Fernsehlotterie / Deutsches Hilfswerk"]
 sdgs: [10, 16]
-stats:
-  - { value: "1,800", label: "BIPoC refugees from Ukraine supported (2022)" }
-photoBrief: "Empowerment workshop or cultural event (with consent)"
+image: "/images/projects/tubman-network/ubuntu-fuer-alle/thematic/ubuntu-advice.webp"
+imageAlt: "Thematic illustration: Three adults discuss paperwork at a table with a laptop."
+galleryTitle: "Project themes in pictures"
+galleryNote: "The images are thematic illustrations and do not depict documented project participants or events."
+gallery:
+  - {"src": "/images/projects/tubman-network/ubuntu-fuer-alle/thematic/ubuntu-advice.webp", "thumb": "/images/projects/tubman-network/ubuntu-fuer-alle/thematic/ubuntu-advice-thumb.webp", "width": 1536, "height": 1024, "thumbWidth": 640, "thumbHeight": 427, "alt": "Thematic illustration: Three adults discuss paperwork at a table with a laptop.", "caption": "Collaborative advice on applications and next steps.", "section": "Thematic illustrations"}
+  - {"src": "/images/projects/tubman-network/ubuntu-fuer-alle/thematic/ubuntu-language-learning.webp", "thumb": "/images/projects/tubman-network/ubuntu-fuer-alle/thematic/ubuntu-language-learning-thumb.webp", "width": 1536, "height": 1024, "thumbWidth": 640, "thumbHeight": 427, "alt": "Thematic illustration: Adults sit with notebooks around a table and listen to a woman speaking.", "caption": "Learning a language together and supporting one another.", "section": "Thematic illustrations"}
+  - {"src": "/images/projects/tubman-network/ubuntu-fuer-alle/thematic/ubuntu-community-gathering.webp", "thumb": "/images/projects/tubman-network/ubuntu-fuer-alle/thematic/ubuntu-community-gathering-thumb.webp", "width": 1536, "height": 1024, "thumbWidth": 640, "thumbHeight": 427, "alt": "Thematic illustration: Adults share food and conversation at a table in a garden.", "caption": "Connection and conversation over a shared meal.", "section": "Thematic illustrations"}
 successStory: true
 order: 21
+sources:
+  - "https://tubman.network/previous-projects/"
+  - "Tätigkeitsbericht tubman.network 2022; Rapport Januar–Mai 2023 (lokales Bantu Archiv)"
+  - "Bestätigung von Boaz Murinzi Murema, 12.11.2026: alle sechs hier dokumentierten historischen Projekte unter Trägerschaft von Bantu e.V."
 ---
 
-When the war in Ukraine began, many Black people and people of colour also fled to Berlin: students, workers and families who often faced additional discrimination while fleeing and on arrival.
+**Legal and administrative project sponsorship: Bantu e.V. · Implementation: tubman.network**
 
-## Ubuntu for All (2022)
+After the war in Ukraine began in 2022, Black people and people of colour organised mutual support in Berlin. People facing racism alongside displacement and loss needed reliable access to advice, education, work and community.
 
-With funding from the DSEE we supported around **1,800 BIPoC refugees from Ukraine** in 2022.
+## Settling in and developing opportunities
 
-## Equal Rights for All (2023)
+The early work included language learning, help with applications and continuing education, and referrals to medical and psychosocial support. Community gatherings and shared meals offered opportunities to build connections and mutual support.
 
-Funded by Deutsche Fernsehlotterie / Deutsches Hilfswerk, Equal Rights for All continued the work. The project was run entirely by Black people and people of colour, who offered culturally sensitive support:
+Ubuntu for All received DSEE support in 2022. Equal Rights for All continued the support with funding from Deutsche Fernsehlotterie / Deutsches Hilfswerk.
 
-- online language courses and daily help with job applications,
-- weekly cultural events and empowerment workshops,
-- psychological support from professionals in psychology, child psychology, childcare, yoga and empowerment work,
-- regular feedback from participants, used to adapt the programme to their needs.
+## Community as part of support
 
-The aim was independence and social participation. Equal Rights for All was implemented by the Tubman.Network team, at that time an initiative under the umbrella of Bantu e.V.
+The documented community activities included creative workshops, music, children’s activities and regular exchange. The January–May 2023 report also describes a Berlin Senate-funded community series under the title “Gleiche Rechte für alle?!?”.
+
+## Responsibility and collaboration
+
+Bantu e.V. provided the legal and administrative framework. The tubman.network team organised implementation. This archive page connects the early response and subsequent community work; it does not advertise current advice sessions or registration.

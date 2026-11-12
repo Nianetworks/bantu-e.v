@@ -17,8 +17,8 @@ type Track = { src: string; srclang: string; label: string; default: boolean };
 type Photo = { src: string; thumb: string; width: number; height: number; thumbWidth?: number; thumbHeight?: number; alt: string; caption?: string; section?: string; focus?: string };
 type Narrated = { src: string; poster?: string; heading: string; label: string; text: string; link: string; tracks: Track[]; transcript?: string; transcriptLabel?: string };
 type Video = { src: string; poster?: string; width: number; height: number; title: string; label: string; duration: string; intro?: string; tracks: Track[]; narrated?: Narrated; transcript?: string };
-interface Props { lang: Lang; gallery: Photo[]; video?: Video; id: string; part: 'player' | 'narrated' | 'gallery'; galleryTitle?: string }
-const { lang, gallery, video, id, part, galleryTitle } = Astro.props;
+interface Props { lang: Lang; gallery: Photo[]; video?: Video; id: string; part: 'player' | 'narrated' | 'gallery'; galleryTitle?: string; galleryNote?: string }
+const { lang, gallery, video, id, part, galleryTitle, galleryNote } = Astro.props;
 const de = lang === 'de';
 const fr = lang === 'fr';
 
@@ -108,6 +108,7 @@ const textLabel = de ? 'Bildbeschreibungen zum Film als Text' : fr ? 'Descriptio
 {part === 'gallery' && gallery.length > 0 && (
   <section class="media" aria-labelledby={`${id}-photos-h`} data-gallery>
     <h2 id={`${id}-photos-h`}>{galleryTitle ?? t.photos(gallery.length)}</h2>
+    {galleryNote && <p class="media__note">{galleryNote}</p>}
     {groups.map((g, gi) => (
       <div class="media__group">
         {g.title && <h3 class="media__group-h" id={`${id}-photos-g${gi + 1}`}>{g.title}</h3>}
@@ -203,6 +204,7 @@ const textLabel = de ? 'Bildbeschreibungen zum Film als Text' : fr ? 'Descriptio
   });
 </script>
 <style>
+  .media__note { margin: -.25rem 0 1rem; max-width: 65ch; color: var(--muted); font-size: .95rem; }
   video { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; background: #000; }
   .media__cap { display: grid; gap: .35rem; padding: .7rem 1rem .5rem; border-top: 1px solid var(--line); background: var(--surface); color: var(--muted); font-size: .95rem; }
   .media__title { color: var(--ink); font-weight: 600; }

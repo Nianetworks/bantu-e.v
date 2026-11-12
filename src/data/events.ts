@@ -44,7 +44,8 @@ export interface EventEntry {
   image?: { src: string; alt: L };
 }
 
-const tubman: L = { de: 'Umgesetzt vom Team von Tubman.Network.', en: 'Run by the Tubman.Network team.', fr: 'Mis en œuvre par l’équipe de Tubman.Network.' };
+// Historical projects (chair, 12.11.2026): Bantu e.V.'s Trägerschaft, implemented by tubman.network.
+const tubman: L = { de: 'Trägerschaft: Bantu e.V. · Umsetzung: tubman.network.', en: 'Legal and administrative project sponsorship: Bantu e.V. · Implementation: tubman.network.', fr: 'Portage juridique et administratif : Bantu e.V. · Mise en œuvre : tubman.network.' };
 const join = (a: L, b: L): L => ({ de: `${a.de} ${b.de}`, en: `${a.en} ${b.en}`, fr: `${a.fr} ${b.fr}` });
 const berlin: L = { de: 'Berlin', en: 'Berlin', fr: 'Berlin' };
 const online: L = { de: 'Online', en: 'Online', fr: 'En ligne' };
@@ -181,9 +182,9 @@ export const eventEntries: EventEntry[] = [
     kind: 'conference',
     title: { de: 'Abschlusskonferenz von Black Engagement Matters', en: 'Black Engagement Matters closing conference', fr: 'Conférence de clôture de Black Engagement Matters' },
     summary: join({
-      de: 'Zum Ende der UN-Dekade für Menschen afrikanischer Abstammung (2015–2024) vernetzte die Konferenz Aktive aus 30 Schwarzen Organisationen aus ganz Deutschland und fragte, was Schwarzes zivilgesellschaftliches Engagement erfolgreich macht.',
-      en: 'At the end of the UN International Decade for People of African Descent (2015–2024), the conference connected activists from 30 Black organisations across Germany and looked at what makes Black civic engagement succeed.',
-      fr: 'À la fin de la Décennie internationale des personnes d’ascendance africaine de l’ONU (2015–2024), la conférence a mis en réseau des militant·es de 30 organisations noires de toute l’Allemagne et s’est interrogée sur ce qui fait réussir l’engagement civique noir.',
+      de: 'Zum Ende der UN-Dekade für Menschen afrikanischer Abstammung (2015–2024) vernetzte die Konferenz Aktive aus Schwarzen Organisationen aus ganz Deutschland und fragte, was Schwarzes zivilgesellschaftliches Engagement erfolgreich macht.',
+      en: 'At the end of the UN International Decade for People of African Descent (2015–2024), the conference connected activists from Black organisations across Germany and looked at what makes Black civic engagement succeed.',
+      fr: 'À la fin de la Décennie internationale des personnes d’ascendance africaine de l’ONU (2015–2024), la conférence a mis en réseau des militant·es d’organisations noires de toute l’Allemagne et s’est interrogée sur ce qui fait réussir l’engagement civique noir.',
     }, tubman),
     project: 'black-engagement-matters',
   },
@@ -283,6 +284,7 @@ export const eventEntries: EventEntry[] = [
     }, tubman),
     place: berlin,
     rhythm: weekly,
+    project: 'parent-circle',
   },
   {
     id: 'bem-schulungen-2023-2024',
@@ -291,9 +293,9 @@ export const eventEntries: EventEntry[] = [
     kind: 'training',
     title: { de: 'Black Engagement Matters: Schulungen für Schwarze Vereine', en: 'Black Engagement Matters: trainings for Black associations', fr: 'Black Engagement Matters : formations pour associations noires' },
     summary: join({
-      de: 'Schulungen auf Grundlage einer Bedarfsanalyse, unter anderem zu Organisationsführung, Rechtsfragen, Fundraising, Öffentlichkeitsarbeit, Datenschutz sowie Safer und Braver Spaces. Zehn Schwarze Ressourcenpersonen wurden geschult; alle Aktivitäten leiteten BIPoC-Expert*innen.',
-      en: 'Trainings based on a needs assessment, including organisational management, legal questions, fundraising, public relations, data protection and safer and braver spaces. Ten Black resource persons were trained; all activities were led by BIPoC experts.',
-      fr: 'Des formations fondées sur une analyse des besoins, notamment sur la gestion d’association, les questions juridiques, la collecte de fonds, la communication, la protection des données et les safer et braver spaces. Dix personnes-ressources noires ont été formées ; toutes les activités étaient animées par des expert·es BIPoC.',
+      de: 'Schulungen auf Grundlage einer Bedarfsanalyse, unter anderem zu Organisationsführung, Rechtsfragen, Fundraising, Öffentlichkeitsarbeit, Datenschutz sowie Safer und Braver Spaces. Geplant war die Qualifizierung Schwarzer Ressourcenpersonen; alle Aktivitäten leiteten BIPoC-Expert*innen.',
+      en: 'Trainings based on a needs assessment, including organisational management, legal questions, fundraising, public relations, data protection and safer and braver spaces. The plan included training Black resource persons; all activities were led by BIPoC experts.',
+      fr: 'Des formations fondées sur une analyse des besoins, notamment sur la gestion d’association, les questions juridiques, la collecte de fonds, la communication, la protection des données et les safer et braver spaces. La formation de personnes-ressources noires était prévue ; toutes les activités étaient animées par des expert·es BIPoC.',
     }, tubman),
     place: { de: 'bundesweit', en: 'across Germany', fr: 'dans toute l’Allemagne' },
     project: 'black-engagement-matters',
@@ -320,9 +322,9 @@ export const eventEntries: EventEntry[] = [
     kind: 'community',
     title: { de: 'Ubuntu für alle: Willkommensfeiern und soziale Cafés', en: 'Ubuntu for All: welcome parties and social cafés', fr: 'Ubuntu pour tous : fêtes de bienvenue et cafés solidaires' },
     summary: {
-      de: 'Für BIPoC-Geflüchtete aus der Ukraine: fünf Willkommensfeiern mit jeweils 300 bis 400 Gästen und dreieinhalb Monate lang tägliche soziale Cafés mit bis zu 200 Besucher*innen am Tag, dazu Beratung, Kinderbetreuung und Deutschunterricht. Rund 1.800 Menschen wurden erreicht.',
-      en: 'For BIPoC refugees from Ukraine: five welcome parties with 300 to 400 guests each and, for three and a half months, daily social cafés with up to 200 visitors a day, plus counselling, childcare and German lessons. Around 1,800 people were reached.',
-      fr: 'Pour les personnes réfugiées BIPoC venues d’Ukraine : cinq fêtes de bienvenue réunissant chacune 300 à 400 invités et, pendant trois mois et demi, des cafés solidaires quotidiens accueillant jusqu’à 200 personnes par jour, ainsi que du conseil, une garde d’enfants et des cours d’allemand. Environ 1 800 personnes ont été touchées.',
+      de: 'Für BIPoC-Geflüchtete aus der Ukraine: fünf Willkommensfeiern mit jeweils 300 bis 400 Gästen und dreieinhalb Monate lang tägliche soziale Cafés mit bis zu 200 Besucher*innen am Tag, dazu Beratung, Kinderbetreuung und Deutschunterricht.',
+      en: 'For BIPoC refugees from Ukraine: five welcome parties with 300 to 400 guests each and, for three and a half months, daily social cafés with up to 200 visitors a day, plus counselling, childcare and German lessons.',
+      fr: 'Pour les personnes réfugiées BIPoC venues d’Ukraine : cinq fêtes de bienvenue réunissant chacune 300 à 400 invités et, pendant trois mois et demi, des cafés solidaires quotidiens accueillant jusqu’à 200 personnes par jour, ainsi que du conseil, une garde d’enfants et des cours d’allemand.',
     },
     place: berlin,
     project: 'ubuntu-fuer-alle',

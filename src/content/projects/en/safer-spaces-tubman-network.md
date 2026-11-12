@@ -1,35 +1,47 @@
 ---
-title: "Safer Spaces for Mothers: Mama Circle"
-subtitle: "A weekly circle in Berlin for African and Afro-diasporic mothers who fled war"
-summary: "Every Sunday, mothers and female caregivers who had fled war met for exchange and support, with childcare during the meetings and counselling four days a week."
-programme: inland
-status: completed
+title: "Safer Spaces for Mothers and Mama Circle"
+subtitle: "Connection, childcare and support for mothers who fled war"
+summary: "Mama Circle combined regular gatherings for African and African-diaspora mothers and caregivers with childcare and practical advice."
+programme: "inland"
+status: "completed"
 country: "Germany"
 location: "Berlin"
 period: "2023–2024"
-start: 2023-01-01
-end: 2024-12-31
-implementer: "Bantu e.V. with the Tubman.Network team"
+start: 2023-04-01
+end: 2024-03-29
+implementer: "tubman.network"
+fiscalSponsorship: true
 funders: ["Robert Bosch Stiftung"]
 sdgs: [3, 5, 10]
-stats:
-  - { value: "weekly", label: "Mama Circle meetings with childcare" }
-  - { value: "4 days", label: "of psychosocial counselling per week" }
-photoBrief: "Symbolic image: the Mama Circle meeting room (no recognisable people)"
+image: "/images/projects/tubman-network/safer-spaces-tubman-network/thematic/mama-peer-support.webp"
+imageAlt: "Thematic illustration: Five women sit together with tea and notebooks and listen to one another."
+galleryTitle: "Project themes in pictures"
+galleryNote: "The images are thematic illustrations and do not depict documented project participants or events."
+gallery:
+  - {"src": "/images/projects/tubman-network/safer-spaces-tubman-network/thematic/mama-peer-support.webp", "thumb": "/images/projects/tubman-network/safer-spaces-tubman-network/thematic/mama-peer-support-thumb.webp", "width": 1536, "height": 1024, "thumbWidth": 640, "thumbHeight": 427, "alt": "Thematic illustration: Five women sit together with tea and notebooks and listen to one another.", "caption": "A supportive conversation space for mothers and caregivers.", "section": "Thematic illustrations"}
+  - {"src": "/images/projects/tubman-network/safer-spaces-tubman-network/thematic/mama-care-and-connection.webp", "thumb": "/images/projects/tubman-network/safer-spaces-tubman-network/thematic/mama-care-and-connection-thumb.webp", "width": 1536, "height": 1024, "thumbWidth": 640, "thumbHeight": 427, "alt": "Thematic illustration: Three women talk in a family room while two children play in the background, facing away from the camera.", "caption": "Conversation among caregivers with a play area for children.", "section": "Thematic illustrations"}
+  - {"src": "/images/projects/tubman-network/safer-spaces-tubman-network/thematic/mama-creative-afternoon.webp", "thumb": "/images/projects/tubman-network/safer-spaces-tubman-network/thematic/mama-creative-afternoon-thumb.webp", "width": 1536, "height": 1024, "thumbWidth": 640, "thumbHeight": 427, "alt": "Thematic illustration: Four women create together with fabric and paper at a table.", "caption": "Creativity, connection and mutual support.", "section": "Thematic illustrations"}
 order: 22
+sources:
+  - "https://tubman.network/previous-projects/"
+  - "Tätigkeitsbericht tubman.network 2022; Rapport Januar–Mai 2023 (lokales Bantu Archiv)"
+  - "Bestätigung von Boaz Murinzi Murema, 12.11.2026: alle sechs hier dokumentierten historischen Projekte unter Trägerschaft von Bantu e.V."
 ---
 
-The **Mama Circle** was the core of the project **Safer Spaces for Mothers**, funded by the Robert Bosch Stiftung. Every Sunday, African and Afro-diasporic mothers and female caregivers who had fled war met in Berlin. Motherhood was understood broadly: the circle was open to every form of caring for children, including women who are not yet mothers.
+**Legal and administrative project sponsorship: Bantu e.V. · Implementation: tubman.network**
 
-## What the project offered
+For mothers and other caregivers, a reliable place to connect can make everyday life after displacement easier to navigate. Mama Circle offered room for conversation, mutual support and cultural exchange while children received care.
 
-- **Weekly meetings** to exchange experiences and cultural traditions, with input on women’s and children’s health.
-- **Childcare** during every meeting, so that the mothers could focus on their own concerns.
-- **Educational and psychosocial counselling** four days a week.
-- **Practical help**: booking and accompanying medical and official appointments.
+## Time and space for caregivers’ concerns
 
-The result: a stable social network and stronger mother-child bonds.
+Regular gatherings welcomed African and African-diaspora mothers and female caregivers. Motherhood was understood to include different forms of sustained care. Topics included health, family life and settling into life in Germany.
 
-## Implementation
+Childcare allowed adults to focus on conversations and their own concerns. Educational and psychosocial advice, alongside help with medical and official appointments, complemented the gatherings.
 
-A project of Bantu e.V., implemented by the Tubman.Network team. Tubman.Network worked under the umbrella of Bantu e.V. until January 2024 and is now the independent association [tubman.network e.V.](https://tubman.network).
+## The documented project phase
+
+Robert Bosch Stiftung funded “Towards Safer Spaces – geflüchtete BIPoC-Mütter stärken” from 1 April 2023 to 29 March 2024. The report documents, among other things, the first MamaCircles gathering on 8 May 2023.
+
+## Responsibility and collaboration
+
+Bantu e.V. held the legal and administrative project sponsorship; tubman.network implemented the project. This page documents the historical work and does not promise current meeting times or advice services.
