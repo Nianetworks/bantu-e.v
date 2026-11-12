@@ -1,7 +1,7 @@
 ---
 title: "Starke Wurzeln: Pearl Kindertagesstätte Kampala"
 subtitle: "Wo kleine Wurzeln stark werden: ein Montessori-orientierter Kindergarten für benachteiligte Kinder"
-summary: "Mit unserer Partnerorganisation ABI bauen wir in Kampala-Namuwongo einen gebührenfreien Kindergarten für 60 Kinder aus einkommensschwachen Familien auf."
+summary: "Mit unserer Partnerorganisation ABI bauen wir in Kampala-Namuwongo einen Kindergarten für 60 Kinder aus einkommensschwachen Familien auf. Die Familien tragen mit einem kleinen Kostenbeitrag zu den Projektkosten bei."
 code: "P 26/230"
 programme: international
 status: active
@@ -19,7 +19,7 @@ sdgs: [4, 5, 10]
 stats:
   - { value: "60", label: "Kinder von 3 bis 6 Jahren, mindestens die Hälfte Mädchen" }
   - { value: "6", label: "lokale Erzieher*innen werden fortgebildet" }
-  - { value: "0 €", label: "Gebühren während der gesamten Förderlaufzeit" }
+  - { value: "mind. 15", label: "Plätze bleiben dauerhaft beitragsfrei; kein Kind wird abgewiesen, weil die Familie nicht zahlen kann" }
 photoBrief: "Gruppenraum mit Montessori-Material, Erzieher*innen bei der Fortbildung. Kinder nur ohne erkennbare Gesichter oder mit Einwilligung der Eltern"
 image: "/images/projects/p26-230-pearl-kita/pearl-kita-montessori-raum.webp"
 imageAlt: "Ein heller Gruppenraum mit Holzregalen voller Montessori-Material, Kinderzeichnungen an der Wand und einer Pinnwand „Montessori Kampala“; zwei Erzieherinnen räumen Material ein."
@@ -39,11 +39,11 @@ Gemeinsam mit unserer ugandischen Partnerorganisation **Anchored Bridges Initiat
 
 ## Was das Projekt leistet
 
-- **60 Kinder** von drei bis sechs Jahren aus einkommensschwachen Familien erhalten einen **gebührenfreien Platz** während der gesamten Förderlaufzeit: mindestens 50 % Mädchen und mindestens fünf Plätze für Kinder mit Behinderungen.
+- **60 Kinder** von drei bis sechs Jahren aus einkommensschwachen Familien erhalten einen Platz; ihre Familien leisten einen **kleinen, sozial gestaffelten Kostenbeitrag** zu den Projektkosten, und kein Kind wird abgewiesen, weil die Familie nicht zahlen kann: mindestens 50 % Mädchen und mindestens fünf Plätze für Kinder mit Behinderungen.
 - Jedes Kind bekommt **täglich eine warme Mahlzeit mit Obst**.
 - **Sechs lokale Erzieher*innen** werden in Montessori-Grundlagen, Kinderschutz, Hygiene und Erster Hilfe fortgebildet.
 - Angemietete Räume mit drei Gruppenräumen und Küche werden kindgerecht ausgestattet; den Außenspielbereich stellt eine benachbarte Kirchengemeinde kostenfrei zur Verfügung. Es finden keine Baumaßnahmen statt.
-- Der Betrieb ist für die ersten fünf Monate nach Eröffnung gesichert. Danach trägt eine **sozial gestaffelte Beitragsordnung** den Kindergarten, ohne den Zugang für die ärmsten Familien einzuschränken.
+- **Kostenbeitrag der Familien:** Nach der mit der Stiftung Nord-Süd-Brücken abgestimmten, sozial gestaffelten Beitragsordnung beträgt der volle Beitrag **630.000 UGX je Term** (rund 150 EUR), zahlbar in bis zu drei Monatsraten (rund 52.500 UGX im Monat). Das liegt deutlich unter den 800.000 bis 1.500.000 UGX, die private Kindergärten in Kampala je Term verlangen. Familien mit geringerem Einkommen zahlen weniger, die ärmsten nichts: Mindestens 15 Plätze bleiben dauerhaft beitragsfrei. Der Betrieb ist für die ersten fünf Monate nach Eröffnung durch die Förderung gesichert; danach tragen die Beiträge den Kindergarten mit. Ihre Spende hilft, die beitragsfreien Plätze zu sichern.
 
 Die Pearl Kindertagesstätte ist die erste Ausbaustufe des Bildungscampus, den ABI in Kampala plant, von der frühkindlichen Bildung bis zur beruflichen Qualifizierung.
 

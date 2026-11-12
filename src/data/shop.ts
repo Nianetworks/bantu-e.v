@@ -114,8 +114,8 @@ export const products: Product[] = [
   {
     slug: 'geschenk-pearl-kita', category: 'gifts', status: 'available', donationReference: 'Geschenk Pearl Kita', project: 'p26-230-pearl-kita-kampala',
     name: { de: 'Ein guter Start für Kinder in Kampala', en: 'A good start for children in Kampala', fr: 'Un bon départ pour les enfants de Kampala' },
-    short: { de: 'Für die gebührenfreien Plätze in der Pearl Kindertagesstätte', en: 'For the fee-free places at Pearl Kindergarten', fr: 'Pour les places gratuites du jardin d’enfants Pearl' },
-    description: { de: 'Ihre Spende hilft uns, den Eigenanteil für die Pearl Kindertagesstätte in Kampala aufzubringen: 60 Kinder erhalten einen gebührenfreien Platz und jeden Tag eine warme Mahlzeit.', en: 'Your donation helps us raise our own contribution for the Pearl Kindergarten in Kampala: 60 children get a fee-free place and a warm meal every day.', fr: 'Votre don nous aide à réunir notre part pour le jardin d’enfants Pearl à Kampala : 60 enfants y ont une place gratuite et un repas chaud chaque jour.' },
+    short: { de: 'Für die Plätze in der Pearl Kindertagesstätte', en: 'For the places at Pearl Kindergarten', fr: 'Pour les places du jardin d’enfants Pearl' },
+    description: { de: 'Ihre Spende hilft uns, den Eigenanteil für die Pearl Kindertagesstätte in Kampala aufzubringen: 60 Kinder erhalten einen Platz und jeden Tag eine warme Mahlzeit; ihre Familien leisten einen nach Einkommen gestaffelten Kostenbeitrag, die ärmsten zahlen nichts.', en: 'Your donation helps us raise our own contribution for the Pearl Kindergarten in Kampala: 60 children get a place and a warm meal every day; their families pay a cost share graded by income, and the poorest pay nothing.', fr: 'Votre don nous aide à réunir notre part pour le jardin d’enfants Pearl à Kampala : 60 enfants y ont une place et un repas chaud chaque jour ; leurs familles versent une contribution selon leurs revenus, les plus pauvres ne paient rien.' },
     priceNote: { de: 'Betrag frei wählbar', en: 'Choose your amount', fr: 'Choisissez votre montant' },
   },
   {

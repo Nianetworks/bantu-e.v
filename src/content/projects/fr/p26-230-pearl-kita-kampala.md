@@ -1,7 +1,7 @@
 ---
 title: "Racines fortes : jardin d’enfants Pearl à Kampala"
 subtitle: "Là où les petites racines deviennent fortes : un jardin d’enfants d’inspiration Montessori pour des enfants défavorisés"
-summary: "Avec notre partenaire ABI, nous ouvrons à Kampala-Namuwongo un jardin d’enfants gratuit pour 60 enfants de familles à faibles revenus."
+summary: "Avec notre partenaire ABI, nous ouvrons à Kampala-Namuwongo un jardin d’enfants pour 60 enfants de familles à faibles revenus. Les familles participent aux frais du projet par une petite contribution."
 code: "P 26/230"
 programme: international
 status: active
@@ -19,7 +19,7 @@ sdgs: [4, 5, 10]
 stats:
   - { value: "60", label: "enfants de 3 à 6 ans, dont au moins la moitié de filles" }
   - { value: "6", label: "éducatrices et éducateurs locaux formés" }
-  - { value: "0 €", label: "de frais pendant toute la durée du financement" }
+  - { value: "15 au moins", label: "places restent durablement gratuites ; aucun enfant n’est refusé parce que sa famille ne peut pas payer" }
 photoBrief: "Salle de groupe avec du matériel Montessori, éducatrices en formation. Enfants uniquement sans visage reconnaissable ou avec l’accord des parents"
 image: "/images/projects/p26-230-pearl-kita/pearl-kita-montessori-raum.webp"
 imageAlt: "Une salle de groupe lumineuse avec des étagères en bois pleines de matériel Montessori, des dessins d’enfants au mur et un panneau « Montessori Kampala » ; deux éducatrices rangent le matériel."
@@ -37,11 +37,11 @@ Avec notre partenaire ougandais **Anchored Bridges Initiatives (ABI)**, nous sou
 
 ## Ce que fait le projet
 
-- **60 enfants** de trois à six ans issus de familles à faibles revenus reçoivent une **place gratuite** pendant toute la durée du financement, dont au moins 50 % de filles et au moins cinq places pour des enfants en situation de handicap.
+- **60 enfants** de trois à six ans issus de familles à faibles revenus reçoivent une place ; leurs familles versent une **petite contribution aux frais du projet, échelonnée selon leurs moyens**, et aucun enfant n’est refusé parce que sa famille ne peut pas payer ; dont au moins 50 % de filles et au moins cinq places pour des enfants en situation de handicap.
 - Chaque enfant reçoit **chaque jour un repas chaud avec des fruits**.
 - **Six éducatrices et éducateurs locaux** sont formés aux bases de la pédagogie Montessori, à la protection de l’enfance, à l’hygiène et aux premiers secours.
 - Des locaux loués avec trois salles de groupe et une cuisine sont aménagés pour les jeunes enfants ; une paroisse voisine met gratuitement à disposition l’espace de jeux extérieur. Il n’y a pas de travaux de construction.
-- Le fonctionnement est assuré pendant les cinq premiers mois après l’ouverture. Ensuite, une **grille de tarifs sociale** fait vivre le jardin d’enfants sans exclure les familles les plus pauvres.
+- **Participation des familles :** selon la grille sociale convenue avec la Stiftung Nord-Süd-Brücken, la contribution pleine est de **630 000 UGX par trimestre scolaire** (environ 150 EUR), payable en trois mensualités au plus (environ 52 500 UGX par mois). C’est nettement moins que les 800 000 à 1 500 000 UGX par trimestre demandés par les jardins d’enfants privés de Kampala. Les familles aux revenus plus faibles paient moins, les plus pauvres ne paient rien : au moins 15 places restent durablement gratuites. Le fonctionnement est assuré par la subvention pendant les cinq premiers mois après l’ouverture ; ensuite, les contributions aident à faire vivre le jardin d’enfants. Votre don aide à garantir les places gratuites.
 
 Le jardin d’enfants Pearl est la première étape du campus éducatif qu’ABI prévoit à Kampala, de la petite enfance à la formation professionnelle.
 
