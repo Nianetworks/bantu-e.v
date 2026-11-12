@@ -62,6 +62,6 @@ Junge Frauen in Mbarara haben oft kaum Zugang zu einer anerkannten Berufsausbild
 
 > „Eure Zertifikate sind nicht nur ein Stück Papier. Sie sind der Beweis, dass ihr die Fähigkeiten, den Mut und die Entschlossenheit habt, euren Weg zu gehen. Ich bin stolz auf euch.“
 >
-> Boaz Murinzi Murema, Vorstand Bantu e.V., im Transparenzbericht 2025
+> Boaz Murinzi Murema, Vorstand Bantu e.V., an die Absolventinnen (2025)
 
-Die Einnahmen betrugen 11.220,74 EUR. Die endgültigen Ausgaben werden derzeit abgestimmt (Stand 12.11.2026): Finanzierungsplan, Belegliste und Jahresbericht 2025 weichen geringfügig voneinander ab; der Abschlussbericht nennt die offenen Punkte. Wir danken der Stiftung Nord-Süd-Brücken und den Schmitz-Stiftungen, die gemeinsam den EZ-Kleinprojektefonds tragen, und vor allem dem gesamten Lehrteam der Msingi School für die hervorragende Umsetzung vor Ort.
+Die Einnahmen betrugen 11.220,74 EUR. Die endgültigen Ausgaben werden derzeit abgestimmt (Stand 12.11.2026): Finanzierungsplan, Belegliste und eine frühere Veröffentlichung weichen geringfügig voneinander ab; der Abschlussbericht nennt die offenen Punkte. Wir danken der Stiftung Nord-Süd-Brücken und den Schmitz-Stiftungen, die gemeinsam den EZ-Kleinprojektefonds tragen, und vor allem dem gesamten Lehrteam der Msingi School für die hervorragende Umsetzung vor Ort.

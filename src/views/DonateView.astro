@@ -34,7 +34,7 @@ const purposes = [
     <ul class="trust" role="list" aria-label={de ? 'Vertrauen und Sicherheit' : fr ? 'Confiance et sécurité' : 'Trust and security'}>
       <li><Icon name="star" class="trust__ic" /> {de ? `Gemeinnützig anerkannt (Freistellungsbescheid vom ${org.tax.exemptionNotice})` : fr ? `Reconnue d’intérêt général (avis d’exonération du ${org.tax.exemptionNotice})` : `Registered charity (tax exemption notice of ${org.tax.exemptionNotice})`}</li>
       <li><Icon name="report" class="trust__ic" /> {de ? 'Zuwendungsbestätigung auf Wunsch' : fr ? 'Reçu fiscal sur demande' : 'Tax donation receipt on request'}</li>
-      <li><Icon name="chart" class="trust__ic" /> <a href={r('reports', lang)}>{de ? 'Jahres- und Transparenzberichte seit 2020' : fr ? 'Rapports annuels et de transparence depuis 2020' : 'Annual and transparency reports since 2020'}</a></li>
+      <li><Icon name="chart" class="trust__ic" /> <a href={r('reports', lang)}>{de ? 'Projektberichte; Transparenz- und Finanzberichte folgen in Kürze' : fr ? 'Rapports de projet ; rapports de transparence et financiers bientôt disponibles' : 'Project reports; transparency and finance reports coming soon'}</a></li>
       <li><Icon name="people" class="trust__ic" /> {org.memberships[lang][0]}</li>
     </ul>
     <nav class="donation-quick" aria-label={de ? 'Spendenweg wählen' : fr ? 'Choisir un moyen de don' : 'Choose how to donate'}>
@@ -167,7 +167,7 @@ const purposes = [
       </div>
       <div class="panel">
         <h3>{de ? 'Transparenz' : fr ? 'Transparence' : 'Transparency'}</h3>
-        <p>{de ? 'Jedes Projekt wird getrennt abgerechnet. In unseren Transparenzberichten legen wir offen, woher unser Geld kommt und wofür wir es einsetzen.' : fr ? 'Chaque projet fait l’objet d’un décompte séparé. Nos rapports de transparence montrent d’où vient notre argent et comment nous l’utilisons.' : 'Every project is accounted for separately. Our transparency reports show where our money comes from and how we use it.'}</p>
+        <p>{de ? 'Jedes Projekt wird getrennt abgerechnet. Transparenz- und Finanzberichte folgen in Kürze.' : fr ? 'Chaque projet fait l’objet d’un décompte séparé. Les rapports de transparence et les rapports financiers arrivent bientôt.' : 'Every project is accounted for separately. Transparency and finance reports are coming soon.'}</p>
         <a class="link-arrow" href={r('reports', lang)}>{de ? 'Zu den Berichten' : fr ? 'Voir les rapports' : 'View reports'}</a>
       </div>
     </div>

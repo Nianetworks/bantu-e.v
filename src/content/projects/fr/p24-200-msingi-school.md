@@ -59,6 +59,6 @@ order: 3
 
 > « Vos certificats ne sont pas qu’un morceau de papier. Ils prouvent que vous avez les compétences, le courage et la détermination pour tracer votre chemin. Je suis fier de vous. »
 >
-> Boaz Murinzi Murema, directeur, rapport de transparence 2025
+> Boaz Murinzi Murema, directeur, aux diplômées (2025)
 
-Les recettes s’élevaient à 11 220,74 €. Les dépenses définitives sont en cours de rapprochement (état au 12 novembre 2026) : le plan de financement, la liste des justificatifs et le rapport annuel 2025 divergent légèrement ; le rapport final indique les points ouverts. Nous remercions la Stiftung Nord-Süd-Brücken et les Schmitz-Stiftungen, qui gèrent ensemble l’EZ-Kleinprojektefonds, et surtout toute l’équipe pédagogique de la Msingi School pour son travail remarquable sur le terrain.
+Les recettes s’élevaient à 11 220,74 €. Les dépenses définitives sont en cours de rapprochement (état au 12 novembre 2026) : le plan de financement, la liste des justificatifs et une publication antérieure divergent légèrement ; le rapport final indique les points ouverts. Nous remercions la Stiftung Nord-Süd-Brücken et les Schmitz-Stiftungen, qui gèrent ensemble l’EZ-Kleinprojektefonds, et surtout toute l’équipe pédagogique de la Msingi School pour son travail remarquable sur le terrain.

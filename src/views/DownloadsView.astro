@@ -10,7 +10,7 @@ const { lang } = Astro.props;
 const de = lang === 'de';
 const fr = lang === 'fr';
 const title = 'Downloads';
-const lead = de ? 'Formulare und Flyer von Bantu e.V. Unsere Jahres-, Transparenz- und Projektberichte finden Sie auf der Seite Berichte.' : fr ? 'Formulaires et dépliants de Bantu e.V. Nos rapports annuels, de transparence et de projet se trouvent sur la page Rapports.' : 'Forms and flyers of Bantu e.V. Our annual, transparency and project reports are on the Reports page.';
+const lead = de ? 'Formulare und Flyer von Bantu e.V. Unsere Projektberichte finden Sie auf der Seite Berichte.' : fr ? 'Formulaires et dépliants de Bantu e.V. Nos rapports de projet se trouvent sur la page Rapports.' : 'Forms and flyers of Bantu e.V. Our project reports are on the Reports page.';
 // Reports live on /berichte/ (audit 09.11.2026: do not mix reports with forms and flyers).
 const shown = groups.filter((g) => g.id !== 'reports' && g.id !== 'projectReports');
 ---

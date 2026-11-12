@@ -59,6 +59,6 @@ Young women in Mbarara often have little access to recognised vocational trainin
 
 > “Your certificates are not merely a piece of paper. They are proof that you have the skills, the courage and the determination to make your way. I am proud of you.”
 >
-> Boaz Murinzi Murema, Executive Director, Transparency Report 2025
+> Boaz Murinzi Murema, Executive Director, to the graduates (2025)
 
-Income was €11,220.74. The final expenditure is being reconciled (status 12 November 2026): the financing plan, the voucher list and the 2025 annual report differ slightly; the final report lists the open points. We thank the Stiftung Nord-Süd-Brücken and the Schmitz-Stiftungen, who jointly run the EZ-Kleinprojektefonds, and above all the entire teaching team of Msingi School for their outstanding work on the ground.
+Income was €11,220.74. The final expenditure is being reconciled (status 12 November 2026): the financing plan, the voucher list and an earlier publication differ slightly; the final report lists the open points. We thank the Stiftung Nord-Süd-Brücken and the Schmitz-Stiftungen, who jointly run the EZ-Kleinprojektefonds, and above all the entire teaching team of Msingi School for their outstanding work on the ground.

@@ -21,7 +21,8 @@ export const withVersion = (url: string, version?: string) => (version ? `${url}
  *  keep PDFs and images for 30 days, so links to them carry this version; change it whenever reports are replaced again. */
 export const reportsVersion = '20261112';
 export const withReportVersion = (url: string) => (/\/(downloads|images)\/berichte\//.test(url) ? withVersion(url, reportsVersion) : url);
-const report = (year: number, size: { ar: string; tr: string }): Download[] => [
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export const report = (year: number, size: { ar: string; tr: string }): Download[] => [
   { group: 'reports', kind: 'annual', year, lang: 'DE', size: `${size.ar} MB`, file: `/downloads/berichte/bantu-ev-jahresbericht-${year}-de.pdf`, title: { de: `Jahresbericht ${year}`, en: `Annual report ${year} (German)`, fr: `Rapport annuel ${year} (allemand)` } },
   { group: 'reports', kind: 'annual', year, lang: 'EN', size: `${size.ar} MB`, file: `/downloads/berichte/bantu-ev-annual-report-${year}-en.pdf`, title: { de: `Annual Report ${year} (Englisch)`, en: `Annual report ${year}`, fr: `Rapport annuel ${year} (anglais)` } },
   { group: 'reports', kind: 'transparency', year, lang: 'DE', size: `${size.tr} MB`, file: `/downloads/berichte/bantu-ev-transparenzbericht-${year}-de.pdf`, title: { de: `Transparenzbericht ${year}`, en: `Transparency report ${year} (German)`, fr: `Rapport de transparence ${year} (allemand)` } },
@@ -29,12 +30,8 @@ const report = (year: number, size: { ar: string; tr: string }): Download[] => [
 ];
 
 export const downloads: Download[] = [
-  ...report(2025, { ar: '0,3', tr: '0,3' }),
-  ...report(2024, { ar: '0,3', tr: '0,3' }),
-  ...report(2023, { ar: '0,3', tr: '0,3' }),
-  ...report(2022, { ar: '0,3', tr: '0,3' }),
-  ...report(2021, { ar: '0,3', tr: '0,3' }),
-  ...report(2020, { ar: '0,3', tr: '0,3' }),
+  // Annual and transparency reports 2020–2025 unpublished on the chair's instruction (12.11.2026) until the financial
+  // corrections are approved; re-add ...report(<year>, { ar: '0,3', tr: '0,3' }) entries (and the PDFs + covers) to publish again.
   // Project reports (public editions). EDIRI pilot 2023 (P 23/91): three languages generated from one template, 09.11.2026.
   // Msingi School P 24/200: final report combining narrative report, financial statement and finance plan (20.03.2026), 11.11.2026.
   { group: 'projectReports', kind: 'project', year: 2025, lang: 'DE', size: '1,9 MB', file: '/downloads/berichte/bantu-ev-msingi-abschlussbericht-2025-de.pdf', title: { de: 'Berufsbildung an der Msingi School: Friseur- und Kosmetikausbildung für junge Frauen in Mbarara, Abschlussbericht 2025 (P 24/200)', en: 'Vocational training at Msingi School: hairdressing and beauty training for young women in Mbarara, final report 2025, German (P 24/200)', fr: 'Formation professionnelle à la Msingi School : coiffure et esthétique pour jeunes femmes à Mbarara, rapport final 2025, allemand (P 24/200)' } },
