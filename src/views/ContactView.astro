@@ -31,10 +31,14 @@ const topics = de
   : ['General enquiry', 'Press and media', 'Cooperation and partnership', 'Donation and education sponsorship', 'Membership and volunteering', 'Book a workshop or training', 'Shop', 'Complaint or concern'];
 const places = [
   { k: 'berlin', name: 'Berlin', sub: T('Sitz und Büro, Inlandsarbeit', 'Seat and office, work in Germany', 'Siège et bureau, travail en Allemagne'), x: 150, y: 70, href: regionPath(lang, 'inland') },
+  { k: 'ntungamo', name: 'Ruhaama / Rwengoma (Ntungamo)', mapName: 'Ntungamo', sub: T('Partner ABI (Uganda)', 'Partner ABI (Uganda)', 'Partenaire ABI (Ouganda)'), x: 372, y: 236, left: true, href: regionPath(lang, 'international') },
+  { k: 'mbarara', name: 'Mbarara', sub: T('Partner ABI (Uganda)', 'Partner ABI (Uganda)', 'Partenaire ABI (Ouganda)'), x: 395, y: 215, href: regionPath(lang, 'international') },
   { k: 'kampala', name: 'Kampala', sub: T('Partner ABI (Uganda)', 'Partner ABI (Uganda)', 'Partenaire ABI (Ouganda)'), x: 430, y: 170, href: regionPath(lang, 'international') },
   { k: 'mbarara', name: 'Mbarara', sub: T('Partner NCDA (Uganda)', 'Partner NCDA (Uganda)', 'Partenaire NCDA (Ouganda)'), x: 395, y: 215, href: regionPath(lang, 'international') },
   { k: 'bujumbura', name: 'Bujumbura', sub: T('Partner WIV-HR (Burundi)', 'Partner WIV-HR (Burundi)', 'Partenaire WIV-HR (Burundi)'), x: 420, y: 262, href: regionPath(lang, 'international') },
 ];
+// One pin per place on the schematic map (Mbarara is listed twice: ABI and NCDA).
+const pins = places.filter((p, i) => places.findIndex((q) => q.k === p.k) === i);
 ---
 <Base lang={lang} title={title} description={lead} altHref={r('contact', de ? 'en' : 'de')}>
   <PageHead lang={lang} title={title} lead={lead}>
@@ -100,16 +104,16 @@ const places = [
           {places.map((p) => <li><a href={p.href}><strong>{p.name}</strong> <span class="muted">{p.sub}</span></a></li>)}
         </ul>
       </div>
-      <svg class="where__map" viewBox="0 0 600 320" role="img" aria-label={T('Schematische Karte: Berlin sowie Kampala, Mbarara und Bujumbura in Ostafrika, durch Linien verbunden', 'Schematic map: Berlin and Kampala, Mbarara and Bujumbura in East Africa, joined by lines', 'Carte schématique : Berlin et Kampala, Mbarara et Bujumbura en Afrique de l’Est, reliés par des lignes')}>
+      <svg class="where__map" viewBox="0 0 600 320" role="img" aria-label={T('Schematische Karte: Berlin sowie Kampala, Mbarara, Ntungamo und Bujumbura in Ostafrika, durch Linien verbunden', 'Schematic map: Berlin and Kampala, Mbarara, Ntungamo and Bujumbura in East Africa, joined by lines', 'Carte schématique : Berlin et Kampala, Mbarara, Ntungamo et Bujumbura en Afrique de l’Est, reliés par des lignes')}>
         <defs><pattern id="dots" width="14" height="14" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1.4" class="map__dot" /></pattern></defs>
         <rect x="0" y="0" width="600" height="320" rx="24" class="map__bg" />
         <rect x="0" y="0" width="600" height="320" rx="24" fill="url(#dots)" />
-        {places.slice(1).map((p, i) => <path d={`M ${places[0].x} ${places[0].y} C ${places[0].x + 90 + i * 40} ${places[0].y + 40 + i * 50}, ${p.x - 110 - i * 30} ${p.y - 70 + i * 20}, ${p.x} ${p.y}`} class="map__line" />)}
-        {places.map((p) => (
+        {pins.slice(1).map((p, i) => <path d={`M ${pins[0].x} ${pins[0].y} C ${pins[0].x + 90 + i * 30} ${pins[0].y + 40 + i * 40}, ${p.x - 110 - i * 25} ${p.y - 70 + i * 15}, ${p.x} ${p.y}`} class="map__line" />)}
+        {pins.map((p) => (
           <g class={`map__place map__place--${p.k}`}>
             <circle cx={p.x} cy={p.y} r="16" class="map__halo" />
             <circle cx={p.x} cy={p.y} r="7" class="map__pin" />
-            <text x={p.k === 'berlin' ? p.x - 28 : p.x + 24} y={p.y + 5} text-anchor={p.k === 'berlin' ? 'end' : 'start'} class="map__label">{p.name}</text>
+            <text x={p.k === 'berlin' || p.left ? p.x - 24 : p.x + 24} y={p.y + 5} text-anchor={p.k === 'berlin' || p.left ? 'end' : 'start'} class="map__label">{p.mapName ?? p.name}</text>
           </g>
         ))}
         <text x="24" y="296" class="map__caption">{T('Berlin · Uganda · Burundi: schematisch, nicht maßstäblich', 'Berlin · Uganda · Burundi: schematic, not to scale', 'Berlin · Ouganda · Burundi : schéma, pas à l’échelle')}</text>
