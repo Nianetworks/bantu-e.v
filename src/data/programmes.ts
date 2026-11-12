@@ -243,7 +243,7 @@ export const regions = [
     title: { de: 'Inlandsarbeit', en: 'Work in Germany', fr: 'Travail en Allemagne' } as L,
     navTitle: { de: 'Inlandsarbeit', en: 'Work in Germany', fr: 'Travail en Allemagne' } as L,
     icon: 'people',
-    image: '/images/ubuntu-talks-illustration.webp',
+    image: '/images/ubuntu-talks-2026-illustration.webp',
     places: { de: 'Berlin · Sachsen-Anhalt · bundesweit', en: 'Berlin · Saxony-Anhalt · across Germany', fr: 'Berlin · Saxe-Anhalt · toute l’Allemagne' } as L,
     navLead: { de: 'Bildung, Begegnung, Beratung und Trägerschaften in Berlin und bundesweit.', en: 'Education, encounter, advice and fiscal sponsorship in Berlin and across Germany.', fr: 'Éducation, rencontres, conseil et portage d’initiatives à Berlin et dans toute l’Allemagne.' } as L,
     lead: {

@@ -42,20 +42,21 @@ const eventSchema = ev ? [ev] : [];
           </div>
         )}
         {d.flyer && (
-          <section class="flyer" aria-labelledby="h-flyer">
+          <section class="flyer" id="flyer" aria-labelledby="h-flyer">
             <h2 id="h-flyer">{de ? 'Flyer' : fr ? 'Dépliant' : 'Flyer'}</h2>
             <div class="flyer__pages">
               {d.flyer.pages.map((pg) => (
                 <figure class="flyer__page">
+                  <a class="flyer__link" href={href(`${pg.src}.jpg`)}>
                   <picture>
                     <source type="image/webp" srcset={`${href(`${pg.src}-800.webp`)} 800w, ${href(`${pg.src}-${pg.width}.webp`)} ${pg.width}w`} sizes="(max-width: 600px) calc(100vw - 2rem), (max-width: 900px) calc(50vw - 1.5rem), 380px" />
                     <img src={href(`${pg.src}.jpg`)} alt={pg.alt} width={pg.width} height={pg.height} loading="lazy" decoding="async" />
                   </picture>
-                  <figcaption>{pg.caption}</figcaption>
+                  </a>
+                  <figcaption>{pg.caption} · <a href={href(`${pg.src}.jpg`)}>{de ? 'groß ansehen' : fr ? 'voir en grand' : 'view large'}<span class="sr-only"> ({pg.caption})</span></a></figcaption>
                 </figure>
               ))}
             </div>
-            <p><a class="link-arrow" href={href(d.flyer.pdf)}>{d.flyer.pdfLabel}</a></p>
           </section>
         )}
         {d.project && <p><a class="link-arrow" href={projectPath(lang, d.project)}>{de ? 'Zur Projektseite' : fr ? 'Aller à la page du projet' : 'Go to the project page'}</a></p>}
@@ -83,6 +84,7 @@ const eventSchema = ev ? [ev] : [];
           </dl>
           <div class="btn-row" style="margin-top:1.2rem">
             {d.registration && <a class="btn btn--gold" href={d.registration}>{d.registrationLabel ?? t.register}</a>}
+            {d.flyer && <a class="btn btn--outline" href="#flyer">{de ? 'Flyer ansehen' : fr ? 'Voir le dépliant' : 'See the flyer'}</a>}
             {d.attachment && <a class="btn btn--outline" href={href(d.attachment.href)}>{d.attachment.label}</a>}
           </div>
         </aside>
@@ -101,6 +103,8 @@ const eventSchema = ev ? [ev] : [];
   .flyer { margin: 2rem 0 1.5rem; }
   .flyer__pages { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); gap: 1rem; margin: 1rem 0; }
   .flyer__page { margin: 0; border-radius: 12px; overflow: hidden; border: 1px solid var(--line); background: var(--surface); }
+  .flyer { scroll-margin-top: 120px; }
+  .flyer__link { display: block; }
   .flyer__page img { display: block; width: 100%; height: auto; }
   .flyer__page figcaption { padding: .5rem .8rem; font-size: .9rem; color: var(--muted); }
   .event-box { position: sticky; top: 100px; }

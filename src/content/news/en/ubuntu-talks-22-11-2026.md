@@ -14,12 +14,9 @@ pinUntil: 2026-11-22
 eventName: "Ubuntu Talks"
 eventKind: community
 project: ubuntu-talks-2026
-image: "/images/ubuntu-talks-illustration.webp"
-imageAlt: "Illustration for Ubuntu Talks: people of different generations around a shared table"
-attachment: { href: "/downloads/flyer/ubuntu-talks-22-11-2026-flyer.pdf", label: "Download the flyer (PDF)" }
+image: "/images/ubuntu-talks-2026-illustration.webp"
+imageAlt: "Illustration for Ubuntu Talks: people of different origins and generations, including a child and an older woman, laughing and talking together; the TV tower and the Brandenburg Gate in the background."
 flyer:
-  pdf: "/downloads/flyer/ubuntu-talks-22-11-2026-flyer.pdf"
-  pdfLabel: "Flyer as PDF (2 pages, 2.0 MB, German and English)"
   pages:
     - { src: "/images/veranstaltungen/ubuntu-talks-22-11-2026-flyer-vorderseite", width: 1240, height: 1759, caption: "Front", alt: "Ubuntu Talks flyer, front: Sunday, 22 November 2026, 11 am to 7 pm, VHS Berlin Mitte. Illustration of people of different origins and generations in front of the TV tower and the Brandenburg Gate. Below: venue, culture dinner, childcare, free entry, QR code for registration and the logos of Bantu e.V., Federation of Ugandans in Germany, Bezirksamt Mitte, MITTEinander aktiv and Club Dialog. Text in German with English translations." }
     - { src: "/images/veranstaltungen/ubuntu-talks-22-11-2026-flyer-rueckseite", width: 1240, height: 1759, caption: "Back", alt: "Ubuntu Talks flyer, back: programme from 11:00 to 19:00 as a timeline, what is offered all day, how to take part on site and online, and the funding logos. The programme is also given as text on the project page." }

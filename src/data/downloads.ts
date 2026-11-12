@@ -52,7 +52,6 @@ export const downloads: Download[] = [
   { group: 'membership', lang: 'EN', size: '0,3 MB', version: membershipFormVersion, file: '/downloads/mitgliedschaft/bantu-ev-membership-form-en.pdf', title: { de: 'Membership application (Englisch)', en: 'Membership application (English)', fr: 'Formulaire d’adhésion (anglais)' } },
   { group: 'membership', lang: 'FR', size: '0,4 MB', version: membershipFormVersion, file: '/downloads/mitgliedschaft/bantu-ev-formulaire-adhesion-fr.pdf', title: { de: 'Formulaire d’adhésion (Französisch)', en: 'Membership application (French)', fr: 'Formulaire d’adhésion (français)' } },
   { group: 'flyer', lang: 'EN', size: '0,2 MB', file: '/downloads/flyer/bantu-ev-flyer-2024.pdf', title: { de: 'Vereinsflyer „Building Our Communities Together“ (2024)', en: 'Association flyer “Building Our Communities Together” (2024)', fr: 'Dépliant de l’association « Building Our Communities Together » (2024)' } },
-  { group: 'flyer', lang: 'DE/EN', size: '2,0 MB', file: '/downloads/flyer/ubuntu-talks-22-11-2026-flyer.pdf', title: { de: 'Ubuntu Talks, Sonntag 22.11.2026: Flyer mit Programm (A5, 2 Seiten)', en: 'Ubuntu Talks, Sunday 22 November 2026: flyer with programme (A5, 2 pages)', fr: 'Ubuntu Talks, dimanche 22 novembre 2026 : dépliant avec programme (A5, 2 pages)' } },
 ];
 
 export const groups: { id: Download['group']; title: L; intro?: L }[] = [

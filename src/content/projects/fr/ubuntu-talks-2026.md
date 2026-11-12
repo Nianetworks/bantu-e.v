@@ -21,8 +21,8 @@ sdgs: [10, 11, 16]
 stats:
   - { value: "40–50", label: "participants attendus sur place, plus 15–20 en ligne" }
   - { value: "gratuit", label: "entrée libre, avec garde d’enfants et dîner culturel" }
-image: "/images/ubuntu-talks-illustration.webp"
-imageAlt: "Illustration des Ubuntu Talks : des personnes de différentes générations assises en cercle autour d’un repas partagé, reliées par une toile."
+image: "/images/ubuntu-talks-2026-illustration.webp"
+imageAlt: "Illustration des Ubuntu Talks : des personnes de différentes origines et générations, dont une enfant et une femme âgée, rient et discutent ensemble ; en arrière-plan la tour de télévision et la porte de Brandebourg."
 featured: true
 order: 3
 ---
@@ -54,6 +54,6 @@ Entrée libre. La salle 2.02 de la VHS Berlin Mitte est accessible sans marches.
 
 La confiance d’abord : photos et vidéos uniquement avec consentement ; les personnes qui ne veulent pas être filmées ou photographiées reçoivent un ruban rouge. Les cercles de parole et l’espace protégé ne sont jamais enregistrés.
 
-Tout en un coup d’œil : [dépliant en PDF](/downloads/flyer/ubuntu-talks-22-11-2026-flyer.pdf) (2 pages, 2,0 Mo, allemand et anglais) et la [page de l’événement](/fr/actualites/ubuntu-talks-22-11-2026/).
+Tout en un coup d’œil : [voir le dépliant](/fr/actualites/ubuntu-talks-22-11-2026/#flyer) (recto et verso en images sur la page de l’événement, allemand et anglais).
 
 La journée doit lancer un **cercle Ubuntu** durable, qui continue de se réunir après la fin du projet.

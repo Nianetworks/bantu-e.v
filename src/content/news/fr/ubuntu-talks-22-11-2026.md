@@ -14,12 +14,9 @@ pinUntil: 2026-11-22
 eventName: "Ubuntu Talks"
 eventKind: community
 project: ubuntu-talks-2026
-image: "/images/ubuntu-talks-illustration.webp"
-imageAlt: "Illustration des Ubuntu Talks : des personnes de différentes générations autour d’une table commune"
-attachment: { href: "/downloads/flyer/ubuntu-talks-22-11-2026-flyer.pdf", label: "Télécharger le dépliant (PDF)" }
+image: "/images/ubuntu-talks-2026-illustration.webp"
+imageAlt: "Illustration des Ubuntu Talks : des personnes de différentes origines et générations, dont une enfant et une femme âgée, rient et discutent ensemble ; en arrière-plan la tour de télévision et la porte de Brandebourg."
 flyer:
-  pdf: "/downloads/flyer/ubuntu-talks-22-11-2026-flyer.pdf"
-  pdfLabel: "Dépliant en PDF (2 pages, 2,0 Mo, allemand et anglais)"
   pages:
     - { src: "/images/veranstaltungen/ubuntu-talks-22-11-2026-flyer-vorderseite", width: 1240, height: 1759, caption: "Recto", alt: "Dépliant Ubuntu Talks, recto : dimanche 22 novembre 2026, de 11 h à 19 h, VHS Berlin Mitte. Illustration de personnes de différentes origines et générations devant la tour de télévision et la porte de Brandebourg. En dessous : lieu, dîner culturel, garde d’enfants, entrée libre, QR code pour l’inscription et logos de Bantu e.V., Federation of Ugandans in Germany, Bezirksamt Mitte, MITTEinander aktiv et Club Dialog. Texte en allemand et en anglais." }
     - { src: "/images/veranstaltungen/ubuntu-talks-22-11-2026-flyer-rueckseite", width: 1240, height: 1759, caption: "Verso", alt: "Dépliant Ubuntu Talks, verso : programme de 11 h à 19 h sous forme de frise, offres de toute la journée, modalités de participation sur place et en ligne, logos des financeurs. Le programme figure aussi en texte sur la page du projet." }

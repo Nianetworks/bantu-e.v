@@ -21,8 +21,8 @@ sdgs: [10, 11, 16]
 stats:
   - { value: "40–50", label: "Teilnehmende vor Ort erwartet, dazu 15–20 online" }
   - { value: "frei", label: "Eintritt, mit Kinderbetreuung und Kultur-Dinner" }
-image: "/images/ubuntu-talks-illustration.webp"
-imageAlt: "Illustration zu den Ubuntu Talks: Menschen verschiedener Generationen sitzen im Kreis um ein gemeinsames Essen, verbunden durch ein Netz."
+image: "/images/ubuntu-talks-2026-illustration.webp"
+imageAlt: "Illustration zu den Ubuntu Talks: Menschen verschiedener Herkunft und Generationen, darunter ein Kind und eine ältere Frau, lachen und reden miteinander; im Hintergrund Fernsehturm und Brandenburger Tor."
 featured: true
 order: 3
 sources:
@@ -58,7 +58,7 @@ Eintritt frei. Der Raum 2.02 in der VHS Berlin Mitte ist stufenlos zugänglich. 
 
 Vertrauen zuerst: Fotos und Videos entstehen nur mit Einverständnis; wer nicht aufgenommen werden möchte, bekommt ein rotes Band. Gesprächskreise und Safe Space werden nie aufgezeichnet.
 
-Alle Angaben auf einen Blick: [Flyer als PDF](/downloads/flyer/ubuntu-talks-22-11-2026-flyer.pdf) (2 Seiten, 2,0 MB) und auf der [Veranstaltungsseite](/aktuelles/ubuntu-talks-22-11-2026/).
+Alle Angaben auf einen Blick: [Flyer ansehen](/aktuelles/ubuntu-talks-22-11-2026/#flyer) (Vorder- und Rückseite als Bild auf der Veranstaltungsseite).
 
 Aus dem Tag soll ein fortbestehender **Ubuntu-Kreis** entstehen, der sich auch nach Projektende trifft.
 

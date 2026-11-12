@@ -21,8 +21,8 @@ sdgs: [10, 11, 16]
 stats:
   - { value: "40–50", label: "participants expected on site, plus 15–20 online" }
   - { value: "free", label: "entry, with childcare and culture dinner" }
-image: "/images/ubuntu-talks-illustration.webp"
-imageAlt: "Illustration for Ubuntu Talks: people of different generations sitting in a circle around a shared meal, connected by a web."
+image: "/images/ubuntu-talks-2026-illustration.webp"
+imageAlt: "Illustration for Ubuntu Talks: people of different origins and generations, including a child and an older woman, laughing and talking together; the TV tower and the Brandenburg Gate in the background."
 featured: true
 order: 3
 ---
@@ -54,6 +54,6 @@ Free entry. Room 2.02 at VHS Berlin Mitte is step-free. Online participation via
 
 Trust first: photos and videos are taken only with consent; anyone who does not want to be filmed or photographed gets a red band. Conversation circles and the safe space are never recorded.
 
-Everything at a glance: [flyer as PDF](/downloads/flyer/ubuntu-talks-22-11-2026-flyer.pdf) (2 pages, 2.0 MB, German and English) and the [event page](/en/news/ubuntu-talks-22-11-2026/).
+Everything at a glance: [see the flyer](/en/news/ubuntu-talks-22-11-2026/#flyer) (front and back as pictures on the event page, German and English).
 
 The day aims to start a lasting **Ubuntu circle** that keeps meeting after the project ends.
