@@ -47,7 +47,7 @@ const donateRef = slug.includes('pearl') ? 'Pearl Kita' : slug.includes('ruziba'
           ? <><figure class="project__figure project__figure--video"><ProjectMedia part="player" lang={lang} gallery={d.gallery} video={d.video} id={slug} /></figure><ProjectMedia part="narrated" lang={lang} gallery={d.gallery} video={d.video} id={slug} /></>
           : <figure class="project__figure">
               {d.image
-                ? <img src={href(d.image)} alt={d.imageAlt ?? ''} width="1200" height="750" />
+                ? <><img src={href(d.image)} alt={d.imageAlt ?? ''} width="1200" height="750" />{d.imageCaption && <figcaption class="project__cap">{d.imageCaption}</figcaption>}</>
                 : <Placeholder lang={lang} label={d.photoBrief} tone={d.programme === 'international' ? 'gold' : 'blue'} />}
             </figure>}
         <p class="lead">{d.summary}</p>
@@ -133,6 +133,7 @@ const donateRef = slug.includes('pearl') ? 'Pearl Kita' : slug.includes('ruziba'
   .report-alts { margin: .6rem 0 0; }
   .project__figure { margin: 0 0 1.5rem; border-radius: 18px; overflow: hidden; border: 1px solid var(--line); }
   .project__figure img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; }
+  .project__cap { padding: .55rem .9rem; font-size: .88rem; color: var(--muted); background: var(--surface); border-top: 1px solid var(--line); }
   .project__stats { margin: 1.5rem 0 2rem; }
   .project__side { position: sticky; top: 100px; display: grid; gap: 1rem; }
   .side-title { font-family: var(--font-sans); font-size: .8rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin-bottom: .8rem; }

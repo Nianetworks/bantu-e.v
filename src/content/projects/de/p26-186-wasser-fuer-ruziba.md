@@ -20,6 +20,11 @@ stats:
   - { value: "≈ 900", label: "Menschen mit sauberem Trinkwasser" }
   - { value: "5.000 l", label: "Hochbehälter: Wasserabgabe ohne Strom" }
 photoBrief: "Bohrstelle und Hochbehälter in Ruziba, Menschen an der Zapfstelle (mit Einverständnis)"
+image: "/images/projects/p26-186-ruziba/ruziba-wasserstation.webp"
+imageAlt: "Ein Wasserturm mit schwarzem Tank und Solardach vor grünen Hügeln; Frauen und Kinder füllen gelbe und blaue Kanister an einer Zapfstelle mit Abflussrinne."
+galleryTitle: "Bilder zum Projekt"
+gallery:
+  - { src: "/images/projects/p26-186-ruziba/ruziba-zapfstelle.webp", thumb: "/images/projects/p26-186-ruziba/ruziba-zapfstelle-480.webp", width: 1600, height: 893, thumbWidth: 480, thumbHeight: 268, focus: "50% 50%", alt: "Frauen füllen an einer Zapfstelle mit zwei Hähnen gelbe Kanister, viele Menschen aus der Nachbarschaft stehen mit Kanistern an; dahinter ein Wasserturm aus Stahl.", caption: "Wasser holen an der Zapfstelle." }
 featured: true
 order: 2
 sources:

@@ -36,6 +36,8 @@ const projects = defineCollection({
     photoBrief: z.string().optional(),
     /** Heading above the photo gallery (default: "N Fotos aus dem Austausch") */
     galleryTitle: z.string().optional(),
+    /** Visible caption under the main project image (e.g. the note that an image is illustrative / AI-generated). */
+    imageCaption: z.string().optional(),
     /** Downloadable project report (PDF in public/downloads/berichte/): button under the stats and in the side column */
     report: z.object({ href: z.string(), label: z.string(), note: z.string().optional(), alternates: z.array(z.object({ lang: z.string(), name: z.string(), href: z.string() })).default([]) }).optional(),
     /** Photo gallery under the project text, shown as even tiles; a click opens the whole photo in the viewer.

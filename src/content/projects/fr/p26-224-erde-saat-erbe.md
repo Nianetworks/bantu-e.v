@@ -23,6 +23,12 @@ stats:
   - { value: "45", label: "élèves" }
   - { value: "12", label: "séances : ateliers, sortie, exposition" }
 photoBrief: "Élèves à l’atelier pisé (uniquement avec consentement), mains avec de l’argile et des semences"
+image: "/images/projects/p26-224-erde-saat-erbe/stampflehm-workshop.webp"
+imageAlt: "Des jeunes compactent de la terre rouge dans un coffrage en bois avec des dames dans un atelier ; à côté, des seaux d’argile."
+galleryTitle: "Images du projet"
+gallery:
+  - { src: "/images/projects/p26-224-erde-saat-erbe/saatgut-und-boden.webp", thumb: "/images/projects/p26-224-erde-saat-erbe/saatgut-und-boden-480.webp", width: 1600, height: 893, thumbWidth: 480, thumbHeight: 268, focus: "50% 50%", alt: "Plusieurs paires de mains tiennent de la terre rouge, du terreau, des haricots et des semences au-dessus d’une table en bois ; sur la table, des bocaux de graines, des sachets et des cahiers avec des croquis de plantes.", caption: "Module 2 : semences, sol et journal d’observation." }
+  - { src: "/images/projects/p26-224-erde-saat-erbe/afrikanisches-viertel-exkursion.webp", thumb: "/images/projects/p26-224-erde-saat-erbe/afrikanisches-viertel-exkursion-480.webp", width: 1600, height: 893, thumbWidth: 480, thumbHeight: 268, focus: "50% 50%", alt: "Un groupe de jeunes avec des blocs-notes et un plan de ville se tient à un coin de rue bordé d’immeubles anciens, sous les plaques « Petersallee » et « Togo-Straße » ; un accompagnateur montre les plaques.", caption: "Excursion : traces coloniales dans le Quartier africain." }
 featured: true
 order: 1
 ---

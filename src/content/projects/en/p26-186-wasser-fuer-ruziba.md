@@ -20,6 +20,11 @@ stats:
   - { value: "≈ 900", label: "people with clean drinking water" }
   - { value: "5,000 l", label: "elevated tank: water flows without electricity" }
 photoBrief: "Borehole and elevated tank in Ruziba, people at the tap (with consent)"
+image: "/images/projects/p26-186-ruziba/ruziba-wasserstation.webp"
+imageAlt: "A water tower with a black tank and a solar roof in front of green hills; women and children fill yellow and blue jerrycans at a tap stand with a drainage channel."
+galleryTitle: "Project images"
+gallery:
+  - { src: "/images/projects/p26-186-ruziba/ruziba-zapfstelle.webp", thumb: "/images/projects/p26-186-ruziba/ruziba-zapfstelle-480.webp", width: 1600, height: 893, thumbWidth: 480, thumbHeight: 268, focus: "50% 50%", alt: "Women fill yellow jerrycans at a tap stand with two taps while many neighbours wait with their containers; a steel water tower behind them.", caption: "Fetching water at the tap stand." }
 featured: true
 order: 2
 ---

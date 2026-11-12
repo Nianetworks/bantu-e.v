@@ -20,6 +20,11 @@ stats:
   - { value: "≈ 900", label: "personnes avec de l’eau potable" }
   - { value: "5 000 l", label: "réservoir surélevé : l’eau coule sans électricité" }
 photoBrief: "Forage et réservoir surélevé à Ruziba, personnes au point d’eau (avec consentement)"
+image: "/images/projects/p26-186-ruziba/ruziba-wasserstation.webp"
+imageAlt: "Un château d’eau avec une citerne noire et un toit solaire devant des collines vertes ; des femmes et des enfants remplissent des bidons jaunes et bleus à une borne-fontaine."
+galleryTitle: "Images du projet"
+gallery:
+  - { src: "/images/projects/p26-186-ruziba/ruziba-zapfstelle.webp", thumb: "/images/projects/p26-186-ruziba/ruziba-zapfstelle-480.webp", width: 1600, height: 893, thumbWidth: 480, thumbHeight: 268, focus: "50% 50%", alt: "Des femmes remplissent des bidons jaunes à une borne-fontaine à deux robinets, de nombreux voisins attendent avec leurs bidons ; derrière, un château d’eau en acier.", caption: "Chercher de l’eau à la borne-fontaine." }
 featured: true
 order: 2
 ---

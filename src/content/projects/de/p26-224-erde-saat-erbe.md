@@ -23,6 +23,12 @@ stats:
   - { value: "45", label: "Schüler*innen" }
   - { value: "12", label: "Termine: Workshops, Exkursion, Ausstellung" }
 photoBrief: "Schüler*innen beim Stampflehm-Workshop (nur mit Einverständnis), Hände mit Lehm und Saatgut"
+image: "/images/projects/p26-224-erde-saat-erbe/stampflehm-workshop.webp"
+imageAlt: "Jugendliche verdichten in einer Werkstatt rote Erde in einer Holzschalung mit Stampfern; daneben Eimer mit Lehm."
+galleryTitle: "Bilder zum Projekt"
+gallery:
+  - { src: "/images/projects/p26-224-erde-saat-erbe/saatgut-und-boden.webp", thumb: "/images/projects/p26-224-erde-saat-erbe/saatgut-und-boden-480.webp", width: 1600, height: 893, thumbWidth: 480, thumbHeight: 268, focus: "50% 50%", alt: "Mehrere Hände halten über einem Holztisch rote Erde, dunklen Boden, Bohnen und Saatgut; auf dem Tisch Gläser mit Samen, Saatguttüten und Notizhefte mit Pflanzenskizzen.", caption: "Modul 2: Saatgut, Boden und Beobachtungsprotokoll." }
+  - { src: "/images/projects/p26-224-erde-saat-erbe/afrikanisches-viertel-exkursion.webp", thumb: "/images/projects/p26-224-erde-saat-erbe/afrikanisches-viertel-exkursion-480.webp", width: 1600, height: 893, thumbWidth: 480, thumbHeight: 268, focus: "50% 50%", alt: "Eine Gruppe Jugendlicher mit Notizblöcken und Stadtplan steht an einer Straßenecke mit Altbauten unter den Straßenschildern „Petersallee“ und „Togo-Straße“; ein Begleiter zeigt auf die Schilder.", caption: "Exkursion: koloniale Spuren im Afrikanischen Viertel." }
 featured: true
 order: 1
 sources:

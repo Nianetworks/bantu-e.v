@@ -21,6 +21,12 @@ stats:
   - { value: "6", label: "local educators trained" }
   - { value: "€0", label: "fees throughout the funded period" }
 photoBrief: "Group room with Montessori materials, educators in training. Children only without recognisable faces or with parental consent"
+image: "/images/projects/p26-230-pearl-kita/pearl-kita-montessori-raum.webp"
+imageAlt: "A bright group room with wooden shelves full of Montessori materials, children’s drawings on the wall and a board reading “Montessori Kampala”; two educators arrange the materials."
+galleryTitle: "Project images"
+gallery:
+  - { src: "/images/projects/p26-230-pearl-kita/pearl-kita-lernmaterial.webp", thumb: "/images/projects/p26-230-pearl-kita/pearl-kita-lernmaterial-480.webp", width: 1600, height: 893, thumbWidth: 480, thumbHeight: 268, focus: "50% 50%", alt: "Children sit with their backs to the camera at wooden tables, fitting shapes into puzzle boards; an educator helps; alphabet and shape posters on the walls.", caption: "Learning with shapes and colours." }
+  - { src: "/images/projects/p26-230-pearl-kita/pearl-kita-fortbildung.webp", thumb: "/images/projects/p26-230-pearl-kita/pearl-kita-fortbildung-480.webp", width: 1600, height: 893, thumbWidth: 480, thumbHeight: 268, focus: "50% 50%", alt: "Seven educators sit around a table with notebooks, Montessori number rods and booklets titled “Child Protection Manuals”, working together.", caption: "Training for the educators, including child protection." }
 featured: true
 order: 1
 ---

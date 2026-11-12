@@ -23,6 +23,12 @@ stats:
   - { value: "45", label: "students" }
   - { value: "12", label: "sessions: workshops, field trip, exhibition" }
 photoBrief: "Students at the rammed-earth workshop (with consent only), hands with clay and seeds"
+image: "/images/projects/p26-224-erde-saat-erbe/stampflehm-workshop.webp"
+imageAlt: "Young people compact red earth in a wooden formwork with rammers in a workshop; buckets of clay beside them."
+galleryTitle: "Project images"
+gallery:
+  - { src: "/images/projects/p26-224-erde-saat-erbe/saatgut-und-boden.webp", thumb: "/images/projects/p26-224-erde-saat-erbe/saatgut-und-boden-480.webp", width: 1600, height: 893, thumbWidth: 480, thumbHeight: 268, focus: "50% 50%", alt: "Several pairs of hands hold red earth, dark soil, beans and seeds over a wooden table; on the table jars of seeds, seed packets and notebooks with plant sketches.", caption: "Module 2: seeds, soil and an observation log." }
+  - { src: "/images/projects/p26-224-erde-saat-erbe/afrikanisches-viertel-exkursion.webp", thumb: "/images/projects/p26-224-erde-saat-erbe/afrikanisches-viertel-exkursion-480.webp", width: 1600, height: 893, thumbWidth: 480, thumbHeight: 268, focus: "50% 50%", alt: "A group of young people with notepads and a city map stands at a street corner with old apartment buildings, below the street signs “Petersallee” and “Togo-Straße”; a guide points at the signs.", caption: "Excursion: colonial traces in the African Quarter." }
 featured: true
 order: 1
 ---

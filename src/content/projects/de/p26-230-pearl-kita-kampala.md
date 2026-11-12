@@ -21,6 +21,12 @@ stats:
   - { value: "6", label: "lokale Erzieher*innen werden fortgebildet" }
   - { value: "0 €", label: "Gebühren während der gesamten Förderlaufzeit" }
 photoBrief: "Gruppenraum mit Montessori-Material, Erzieher*innen bei der Fortbildung. Kinder nur ohne erkennbare Gesichter oder mit Einwilligung der Eltern"
+image: "/images/projects/p26-230-pearl-kita/pearl-kita-montessori-raum.webp"
+imageAlt: "Ein heller Gruppenraum mit Holzregalen voller Montessori-Material, Kinderzeichnungen an der Wand und einer Pinnwand „Montessori Kampala“; zwei Erzieherinnen räumen Material ein."
+galleryTitle: "Bilder zum Projekt"
+gallery:
+  - { src: "/images/projects/p26-230-pearl-kita/pearl-kita-lernmaterial.webp", thumb: "/images/projects/p26-230-pearl-kita/pearl-kita-lernmaterial-480.webp", width: 1600, height: 893, thumbWidth: 480, thumbHeight: 268, focus: "50% 50%", alt: "Kinder sitzen mit dem Rücken zur Kamera an Holztischen und legen Formen in Steckpuzzles; eine Erzieherin hilft; an den Wänden Alphabet- und Formenplakate.", caption: "Lernen mit Formen und Farben." }
+  - { src: "/images/projects/p26-230-pearl-kita/pearl-kita-fortbildung.webp", thumb: "/images/projects/p26-230-pearl-kita/pearl-kita-fortbildung-480.webp", width: 1600, height: 893, thumbWidth: 480, thumbHeight: 268, focus: "50% 50%", alt: "Sieben Erzieherinnen sitzen an einem Tisch mit Notizheften, Montessori-Rechenstangen und Heften „Child Protection Manuals“ und arbeiten gemeinsam.", caption: "Fortbildung der Erzieher*innen, auch zum Kinderschutz." }
 featured: true
 order: 1
 sources:

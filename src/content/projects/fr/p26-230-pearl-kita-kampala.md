@@ -21,6 +21,12 @@ stats:
   - { value: "6", label: "éducatrices et éducateurs locaux formés" }
   - { value: "0 €", label: "de frais pendant toute la durée du financement" }
 photoBrief: "Salle de groupe avec du matériel Montessori, éducatrices en formation. Enfants uniquement sans visage reconnaissable ou avec l’accord des parents"
+image: "/images/projects/p26-230-pearl-kita/pearl-kita-montessori-raum.webp"
+imageAlt: "Une salle de groupe lumineuse avec des étagères en bois pleines de matériel Montessori, des dessins d’enfants au mur et un panneau « Montessori Kampala » ; deux éducatrices rangent le matériel."
+galleryTitle: "Images du projet"
+gallery:
+  - { src: "/images/projects/p26-230-pearl-kita/pearl-kita-lernmaterial.webp", thumb: "/images/projects/p26-230-pearl-kita/pearl-kita-lernmaterial-480.webp", width: 1600, height: 893, thumbWidth: 480, thumbHeight: 268, focus: "50% 50%", alt: "Des enfants assis de dos à des tables en bois posent des formes dans des encastrements ; une éducatrice les aide ; des affiches d’alphabet et de formes aux murs.", caption: "Apprendre avec les formes et les couleurs." }
+  - { src: "/images/projects/p26-230-pearl-kita/pearl-kita-fortbildung.webp", thumb: "/images/projects/p26-230-pearl-kita/pearl-kita-fortbildung-480.webp", width: 1600, height: 893, thumbWidth: 480, thumbHeight: 268, focus: "50% 50%", alt: "Sept éducatrices autour d’une table avec des cahiers, des barres numériques Montessori et des livrets « Child Protection Manuals », travaillant ensemble.", caption: "Formation des éducatrices et éducateurs, y compris sur la protection de l’enfance." }
 featured: true
 order: 1
 ---
