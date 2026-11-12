@@ -14,7 +14,6 @@ sdgs: [5, 10]
 image: "/images/projects/tubman-network/parent-circle/thematic/parent-circle-thematic.webp"
 imageAlt: "Thematische Illustration: Eltern sprechen an einem Tisch; Kinder spielen im Hintergrund in einer Spielecke."
 galleryTitle: "Einblicke in die Projektthemen"
-galleryNote: "Die Bilder sind thematische Illustrationen und zeigen keine dokumentierten Projektteilnehmenden oder Veranstaltungen."
 gallery:
   - {"src": "/images/projects/tubman-network/parent-circle/thematic/parent-circle-thematic.webp", "thumb": "/images/projects/tubman-network/parent-circle/thematic/parent-circle-thematic-thumb.webp", "width": 1536, "height": 1024, "thumbWidth": 640, "thumbHeight": 427, "alt": "Thematische Illustration: Eltern sprechen an einem Tisch; Kinder spielen im Hintergrund in einer Spielecke.", "caption": "Eltern im Austausch mit einem Spielbereich für Kinder.", "section": "Thematische Motive"}
 order: 26

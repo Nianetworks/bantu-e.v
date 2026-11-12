@@ -14,7 +14,6 @@ sdgs: [10, 16, 17]
 image: "/images/projects/tubman-network/black-engagement-matters/thematic/bem-collaborative-planning.webp"
 imageAlt: "Illustration thématique : Cinq adultes travaillent ensemble autour d’une table avec des cahiers et un plan sur papier."
 galleryTitle: "Les thèmes du projet en images"
-galleryNote: "Les images sont des illustrations thématiques et ne représentent pas des personnes ou des événements documentés du projet."
 gallery:
   - {"src": "/images/projects/tubman-network/black-engagement-matters/thematic/bem-collaborative-planning.webp", "thumb": "/images/projects/tubman-network/black-engagement-matters/thematic/bem-collaborative-planning-thumb.webp", "width": 1536, "height": 1024, "thumbWidth": 640, "thumbHeight": 427, "alt": "Illustration thématique : Cinq adultes travaillent ensemble autour d’une table avec des cahiers et un plan sur papier.", "caption": "Planification collective et partage de connaissances au sein de la société civile noire.", "section": "Images thématiques"}
   - {"src": "/images/projects/tubman-network/black-engagement-matters/thematic/bem-facilitation.webp", "thumb": "/images/projects/tubman-network/black-engagement-matters/thematic/bem-facilitation-thumb.webp", "width": 1536, "height": 1024, "thumbWidth": 640, "thumbHeight": 427, "alt": "Illustration thématique : Une femme anime une discussion près d’un tableau avec des adultes assis.", "caption": "Un échange animé sur l’engagement citoyen.", "section": "Images thématiques"}

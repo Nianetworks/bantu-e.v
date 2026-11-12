@@ -16,7 +16,6 @@ sdgs: [3, 5, 10]
 image: "/images/projects/tubman-network/safer-spaces-tubman-network/thematic/mama-peer-support.webp"
 imageAlt: "Thematic illustration: Five women sit together with tea and notebooks and listen to one another."
 galleryTitle: "Project themes in pictures"
-galleryNote: "The images are thematic illustrations and do not depict documented project participants or events."
 gallery:
   - {"src": "/images/projects/tubman-network/safer-spaces-tubman-network/thematic/mama-peer-support.webp", "thumb": "/images/projects/tubman-network/safer-spaces-tubman-network/thematic/mama-peer-support-thumb.webp", "width": 1536, "height": 1024, "thumbWidth": 640, "thumbHeight": 427, "alt": "Thematic illustration: Five women sit together with tea and notebooks and listen to one another.", "caption": "A supportive conversation space for mothers and caregivers.", "section": "Thematic illustrations"}
   - {"src": "/images/projects/tubman-network/safer-spaces-tubman-network/thematic/mama-care-and-connection.webp", "thumb": "/images/projects/tubman-network/safer-spaces-tubman-network/thematic/mama-care-and-connection-thumb.webp", "width": 1536, "height": 1024, "thumbWidth": 640, "thumbHeight": 427, "alt": "Thematic illustration: Three women talk in a family room while two children play in the background, facing away from the camera.", "caption": "Conversation among caregivers with a play area for children.", "section": "Thematic illustrations"}

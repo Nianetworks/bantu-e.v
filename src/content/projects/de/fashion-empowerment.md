@@ -14,7 +14,6 @@ sdgs: [4, 10]
 image: "/images/projects/tubman-network/fashion-empowerment/thematic/fashion-design-workshop.webp"
 imageAlt: "Thematische Illustration: Sechs Erwachsene betrachten Stoffe und eine Entwurfsskizze an einem Arbeitstisch."
 galleryTitle: "Einblicke in die Projektthemen"
-galleryNote: "Die Bilder sind thematische Illustrationen und zeigen keine dokumentierten Projektteilnehmenden oder Veranstaltungen."
 gallery:
   - {"src": "/images/projects/tubman-network/fashion-empowerment/thematic/fashion-design-workshop.webp", "thumb": "/images/projects/tubman-network/fashion-empowerment/thematic/fashion-design-workshop-thumb.webp", "width": 1536, "height": 1024, "thumbWidth": 640, "thumbHeight": 427, "alt": "Thematische Illustration: Sechs Erwachsene betrachten Stoffe und eine Entwurfsskizze an einem Arbeitstisch.", "caption": "Gemeinsames Entwerfen mit Stoffen und Skizzen.", "section": "Thematische Motive"}
   - {"src": "/images/projects/tubman-network/fashion-empowerment/thematic/fashion-accessories.webp", "thumb": "/images/projects/tubman-network/fashion-empowerment/thematic/fashion-accessories-thumb.webp", "width": 1536, "height": 1024, "thumbWidth": 640, "thumbHeight": 427, "alt": "Thematische Illustration: Drei Erwachsene betrachten eine gemusterte Stofftasche und eine Skizze.", "caption": "Textile Accessoires als Ausdruck eigener Gestaltungsideen.", "section": "Thematische Motive"}

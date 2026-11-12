@@ -14,7 +14,6 @@ sdgs: [4, 10]
 image: "/images/projects/tubman-network/fashion-empowerment/thematic/fashion-design-workshop.webp"
 imageAlt: "Thematic illustration: Six adults examine fabrics and a design sketch at a worktable."
 galleryTitle: "Project themes in pictures"
-galleryNote: "The images are thematic illustrations and do not depict documented project participants or events."
 gallery:
   - {"src": "/images/projects/tubman-network/fashion-empowerment/thematic/fashion-design-workshop.webp", "thumb": "/images/projects/tubman-network/fashion-empowerment/thematic/fashion-design-workshop-thumb.webp", "width": 1536, "height": 1024, "thumbWidth": 640, "thumbHeight": 427, "alt": "Thematic illustration: Six adults examine fabrics and a design sketch at a worktable.", "caption": "Collaborative design with fabrics and sketches.", "section": "Thematic illustrations"}
   - {"src": "/images/projects/tubman-network/fashion-empowerment/thematic/fashion-accessories.webp", "thumb": "/images/projects/tubman-network/fashion-empowerment/thematic/fashion-accessories-thumb.webp", "width": 1536, "height": 1024, "thumbWidth": 640, "thumbHeight": 427, "alt": "Thematic illustration: Three adults examine a patterned fabric bag and a sketch.", "caption": "Textile accessories as an expression of individual design ideas.", "section": "Thematic illustrations"}

@@ -14,7 +14,6 @@ sdgs: [10, 16, 17]
 image: "/images/projects/tubman-network/black-engagement-matters/thematic/bem-collaborative-planning.webp"
 imageAlt: "Thematic illustration: Five adults collaborate around a table with notebooks and a plan on paper."
 galleryTitle: "Project themes in pictures"
-galleryNote: "The images are thematic illustrations and do not depict documented project participants or events."
 gallery:
   - {"src": "/images/projects/tubman-network/black-engagement-matters/thematic/bem-collaborative-planning.webp", "thumb": "/images/projects/tubman-network/black-engagement-matters/thematic/bem-collaborative-planning-thumb.webp", "width": 1536, "height": 1024, "thumbWidth": 640, "thumbHeight": 427, "alt": "Thematic illustration: Five adults collaborate around a table with notebooks and a plan on paper.", "caption": "Collaborative planning and knowledge sharing in Black civil society.", "section": "Thematic illustrations"}
   - {"src": "/images/projects/tubman-network/black-engagement-matters/thematic/bem-facilitation.webp", "thumb": "/images/projects/tubman-network/black-engagement-matters/thematic/bem-facilitation-thumb.webp", "width": 1536, "height": 1024, "thumbWidth": 640, "thumbHeight": 427, "alt": "Thematic illustration: A woman beside a flipchart facilitates a discussion with seated adults.", "caption": "Facilitated discussion about civic engagement.", "section": "Thematic illustrations"}

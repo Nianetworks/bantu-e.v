@@ -16,7 +16,6 @@ sdgs: [3, 5, 10]
 image: "/images/projects/tubman-network/safer-spaces-tubman-network/thematic/mama-peer-support.webp"
 imageAlt: "Thematische Illustration: Fünf Frauen sitzen mit Tee und Notizbüchern zusammen und hören einander zu."
 galleryTitle: "Einblicke in die Projektthemen"
-galleryNote: "Die Bilder sind thematische Illustrationen und zeigen keine dokumentierten Projektteilnehmenden oder Veranstaltungen."
 gallery:
   - {"src": "/images/projects/tubman-network/safer-spaces-tubman-network/thematic/mama-peer-support.webp", "thumb": "/images/projects/tubman-network/safer-spaces-tubman-network/thematic/mama-peer-support-thumb.webp", "width": 1536, "height": 1024, "thumbWidth": 640, "thumbHeight": 427, "alt": "Thematische Illustration: Fünf Frauen sitzen mit Tee und Notizbüchern zusammen und hören einander zu.", "caption": "Ein geschützter Gesprächsraum für Mütter und Betreuungspersonen.", "section": "Thematische Motive"}
   - {"src": "/images/projects/tubman-network/safer-spaces-tubman-network/thematic/mama-care-and-connection.webp", "thumb": "/images/projects/tubman-network/safer-spaces-tubman-network/thematic/mama-care-and-connection-thumb.webp", "width": 1536, "height": 1024, "thumbWidth": 640, "thumbHeight": 427, "alt": "Thematische Illustration: Drei Frauen sprechen im Familienraum; zwei Kinder spielen im Hintergrund mit dem Rücken zur Kamera.", "caption": "Austausch unter Betreuungspersonen mit einem Spielbereich für Kinder.", "section": "Thematische Motive"}

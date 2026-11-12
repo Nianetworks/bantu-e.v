@@ -14,7 +14,6 @@ sdgs: [4, 10]
 image: "/images/projects/tubman-network/fashion-empowerment/thematic/fashion-design-workshop.webp"
 imageAlt: "Illustration thématique : Six adultes examinent des tissus et un croquis autour d’une table de travail."
 galleryTitle: "Les thèmes du projet en images"
-galleryNote: "Les images sont des illustrations thématiques et ne représentent pas des personnes ou des événements documentés du projet."
 gallery:
   - {"src": "/images/projects/tubman-network/fashion-empowerment/thematic/fashion-design-workshop.webp", "thumb": "/images/projects/tubman-network/fashion-empowerment/thematic/fashion-design-workshop-thumb.webp", "width": 1536, "height": 1024, "thumbWidth": 640, "thumbHeight": 427, "alt": "Illustration thématique : Six adultes examinent des tissus et un croquis autour d’une table de travail.", "caption": "Création collective avec des tissus et des croquis.", "section": "Images thématiques"}
   - {"src": "/images/projects/tubman-network/fashion-empowerment/thematic/fashion-accessories.webp", "thumb": "/images/projects/tubman-network/fashion-empowerment/thematic/fashion-accessories-thumb.webp", "width": 1536, "height": 1024, "thumbWidth": 640, "thumbHeight": 427, "alt": "Illustration thématique : Trois adultes examinent un sac en tissu à motifs et un croquis.", "caption": "Des accessoires textiles pour exprimer ses idées créatives.", "section": "Images thématiques"}

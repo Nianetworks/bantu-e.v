@@ -14,7 +14,6 @@ sdgs: [10, 16]
 image: "/images/projects/tubman-network/ubuntu-fuer-alle/thematic/ubuntu-advice.webp"
 imageAlt: "Thematische Illustration: Drei Erwachsene besprechen Unterlagen an einem Tisch mit einem Laptop."
 galleryTitle: "Einblicke in die Projektthemen"
-galleryNote: "Die Bilder sind thematische Illustrationen und zeigen keine dokumentierten Projektteilnehmenden oder Veranstaltungen."
 gallery:
   - {"src": "/images/projects/tubman-network/ubuntu-fuer-alle/thematic/ubuntu-advice.webp", "thumb": "/images/projects/tubman-network/ubuntu-fuer-alle/thematic/ubuntu-advice-thumb.webp", "width": 1536, "height": 1024, "thumbWidth": 640, "thumbHeight": 427, "alt": "Thematische Illustration: Drei Erwachsene besprechen Unterlagen an einem Tisch mit einem Laptop.", "caption": "Gemeinsame Beratung zu Bewerbungen und nächsten Schritten.", "section": "Thematische Motive"}
   - {"src": "/images/projects/tubman-network/ubuntu-fuer-alle/thematic/ubuntu-language-learning.webp", "thumb": "/images/projects/tubman-network/ubuntu-fuer-alle/thematic/ubuntu-language-learning-thumb.webp", "width": 1536, "height": 1024, "thumbWidth": 640, "thumbHeight": 427, "alt": "Thematische Illustration: Erwachsene sitzen mit Heften an einem Tisch und hören einer Sprecherin zu.", "caption": "Gemeinsam Sprache lernen und sich gegenseitig unterstützen.", "section": "Thematische Motive"}

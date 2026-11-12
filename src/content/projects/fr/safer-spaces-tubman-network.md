@@ -16,7 +16,6 @@ sdgs: [3, 5, 10]
 image: "/images/projects/tubman-network/safer-spaces-tubman-network/thematic/mama-peer-support.webp"
 imageAlt: "Illustration thématique : Cinq femmes sont assises avec du thé et des cahiers et s’écoutent."
 galleryTitle: "Les thèmes du projet en images"
-galleryNote: "Les images sont des illustrations thématiques et ne représentent pas des personnes ou des événements documentés du projet."
 gallery:
   - {"src": "/images/projects/tubman-network/safer-spaces-tubman-network/thematic/mama-peer-support.webp", "thumb": "/images/projects/tubman-network/safer-spaces-tubman-network/thematic/mama-peer-support-thumb.webp", "width": 1536, "height": 1024, "thumbWidth": 640, "thumbHeight": 427, "alt": "Illustration thématique : Cinq femmes sont assises avec du thé et des cahiers et s’écoutent.", "caption": "Un espace d’échange bienveillant pour les mères et les personnes qui prennent soin des enfants.", "section": "Images thématiques"}
   - {"src": "/images/projects/tubman-network/safer-spaces-tubman-network/thematic/mama-care-and-connection.webp", "thumb": "/images/projects/tubman-network/safer-spaces-tubman-network/thematic/mama-care-and-connection-thumb.webp", "width": 1536, "height": 1024, "thumbWidth": 640, "thumbHeight": 427, "alt": "Illustration thématique : Trois femmes échangent dans une salle familiale ; deux enfants jouent en arrière-plan, dos à l’appareil.", "caption": "Des échanges entre adultes avec un espace de jeu pour les enfants.", "section": "Images thématiques"}
