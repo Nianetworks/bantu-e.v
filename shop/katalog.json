@@ -1,0 +1,132 @@
+{
+ "generated": "2026-11-14T10:26:48.539Z",
+ "org": {
+  "shortName": "Bantu e.V.",
+  "legalName": "Bantu-Vereinigung für globale Bildung, Gerechtigkeit und Zusammenarbeit e.V.",
+  "email": "info@bantu-ev.org",
+  "address": "Kameruner Str. 1, 13351 Berlin"
+ },
+ "bank": {
+  "holder": "Bantu e.V.",
+  "iban": "DE47430609671035681000",
+  "bic": "GENODEM1GLS",
+  "bank": "GLS Gemeinschaftsbank eG"
+ },
+ "giftLimits": {
+  "min": 5,
+  "max": 10000
+ },
+ "shipping": {
+  "flat": null
+ },
+ "products": [
+  {
+   "slug": "geschenk-pearl-kita",
+   "kind": "gift",
+   "orderable": true,
+   "name": {
+    "de": "Ein guter Start für Kinder in Kampala",
+    "en": "A good start for children in Kampala",
+    "fr": "Un bon départ pour les enfants de Kampala"
+   },
+   "price": null,
+   "reference": "Geschenk Pearl Kita"
+  },
+  {
+   "slug": "geschenk-wasser-ruziba",
+   "kind": "gift",
+   "orderable": true,
+   "name": {
+    "de": "Sauberes Wasser für Ruziba",
+    "en": "Clean water for Ruziba",
+    "fr": "De l’eau propre pour Ruziba"
+   },
+   "price": null,
+   "reference": "Geschenk Wasser Ruziba"
+  },
+  {
+   "slug": "geschenk-bildung",
+   "kind": "gift",
+   "orderable": true,
+   "name": {
+    "de": "Bildung für alle",
+    "en": "Education for all",
+    "fr": "L’éducation pour tous"
+   },
+   "price": null,
+   "reference": "Geschenk Bildung fuer alle"
+  },
+  {
+   "slug": "abantu-coffee-kanungu-forest",
+   "kind": "goods",
+   "orderable": false,
+   "name": {
+    "de": "Abantu Coffee „Kanungu Forest“",
+    "en": "Abantu Coffee “Kanungu Forest”",
+    "fr": "Abantu Coffee « Kanungu Forest »"
+   },
+   "price": null,
+   "reference": null
+  },
+  {
+   "slug": "abantu-coffee-sebei-elgon",
+   "kind": "goods",
+   "orderable": false,
+   "name": {
+    "de": "Abantu Coffee „Sebei Elgon“",
+    "en": "Abantu Coffee “Sebei Elgon”",
+    "fr": "Abantu Coffee « Sebei Elgon »"
+   },
+   "price": null,
+   "reference": null
+  },
+  {
+   "slug": "abantu-coffee-roots-and-routes",
+   "kind": "goods",
+   "orderable": false,
+   "name": {
+    "de": "Abantu Coffee „Roots & Routes“",
+    "en": "Abantu Coffee “Roots & Routes”",
+    "fr": "Abantu Coffee « Roots & Routes »"
+   },
+   "price": null,
+   "reference": null
+  },
+  {
+   "slug": "bantu-stofftasche",
+   "kind": "goods",
+   "orderable": false,
+   "name": {
+    "de": "Bantu-Stofftasche",
+    "en": "Bantu tote bag",
+    "fr": "Sac en toile Bantu"
+   },
+   "price": null,
+   "reference": null
+  },
+  {
+   "slug": "bantu-t-shirt",
+   "kind": "goods",
+   "orderable": false,
+   "name": {
+    "de": "T-Shirt „Ich bin, weil wir sind“",
+    "en": "T-shirt “I am because we are”",
+    "fr": "T-shirt « Je suis parce que nous sommes »"
+   },
+   "price": null,
+   "reference": null
+  },
+  {
+   "slug": "bantu-tasse",
+   "kind": "goods",
+   "orderable": false,
+   "name": {
+    "de": "Bantu-Tasse",
+    "en": "Bantu mug",
+    "fr": "Tasse Bantu"
+   },
+   "price": null,
+   "reference": null
+  }
+ ]
+}
